@@ -1,10 +1,7 @@
 /Software_engineering_project/nbproject/private/
 /Software_engineering_project/dist/
 /Software_engineering_project/build/
-Software_engineering_project/nbproject/build-impl.xml
-Software_engineering_project/nbproject/genfiles.properties
-Software_engineering_project/.idea/ant.xml
-Software_engineering_project/.idea/ant.xml
-*.xml
-Software_engineering_project/.idea/misc.xml
-Software_engineering_project/.idea/libraries/Software_engineering_project.xml
+Software_engineering_project/nbproject/
+Software_engineering_project/.idea/
+Software_engineering_project/out/
+Software_engineering_project/Software_engineering_project.iml
