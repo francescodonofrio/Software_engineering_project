@@ -1,7 +1,11 @@
-/Software_engineering_project/nbproject/private/
 /Software_engineering_project/dist/
 /Software_engineering_project/build/
-Software_engineering_project/nbproject/
-Software_engineering_project/.idea/
-Software_engineering_project/out/
-Software_engineering_project/Software_engineering_project.iml
+/Software_engineering_project/nbproject/
+/Software_engineering_project/.idea/
+/Software_engineering_project/out/
+/Software_engineering_project/Software_engineering_project.iml
+/Software_engineering_project/Software_engineering_project/src/software_engineering_project/Paint.java
+Software_engineering_project/nbproject/build-impl.xml
+Software_engineering_project/nbproject/configs/Run_as_WebStart.properties
+Software_engineering_project/nbproject/configs/Run_as_WebStart.properties
+*.xml
