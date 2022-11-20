@@ -10,7 +10,7 @@ In particular:
 
 The UML schema of this application is the following:
 
-![UML class_with_shapes (1)](https://user-images.githubusercontent.com/68144630/202910365-5a8137ad-72ee-4450-95e6-a553e17eef03.png)
+![WhatsApp Image 2022-11-20 at 17 42 11](https://user-images.githubusercontent.com/68144630/202914471-023799ba-b4db-4fa2-8463-2c65b44ee61c.jpeg)
 
 ### Our definition of done
 Done means every task under the User Story has been completed and tested and any work created is attached to the User Story so the Product Owner can review it and make sure it meets his or her expectations.
