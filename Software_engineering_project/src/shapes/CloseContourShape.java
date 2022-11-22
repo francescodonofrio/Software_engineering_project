@@ -4,14 +4,14 @@ import java.io.Serializable;
 
 public abstract class CloseContourShape implements Shape, Serializable {
 
-    protected Shape shape;
+    protected javafx.scene.shape.Shape shape;
 
     /**
      * A function to make a shape focussed
      */
     @Override
     public void focus(){
-        this.shape.setFocused(true);
+
     }
 
     /**

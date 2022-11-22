@@ -10,7 +10,6 @@ public abstract class OpenContourShape implements Shape, Serializable {
      */
     @Override
     public void focus(){
-        this.shape.setFocused(true);
     }
 
     /**
