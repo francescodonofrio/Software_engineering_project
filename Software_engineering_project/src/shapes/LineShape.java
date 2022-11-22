@@ -8,7 +8,7 @@ public class LineShape extends OpenContourShape{
      * The constructor of a LineShape
      */
     public LineShape(){
-        this.shape=new Line();
+        this.shape=new Line(-100,0,100,0);
     }
 
     @Override
@@ -19,6 +19,11 @@ public class LineShape extends OpenContourShape{
     @Override
     public void setY(double Y) {
         shape.setLayoutY(Y);
+    }
+
+    @Override
+    public javafx.scene.shape.Shape getShape() {
+        return shape;
     }
     
 }

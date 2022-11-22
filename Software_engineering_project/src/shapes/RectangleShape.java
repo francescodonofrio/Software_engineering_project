@@ -8,7 +8,7 @@ public class RectangleShape extends CloseContourShape{
      * The constructor of a RectangleShape
      */
     public RectangleShape(){
-        this.shape= new Rectangle();
+        this.shape= new Rectangle(20,50);
     }
 
     @Override
@@ -21,4 +21,9 @@ public class RectangleShape extends CloseContourShape{
         shape.setLayoutY(Y);
     }
 
+    @Override
+    public javafx.scene.shape.Shape getShape() {
+        return shape;
+    }
+    
 }

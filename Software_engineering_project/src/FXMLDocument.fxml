@@ -52,7 +52,7 @@
                   </ColorPicker>
                </children>
             </VBox>
-            <Pane fx:id="drawingPane" prefHeight="534.0" prefWidth="698.0" />
+            <Pane fx:id="drawingPane" onMouseClicked="#DrawingWindowOnMouseClick" prefHeight="534.0" prefWidth="698.0" />
          </children>
       </HBox>
    </children>

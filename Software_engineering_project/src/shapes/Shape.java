@@ -5,4 +5,5 @@ public interface Shape {
     public void copy(javafx.scene.shape.Shape clipboard);
     public void setX(double X);
     public void setY(double Y);
+    public javafx.scene.shape.Shape getShape();
 }
