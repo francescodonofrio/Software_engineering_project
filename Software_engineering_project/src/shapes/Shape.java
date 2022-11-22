@@ -1,4 +1,4 @@
-package software_engineering_project.shapes;
+package shapes;
 
 public interface Shape {
     public void focus();

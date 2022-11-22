@@ -1,4 +1,4 @@
-package software_engineering_project.shapes;
+package shapes;
 
 import java.io.Serializable;
 
