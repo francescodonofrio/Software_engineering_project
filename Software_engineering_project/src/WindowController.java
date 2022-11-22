@@ -81,11 +81,12 @@ public class WindowController implements Initializable {
     }
 
     @FXML
-    private void saveAction(ActionEvent event) {
+    private void saveWindow(ActionEvent event) {
+        
     }
 
     @FXML
-    private void loadAction(ActionEvent event) {
+    private void loadWindow(ActionEvent event) {
     }
     
 }
