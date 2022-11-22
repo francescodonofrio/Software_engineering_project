@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -17,8 +18,11 @@
          <children>
             <MenuBar>
               <menus>
-                <Menu fx:id="saveBtn" mnemonicParsing="false" onAction="#saveWindow" text="Save" />
-                <Menu fx:id="loadBtn" mnemonicParsing="false" onAction="#loadWindow" text="Load" />
+                <Menu mnemonicParsing="false" text="File">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#saveWindow" text="Save" />
+                        <MenuItem mnemonicParsing="false" onAction="#loadWindow" text="Load" />
+                     </items></Menu>
               </menus>
             </MenuBar>
             <HBox prefHeight="542.0" prefWidth="863.0">

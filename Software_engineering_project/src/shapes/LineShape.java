@@ -8,7 +8,7 @@ public class LineShape extends OpenContourShape{
      * The constructor of a LineShape
      */
     public LineShape(){
-        this.shape=new Line(-100,0,100,0);
+      //  this.shape=new Line(-100,0,100,0);
     }
 
     @Override
