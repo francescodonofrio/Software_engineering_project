@@ -7,36 +7,34 @@
 import action.Action;
 import action.DrawAction;
 import action.Invoker;
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
-import javafx.scene.control.Menu;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import shapes.EllipseShape;
 import shapes.LineShape;
 import shapes.RectangleShape;
 import shapes.Shape;
 
-/**
- *
- * @author franc
- */
 public class WindowController implements Initializable {
 
     @FXML
@@ -96,9 +94,16 @@ public class WindowController implements Initializable {
         FileChooser.ExtensionFilter ext = new FileChooser.ExtensionFilter("Binary File (*.bin)", "*.bin");
         chooser.getExtensionFilters().add(ext);
         chooser.setTitle("Save File");
-        File file = chooser.showSaveDialog(new Stage());
+        File file = chooser.showSaveDialog(drawingPane.getScene().getWindow());
+        if(file == null) return;
         try(ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file.getAbsolutePath())))){
-                out.writeObject(drawingPane);
+        
+            ObservableList list = drawingPane.getChildren();
+            out.writeInt(list.size());
+            for(int i = 0 ; i < list.size(); i++){
+                out.writeObject((javafx.scene.shape.Shape)list.get(i));
+            }
+                
         } catch (FileNotFoundException ex) {
             Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -109,6 +114,25 @@ public class WindowController implements Initializable {
 
     @FXML
     private void loadWindow(ActionEvent event) {
+        FileChooser chooser = new FileChooser();
+        FileChooser.ExtensionFilter ext = new FileChooser.ExtensionFilter("Binary File (*.bin)", "*.bin");
+        chooser.getExtensionFilters().add(ext);
+        chooser.setTitle("Open File");
+        File file = chooser.showOpenDialog(drawingPane.getScene().getWindow());
+        if(file == null) return;
+        try (ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file.getAbsolutePath())))){
+            
+            int len = in.readInt();
+            for(int i = 0; i < len; i++){
+                javafx.scene.shape.Shape temp = (javafx.scene.shape.Shape) in.readObject();
+                drawingPane.getChildren().add(temp);
+            }
+
+        } catch (FileNotFoundException ex) {    
+            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException | ClassNotFoundException ex) {
+            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }
