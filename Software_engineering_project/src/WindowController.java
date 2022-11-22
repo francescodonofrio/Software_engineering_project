@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.layout.Pane;
 
 /**
@@ -26,6 +27,10 @@ public class WindowController implements Initializable {
     private Button rectangleBtn;
     @FXML
     private Button ellipseBtn;
+    @FXML
+    private ColorPicker ColoPickerInternal;
+    @FXML
+    private ColorPicker ColorPickerContour;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
