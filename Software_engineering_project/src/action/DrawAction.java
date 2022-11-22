@@ -6,6 +6,7 @@
 package action;
 
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import shapes.Shape;
 
 /**
@@ -15,21 +16,18 @@ import shapes.Shape;
 public class DrawAction implements Action{
     
     private final Shape shape;
-    private final double X;
-    private final double Y;
     private final Pane drawingPane;
     
-    public DrawAction(Shape shape, double X, double Y, Pane drawingPane) {
+    public DrawAction(Shape shape, double X, double Y, Color internalColor, Pane drawingPane) {
         this.shape = shape;
-        this.X = X;
-        this.Y = Y;
+        this.shape.setX(X);
+        this.shape.setY(Y);
+        this.shape.setInternalColor(internalColor);
         this.drawingPane = drawingPane;
     }
     
     @Override
     public void execute(){
-        shape.setX(X);
-        shape.setY(Y);    
         drawingPane.getChildren().add(shape.getShape());
     }
     

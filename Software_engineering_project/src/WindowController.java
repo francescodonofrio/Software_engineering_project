@@ -17,6 +17,7 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Menu;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import shapes.EllipseShape;
 import shapes.LineShape;
 import shapes.RectangleShape;
@@ -44,7 +45,7 @@ public class WindowController implements Initializable {
     @FXML
     private Menu loadBtn;
     @FXML
-    private ColorPicker coloPickerInternal;
+    private ColorPicker colorPickerInternal;
     @FXML
     private ColorPicker colorPickerContour;
     
@@ -75,7 +76,8 @@ public class WindowController implements Initializable {
     private void DrawingWindowOnMouseClick(MouseEvent event) {
         double X = event.getX();
         double Y = event.getY();
-        Action action = new DrawAction(selectedShape, X, Y, drawingPane);
+        Color internal = colorPickerInternal.getValue();
+        Action action = new DrawAction(selectedShape, X, Y, internal, drawingPane);
         invoker.execute(action);
         drawingPane.setDisable(true);
     }

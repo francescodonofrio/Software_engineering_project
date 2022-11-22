@@ -1,5 +1,7 @@
 package shapes;
 
+import javafx.scene.paint.Color;
+
 import java.io.Serializable;
 
 public abstract class CloseContourShape implements Shape, Serializable {
@@ -32,5 +34,31 @@ public abstract class CloseContourShape implements Shape, Serializable {
     @Override
     public javafx.scene.shape.Shape getShape() {
         return this.shape;
+    }
+
+    /**
+     * Sets a new color for a shape
+     * @param newColor the new color to set
+     */
+    public void setInternalColor(Color newColor){
+        shape.setFill(newColor);
+    }
+
+    /**
+     * Sets the X coordinate for this shape
+     * @param X the new X coordinate
+     */
+    @Override
+    public void setX(double X) {
+        shape.setLayoutX(X);
+    }
+
+    /**
+     * Sets the Y coordinate for this shape
+     * @param Y the new Y coordinate
+     */
+    @Override
+    public void setY(double Y) {
+        shape.setLayoutY(Y);
     }
 }
