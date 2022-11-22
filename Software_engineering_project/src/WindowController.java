@@ -77,7 +77,8 @@ public class WindowController implements Initializable {
         double X = event.getX();
         double Y = event.getY();
         Color internal = colorPickerInternal.getValue();
-        Action action = new DrawAction(selectedShape, X, Y, internal, drawingPane);
+        Color contour = colorPickerContour.getValue();
+        Action action = new DrawAction(selectedShape, X, Y, internal, contour, drawingPane);
         invoker.execute(action);
         drawingPane.setDisable(true);
     }

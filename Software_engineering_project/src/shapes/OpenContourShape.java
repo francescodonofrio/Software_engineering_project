@@ -59,5 +59,14 @@ public abstract class OpenContourShape implements Shape, Serializable {
     public void setY(double Y) {
         shape.setLayoutY(Y);
     }
+    
+    /**
+     * Sets a new contour color for a shape
+     * @param newColor the new color to set
+     */
+    @Override
+    public void setContourColor(Color newColor){
+        shape.setStroke(newColor);
+    }
 
 }

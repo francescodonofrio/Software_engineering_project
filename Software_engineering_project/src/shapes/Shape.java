@@ -36,9 +36,16 @@ public interface Shape {
     javafx.scene.shape.Shape getShape();
 
     /**
-     * Sets a new color for a shape
+     * Sets a new internal color for a shape
      *
      * @param newColor the new color to set
      */
     void setInternalColor(Color newColor);
+    
+    /**
+     * Sets a new contour color for a shape
+     *
+     * @param newColor the new color to set
+     */
+    void setContourColor(Color newColor);
 }

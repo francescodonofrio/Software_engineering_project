@@ -37,13 +37,22 @@ public abstract class CloseContourShape implements Shape, Serializable {
     }
 
     /**
-     * Sets a new color for a shape
+     * Sets a new internal color for a shape
      * @param newColor the new color to set
      */
+    @Override
     public void setInternalColor(Color newColor){
         shape.setFill(newColor);
     }
-
+    
+    /**
+     * Sets a new contour color for a shape
+     * @param newColor the new color to set
+     */
+    @Override
+    public void setContourColor(Color newColor){
+        shape.setStroke(newColor);
+    }
     /**
      * Sets the X coordinate for this shape
      * @param X the new X coordinate
