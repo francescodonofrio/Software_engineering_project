@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public abstract class CloseContourShape implements Shape, Serializable {
 
-    protected SerializableShape shape;
+    protected Shape shape;
 
     /**
      * A function to make a shape focussed
@@ -20,7 +20,7 @@ public abstract class CloseContourShape implements Shape, Serializable {
      * @param clipboard the clipboard where to save the current shape
      */
     @Override
-    public void copy(SerializableShape clipboard){
+    public void copy(javafx.scene.shape.Shape clipboard){
         clipboard=this.shape;
     }
 }

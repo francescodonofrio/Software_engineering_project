@@ -8,5 +8,6 @@ Software_engineering_project/Software_engineering_project/src/software_engineeri
 Software_engineering_project/nbproject/build-impl.xml
 Software_engineering_project/nbproject/configs/Run_as_WebStart.properties
 Software_engineering_project/nbproject/configs/Run_as_WebStart.properties
+Software_engineering_project/out/
 *.xml
 *.class
