@@ -11,9 +11,4 @@ public class RectangleShape extends CloseContourShape {
         this.shape = new Rectangle(20, 50);
     }
 
-    @Override
-    public javafx.scene.shape.Shape getShape() {
-        return shape;
-    }
-
 }

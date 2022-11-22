@@ -3,7 +3,6 @@ package shapes;
 import javafx.scene.paint.Color;
 
 import java.io.Serializable;
-import serializableShapes.SerializableShape;
 
 public abstract class CloseContourShape implements Shape, Serializable {
 

@@ -1,6 +1,5 @@
 package shapes;
 
-import javafx.scene.shape.Line;
 import serializableShapes.SerializableLine;
 
 public class LineShape extends OpenContourShape {
@@ -10,21 +9,6 @@ public class LineShape extends OpenContourShape {
      */
     public LineShape() {
         this.shape = new SerializableLine(-100, 0, 100, 0);
-    }
-
-    @Override
-    public void setX(double X) {
-        shape.setLayoutX(X);
-    }
-
-    @Override
-    public void setY(double Y) {
-        shape.setLayoutY(Y);
-    }
-
-    @Override
-    public javafx.scene.shape.Shape getShape() {
-        return shape;
     }
 
 }
