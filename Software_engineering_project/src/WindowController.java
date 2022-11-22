@@ -7,8 +7,16 @@
 import action.Action;
 import action.DrawAction;
 import action.Invoker;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,6 +26,8 @@ import javafx.scene.control.Menu;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import shapes.EllipseShape;
 import shapes.LineShape;
 import shapes.RectangleShape;
@@ -40,10 +50,6 @@ public class WindowController implements Initializable {
     
     private final Invoker invoker = new Invoker();
     private Shape selectedShape;
-    @FXML
-    private Menu saveBtn;
-    @FXML
-    private Menu loadBtn;
     @FXML
     private ColorPicker colorPickerInternal;
     @FXML
@@ -85,6 +91,19 @@ public class WindowController implements Initializable {
 
     @FXML
     private void saveWindow(ActionEvent event) {
+        
+        FileChooser chooser = new FileChooser();
+        FileChooser.ExtensionFilter ext = new FileChooser.ExtensionFilter("Binary File (*.bin)", "*.bin");
+        chooser.getExtensionFilters().add(ext);
+        chooser.setTitle("Save File");
+        File file = chooser.showSaveDialog(new Stage());
+        try(ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file.getAbsolutePath())))){
+                out.writeObject(drawingPane);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
 
