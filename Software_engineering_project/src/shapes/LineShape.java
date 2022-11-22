@@ -12,16 +12,6 @@ public class LineShape extends OpenContourShape{
     }
 
     @Override
-    public double getX() {
-        return shape.getLayoutX();
-    }
-
-    @Override
-    public double getY() {
-        return shape.getLayoutY();
-    }
-
-    @Override
     public void setX(double X) {
         shape.setLayoutX(X);
     }

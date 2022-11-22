@@ -10,16 +10,6 @@ public class EllipseShape extends CloseContourShape{
     public EllipseShape(){
         this.shape=  new Ellipse();
     }
-    
-    @Override
-    public double getX() {
-        return shape.getLayoutX();
-    }
-
-    @Override
-    public double getY() {
-        return shape.getLayoutY();
-    }
 
     @Override
     public void setX(double X) {
