@@ -3,10 +3,10 @@ package shapes;
 import javafx.scene.paint.Color;
 
 import java.io.Serializable;
-import serializableShapes.SerializableShape;
 
 public abstract class OpenContourShape implements Shape, Serializable {
-    protected SerializableShape shape;
+    protected javafx.scene.shape.Shape shape;
+
     /**
      * A function to make a shape focussed
      */
@@ -36,15 +36,15 @@ public abstract class OpenContourShape implements Shape, Serializable {
 
     /**
      * Sets a new color for a shape
+     *
      * @param newColor the new color to set
      */
-    @Override
-    public void setInternalColor(Color newColor){
-        return;
+    public void setInternalColor(Color newColor) {
     }
 
     /**
      * Sets the X coordinate for this shape
+     *
      * @param X the new X coordinate
      */
     @Override
@@ -54,6 +54,7 @@ public abstract class OpenContourShape implements Shape, Serializable {
 
     /**
      * Sets the Y coordinate for this shape
+     *
      * @param Y the new Y coordinate
      */
     @Override

@@ -18,12 +18,14 @@ public interface Shape {
 
     /**
      * Sets the X coordinate for this shape
+     *
      * @param X the new X coordinate
      */
     void setX(double X);
 
     /**
      * Sets the Y coordinate for this shape
+     *
      * @param Y the new Y coordinate
      */
     void setY(double Y);

@@ -1,14 +1,15 @@
 package shapes;
 
 import javafx.scene.shape.Ellipse;
+import serializableShapes.SerializableEllipse;
 
-public class EllipseShape extends CloseContourShape{
+public class EllipseShape extends CloseContourShape {
 
     /**
      * The constructor of an EllipseShape
      */
-    public EllipseShape(){
-        this.shape=  new Ellipse(60,150);
+    public EllipseShape() {
+        this.shape = new SerializableEllipse(60, 150);
     }
 
     @Override

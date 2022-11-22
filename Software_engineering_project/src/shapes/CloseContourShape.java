@@ -7,7 +7,7 @@ import serializableShapes.SerializableShape;
 
 public abstract class CloseContourShape implements Shape, Serializable {
 
-    protected SerializableShape shape;
+    protected javafx.scene.shape.Shape shape;
 
     /**
      * A function to make a shape focussed
