@@ -17,8 +17,8 @@
          <children>
             <MenuBar>
               <menus>
-                <Menu fx:id="saveBtn" mnemonicParsing="false" onAction="#saveAction" text="Save" />
-                <Menu fx:id="loadBtn" mnemonicParsing="false" onAction="#loadAction" text="Load" />
+                <Menu fx:id="saveBtn" mnemonicParsing="false" onAction="#saveWindow" text="Save" />
+                <Menu fx:id="loadBtn" mnemonicParsing="false" onAction="#loadWindow" text="Load" />
               </menus>
             </MenuBar>
             <HBox prefHeight="542.0" prefWidth="863.0">
