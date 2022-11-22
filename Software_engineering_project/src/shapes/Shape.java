@@ -5,18 +5,6 @@ import javafx.scene.paint.Color;
 public interface Shape {
 
     /**
-     * A function to make a shape focussed
-     */
-    void focus();
-
-    /**
-     * A function that copies the current shape on the clipboard passed as an argument.
-     *
-     * @param clipboard the clipboard where to save the current shape
-     */
-    void copy(javafx.scene.shape.Shape clipboard);
-
-    /**
      * Sets the X coordinate for this shape
      *
      * @param X the new X coordinate
