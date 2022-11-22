@@ -9,13 +9,12 @@ import action.DrawAction;
 import action.Invoker;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.Menu;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import shapes.EllipseShape;
@@ -37,13 +36,17 @@ public class WindowController implements Initializable {
     private Button rectangleBtn;
     @FXML
     private Button ellipseBtn;
-    @FXML
-    private ColorPicker ColoPickerInternal;
-    @FXML
-    private ColorPicker ColorPickerContour;
     
     private final Invoker invoker = new Invoker();
     private Shape selectedShape;
+    @FXML
+    private Menu saveBtn;
+    @FXML
+    private Menu loadBtn;
+    @FXML
+    private ColorPicker coloPickerInternal;
+    @FXML
+    private ColorPicker colorPickerContour;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -75,6 +78,14 @@ public class WindowController implements Initializable {
         Action action = new DrawAction(selectedShape, X, Y, drawingPane);
         invoker.execute(action);
         drawingPane.setDisable(true);
+    }
+
+    @FXML
+    private void saveAction(ActionEvent event) {
+    }
+
+    @FXML
+    private void loadAction(ActionEvent event) {
     }
     
 }
