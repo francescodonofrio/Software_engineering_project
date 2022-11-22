@@ -1,6 +1,5 @@
 /*
  */
-package software_engineering_project;
 
 import java.net.URL;
 import java.util.ResourceBundle;
