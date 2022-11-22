@@ -37,14 +37,14 @@ public class FXMLDocumentControllerIT {
     }
 
     /**
-     * Test of initialize method, of class FXMLDocumentController.
+     * Test of initialize method, of class WindowController.
      */
     @Test
     public void testInitialize() {
         System.out.println("initialize");
         URL url = null;
         ResourceBundle rb = null;
-        FXMLDocumentController instance = new FXMLDocumentController();
+        WindowController instance = new WindowController();
         instance.initialize(url, rb);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
