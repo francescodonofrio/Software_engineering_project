@@ -5,10 +5,14 @@
  */
 package serializableShapes;
 
+import java.io.Serializable;
+import javafx.scene.shape.Shape;
+
 /**
  *
  * @author franc
  */
-public class SerializableShape {
+public abstract class SerializableShape extends Shape implements Serializable {
+    
     
 }
