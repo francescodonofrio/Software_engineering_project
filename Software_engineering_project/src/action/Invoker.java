@@ -7,7 +7,7 @@ public class Invoker {
     private Deque<Action> actions;
 
     /**
-     *  Constructs an Invoker capable of memorizing the sequence
+     *  Returns a new instance of Invoker, capable of memorizing the sequence
      *  of actions that have been executed
      */
     public Invoker(){

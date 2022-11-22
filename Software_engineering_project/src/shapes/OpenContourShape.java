@@ -7,11 +7,6 @@ import java.io.Serializable;
 public abstract class OpenContourShape implements Shape, Serializable {
     protected javafx.scene.shape.Shape shape;
 
-    /**
-     * Returns the shape contained in the current object
-     *
-     * @return the shape contained
-     */
     @Override
     public javafx.scene.shape.Shape getShape() {
         return this.shape;

@@ -7,7 +7,7 @@ import java.io.Serializable;
 public abstract class CloseContourShape implements Shape, Serializable {
 
     protected javafx.scene.shape.Shape shape;
-    
+
     /**
      * Returns the shape contained in the current object
      *

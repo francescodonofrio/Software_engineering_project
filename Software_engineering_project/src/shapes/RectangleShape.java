@@ -1,14 +1,15 @@
 package shapes;
 
-import javafx.scene.shape.Rectangle;
+
+import serializableShapes.SerializableRectangle;
 
 public class RectangleShape extends CloseContourShape {
 
     /**
-     * The constructor of a RectangleShape
+     * Creates a new instance of RectangleShape
      */
     public RectangleShape() {
-        this.shape = new Rectangle(20, 50);
+        this.shape = new SerializableRectangle(20, 50);
     }
 
 }
