@@ -6,7 +6,7 @@ public class RectangleShape extends CloseContourShape{
      * The constructor of a RectangleShape
      */
     public RectangleShape(){
-        this.shape=new SerializableRectangle();
+        this.shape=new Rectangle();
     }
 
 }
