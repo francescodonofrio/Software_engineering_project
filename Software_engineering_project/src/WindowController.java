@@ -6,8 +6,10 @@
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 
 /**
@@ -18,10 +20,28 @@ public class WindowController implements Initializable {
 
     @FXML
     private Pane drawingPane;
+    @FXML
+    private Button lineSegmentBtn;
+    @FXML
+    private Button rectangleBtn;
+    @FXML
+    private Button ellipseBtn;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+
+    @FXML
+    private void lineSegmentSelection(ActionEvent event) {
+    }
+
+    @FXML
+    private void rectangleSelection(ActionEvent event) {
+    }
+
+    @FXML
+    private void ellipseSelection(ActionEvent event) {
+    }
     
 }

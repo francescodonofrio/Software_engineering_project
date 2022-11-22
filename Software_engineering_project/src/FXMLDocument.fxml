@@ -1,10 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="542.0" prefWidth="863.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17" fx:controller="WindowController">
+<AnchorPane id="AnchorPane" prefHeight="542.0" prefWidth="863.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="WindowController">
    <children>
-      <Pane fx:id="drawingPane" prefHeight="200.0" prefWidth="320.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <HBox prefHeight="542.0" prefWidth="863.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <VBox prefHeight="542.0" prefWidth="163.0" style="-fx-border-color: black; -fx-background-color: white;">
+               <children>
+                  <Button fx:id="lineSegmentBtn" mnemonicParsing="false" onAction="#lineSegmentSelection" prefHeight="27.0" prefWidth="867.0" style="-fx-border-color: black; -fx-background-color: white;" text="Line segment">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="rectangleBtn" mnemonicParsing="false" onAction="#rectangleSelection" prefHeight="27.0" prefWidth="867.0" style="-fx-border-color: black; -fx-background-color: white;" text="Rectangle">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="ellipseBtn" mnemonicParsing="false" onAction="#ellipseSelection" prefHeight="27.0" prefWidth="867.0" style="-fx-border-color: black; -fx-background-color: white;" text="Ellipse">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+            <Pane fx:id="drawingPane" prefHeight="534.0" prefWidth="698.0" />
+         </children>
+      </HBox>
    </children>
 </AnchorPane>
