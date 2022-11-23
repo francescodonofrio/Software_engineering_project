@@ -27,16 +27,4 @@ public class Invoker {
         }
     }
 
-    /**
-     * Undoes the last executed action stored inside the internal collection
-     */
-    public void undo(){
-        try{
-            Action action=this.actions.pop();
-            action.undo();
-        }catch(Exception ex){
-            System.out.println("Unable to undo the action: \" "+ex+" \" !\n");
-        }
-    }
-
 }

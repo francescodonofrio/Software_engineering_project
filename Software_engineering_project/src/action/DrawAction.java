@@ -36,12 +36,4 @@ public class DrawAction implements Action{
         drawingPane.getChildren().add(shape.getShape());
     }
 
-    /**
-     * Undoes the draw action
-     */
-    @Override
-    public void undo(){
-        
-    }
-    
 }

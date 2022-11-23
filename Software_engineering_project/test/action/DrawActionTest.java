@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package action;
 
 import javafx.scene.layout.Pane;
@@ -18,10 +13,6 @@ import shapes.LineShape;
 import shapes.RectangleShape;
 import shapes.Shape;
 
-/**
- *
- * @author franc
- */
 public class DrawActionTest {
     
     private double internalRed, internalGreen, internalBlue, internalOpacity, contourGreen, contourRed, contourBlue, contourOpacity , width, height, radiusX, radiusY, startX, startY, endX, endY;
