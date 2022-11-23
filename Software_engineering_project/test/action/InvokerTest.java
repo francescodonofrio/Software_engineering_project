@@ -25,10 +25,6 @@ public class InvokerTest {
             for(int i=0;i<this.num;i++)
                 list.add(i);
         }
-
-        @Override
-        public void undo() throws Exception {
-        }
     }
     
     @Before
