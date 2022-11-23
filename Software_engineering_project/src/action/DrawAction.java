@@ -30,7 +30,6 @@ public class DrawAction implements Action{
 
     /**
      * Executes the draw action as instantiated before
-     * @throws java.lang.Exception
      */
     @Override
     public void execute(){
@@ -39,7 +38,6 @@ public class DrawAction implements Action{
 
     /**
      * Undoes the draw action
-     * @throws java.lang.Exception
      */
     @Override
     public void undo(){

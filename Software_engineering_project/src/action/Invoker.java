@@ -11,7 +11,7 @@ public class Invoker {
      *  of actions that have been executed
      */
     public Invoker(){
-        this.actions= new ArrayDeque<Action>();
+        this.actions= new ArrayDeque<>();
     }
 
     /**
