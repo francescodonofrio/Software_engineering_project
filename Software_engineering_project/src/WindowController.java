@@ -37,6 +37,7 @@ public class WindowController implements Initializable {
     private Button ellipseBtn;
     
     private Invoker invoker;
+    
     private Shape selectedShape;
     @FXML
     private ColorPicker colorPickerInternal;

@@ -20,9 +20,12 @@ public class DrawActionTest {
     private Color internalColor, contourColor;
     private Pane drawingPane;
     
+    public DrawActionTest(){
+        System.out.println("Test DrawAction");
+    }
+    
     @Before
-    public void setUp() {
-        
+    public void setUp() {        
         internalRed = 0.5;
         internalGreen = 0.2;
         internalBlue = 0.15;
@@ -60,7 +63,7 @@ public class DrawActionTest {
      */
     @Test
     public void testExecuteRectangle() {
-        System.out.println("execute");
+        System.out.print("draw (Rectangle):");
         
         DrawAction instance = new DrawAction(rectangleShape, 100, 150, internalColor, contourColor, drawingPane);
         instance.execute();
@@ -81,6 +84,7 @@ public class DrawActionTest {
         assertEquals(colorStroke.getBlue(), contourBlue, 0.1);
         assertEquals(colorStroke.getOpacity(), contourOpacity, 0.1);
         
+        System.out.println("Passed");        
     }
     
     /**
@@ -88,7 +92,7 @@ public class DrawActionTest {
     */
     @Test
     public void testExecuteEllipse() {
-        System.out.println("execute");
+        System.out.print("draw (Ellipse): ");
         
         DrawAction instance = new DrawAction(ellipseShape, 180, 200, internalColor, contourColor, drawingPane);
         instance.execute();
@@ -108,7 +112,8 @@ public class DrawActionTest {
         assertEquals(colorStroke.getGreen(), contourGreen, 0.1);
         assertEquals(colorStroke.getBlue(), contourBlue, 0.1);
         assertEquals(colorStroke.getOpacity(), contourOpacity, 0.1);
-        
+
+        System.out.println("Passed");        
     }
     
     /**
@@ -116,7 +121,7 @@ public class DrawActionTest {
     */
     @Test
     public void testExecuteLineSegment() {
-        System.out.println("execute");
+        System.out.print("draw (Line): ");
         
         DrawAction instance = new DrawAction(lineShape, 100, 150, internalColor, contourColor, drawingPane);
         instance.execute();
@@ -134,14 +139,15 @@ public class DrawActionTest {
         assertEquals(colorStroke.getBlue(), contourBlue, 0.1);
         assertEquals(colorStroke.getOpacity(), contourOpacity, 0.1);
         
-    }
+        System.out.println("Passed");
+}
     
     /**
     * Test of execute method, of class DrawAction,  using an instance of LineShape.
     */
     @Test
     public void testExecuteMultipleShapes() {
-        System.out.println("execute");
+        System.out.print("draw (multiple shapes):");
         
         DrawAction instance1 = new DrawAction(lineShape, 100, 150, internalColor, contourColor, drawingPane);
         instance1.execute();
@@ -200,6 +206,7 @@ public class DrawActionTest {
         assertEquals(colorStroke3.getBlue(), contourBlue, 0.1);
         assertEquals(colorStroke3.getOpacity(), contourOpacity, 0.1);
         
+        System.out.println("Passed");
     }
     
 }
