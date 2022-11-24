@@ -29,10 +29,6 @@ public class FileIO {
     public FileIO(Pane drawingPane) {
         this.drawingPane = drawingPane;        
     }
-
-    FileIO() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
     public void save(File file) {
         if(file == null) return;
