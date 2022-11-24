@@ -9,10 +9,9 @@ import java.io.IOException;
 import java.util.List;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Before;
 
 /**
  *
@@ -20,55 +19,55 @@ import static org.junit.Assert.*;
  */
 public class FileIOTest {
     
+    SerializableEllipse testEllipse;
+    SerializableLine testLine;
+    SerializableRectangle testRectangle;   
+    Color testColor;
+    Pane testPane;
+    File testFile;
+    
     public FileIOTest() {
     }
     
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    /**
-     * Test of save method, of class FileIO.
-     * PENSO CHE LA SAVE E LA LOAD VANNO TESTATE IN UN SOLO METODO
-     */
-    @Test
-    public void testSave() throws IOException {   
+    @Before
+    public void setUp() {
+        testEllipse = new SerializableEllipse(50, 50, 30, 30);
+        testLine = new SerializableLine(40, 40, 70, 70);
+        testRectangle = new SerializableRectangle(40, 50, 60,40);
         
-        System.out.println("save");
-        
-        SerializableEllipse testEllipse = new SerializableEllipse(50, 50, 30, 30);
-        SerializableLine testLine = new SerializableLine(40, 40, 70, 70);
-        SerializableRectangle testRectangle = new SerializableRectangle(40, 50, 60,40);
-        
-        Color testColor = new Color(0,0,0,0);
+        testColor = new Color(0,0,0,0);
         testEllipse.setFill(testColor);
         testRectangle.setFill(testColor);
         testEllipse.setStroke(testColor);
         testRectangle.setStroke(testColor);
         testLine.setStroke(testColor);
         
-        Pane testPane = new Pane();
+        testPane = new Pane();
         testPane.getChildren().add(testLine);
-        testPane.getChildren().add(testEllipse); // NON SI SALVANO LA X E LA Y 
+        testPane.getChildren().add(testEllipse); 
         testPane.getChildren().add(testRectangle);
+        
+        testFile = new File("testFile.bin");
+    }
+    
+
+    /**
+     * Test of save method, of class FileIO.
+     * PENSO CHE LA SAVE E LA LOAD VANNO TESTATE IN UN SOLO METODO
+     * oppure 
+     * DEFINIRE IL PANE CON LE IMMAGINI NELLA CLASSE DEL TEST E USARLI NEI METODI DI Save e Load test
+     */
+    @Test
+    public void testSave() throws IOException {   
+        System.out.println("save");
 
         FileIO save = new FileIO(testPane); 
-        File testFile = new File("testFile.bin");
         save.save(testFile);
         
-        Pane newPane = new Pane();
-        FileIO load = new FileIO(newPane);
-        load.load(testFile);
-        
-        List testList1 = testPane.getChildren();
-        List testList2 = newPane.getChildren();
-//        System.out.println(testList1.toString());
-//        System.out.println(testList2.toString());
-        assertEquals(testList1.toString(), testList2.toString());
+        assertEquals(true, testFile.exists());
+        assertEquals(true, testFile.canWrite());
+        assertNotEquals(0, testFile.length());
+//        assertEquals(469, testFile.length()); // file with the pane with the added shape in setUp() have size of 469 byte
         
     }
 
@@ -79,11 +78,17 @@ public class FileIOTest {
     @Test
     public void testLoad() {
         System.out.println("load");
-        FileIO instance = null;
-        File testFile = new File("testFile.bin");
-        instance.load(testFile);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        Pane loadedPane = new Pane();
+        FileIO load = new FileIO(loadedPane); 
+        load.load(testFile);
+        
+        List testList1 = testPane.getChildren();
+        List testList2 = loadedPane.getChildren();
+        
+        assertEquals(true, testFile.canRead());
+        assertEquals(testList1.toString(), testList2.toString());
+        
     }
     
 }
