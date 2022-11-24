@@ -17,6 +17,7 @@ public abstract class OpenContourShape implements Shape, Serializable {
      *
      * @param newColor the new color to set
      */
+    @Override
     public void setInternalColor(Color newColor) {
     }
 
