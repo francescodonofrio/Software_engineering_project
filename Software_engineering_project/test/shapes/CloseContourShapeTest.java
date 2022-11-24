@@ -33,7 +33,7 @@ public class CloseContourShapeTest {
     }
 
     /**
-     * Test of getShape method, of class OpenContourShape.
+     * Test of getShape method, of class CloseContourShape.
      */
     @Test
     public void testGetShape() {
@@ -45,7 +45,7 @@ public class CloseContourShapeTest {
     }
 
     /**
-     * Test of setInternalColor method, of class OpenContourShape.
+     * Test of setInternalColor method, of class CloseContourShape.
      */
     @Test
     public void testSetInternalColor() {
@@ -59,7 +59,7 @@ public class CloseContourShapeTest {
     }
 
     /**
-     * Test of setX method, of class OpenContourShape.
+     * Test of setX method, of class CloseContourShape.
      */
     @Test
     public void testSetX() {
@@ -73,7 +73,7 @@ public class CloseContourShapeTest {
     }
 
     /**
-     * Test of setY method, of class OpenContourShape.
+     * Test of setY method, of class CloseContourShape.
      */
     @Test
     public void testSetY() {
@@ -87,7 +87,7 @@ public class CloseContourShapeTest {
     }
 
     /**
-     * Test of setContourColor method, of class OpenContourShape.
+     * Test of setContourColor method, of class CloseContourShape.
      */
     @Test
     public void testSetContourColor() {
@@ -99,4 +99,23 @@ public class CloseContourShapeTest {
         
         System.out.println("Passed");
     }    
+    
+    /**
+    * Test of draw method, of class CloseContourShape.
+    */
+    @Test
+    public void testDraw() {
+        System.out.print("draw: ");
+        
+        Color internalColor=Color.CHOCOLATE;
+        Color contourColor=Color.YELLOW;
+        shape.draw(50, 60, internalColor, contourColor);
+        assertEquals(test.getStroke(),contourColor);
+        assertEquals(test.getFill(),internalColor);
+        assertEquals(test.getLayoutX(),50,0.1);
+        assertEquals(test.getLayoutY(),60,0.1);
+        
+        
+        System.out.println("Passed");
+    }  
 }

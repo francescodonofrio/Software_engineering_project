@@ -98,4 +98,21 @@ public class OpenContourShapeTest {
         
         System.out.println("Passed");
     }    
+    
+    /**
+    * Test of draw method, of class OpenContourShape.
+    */
+    @Test
+    public void testDraw() {
+        System.out.print("draw: ");
+        
+        Color contourColor=Color.YELLOW;
+        shape.draw(50, 60, contourColor, contourColor);
+        assertEquals(test.getStroke(),contourColor);
+        assertEquals(test.getLayoutX(),50,0.1);
+        assertEquals(test.getLayoutY(),60,0.1);
+        
+        
+        System.out.println("Passed");
+    }  
 }
