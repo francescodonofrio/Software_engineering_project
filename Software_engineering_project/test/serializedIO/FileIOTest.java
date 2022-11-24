@@ -12,11 +12,14 @@ import javafx.scene.paint.Color;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
 
 /**
  *
  * @author vince
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FileIOTest {
     
     SerializableEllipse testEllipse;
@@ -31,16 +34,15 @@ public class FileIOTest {
     
     @Before
     public void setUp() {
-        testEllipse = new SerializableEllipse(50, 50, 30, 30);
-        testLine = new SerializableLine(40, 40, 70, 70);
-        testRectangle = new SerializableRectangle(40, 50, 60,40);
+        testEllipse = new SerializableEllipse(29, 73, 24, 55);
+        testLine = new SerializableLine(45, 93, 84, 123);
+        testRectangle = new SerializableRectangle(66, 82, 23, 17);
         
-        testColor = new Color(0,0,0,0);
-        testEllipse.setFill(testColor);
-        testRectangle.setFill(testColor);
-        testEllipse.setStroke(testColor);
-        testRectangle.setStroke(testColor);
-        testLine.setStroke(testColor);
+        testEllipse.setFill(Color.CHOCOLATE);
+        testRectangle.setFill(Color.MEDIUMORCHID);
+        testEllipse.setStroke(Color.DARKGREEN);
+        testRectangle.setStroke(Color.GOLDENROD);
+        testLine.setStroke(Color.DARKSALMON);
         
         testPane = new Pane();
         testPane.getChildren().add(testLine);
@@ -53,19 +55,17 @@ public class FileIOTest {
 
     /**
      * Test of save method, of class FileIO.
-     * PENSO CHE LA SAVE E LA LOAD VANNO TESTATE IN UN SOLO METODO
-     * oppure 
-     * DEFINIRE IL PANE CON LE IMMAGINI NELLA CLASSE DEL TEST E USARLI NEI METODI DI Save e Load test
      */
     @Test
-    public void testSave() throws IOException {   
+    public void testASave() {   
         System.out.println("save");
 
         FileIO save = new FileIO(testPane); 
         save.save(testFile);
         
-        assertEquals(true, testFile.exists());
-        assertEquals(true, testFile.canWrite());
+        assertNotNull(save);
+        assertTrue(testFile.exists());
+        assertTrue(testFile.canWrite());
         assertNotEquals(0, testFile.length());
 //        assertEquals(469, testFile.length()); // file with the pane with the added shape in setUp() have size of 469 byte
         
@@ -73,21 +73,22 @@ public class FileIOTest {
 
     /**
      * Test of load method, of class FileIO.
-     * PENSO CHE LA SAVE E LA LOAD VANNO TESTATE IN UN SOLO METODO
      */
     @Test
-    public void testLoad() {
+    public void testBLoad() {
         System.out.println("load");
         
         Pane loadedPane = new Pane();
         FileIO load = new FileIO(loadedPane); 
         load.load(testFile);
         
-        List testList1 = testPane.getChildren();
-        List testList2 = loadedPane.getChildren();
+        List expectedList = testPane.getChildren();
+        List actualList = loadedPane.getChildren();
         
-        assertEquals(true, testFile.canRead());
-        assertEquals(testList1.toString(), testList2.toString());
+        assertNotNull(load);
+        assertTrue(testFile.canRead());
+        assertEquals(expectedList.toString(), actualList.toString());
+//        assertArrayEquals(expectedList.toArray(), actualList.toArray());
         
     }
     
