@@ -1,4 +1,4 @@
-package serializableShapes;
+package serializedIO;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -41,6 +41,8 @@ public class SerializableEllipse extends Ellipse implements Serializable {
         output.defaultWriteObject();
         output.writeDouble(this.getLayoutX());
         output.writeDouble(this.getLayoutY());
+        output.writeDouble(this.getCenterX());
+        output.writeDouble(this.getCenterY());
         output.writeDouble(this.getRadiusX());
         output.writeDouble(this.getRadiusY());
         
@@ -63,6 +65,8 @@ public class SerializableEllipse extends Ellipse implements Serializable {
         input.defaultReadObject();
         this.setLayoutX(input.readDouble());
         this.setLayoutY(input.readDouble());
+        this.setCenterX(input.readDouble());
+        this.setCenterY(input.readDouble());
         this.setRadiusX(input.readDouble());
         this.setRadiusY(input.readDouble());
         this.setStroke(new Color(input.readDouble(),input.readDouble(),input.readDouble(),input.readDouble()));

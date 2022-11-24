@@ -1,6 +1,6 @@
 package shapes;
 
-import serializableShapes.SerializableLine;
+import serializedIO.SerializableLine;
 
 public class LineShape extends OpenContourShape {
 

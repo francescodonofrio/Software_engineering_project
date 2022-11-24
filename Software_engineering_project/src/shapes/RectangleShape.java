@@ -1,7 +1,7 @@
 package shapes;
 
 
-import serializableShapes.SerializableRectangle;
+import serializedIO.SerializableRectangle;
 
 public class RectangleShape extends CloseContourShape {
 

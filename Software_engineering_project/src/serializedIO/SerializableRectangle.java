@@ -1,4 +1,4 @@
-package serializableShapes;
+package serializedIO;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -52,6 +52,8 @@ public class SerializableRectangle extends Rectangle implements Serializable {
         output.defaultWriteObject();
         output.writeDouble(this.getLayoutX());
         output.writeDouble(this.getLayoutY());
+        output.writeDouble(this.getX());
+        output.writeDouble(this.getY());
         output.writeDouble(this.getHeight());
         output.writeDouble(this.getWidth());
         
@@ -74,6 +76,8 @@ public class SerializableRectangle extends Rectangle implements Serializable {
         input.defaultReadObject();
         this.setLayoutX(input.readDouble());
         this.setLayoutY(input.readDouble());
+        this.setX(input.readDouble());
+        this.setY(input.readDouble());
         this.setHeight(input.readDouble());
         this.setWidth(input.readDouble());
         this.setStroke(new Color(input.readDouble(),input.readDouble(),input.readDouble(),input.readDouble()));

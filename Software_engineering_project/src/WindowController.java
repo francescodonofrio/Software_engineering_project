@@ -30,6 +30,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
+import serializedIO.FileIO;
 import shapes.EllipseShape;
 import shapes.LineShape;
 import shapes.RectangleShape;
@@ -89,27 +90,13 @@ public class WindowController implements Initializable {
 
     @FXML
     private void saveWindow(ActionEvent event) {
-        
         FileChooser chooser = new FileChooser();
         FileChooser.ExtensionFilter ext = new FileChooser.ExtensionFilter("Binary File (*.bin)", "*.bin");
         chooser.getExtensionFilters().add(ext);
         chooser.setTitle("Save File");
         File file = chooser.showSaveDialog(drawingPane.getScene().getWindow());
-        if(file == null) return;
-        try(ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file.getAbsolutePath())))){
-        
-            ObservableList list = drawingPane.getChildren();
-            out.writeInt(list.size());
-            for(int i = 0 ; i < list.size(); i++){
-                out.writeObject((javafx.scene.shape.Shape)list.get(i));
-            }
-                
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        FileIO out = new FileIO(this.drawingPane);
+        out.save(file);          
     }
 
     @FXML
@@ -119,20 +106,8 @@ public class WindowController implements Initializable {
         chooser.getExtensionFilters().add(ext);
         chooser.setTitle("Open File");
         File file = chooser.showOpenDialog(drawingPane.getScene().getWindow());
-        if(file == null) return;
-        try (ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file.getAbsolutePath())))){
-            
-            int len = in.readInt();
-            for(int i = 0; i < len; i++){
-                javafx.scene.shape.Shape temp = (javafx.scene.shape.Shape) in.readObject();
-                drawingPane.getChildren().add(temp);
-            }
-
-        } catch (FileNotFoundException ex) {    
-            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException | ClassNotFoundException ex) {
-            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        FileIO in = new FileIO(this.drawingPane);
+        in.load(file);
     }
     
 }

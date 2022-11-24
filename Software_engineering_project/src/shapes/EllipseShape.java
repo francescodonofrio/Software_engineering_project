@@ -1,6 +1,6 @@
 package shapes;
 
-import serializableShapes.SerializableEllipse;
+import serializedIO.SerializableEllipse;
 
 public class EllipseShape extends CloseContourShape {
 
