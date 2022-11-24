@@ -12,6 +12,10 @@ public class OpenContourShapeTest {
         public MockShape(javafx.scene.shape.Shape shape){
             this.shape=shape;
         }
+
+        @Override
+        public void setDim(double initialDim1, double initialDim2, double finalDim1, double finalDim2) {
+        }
     }
     
     private javafx.scene.shape.Shape test;
