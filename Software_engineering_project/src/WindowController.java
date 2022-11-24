@@ -36,7 +36,7 @@ public class WindowController implements Initializable {
     @FXML
     private Button ellipseBtn;
     
-    private final Invoker invoker = new Invoker();
+    private Invoker invoker;
     private Shape selectedShape;
     @FXML
     private ColorPicker colorPickerInternal;
@@ -46,6 +46,7 @@ public class WindowController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         drawingPane.setDisable(true);
+        this.invoker = new Invoker();
     }    
 
     @FXML

@@ -11,11 +11,11 @@ public class InvokerTest {
     private Invoker invoker;
     private List<Integer> test;
 
-    class TestAction implements Action{
+    class MockAction implements Action{
         private final List<Integer> list;
         private final int num;
 
-        public TestAction(List list, int num){
+        public MockAction(List list, int num){
             this.list=list;
             this.num=num;
         }
@@ -41,7 +41,7 @@ public class InvokerTest {
         System.out.println("execute");
         
         int num=5;
-        Action action=new TestAction(this.test,num);
+        Action action=new MockAction(this.test,num);
         invoker.execute(action);
         assertEquals(num,this.test.size());
         
