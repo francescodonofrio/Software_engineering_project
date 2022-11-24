@@ -47,12 +47,12 @@ public class InvokerTest {
         
         this.test.clear();
         int num1=3;
-        action=new TestAction(this.test,num1);
+        action=new MockAction(this.test,num1);
         invoker.execute(action);
         assertEquals(num1,this.test.size());
         
         int num2=5;
-        action=new TestAction(this.test,num2);
+        action=new MockAction(this.test,num2);
         invoker.execute(action);
         assertEquals(num1+num2,this.test.size());
     }
