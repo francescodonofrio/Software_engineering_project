@@ -38,4 +38,6 @@ public interface Shape {
      * @param newColor the new color to set
      */
     void setContourColor(Color newColor);
+    
+    void draw(double X, double Y, Color internalColor, Color contourColor);
 }
