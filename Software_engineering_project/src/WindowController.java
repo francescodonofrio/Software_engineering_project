@@ -1,9 +1,6 @@
 import action.Action;
 import action.DrawAction;
 import action.Invoker;
-import java.io.File;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,6 +16,10 @@ import shapes.LineShape;
 import shapes.RectangleShape;
 import shapes.Shape;
 
+import java.io.File;
+import java.net.URL;
+import java.util.ResourceBundle;
+
 public class WindowController implements Initializable {
 
     @FXML
@@ -29,47 +30,46 @@ public class WindowController implements Initializable {
     private ColorPicker colorPickerContour;
     @FXML
     private ScrollPane scrollPane;
-    
+
     private Invoker invoker;
     private Shape selectedShape;
     private double initialDim1;
     private double initialDim2;
     private double finalDim1;
     private double finalDim2;
-    
+
     /**
-    * Called to initialize a controller after its root element has been
-    * completely processed.
-    *
-    * @param url
-    * The location used to resolve relative paths for the root object, or
-    * null if the location is not known.
-    *
-    * @param rb
-    * The resources used to localize the root object, or null if
-    * the root object was not localized.
-    */
+     * Called to initialize a controller after its root element has been
+     * completely processed.
+     *
+     * @param url The location used to resolve relative paths for the root object, or
+     *            null if the location is not known.
+     * @param rb  The resources used to localize the root object, or null if
+     *            the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         drawingPane.setDisable(true);
         this.invoker = new Invoker();
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-    }    
-    
+    }
+
     /**
-     * Executed when the segment button is clicked
-     * @param event
+     * Called when the segment button is clicked
+     *
+     * @param event the event of the click
      */
     @FXML
     private void lineSegmentSelection(ActionEvent event) {
         selectedShape = new LineShape();
         drawingPane.setDisable(false);
     }
-    
+
     /**
-     * Executed when the segment button is clicked
-     * @param event 
+     * Called when the rectangle button is clicked
+     *
+     * @param event the event of the click
      */
     @FXML
     private void rectangleSelection(ActionEvent event) {
@@ -77,22 +77,22 @@ public class WindowController implements Initializable {
         drawingPane.setDisable(false);
     }
 
+    /**
+     * Called when the ellipse button is clicked
+     *
+     * @param event the event of the click
+     */
     @FXML
     private void ellipseSelection(ActionEvent event) {
         selectedShape = new EllipseShape();
         drawingPane.setDisable(false);
     }
 
-    private void DrawingWindowOnMouseClick(MouseEvent event) {
-        double X = event.getX();
-        double Y = event.getY();
-        Color internal = colorPickerInternal.getValue();
-        Color contour = colorPickerContour.getValue();
-        Action action = new DrawAction(selectedShape, X, Y, internal, contour, drawingPane);
-        invoker.execute(action);
-        drawingPane.setDisable(true);
-    }
-
+    /**
+     * Called when the save button is being clicked
+     *
+     * @param event the event of the click
+     */
     @FXML
     private void saveWindow(ActionEvent event) {
         FileChooser chooser = new FileChooser();
@@ -101,9 +101,14 @@ public class WindowController implements Initializable {
         chooser.setTitle("Save File");
         File file = chooser.showSaveDialog(drawingPane.getScene().getWindow());
         FileIO out = new FileIO(this.drawingPane);
-        out.save(file);          
+        out.save(file);
     }
 
+    /**
+     * Called when the load button is being clicked
+     *
+     * @param event the event of the click
+     */
     @FXML
     private void loadWindow(ActionEvent event) {
         FileChooser chooser = new FileChooser();
@@ -114,12 +119,22 @@ public class WindowController implements Initializable {
         FileIO in = new FileIO(this.drawingPane);
         in.load(file);
     }
-    
+
+    /**
+     * Called when the mouse is released from the drawing pane
+     *
+     * @param event the event of the click
+     */
     @FXML
     private void DrawingWindowOnMouseReleased(MouseEvent event) {
         drawingPane.setDisable(true);
     }
 
+    /**
+     * Called when the mouse is being dragged on the drawing pane
+     *
+     * @param event the event of the click
+     */
     @FXML
     private void DrawingWindowOnMouseDragged(MouseEvent event) {
         finalDim1 = event.getX();
@@ -127,6 +142,11 @@ public class WindowController implements Initializable {
         selectedShape.setDim(initialDim1, initialDim2, finalDim1, finalDim2);
     }
 
+    /**
+     * Called when the drawing pane is being clicked
+     *
+     * @param event the event of the click
+     */
     @FXML
     private void DrawingWindowOnMousePressed(MouseEvent event) {
         Color internal = colorPickerInternal.getValue();
@@ -136,5 +156,5 @@ public class WindowController implements Initializable {
         Action action = new DrawAction(selectedShape, initialDim1, initialDim2, internal, contour, drawingPane);
         invoker.execute(action);
     }
-    
+
 }

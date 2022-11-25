@@ -40,18 +40,27 @@ public abstract class OpenContourShape implements Shape, Serializable {
     public void setY(double Y) {
         shape.setLayoutY(Y);
     }
-    
+
     /**
      * Sets a new contour color for a shape
+     *
      * @param newColor the new color to set
      */
     @Override
-    public void setContourColor(Color newColor){
+    public void setContourColor(Color newColor) {
         shape.setStroke(newColor);
     }
-    
+
+    /**
+     * Updates the current shape as defined by the parameters
+     *
+     * @param X             the new X coordinate
+     * @param Y             the new Y coordinate
+     * @param internalColor the internal color
+     * @param contourColor  the contour color
+     */
     @Override
-    public void draw(double X, double Y, Color internalColor, Color contourColor){
+    public void draw(double X, double Y, Color internalColor, Color contourColor) {
         this.setX(X);
         this.setY(Y);
         this.setInternalColor(internalColor);

@@ -11,11 +11,19 @@ public class LineShape extends OpenContourShape {
         this.shape = new SerializableLine();
     }
 
+    /**
+     * Updates the dimentions of the shape
+     *
+     * @param initialX the initial X coordinate
+     * @param initialY the initial Y coordinate
+     * @param finalX   the final X coordinate
+     * @param finalY   the final Y coordinate
+     */
     @Override
-    public void setDim(double initialDim1,double initialDim2, double finalDim1, double finalDim2) {
-        javafx.scene.shape.Line line = (javafx.scene.shape.Line)shape;
-        line.setEndX(finalDim1-initialDim1);
-        line.setEndY(finalDim2-initialDim2);
+    public void setDim(double initialX, double initialY, double finalX, double finalY) {
+        javafx.scene.shape.Line line = (javafx.scene.shape.Line) shape;
+        line.setEndX(finalX - initialX);
+        line.setEndY(finalY - initialY);
     }
 
 }

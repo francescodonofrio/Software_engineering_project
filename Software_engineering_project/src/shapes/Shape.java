@@ -31,15 +31,31 @@ public interface Shape {
      * @param newColor the new color to set
      */
     void setInternalColor(Color newColor);
-    
+
     /**
      * Sets a new contour color for a shape
      *
      * @param newColor the new color to set
      */
     void setContourColor(Color newColor);
-    
+
+    /**
+     * Updates the current shape as defined by the parameters
+     *
+     * @param X             the new X coordinate
+     * @param Y             the new Y coordinate
+     * @param internalColor the internal color
+     * @param contourColor  the contour color
+     */
     void draw(double X, double Y, Color internalColor, Color contourColor);
-    
-    void setDim(double initialDim1,double initialDim2, double finalDim1, double finalDim2);
+
+    /**
+     * Updates the dimentions of the shape
+     *
+     * @param initialX the initial X coordinate
+     * @param initialY the initial Y coordinate
+     * @param finalX   the final X coordinate
+     * @param finalY   the final Y coordinate
+     */
+    void setDim(double initialX, double initialY, double finalX, double finalY);
 }
