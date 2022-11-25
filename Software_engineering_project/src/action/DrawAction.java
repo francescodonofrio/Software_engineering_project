@@ -2,11 +2,11 @@ package action;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import shapes.Shape;
+import shapes.ShapeInterface;
 
 public class DrawAction implements Action {
 
-    private final Shape shape;
+    private final ShapeInterface shape;
     private final Pane drawingPane;
 
     /**
@@ -20,7 +20,7 @@ public class DrawAction implements Action {
      * @param contourColor  the contour color of the shape
      * @param drawingPane   the drawing pane
      */
-    public DrawAction(Shape shape, double X, double Y, Color internalColor, Color contourColor, Pane drawingPane) {
+    public DrawAction(ShapeInterface shape, double X, double Y, Color internalColor, Color contourColor, Pane drawingPane) {
         this.shape = shape;
         this.drawingPane = drawingPane;
         shape.draw(X, Y, internalColor, contourColor);

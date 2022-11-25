@@ -5,6 +5,7 @@ import javafx.scene.layout.Pane;
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.shape.Shape;
 
 public class FileIO {
 
@@ -39,7 +40,7 @@ public class FileIO {
 
             int len = in.readInt();
             for (int i = 0; i < len; i++) {
-                javafx.scene.shape.Shape temp = (javafx.scene.shape.Shape) in.readObject();
+                Shape temp = (Shape) in.readObject();
                 drawingPane.getChildren().add(temp);
             }
 

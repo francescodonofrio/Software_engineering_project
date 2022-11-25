@@ -13,12 +13,12 @@ import static org.junit.Assert.*;
 import shapes.EllipseShape;
 import shapes.LineShape;
 import shapes.RectangleShape;
-import shapes.Shape;
+import shapes.ShapeInterface;
 
 public class DrawActionTest {
 
     private double internalRed, internalGreen, internalBlue, internalOpacity, contourGreen, contourRed, contourBlue, contourOpacity, width, height, radiusX, radiusY, startX, startY, endX, endY;
-    private Shape rectangleShape, ellipseShape, lineShape;
+    private ShapeInterface rectangleShape, ellipseShape, lineShape;
     private Color internalColor, contourColor;
     private Pane drawingPane;
 

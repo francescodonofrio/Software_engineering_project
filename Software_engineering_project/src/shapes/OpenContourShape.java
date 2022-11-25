@@ -2,12 +2,13 @@ package shapes;
 
 import javafx.scene.paint.Color;
 import java.io.Serializable;
+import javafx.scene.shape.Shape;
 
-public abstract class OpenContourShape implements Shape, Serializable {
-    protected javafx.scene.shape.Shape shape;
+public abstract class OpenContourShape implements ShapeInterface, Serializable {
+    protected Shape shape;
 
     @Override
-    public javafx.scene.shape.Shape getShape() {
+    public Shape getShape() {
         return this.shape;
     }
 

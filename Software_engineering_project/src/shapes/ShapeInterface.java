@@ -1,8 +1,9 @@
 package shapes;
 
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Shape;
 
-public interface Shape {
+public interface ShapeInterface {
 
     /**
      * Sets the X coordinate for this shape
@@ -23,7 +24,7 @@ public interface Shape {
      *
      * @return the shape contained
      */
-    javafx.scene.shape.Shape getShape();
+    Shape getShape();
 
     /**
      * Sets a new internal color for a shape

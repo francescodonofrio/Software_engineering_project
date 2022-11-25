@@ -2,6 +2,7 @@ package shapes;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Shape;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -9,7 +10,7 @@ import static org.junit.Assert.*;
 
 public class OpenContourShapeTest {
 
-    private javafx.scene.shape.Shape test;
+    private Shape test;
     private MockShape shape;
 
     public OpenContourShapeTest() {
@@ -108,7 +109,7 @@ public class OpenContourShapeTest {
     }
 
     public class MockShape extends OpenContourShape {
-        public MockShape(javafx.scene.shape.Shape shape) {
+        public MockShape(Shape shape) {
             this.shape = shape;
         }
 

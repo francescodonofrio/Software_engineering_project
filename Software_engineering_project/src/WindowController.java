@@ -14,10 +14,10 @@ import serializedIO.FileIO;
 import shapes.EllipseShape;
 import shapes.LineShape;
 import shapes.RectangleShape;
-import shapes.Shape;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
+import shapes.ShapeInterface;
 
 public class WindowController implements Initializable {
 
@@ -31,7 +31,7 @@ public class WindowController implements Initializable {
     private ScrollPane scrollPane;
 
     private Invoker invoker;
-    private Shape selectedShape;
+    private ShapeInterface selectedShape;
     private double initialDim1;
     private double initialDim2;
     private double finalDim1;

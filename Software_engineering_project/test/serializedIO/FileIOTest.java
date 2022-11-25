@@ -25,7 +25,6 @@ public class FileIOTest {
     private SerializableEllipse testEllipse;
     private SerializableLine testLine;
     private SerializableRectangle testRectangle;
-    private Color testColor;
     private Pane testPane;
     private Pane testPaneEmpty;
     private File testFile;

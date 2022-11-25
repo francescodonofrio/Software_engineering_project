@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class EllipseShapeTest {
 
-    private Shape ellipseShape;
+    private ShapeInterface ellipseShape;
 
     public EllipseShapeTest() {
         System.out.println("Test EllipseShape");

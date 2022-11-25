@@ -7,10 +7,11 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 
 public class CloseContourShapeTest {
 
-    private javafx.scene.shape.Shape test;
+    private Shape test;
     private MockShape shape;
 
     public CloseContourShapeTest() {
@@ -111,7 +112,7 @@ public class CloseContourShapeTest {
     }
 
     public class MockShape extends CloseContourShape {
-        public MockShape(javafx.scene.shape.Shape shape) {
+        public MockShape(Shape shape) {
             this.shape = shape;
         }
 

@@ -2,10 +2,11 @@ package shapes;
 
 import javafx.scene.paint.Color;
 import java.io.Serializable;
+import javafx.scene.shape.Shape;
 
-public abstract class CloseContourShape implements Shape, Serializable {
+public abstract class CloseContourShape implements ShapeInterface, Serializable {
 
-    protected javafx.scene.shape.Shape shape;
+    protected Shape shape;
 
     /**
      * Returns the shape contained in the current object
@@ -13,7 +14,7 @@ public abstract class CloseContourShape implements Shape, Serializable {
      * @return the shape contained
      */
     @Override
-    public javafx.scene.shape.Shape getShape() {
+    public Shape getShape() {
         return this.shape;
     }
 
