@@ -13,24 +13,32 @@ import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
 
+/*
+    The test methods need to execute in order.
+    In JUnit 4 is possible to exucte methods in order of name ascending, so: 
+    first testASave(), second testBLoad(). 
+*/
+
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FileIOTest {
 
-    SerializableEllipse testEllipse;
-    SerializableLine testLine;
-    SerializableRectangle testRectangle;
-    Color testColor;
-    Pane testPane;
-    Pane testPaneEmpty;
-    File testFile;
-    File testFileEmpty;
-    File testFileNull;
+    private SerializableEllipse testEllipse;
+    private SerializableLine testLine;
+    private SerializableRectangle testRectangle;
+    private Color testColor;
+    private Pane testPane;
+    private Pane testPaneEmpty;
+    private File testFile;
+    private File testFileEmpty;
+    private File testFileNull;
 
     public FileIOTest() {
+        System.out.println("Test File I/O (Load and Save)");
     }
 
     @Before
     public void setUp() {
+        
         testEllipse = new SerializableEllipse(29, 73, 24, 55);
         testLine = new SerializableLine(45, 93, 84, 123);
         testRectangle = new SerializableRectangle(66, 82, 23, 17);
@@ -51,6 +59,7 @@ public class FileIOTest {
         testFileEmpty = new File("testFileEmpty.bin");
         testPaneEmpty = new Pane();
         testFileNull = null;
+        
     }
 
     /**
@@ -58,7 +67,7 @@ public class FileIOTest {
      */
     @Test
     public void testASave() {
-        System.out.println("save");
+        System.out.println("Save Test:");
 
         FileIO saveEmpty = new FileIO(testPaneEmpty);
         saveEmpty.save(testFileEmpty);
@@ -78,7 +87,7 @@ public class FileIOTest {
         assertTrue(testFile.exists());
         assertTrue(testFile.canWrite());
         assertNotEquals(0, testFile.length());
-
+        System.out.println("Passed");
     }
 
     /**
@@ -86,7 +95,7 @@ public class FileIOTest {
      */
     @Test
     public void testBLoad() {
-        System.out.println("load");
+        System.out.println("Load Test:");
 
         Pane loadedPane = new Pane();
         FileIO loadEmpty = new FileIO(loadedPane);
@@ -111,7 +120,8 @@ public class FileIOTest {
         assertNull(testFileNull);
         assertTrue(testFile.canRead());
         assertEquals(expectedList.toString(), actualList.toString());
-
+        
+        System.out.println("Passed");
     }
 
 }
