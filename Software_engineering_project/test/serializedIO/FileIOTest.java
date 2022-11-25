@@ -1,8 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4TestClass.java to edit this template
- */
-package serializedIO; 
+package serializedIO;
 
 import java.io.File;
 import java.util.List;
@@ -14,10 +10,6 @@ import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
 
-/**
- *
- * @author vince
- */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FileIOTest {
     
