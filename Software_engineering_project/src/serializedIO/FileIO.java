@@ -2,7 +2,6 @@ package serializedIO;
 
 import javafx.collections.ObservableList;
 import javafx.scene.layout.Pane;
-
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;

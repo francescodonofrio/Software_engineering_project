@@ -5,7 +5,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
-
 import java.io.Serializable;
 import javafx.scene.paint.Color;
 

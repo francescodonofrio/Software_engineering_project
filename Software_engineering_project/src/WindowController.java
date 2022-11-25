@@ -15,7 +15,6 @@ import shapes.EllipseShape;
 import shapes.LineShape;
 import shapes.RectangleShape;
 import shapes.Shape;
-
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;

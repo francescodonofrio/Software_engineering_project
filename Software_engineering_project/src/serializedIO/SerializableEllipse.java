@@ -2,7 +2,6 @@ package serializedIO;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
