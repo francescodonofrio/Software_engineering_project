@@ -52,4 +52,12 @@ public abstract class CloseContourShape implements Shape, Serializable {
     public void setY(double Y) {
         shape.setLayoutY(Y);
     }
+    
+    @Override
+    public void draw(double X, double Y, Color internalColor, Color contourColor){
+        this.setX(X);
+        this.setY(Y);
+        this.setInternalColor(internalColor);
+        this.setContourColor(contourColor);
+    }
 }

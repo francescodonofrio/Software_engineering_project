@@ -21,11 +21,8 @@ public class DrawAction implements Action{
      */
     public DrawAction(Shape shape, double X, double Y, Color internalColor, Color contourColor, Pane drawingPane) {
         this.shape = shape;
-        this.shape.setX(X);
-        this.shape.setY(Y);
-        this.shape.setInternalColor(internalColor);
-        this.shape.setContourColor(contourColor);
         this.drawingPane = drawingPane;
+        shape.draw(X, Y, internalColor, contourColor);
     }
 
     /**

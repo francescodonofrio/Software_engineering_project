@@ -7,20 +7,9 @@
 import action.Action;
 import action.DrawAction;
 import action.Invoker;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -47,16 +36,23 @@ public class WindowController implements Initializable {
     @FXML
     private Button ellipseBtn;
     
-    private final Invoker invoker = new Invoker();
+    private Invoker invoker;
+    
     private Shape selectedShape;
     @FXML
     private ColorPicker colorPickerInternal;
     @FXML
     private ColorPicker colorPickerContour;
     
+    private double initialDim1;
+    private double initialDim2;
+    private double finalDim1;
+    private double finalDim2;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         drawingPane.setDisable(true);
+        this.invoker = new Invoker();
     }    
 
     @FXML
@@ -77,7 +73,6 @@ public class WindowController implements Initializable {
         drawingPane.setDisable(false);
     }
 
-    @FXML
     private void DrawingWindowOnMouseClick(MouseEvent event) {
         double X = event.getX();
         double Y = event.getY();
@@ -108,6 +103,18 @@ public class WindowController implements Initializable {
         File file = chooser.showOpenDialog(drawingPane.getScene().getWindow());
         FileIO in = new FileIO(this.drawingPane);
         in.load(file);
+    }
+
+    @FXML
+    private void DrawingWindowOnMouseReleased(MouseEvent event) {
+    }
+
+    @FXML
+    private void DrawingWindowOnMouseDragged(MouseEvent event) {
+    }
+
+    @FXML
+    private void DrawingWindowOnMousePressed(MouseEvent event) {
     }
     
 }

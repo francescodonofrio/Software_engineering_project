@@ -17,6 +17,7 @@ public abstract class OpenContourShape implements Shape, Serializable {
      *
      * @param newColor the new color to set
      */
+    @Override
     public void setInternalColor(Color newColor) {
     }
 
@@ -47,6 +48,14 @@ public abstract class OpenContourShape implements Shape, Serializable {
     @Override
     public void setContourColor(Color newColor){
         shape.setStroke(newColor);
+    }
+    
+    @Override
+    public void draw(double X, double Y, Color internalColor, Color contourColor){
+        this.setX(X);
+        this.setY(Y);
+        this.setInternalColor(internalColor);
+        this.setContourColor(contourColor);
     }
 
 }

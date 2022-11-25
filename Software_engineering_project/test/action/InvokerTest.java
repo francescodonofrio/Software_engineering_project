@@ -11,11 +11,11 @@ public class InvokerTest {
     private Invoker invoker;
     private List<Integer> test;
 
-    class TestAction implements Action{
+    public class MockAction implements Action{
         private final List<Integer> list;
         private final int num;
 
-        public TestAction(List list, int num){
+        public MockAction(List list, int num){
             this.list=list;
             this.num=num;
         }
@@ -27,8 +27,12 @@ public class InvokerTest {
         }
     }
     
+    public InvokerTest(){
+        System.out.println("Test Invoker");
+    }
+    
     @Before
-    public void setUp() {
+    public void setUp() {        
         this.invoker=new Invoker();
         this.test=new ArrayList();
     }
@@ -38,23 +42,25 @@ public class InvokerTest {
      */
     @Test
     public void testExecute() {
-        System.out.println("execute");
+        System.out.println("execute:");
         
         int num=5;
-        Action action=new TestAction(this.test,num);
+        Action action=new MockAction(this.test,num);
         invoker.execute(action);
         assertEquals(num,this.test.size());
         
         this.test.clear();
         int num1=3;
-        action=new TestAction(this.test,num1);
+        action=new MockAction(this.test,num1);
         invoker.execute(action);
         assertEquals(num1,this.test.size());
         
         int num2=5;
-        action=new TestAction(this.test,num2);
+        action=new MockAction(this.test,num2);
         invoker.execute(action);
         assertEquals(num1+num2,this.test.size());
+        
+        System.out.println("Passed");
     }
 
 }
