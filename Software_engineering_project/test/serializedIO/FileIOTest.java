@@ -21,7 +21,10 @@ public class FileIOTest {
     SerializableRectangle testRectangle;
     Color testColor;
     Pane testPane;
+    Pane testPaneEmpty;
     File testFile;
+    File testFileEmpty;
+    File testFileNull;
 
     public FileIOTest() {
     }
@@ -44,6 +47,10 @@ public class FileIOTest {
         testPane.getChildren().add(testRectangle);
 
         testFile = new File("testFile.bin");
+                
+        testFileEmpty = new File("testFileEmpty.bin");
+        testPaneEmpty = new Pane();
+        testFileNull = null;
     }
 
     /**
@@ -53,10 +60,21 @@ public class FileIOTest {
     public void testASave() {
         System.out.println("save");
 
-        FileIO save = new FileIO(testPane);
+        FileIO saveEmpty = new FileIO(testPaneEmpty);
+        saveEmpty.save(testFileEmpty);
+        
+        assertNotNull(testFileEmpty);
+        assertTrue(testFileEmpty.exists());
+        assertTrue(testFileEmpty.canWrite());
+        assertNotEquals(0, testFileEmpty.length()); // file is not really "empty" because the number of shapes is writed on it also is it 0.
+        
+        FileIO save = new FileIO(testPane); 
         save.save(testFile);
+        save.save(testFileNull);
 
-        assertNotNull(save);
+        assertNotNull(save);  
+        assertNotNull(testFile);
+        assertNull(testFileNull);  
         assertTrue(testFile.exists());
         assertTrue(testFile.canWrite());
         assertNotEquals(0, testFile.length());
@@ -71,13 +89,26 @@ public class FileIOTest {
         System.out.println("load");
 
         Pane loadedPane = new Pane();
+        FileIO loadEmpty = new FileIO(loadedPane);
+        loadEmpty.load(testFileEmpty);
+        
+        List expectedList = testPaneEmpty.getChildren();
+        List actualList = loadedPane.getChildren();
+        
+        assertNotNull(loadEmpty);
+        assertTrue(testFileEmpty.canRead());
+        assertEquals(expectedList.toString(), actualList.toString());
+        
         FileIO load = new FileIO(loadedPane);
         load.load(testFile);
+        load.load(testFileNull);
 
-        List expectedList = testPane.getChildren();
-        List actualList = loadedPane.getChildren();
-
+        expectedList = testPane.getChildren();
+        actualList = loadedPane.getChildren();
+        
         assertNotNull(load);
+        assertNotNull(testFile);
+        assertNull(testFileNull);
         assertTrue(testFile.canRead());
         assertEquals(expectedList.toString(), actualList.toString());
 
