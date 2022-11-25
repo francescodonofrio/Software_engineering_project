@@ -50,6 +50,7 @@ public class FileIO {
     
     public void load(File file) {
         if(file == null) return;
+        drawingPane.getChildren().clear();
         try (ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file.getAbsolutePath())))){
             
             int len = in.readInt();

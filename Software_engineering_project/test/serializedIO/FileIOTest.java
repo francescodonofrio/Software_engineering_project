@@ -5,7 +5,6 @@
 package serializedIO; 
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -52,7 +51,6 @@ public class FileIOTest {
         testFile = new File("testFile.bin");
     }
     
-
     /**
      * Test of save method, of class FileIO.
      */
@@ -67,7 +65,6 @@ public class FileIOTest {
         assertTrue(testFile.exists());
         assertTrue(testFile.canWrite());
         assertNotEquals(0, testFile.length());
-//        assertEquals(469, testFile.length()); // file with the pane with the added shape in setUp() have size of 469 byte
         
     }
 
@@ -88,7 +85,6 @@ public class FileIOTest {
         assertNotNull(load);
         assertTrue(testFile.canRead());
         assertEquals(expectedList.toString(), actualList.toString());
-//        assertArrayEquals(expectedList.toArray(), actualList.toArray());
         
     }
     

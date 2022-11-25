@@ -59,154 +59,67 @@ public class DrawActionTest {
     }
 
     /**
-     * Test of execute method, of class DrawAction, using an instance of RectangleShape.
+     * Test of execute method, of class DrawAction.
      */
     @Test
-    public void testExecuteRectangle() {
-        System.out.print("draw (Rectangle):");
+    public void testExecute() {
+        System.out.print("draw :");
         
-        DrawAction instance = new DrawAction(rectangleShape, 100, 150, internalColor, contourColor, drawingPane);
-        instance.execute();
-        Rectangle shapeRetrieved = (Rectangle)drawingPane.getChildren().get(0);
-        Color colorFill = (Color)shapeRetrieved.getFill();
-        Color colorStroke = (Color)shapeRetrieved.getStroke();
+        DrawAction instanceRectangle = new DrawAction(rectangleShape, 100, 150, internalColor, contourColor, drawingPane);
+        instanceRectangle.execute();
+        Rectangle rectangleRetrieved = (Rectangle)drawingPane.getChildren().get(0);
+        Color colorFillRectangle = (Color)rectangleRetrieved.getFill();
+        Color colorStrokeRectangle = (Color)rectangleRetrieved.getStroke();
         
-        assertEquals(shapeRetrieved.getLayoutX(),100, 0.1);
-        assertEquals(shapeRetrieved.getLayoutY(),150, 0.1);
-        assertEquals(shapeRetrieved.getHeight(), height, 0.1);
-        assertEquals(shapeRetrieved.getWidth(), width, 0.1);
-        assertEquals(colorFill.getRed(), internalRed, 0.1);
-        assertEquals(colorFill.getGreen(), internalGreen, 0.1);
-        assertEquals(colorFill.getBlue(), internalBlue, 0.1);
-        assertEquals(colorFill.getOpacity(), internalOpacity, 0.1);
-        assertEquals(colorStroke.getRed(), contourRed, 0.1);
-        assertEquals(colorStroke.getGreen(), contourGreen, 0.1);
-        assertEquals(colorStroke.getBlue(), contourBlue, 0.1);
-        assertEquals(colorStroke.getOpacity(), contourOpacity, 0.1);
+        assertEquals(rectangleRetrieved.getLayoutX(),100, 0.1);
+        assertEquals(rectangleRetrieved.getLayoutY(),150, 0.1);
+        assertEquals(rectangleRetrieved.getHeight(), height, 0.1);
+        assertEquals(rectangleRetrieved.getWidth(), width, 0.1);
+        assertEquals(colorFillRectangle.getRed(), internalRed, 0.1);
+        assertEquals(colorFillRectangle.getGreen(), internalGreen, 0.1);
+        assertEquals(colorFillRectangle.getBlue(), internalBlue, 0.1);
+        assertEquals(colorFillRectangle.getOpacity(), internalOpacity, 0.1);
+        assertEquals(colorStrokeRectangle.getRed(), contourRed, 0.1);
+        assertEquals(colorStrokeRectangle.getGreen(), contourGreen, 0.1);
+        assertEquals(colorStrokeRectangle.getBlue(), contourBlue, 0.1);
+        assertEquals(colorStrokeRectangle.getOpacity(), contourOpacity, 0.1);
+        
+        DrawAction instanceEllipse = new DrawAction(ellipseShape, 180, 200, internalColor, contourColor, drawingPane);
+        instanceEllipse.execute();
+        Ellipse shapeRetrievedEllipse = (Ellipse)drawingPane.getChildren().get(1);
+        Color colorFillEllipse = (Color)shapeRetrievedEllipse.getFill();
+        Color colorStrokeEllipse = (Color)shapeRetrievedEllipse.getStroke();
+        
+        assertEquals(shapeRetrievedEllipse.getLayoutX(),180, 0.1);
+        assertEquals(shapeRetrievedEllipse.getLayoutY(),200, 0.1);
+        assertEquals(shapeRetrievedEllipse.getRadiusX(), radiusX, 0.1);
+        assertEquals(shapeRetrievedEllipse.getRadiusY(), radiusY, 0.1);
+        assertEquals(colorFillEllipse.getRed(), internalRed, 0.1);
+        assertEquals(colorFillEllipse.getGreen(), internalGreen, 0.1);
+        assertEquals(colorFillEllipse.getBlue(), internalBlue, 0.1);
+        assertEquals(colorFillEllipse.getOpacity(), internalOpacity, 0.1);
+        assertEquals(colorStrokeEllipse.getRed(), contourRed, 0.1);
+        assertEquals(colorStrokeEllipse.getGreen(), contourGreen, 0.1);
+        assertEquals(colorStrokeEllipse.getBlue(), contourBlue, 0.1);
+        assertEquals(colorStrokeEllipse.getOpacity(), contourOpacity, 0.1);
+        
+        DrawAction instanceLine = new DrawAction(lineShape, 100, 150, internalColor, contourColor, drawingPane);
+        instanceLine.execute();
+        Line shapeRetrievedLine = (Line)drawingPane.getChildren().get(2);
+        Color colorStrokeLine = (Color)shapeRetrievedLine.getStroke();
+        
+        assertEquals(shapeRetrievedLine.getLayoutX(),100, 0.1);
+        assertEquals(shapeRetrievedLine.getLayoutY(),150, 0.1);
+        assertEquals(shapeRetrievedLine.getStartX(), startX, 0.1);
+        assertEquals(shapeRetrievedLine.getStartY(), startY, 0.1);
+        assertEquals(shapeRetrievedLine.getEndX(), endX, 0.1);
+        assertEquals(shapeRetrievedLine.getEndY(), endY, 0.1);
+        assertEquals(colorStrokeLine.getRed(), contourRed, 0.1);
+        assertEquals(colorStrokeLine.getGreen(), contourGreen, 0.1);
+        assertEquals(colorStrokeLine.getBlue(), contourBlue, 0.1);
+        assertEquals(colorStrokeLine.getOpacity(), contourOpacity, 0.1);
         
         System.out.println("Passed");        
-    }
-    
-    /**
-    * Test of execute method, of class DrawAction, using an instance of EllipseShape.
-    */
-    @Test
-    public void testExecuteEllipse() {
-        System.out.print("draw (Ellipse): ");
-        
-        DrawAction instance = new DrawAction(ellipseShape, 180, 200, internalColor, contourColor, drawingPane);
-        instance.execute();
-        Ellipse shapeRetrieved = (Ellipse)drawingPane.getChildren().get(0);
-        Color colorFill = (Color)shapeRetrieved.getFill();
-        Color colorStroke = (Color)shapeRetrieved.getStroke();
-        
-        assertEquals(shapeRetrieved.getLayoutX(),180, 0.1);
-        assertEquals(shapeRetrieved.getLayoutY(),200, 0.1);
-        assertEquals(shapeRetrieved.getRadiusX(), radiusX, 0.1);
-        assertEquals(shapeRetrieved.getRadiusY(), radiusY, 0.1);
-        assertEquals(colorFill.getRed(), internalRed, 0.1);
-        assertEquals(colorFill.getGreen(), internalGreen, 0.1);
-        assertEquals(colorFill.getBlue(), internalBlue, 0.1);
-        assertEquals(colorFill.getOpacity(), internalOpacity, 0.1);
-        assertEquals(colorStroke.getRed(), contourRed, 0.1);
-        assertEquals(colorStroke.getGreen(), contourGreen, 0.1);
-        assertEquals(colorStroke.getBlue(), contourBlue, 0.1);
-        assertEquals(colorStroke.getOpacity(), contourOpacity, 0.1);
-
-        System.out.println("Passed");        
-    }
-    
-    /**
-    * Test of execute method, of class DrawAction,  using an instance of LineShape.
-    */
-    @Test
-    public void testExecuteLineSegment() {
-        System.out.print("draw (Line): ");
-        
-        DrawAction instance = new DrawAction(lineShape, 100, 150, internalColor, contourColor, drawingPane);
-        instance.execute();
-        Line shapeRetrieved = (Line)drawingPane.getChildren().get(0);
-        Color colorStroke = (Color)shapeRetrieved.getStroke();
-        
-        assertEquals(shapeRetrieved.getLayoutX(),100, 0.1);
-        assertEquals(shapeRetrieved.getLayoutY(),150, 0.1);
-        assertEquals(shapeRetrieved.getStartX(), startX, 0.1);
-        assertEquals(shapeRetrieved.getStartY(), startY, 0.1);
-        assertEquals(shapeRetrieved.getEndX(), endX, 0.1);
-        assertEquals(shapeRetrieved.getEndY(), endY, 0.1);
-        assertEquals(colorStroke.getRed(), contourRed, 0.1);
-        assertEquals(colorStroke.getGreen(), contourGreen, 0.1);
-        assertEquals(colorStroke.getBlue(), contourBlue, 0.1);
-        assertEquals(colorStroke.getOpacity(), contourOpacity, 0.1);
-        
-        System.out.println("Passed");
-}
-    
-    /**
-    * Test of execute method, of class DrawAction,  using an instance of LineShape.
-    */
-    @Test
-    public void testExecuteMultipleShapes() {
-        System.out.print("draw (multiple shapes):");
-        
-        DrawAction instance1 = new DrawAction(lineShape, 100, 150, internalColor, contourColor, drawingPane);
-        instance1.execute();
-        
-        DrawAction instance2 = new DrawAction(rectangleShape, 130, 220, internalColor, contourColor, drawingPane);
-        instance2.execute();
-        
-        DrawAction instance3 = new DrawAction(ellipseShape, 180, 200, internalColor, contourColor, drawingPane);
-        instance3.execute();
-        
-        Line shapeRetrieved1 = (Line)drawingPane.getChildren().get(0);
-        Color colorStroke1 = (Color)shapeRetrieved1.getStroke();
-        
-        Rectangle shapeRetrieved2 = (Rectangle)drawingPane.getChildren().get(1);
-        Color colorFill2 = (Color)shapeRetrieved2.getFill();
-        Color colorStroke2 = (Color)shapeRetrieved2.getStroke();
-        
-        Ellipse shapeRetrieved3 = (Ellipse)drawingPane.getChildren().get(2);
-        Color colorFill3 = (Color)shapeRetrieved3.getFill();
-        Color colorStroke3 = (Color)shapeRetrieved3.getStroke();
-        
-        assertEquals(shapeRetrieved1.getLayoutX(),100, 0.1);
-        assertEquals(shapeRetrieved1.getLayoutY(),150, 0.1);
-        assertEquals(shapeRetrieved1.getStartX(), startX, 0.1);
-        assertEquals(shapeRetrieved1.getStartY(), startY, 0.1);
-        assertEquals(shapeRetrieved1.getEndX(), endX, 0.1);
-        assertEquals(shapeRetrieved1.getEndY(), endY, 0.1);
-        assertEquals(colorStroke1.getRed(), contourRed, 0.1);
-        assertEquals(colorStroke1.getGreen(), contourGreen, 0.1);
-        assertEquals(colorStroke1.getBlue(), contourBlue, 0.1);
-        assertEquals(colorStroke1.getOpacity(), contourOpacity, 0.1);
-        
-        assertEquals(shapeRetrieved2.getLayoutX(),130, 0.1);
-        assertEquals(shapeRetrieved2.getLayoutY(),220, 0.1);
-        assertEquals(shapeRetrieved2.getHeight(), height, 0.1);
-        assertEquals(shapeRetrieved2.getWidth(), width, 0.1);
-        assertEquals(colorFill2.getRed(), internalRed, 0.1);
-        assertEquals(colorFill2.getGreen(), internalGreen, 0.1);
-        assertEquals(colorFill2.getBlue(), internalBlue, 0.1);
-        assertEquals(colorFill2.getOpacity(), internalOpacity, 0.1);
-        assertEquals(colorStroke2.getRed(), contourRed, 0.1);
-        assertEquals(colorStroke2.getGreen(), contourGreen, 0.1);
-        assertEquals(colorStroke2.getBlue(), contourBlue, 0.1);
-        assertEquals(colorStroke2.getOpacity(), contourOpacity, 0.1);
-        
-        assertEquals(shapeRetrieved3.getLayoutX(),180, 0.1);
-        assertEquals(shapeRetrieved3.getLayoutY(),200, 0.1);
-        assertEquals(shapeRetrieved3.getRadiusX(), radiusX, 0.1);
-        assertEquals(shapeRetrieved3.getRadiusY(), radiusY, 0.1);
-        assertEquals(colorFill3.getRed(), internalRed, 0.1);
-        assertEquals(colorFill3.getGreen(), internalGreen, 0.1);
-        assertEquals(colorFill3.getBlue(), internalBlue, 0.1);
-        assertEquals(colorFill3.getOpacity(), internalOpacity, 0.1);
-        assertEquals(colorStroke3.getRed(), contourRed, 0.1);
-        assertEquals(colorStroke3.getGreen(), contourGreen, 0.1);
-        assertEquals(colorStroke3.getBlue(), contourBlue, 0.1);
-        assertEquals(colorStroke3.getOpacity(), contourOpacity, 0.1);
-        
-        System.out.println("Passed");
     }
     
 }

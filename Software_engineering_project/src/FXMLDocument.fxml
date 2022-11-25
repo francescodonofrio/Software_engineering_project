@@ -7,9 +7,9 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
 <AnchorPane id="AnchorPane" prefHeight="542.0" prefWidth="863.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="WindowController">
@@ -29,17 +29,17 @@
                <children>
                   <VBox prefHeight="542.0" prefWidth="180.0" style="-fx-border-color: black; -fx-background-color: white;">
                      <children>
-                        <Button fx:id="lineSegmentBtn" mnemonicParsing="false" onAction="#lineSegmentSelection" prefHeight="27.0" prefWidth="867.0" style="-fx-border-color: black; -fx-background-color: white;" text="Line segment">
+                        <Button mnemonicParsing="false" onAction="#lineSegmentSelection" prefHeight="27.0" prefWidth="867.0" style="-fx-border-color: black; -fx-background-color: white;" text="Line segment">
                            <VBox.margin>
                               <Insets top="10.0" />
                            </VBox.margin>
                         </Button>
-                        <Button fx:id="rectangleBtn" mnemonicParsing="false" onAction="#rectangleSelection" prefHeight="27.0" prefWidth="867.0" style="-fx-border-color: black; -fx-background-color: white;" text="Rectangle">
+                        <Button mnemonicParsing="false" onAction="#rectangleSelection" prefHeight="27.0" prefWidth="867.0" style="-fx-border-color: black; -fx-background-color: white;" text="Rectangle">
                            <VBox.margin>
                               <Insets top="10.0" />
                            </VBox.margin>
                         </Button>
-                        <Button fx:id="ellipseBtn" mnemonicParsing="false" onAction="#ellipseSelection" prefHeight="27.0" prefWidth="867.0" style="-fx-border-color: black; -fx-background-color: white;" text="Ellipse">
+                        <Button mnemonicParsing="false" onAction="#ellipseSelection" prefHeight="27.0" prefWidth="867.0" style="-fx-border-color: black; -fx-background-color: white;" text="Ellipse">
                            <VBox.margin>
                               <Insets top="10.0" />
                            </VBox.margin>
@@ -66,7 +66,11 @@
                         </ColorPicker>
                      </children>
                   </VBox>
-                  <Pane fx:id="drawingPane" onMouseDragged="#DrawingWindowOnMouseDragged" onMousePressed="#DrawingWindowOnMousePressed" onMouseReleased="#DrawingWindowOnMouseReleased" prefHeight="534.0" prefWidth="698.0" />
+                  <ScrollPane fx:id="scrollPane" prefHeight="432.0" prefWidth="684.0">
+                    <content>
+                      <AnchorPane fx:id="drawingPane" minHeight="0.0" minWidth="0.0" onMouseDragged="#DrawingWindowOnMouseDragged" onMousePressed="#DrawingWindowOnMousePressed" onMouseReleased="#DrawingWindowOnMouseReleased" prefHeight="516.0" prefWidth="682.0" />
+                    </content>
+                  </ScrollPane>
                </children>
             </HBox>
          </children>

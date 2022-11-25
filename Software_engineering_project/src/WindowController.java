@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import action.Action;
 import action.DrawAction;
 import action.Invoker;
@@ -13,8 +7,8 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -30,37 +24,53 @@ public class WindowController implements Initializable {
     @FXML
     private Pane drawingPane;
     @FXML
-    private Button lineSegmentBtn;
-    @FXML
-    private Button rectangleBtn;
-    @FXML
-    private Button ellipseBtn;
-    
-    private Invoker invoker;
-    
-    private Shape selectedShape;
-    @FXML
     private ColorPicker colorPickerInternal;
     @FXML
     private ColorPicker colorPickerContour;
+    @FXML
+    private ScrollPane scrollPane;
     
+    private Invoker invoker;
+    private Shape selectedShape;
     private double initialDim1;
     private double initialDim2;
     private double finalDim1;
     private double finalDim2;
     
+    /**
+    * Called to initialize a controller after its root element has been
+    * completely processed.
+    *
+    * @param url
+    * The location used to resolve relative paths for the root object, or
+    * null if the location is not known.
+    *
+    * @param rb
+    * The resources used to localize the root object, or null if
+    * the root object was not localized.
+    */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         drawingPane.setDisable(true);
         this.invoker = new Invoker();
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
     }    
-
+    
+    /**
+     * Executed when the segment button is clicked
+     * @param event
+     */
     @FXML
     private void lineSegmentSelection(ActionEvent event) {
         selectedShape = new LineShape();
         drawingPane.setDisable(false);
     }
-
+    
+    /**
+     * Executed when the segment button is clicked
+     * @param event 
+     */
     @FXML
     private void rectangleSelection(ActionEvent event) {
         selectedShape = new RectangleShape();
@@ -104,17 +114,27 @@ public class WindowController implements Initializable {
         FileIO in = new FileIO(this.drawingPane);
         in.load(file);
     }
-
+    
     @FXML
     private void DrawingWindowOnMouseReleased(MouseEvent event) {
+        drawingPane.setDisable(true);
     }
 
     @FXML
     private void DrawingWindowOnMouseDragged(MouseEvent event) {
+        finalDim1 = event.getX();
+        finalDim2 = event.getY();
+        selectedShape.setDim(initialDim1, initialDim2, finalDim1, finalDim2);
     }
 
     @FXML
     private void DrawingWindowOnMousePressed(MouseEvent event) {
+        Color internal = colorPickerInternal.getValue();
+        Color contour = colorPickerContour.getValue();
+        initialDim1 = event.getX();
+        initialDim2 = event.getY();
+        Action action = new DrawAction(selectedShape, initialDim1, initialDim2, internal, contour, drawingPane);
+        invoker.execute(action);
     }
     
 }
