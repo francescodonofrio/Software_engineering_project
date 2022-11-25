@@ -2,39 +2,25 @@ package action;
 
 import org.junit.Before;
 import org.junit.Test;
+
 import static org.junit.Assert.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class InvokerTest {
-    
+
     private Invoker invoker;
     private List<Integer> test;
 
-    public class MockAction implements Action{
-        private final List<Integer> list;
-        private final int num;
-
-        public MockAction(List list, int num){
-            this.list=list;
-            this.num=num;
-        }
-
-        @Override
-        public void execute(){
-            for(int i=0;i<this.num;i++)
-                list.add(i);
-        }
-    }
-    
-    public InvokerTest(){
+    public InvokerTest() {
         System.out.println("Test Invoker");
     }
-    
+
     @Before
-    public void setUp() {        
-        this.invoker=new Invoker();
-        this.test=new ArrayList();
+    public void setUp() {
+        this.invoker = new Invoker();
+        this.test = new ArrayList();
     }
 
     /**
@@ -42,25 +28,41 @@ public class InvokerTest {
      */
     @Test
     public void testExecute() {
-        System.out.println("execute:");
-        
-        int num=5;
-        Action action=new MockAction(this.test,num);
+        System.out.print("execute: ");
+
+        int num = 5;
+        Action action = new MockAction(this.test, num);
         invoker.execute(action);
-        assertEquals(num,this.test.size());
-        
+        assertEquals(num, this.test.size());
+
         this.test.clear();
-        int num1=3;
-        action=new MockAction(this.test,num1);
+        int num1 = 3;
+        action = new MockAction(this.test, num1);
         invoker.execute(action);
-        assertEquals(num1,this.test.size());
-        
-        int num2=5;
-        action=new MockAction(this.test,num2);
+        assertEquals(num1, this.test.size());
+
+        int num2 = 5;
+        action = new MockAction(this.test, num2);
         invoker.execute(action);
-        assertEquals(num1+num2,this.test.size());
-        
+        assertEquals(num1 + num2, this.test.size());
+
         System.out.println("Passed");
+    }
+
+    public class MockAction implements Action {
+        private final List<Integer> list;
+        private final int num;
+
+        public MockAction(List list, int num) {
+            this.list = list;
+            this.num = num;
+        }
+
+        @Override
+        public void execute() {
+            for (int i = 0; i < this.num; i++)
+                list.add(i);
+        }
     }
 
 }

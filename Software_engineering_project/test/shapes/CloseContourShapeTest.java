@@ -12,6 +12,7 @@ public class CloseContourShapeTest {
 
     private javafx.scene.shape.Shape test;
     private MockShape shape;
+
     public CloseContourShapeTest() {
         System.out.println("Test CloseContourShape");
     }

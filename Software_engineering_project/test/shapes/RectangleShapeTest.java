@@ -7,6 +7,10 @@ import org.junit.Test;
 public class RectangleShapeTest {
     private RectangleShape rectangleShape;
 
+    public RectangleShapeTest() {
+        System.out.println("Test RectangleShape");
+    }
+
     /**
      * Test of setDim method, of class RectangleShape.
      */

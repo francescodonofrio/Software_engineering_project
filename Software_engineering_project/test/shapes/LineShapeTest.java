@@ -7,6 +7,10 @@ import org.junit.Test;
 public class LineShapeTest {
     private LineShape lineShape;
 
+    public LineShapeTest() {
+        System.out.println("Test LineShape");
+    }
+
     /**
      * Test of setDim method, of class LineShape.
      */

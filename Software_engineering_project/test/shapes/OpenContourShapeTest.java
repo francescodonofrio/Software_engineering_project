@@ -11,6 +11,7 @@ public class OpenContourShapeTest {
 
     private javafx.scene.shape.Shape test;
     private MockShape shape;
+
     public OpenContourShapeTest() {
         System.out.println("Test OpenContourShape");
     }

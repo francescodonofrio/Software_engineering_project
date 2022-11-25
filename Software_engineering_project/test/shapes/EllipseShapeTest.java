@@ -8,6 +8,10 @@ public class EllipseShapeTest {
 
     private Shape ellipseShape;
 
+    public EllipseShapeTest() {
+        System.out.println("Test EllipseShape");
+    }
+
     /**
      * Test of setDim method, of class EllipseShape.
      */
