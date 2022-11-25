@@ -47,6 +47,12 @@ public class SerializableRectangle extends Rectangle implements Serializable {
         super(x, y, width, height);
     }
     
+    /**
+     * Write this object to the ObjectOutputStream.
+     * 
+     * @param output an ObjectOutpuStream used to write on an OutputStream
+     * @throws IOException 
+     */
     private void writeObject(ObjectOutputStream output) throws IOException {
 
         output.defaultWriteObject();
@@ -71,6 +77,13 @@ public class SerializableRectangle extends Rectangle implements Serializable {
         
     }
     
+    /**
+     * Write this object to the ObjectInputStream.
+     * 
+     * @param input an ObjectInputStream used to read on an InputStream
+     * @throws IOException
+     * @throws ClassNotFoundException 
+     */
     private void readObject(ObjectInputStream input) throws IOException, ClassNotFoundException {
 
         input.defaultReadObject();

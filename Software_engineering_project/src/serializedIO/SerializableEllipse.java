@@ -18,6 +18,7 @@ public class SerializableEllipse extends Ellipse implements Serializable {
 
     /**
      * Creates an instance of Ellipse of the given size.
+     * 
      * @param radiusX the horizontal radius of the ellipse in pixels
      * @param radiusY the vertical radius of the ellipse in pixels
      */
@@ -27,6 +28,7 @@ public class SerializableEllipse extends Ellipse implements Serializable {
 
     /**
      * Creates an instance of Ellipse of the given position and size.
+     * 
      * @param centerX the horizontal position of the center of the ellipse in pixels
      * @param centerY the vertical position of the center of the ellipse in pixels
      * @param radiusX the horizontal radius of the ellipse in pixels
@@ -36,6 +38,12 @@ public class SerializableEllipse extends Ellipse implements Serializable {
         super(centerX, centerY, radiusX, radiusY);
     }
     
+    /**
+     * Write this object to the ObjectOutputStream.
+     * 
+     * @param output an ObjectOutpuStream used to write on an OutputStream
+     * @throws IOException 
+     */
     private void writeObject(ObjectOutputStream output) throws IOException {
 
         output.defaultWriteObject();
@@ -60,6 +68,13 @@ public class SerializableEllipse extends Ellipse implements Serializable {
         
     }
     
+    /**
+     * Write this object to the ObjectInputStream.
+     * 
+     * @param input an ObjectInputStream used to read on an InputStream
+     * @throws IOException
+     * @throws ClassNotFoundException 
+     */
     private void readObject(ObjectInputStream input) throws IOException, ClassNotFoundException {
 
         input.defaultReadObject();
