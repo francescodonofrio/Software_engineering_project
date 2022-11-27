@@ -48,7 +48,7 @@ public interface ShapeInterface {
      * @param internalColor the internal color
      * @param contourColor  the contour color
      */
-    void draw(double X, double Y, Color internalColor, Color contourColor);
+    void setProperties(double X, double Y, Color internalColor, Color contourColor);
 
     /**
      * Updates the dimentions of the shape

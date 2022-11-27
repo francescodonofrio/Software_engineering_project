@@ -101,7 +101,7 @@ public class CloseContourShapeTest {
 
         Color internalColor = Color.CHOCOLATE;
         Color contourColor = Color.YELLOW;
-        shape.draw(50, 60, internalColor, contourColor);
+        shape.setProperties(50, 60, internalColor, contourColor);
         assertEquals(test.getStroke(), contourColor);
         assertEquals(test.getFill(), internalColor);
         assertEquals(test.getLayoutX(), 50, 0.1);

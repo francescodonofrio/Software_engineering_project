@@ -34,16 +34,16 @@ public class WindowController implements Initializable {
 
     private Invoker invoker;
     private ShapeInterface selectedShape;
-    private double initialDim1;
-    private double initialDim2;
-    private double finalDim1;
-    private double finalDim2;
-    private FileChooser chooser;
-    private FileChooser.ExtensionFilter ext;
+    private double initialX;
+    private double initialY;
+    private double finalX;
+    private double finalY;
+    private FileChooser fileChooser;
+    private FileChooser.ExtensionFilter extensionFilter;
     private File file;
-    private FileIO inputOutput;
-    private Color internal;
-    private Color contour;
+    private FileIO shapesInputOutput;
+    private Color internalColor;
+    private Color contourColor;
     private Action action;
 
     /**
@@ -64,10 +64,10 @@ public class WindowController implements Initializable {
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         
-        chooser = new FileChooser();
-        ext = new FileChooser.ExtensionFilter("Binary File (*.bin)", "*.bin");
-        chooser.getExtensionFilters().add(ext);
-        inputOutput = new FileIO(this.drawingPane);
+        fileChooser = new FileChooser();
+        extensionFilter = new FileChooser.ExtensionFilter("Binary File (*.bin)", "*.bin");
+        fileChooser.getExtensionFilters().add(extensionFilter);
+        shapesInputOutput = new FileIO(this.drawingPane);
     }
 
     /**
@@ -110,9 +110,9 @@ public class WindowController implements Initializable {
      */
     @FXML
     private void saveWindow(ActionEvent event) {
-        chooser.setTitle("Save File");
-        file = chooser.showSaveDialog(drawingPane.getScene().getWindow());
-        inputOutput.save(file);
+        fileChooser.setTitle("Save File");
+        file = fileChooser.showSaveDialog(drawingPane.getScene().getWindow());
+        shapesInputOutput.save(file);
     }
 
     /**
@@ -122,9 +122,9 @@ public class WindowController implements Initializable {
      */
     @FXML
     private void loadWindow(ActionEvent event) {
-        chooser.setTitle("Open File");
-        file = chooser.showOpenDialog(drawingPane.getScene().getWindow());
-        inputOutput.load(file);
+        fileChooser.setTitle("Open File");
+        file = fileChooser.showOpenDialog(drawingPane.getScene().getWindow());
+        shapesInputOutput.load(file);
     }
 
     /**
@@ -144,9 +144,9 @@ public class WindowController implements Initializable {
      */
     @FXML
     private void DrawingWindowOnMouseDragged(MouseEvent event) {
-        finalDim1 = event.getX();
-        finalDim2 = event.getY();
-        selectedShape.setDim(initialDim1, initialDim2, finalDim1, finalDim2);
+        finalX = event.getX();
+        finalY = event.getY();
+        selectedShape.setDim(initialX, initialY, finalX, finalY);
     }
 
     /**
@@ -156,11 +156,11 @@ public class WindowController implements Initializable {
      */
     @FXML
     private void DrawingWindowOnMousePressed(MouseEvent event) {
-        internal = colorPickerInternal.getValue();
-        contour = colorPickerContour.getValue();
-        initialDim1 = event.getX();
-        initialDim2 = event.getY();
-        action = new DrawAction(selectedShape, initialDim1, initialDim2, internal, contour, drawingPane);
+        internalColor = colorPickerInternal.getValue();
+        contourColor = colorPickerContour.getValue();
+        initialX = event.getX();
+        initialY = event.getY();
+        action = new DrawAction(selectedShape, initialX, initialY, internalColor, contourColor, drawingPane);
         invoker.execute(action);
     }
 

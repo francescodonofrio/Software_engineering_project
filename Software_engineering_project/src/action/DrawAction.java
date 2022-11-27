@@ -23,7 +23,7 @@ public class DrawAction implements Action {
     public DrawAction(ShapeInterface shape, double X, double Y, Color internalColor, Color contourColor, Pane drawingPane) {
         this.shape = shape;
         this.drawingPane = drawingPane;
-        shape.draw(X, Y, internalColor, contourColor);
+        shape.setProperties(X, Y, internalColor, contourColor);
     }
 
     /**

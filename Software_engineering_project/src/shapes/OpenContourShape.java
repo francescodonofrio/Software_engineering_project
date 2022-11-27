@@ -60,7 +60,7 @@ public abstract class OpenContourShape implements ShapeInterface, Serializable {
      * @param contourColor  the contour color
      */
     @Override
-    public void draw(double X, double Y, Color internalColor, Color contourColor) {
+    public void setProperties(double X, double Y, Color internalColor, Color contourColor) {
         this.setX(X);
         this.setY(Y);
         this.setInternalColor(internalColor);

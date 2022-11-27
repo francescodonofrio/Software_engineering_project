@@ -99,7 +99,7 @@ public class OpenContourShapeTest {
         System.out.print("draw: ");
 
         Color contourColor = Color.YELLOW;
-        shape.draw(50, 60, contourColor, contourColor);
+        shape.setProperties(50, 60, contourColor, contourColor);
         assertEquals(test.getStroke(), contourColor);
         assertEquals(test.getLayoutX(), 50, 0.1);
         assertEquals(test.getLayoutY(), 60, 0.1);

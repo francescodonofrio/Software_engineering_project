@@ -9,7 +9,7 @@ import javafx.scene.shape.Shape;
 
 public class FileIO {
 
-    Pane drawingPane;
+    private final Pane drawingPane;
 
     public FileIO(Pane drawingPane) {
         this.drawingPane = drawingPane;
@@ -36,11 +36,12 @@ public class FileIO {
     public void load(File file) {
         if (file == null) return;
         drawingPane.getChildren().clear();
+        Shape temp;
         try (ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file.getAbsolutePath())))) {
 
             int len = in.readInt();
             for (int i = 0; i < len; i++) {
-                Shape temp = (Shape) in.readObject();
+                temp = (Shape) in.readObject();
                 drawingPane.getChildren().add(temp);
             }
 
