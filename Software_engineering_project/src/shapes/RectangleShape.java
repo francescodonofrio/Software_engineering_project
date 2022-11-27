@@ -1,15 +1,20 @@
 package shapes;
 
 
+import javafx.scene.shape.Rectangle;
 import serializedIO.SerializableRectangle;
 
 public class RectangleShape extends CloseContourShape {
 
+    private double width, height;
+    private final Rectangle rectangle;
+    
     /**
      * Creates a new instance of RectangleShape
      */
     public RectangleShape() {
         this.shape = new SerializableRectangle();
+        this.rectangle = (Rectangle)shape;
     }
 
     /**
@@ -22,9 +27,8 @@ public class RectangleShape extends CloseContourShape {
      */
     @Override
     public void setDim(double initialX, double initialY, double finalX, double finalY) {
-        javafx.scene.shape.Rectangle rectangle = (javafx.scene.shape.Rectangle) shape;
-        double width = finalX - initialX;
-        double height = finalY - initialY;
+        width = finalX - initialX;
+        height = finalY - initialY;
         if (width < 0) {
             width = -width;
             rectangle.setLayoutX(finalX);

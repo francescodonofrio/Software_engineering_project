@@ -36,6 +36,13 @@ public class WindowController implements Initializable {
     private double initialDim2;
     private double finalDim1;
     private double finalDim2;
+    private FileChooser chooser;
+    private FileChooser.ExtensionFilter ext;
+    private File file;
+    private FileIO inputOutput;
+    private Color internal;
+    private Color contour;
+    private Action action;
 
     /**
      * Called to initialize a controller after its root element has been
@@ -49,9 +56,16 @@ public class WindowController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         drawingPane.setDisable(true);
+        
         this.invoker = new Invoker();
+        
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        
+        chooser = new FileChooser();
+        ext = new FileChooser.ExtensionFilter("Binary File (*.bin)", "*.bin");
+        chooser.getExtensionFilters().add(ext);
+        inputOutput = new FileIO(this.drawingPane);
     }
 
     /**
@@ -94,13 +108,9 @@ public class WindowController implements Initializable {
      */
     @FXML
     private void saveWindow(ActionEvent event) {
-        FileChooser chooser = new FileChooser();
-        FileChooser.ExtensionFilter ext = new FileChooser.ExtensionFilter("Binary File (*.bin)", "*.bin");
-        chooser.getExtensionFilters().add(ext);
         chooser.setTitle("Save File");
-        File file = chooser.showSaveDialog(drawingPane.getScene().getWindow());
-        FileIO out = new FileIO(this.drawingPane);
-        out.save(file);
+        file = chooser.showSaveDialog(drawingPane.getScene().getWindow());
+        inputOutput.save(file);
     }
 
     /**
@@ -110,13 +120,9 @@ public class WindowController implements Initializable {
      */
     @FXML
     private void loadWindow(ActionEvent event) {
-        FileChooser chooser = new FileChooser();
-        FileChooser.ExtensionFilter ext = new FileChooser.ExtensionFilter("Binary File (*.bin)", "*.bin");
-        chooser.getExtensionFilters().add(ext);
         chooser.setTitle("Open File");
-        File file = chooser.showOpenDialog(drawingPane.getScene().getWindow());
-        FileIO in = new FileIO(this.drawingPane);
-        in.load(file);
+        file = chooser.showOpenDialog(drawingPane.getScene().getWindow());
+        inputOutput.load(file);
     }
 
     /**
@@ -148,11 +154,11 @@ public class WindowController implements Initializable {
      */
     @FXML
     private void DrawingWindowOnMousePressed(MouseEvent event) {
-        Color internal = colorPickerInternal.getValue();
-        Color contour = colorPickerContour.getValue();
+        internal = colorPickerInternal.getValue();
+        contour = colorPickerContour.getValue();
         initialDim1 = event.getX();
         initialDim2 = event.getY();
-        Action action = new DrawAction(selectedShape, initialDim1, initialDim2, internal, contour, drawingPane);
+        action = new DrawAction(selectedShape, initialDim1, initialDim2, internal, contour, drawingPane);
         invoker.execute(action);
     }
 
