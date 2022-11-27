@@ -19,6 +19,8 @@ import shapes.RectangleShape;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import shapes.ShapeInterface;
 
 public class WindowController implements Initializable {
@@ -31,6 +33,12 @@ public class WindowController implements Initializable {
     private ColorPicker colorPickerContour;
     @FXML
     private ScrollPane scrollPane;
+    @FXML
+    private Button lineSegmentBtn;
+    @FXML
+    private Button rectangleBtn;
+    @FXML
+    private Button ellipseBtn;
 
     private Invoker invoker;
     private ShapeInterface selectedShape;
@@ -78,6 +86,7 @@ public class WindowController implements Initializable {
     @FXML
     private void lineSegmentSelection(ActionEvent event) {
         selectedShape = new LineShape();
+        lineSegmentBtn.setStyle("-fx-border-color: #ff0000; -fx-border-color : black;");
         drawingPane.setDisable(false);
     }
 
@@ -89,6 +98,7 @@ public class WindowController implements Initializable {
     @FXML
     private void rectangleSelection(ActionEvent event) {
         selectedShape = new RectangleShape();
+        rectangleBtn.setStyle("-fx-border-color: #ff0000; -fx-border-color : black;");
         drawingPane.setDisable(false);
     }
 
@@ -100,6 +110,7 @@ public class WindowController implements Initializable {
     @FXML
     private void ellipseSelection(ActionEvent event) {
         selectedShape = new EllipseShape();
+        ellipseBtn.setStyle("-fx-border-color: #ff0000; -fx-border-color : black;");
         drawingPane.setDisable(false);
     }
 
@@ -135,6 +146,9 @@ public class WindowController implements Initializable {
     @FXML
     private void DrawingWindowOnMouseReleased(MouseEvent event) {
         drawingPane.setDisable(true);
+        lineSegmentBtn.setStyle("-fx-background-color : white; -fx-border-color : black");
+        ellipseBtn.setStyle("-fx-background-color : white; -fx-border-color : black");
+        rectangleBtn.setStyle("-fx-background-color : white; -fx-border-color : black");
     }
 
     /**
