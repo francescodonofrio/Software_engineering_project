@@ -10,18 +10,32 @@ import javafx.scene.shape.Shape;
 public class FileIO {
 
     private final Pane drawingPane;
+    
+    /**
+     * Returns a new instance of FileIO, given the Pane to save or load 
+     * through the appropriate methods.
+     *
+     * @param drawingPane         the drawing pane to save.
+     */
 
     public FileIO(Pane drawingPane) {
         this.drawingPane = drawingPane;
     }
-
+    
+    /**
+     * Perform a save operation, given a legal istance of file 
+     * where the shapes drawed in the actual pane will saved.
+     * 
+     * @param file      file to save to
+     */
     public void save(File file) {
         if (file == null) return;
         try (ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file.getAbsolutePath())))) {
-
+        
             ObservableList list = drawingPane.getChildren();
-            out.writeInt(list.size());
-            for (int i = 0; i < list.size(); i++) {
+            int len = list.size();
+            out.writeInt(len);
+            for (int i = 0; i < len; i++) {
                 out.writeObject(list.get(i));
             }
 
@@ -32,7 +46,13 @@ public class FileIO {
         }
 
     }
-
+    
+    /**
+     * Perform a load operation, given a legal istance of file, 
+     * where the shapes previously saved will loaded in the actual pane.
+     * 
+     * @param file      file to load from
+     */
     public void load(File file) {
         if (file == null) return;
         drawingPane.getChildren().clear();
