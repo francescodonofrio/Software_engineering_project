@@ -1,3 +1,5 @@
+package mainPackage;
+
 import action.Action;
 import action.DrawAction;
 import action.Invoker;
