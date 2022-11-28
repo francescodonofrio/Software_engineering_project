@@ -72,6 +72,9 @@ public class WindowController implements Initializable {
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         
+        colorPickerInternal.setValue(Color.TRANSPARENT);
+        colorPickerContour.setValue(Color.BLACK);
+        
         fileChooser = new FileChooser();
         extensionFilter = new FileChooser.ExtensionFilter("Binary File (*.bin)", "*.bin");
         fileChooser.getExtensionFilters().add(extensionFilter);
