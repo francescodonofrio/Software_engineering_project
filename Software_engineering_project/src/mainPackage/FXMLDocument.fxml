@@ -69,7 +69,7 @@
                         </VBox>
                         <ScrollPane fx:id="scrollPane" prefHeight="432.0" prefWidth="684.0">
                             <content>
-                                <AnchorPane fx:id="drawingPane" minHeight="0.0" minWidth="0.0" onMouseDragged="#DrawingWindowOnMouseDragged" onMousePressed="#DrawingWindowOnMousePressed" onMouseReleased="#DrawingWindowOnMouseReleased" prefHeight="516.0" prefWidth="682.0" />
+                                <AnchorPane fx:id="drawingPane" minHeight="0.0" minWidth="0.0" onMouseDragged="#drawingWindowOnMouseDragged" onMousePressed="#drawingWindowOnMousePressed" onMouseReleased="#drawingWindowOnMouseReleased" prefHeight="516.0" prefWidth="682.0" />
                             </content>
                         </ScrollPane>
                     </children>

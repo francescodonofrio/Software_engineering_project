@@ -19,7 +19,6 @@ import shapes.RectangleShape;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import shapes.ShapeInterface;
 
@@ -147,7 +146,7 @@ public class WindowController implements Initializable {
      * @param event the event of the click
      */
     @FXML
-    private void DrawingWindowOnMouseReleased(MouseEvent event) {
+    private void drawingWindowOnMouseReleased(MouseEvent event) {
         drawingPane.setDisable(true);
         lineSegmentBtn.setStyle("-fx-background-color : white; -fx-border-color : black");
         ellipseBtn.setStyle("-fx-background-color : white; -fx-border-color : black");
@@ -160,7 +159,7 @@ public class WindowController implements Initializable {
      * @param event the event of the click
      */
     @FXML
-    private void DrawingWindowOnMouseDragged(MouseEvent event) {
+    private void drawingWindowOnMouseDragged(MouseEvent event) {
         finalX = event.getX();
         finalY = event.getY();
         selectedShape.setDim(initialX, initialY, finalX, finalY);
@@ -172,7 +171,7 @@ public class WindowController implements Initializable {
      * @param event the event of the click
      */
     @FXML
-    private void DrawingWindowOnMousePressed(MouseEvent event) {
+    private void drawingWindowOnMousePressed(MouseEvent event) {
         internalColor = colorPickerInternal.getValue();
         contourColor = colorPickerContour.getValue();
         initialX = event.getX();
