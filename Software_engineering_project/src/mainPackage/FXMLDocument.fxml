@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="542.0" prefWidth="863.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainPackage.WindowController">
+<AnchorPane id="AnchorPane" prefHeight="542.0" prefWidth="863.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainPackage.WindowController">
     <children>
         <VBox prefHeight="542.0" prefWidth="863.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -30,17 +30,17 @@
                     <children>
                         <VBox prefHeight="542.0" prefWidth="180.0" style="-fx-border-color: black; -fx-background-color: white;">
                             <children>
-                                <Button fx:id="lineSegmentBtn" mnemonicParsing="false" onAction="#lineSegmentSelection" prefHeight="27.0" prefWidth="867.0" style="-fx-border-color: black; -fx-background-color: white;" text="Line segment">
+                                <Button fx:id="lineSegmentBtn" mnemonicParsing="false" onAction="#lineSegmentSelection" prefHeight="27.0" prefWidth="867.0" style="-fx-border-color: black;" text="Line segment">
                                     <VBox.margin>
                                         <Insets top="10.0" />
                                     </VBox.margin>
                                 </Button>
-                                <Button fx:id="rectangleBtn" mnemonicParsing="false" onAction="#rectangleSelection" prefHeight="27.0" prefWidth="867.0" style="-fx-border-color: black; -fx-background-color: white;" text="Rectangle">
+                                <Button fx:id="rectangleBtn" mnemonicParsing="false" onAction="#rectangleSelection" prefHeight="27.0" prefWidth="867.0" style="-fx-border-color: black;" text="Rectangle">
                                     <VBox.margin>
                                         <Insets top="10.0" />
                                     </VBox.margin>
                                 </Button>
-                                <Button fx:id="ellipseBtn" mnemonicParsing="false" onAction="#ellipseSelection" prefHeight="27.0" prefWidth="867.0" style="-fx-border-color: black; -fx-background-color: white;" text="Ellipse">
+                                <Button fx:id="ellipseBtn" mnemonicParsing="false" onAction="#ellipseSelection" prefHeight="27.0" prefWidth="867.0" style="-fx-border-color: black;" text="Ellipse">
                                     <VBox.margin>
                                         <Insets top="10.0" />
                                     </VBox.margin>
