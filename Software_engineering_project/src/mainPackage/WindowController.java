@@ -85,12 +85,8 @@ public class WindowController implements Initializable {
         this.invoker = new Invoker();
         
         shapesTable.setItems(drawingPane.getChildren());
-        shapesColumn.setCellValueFactory(new Callback<CellDataFeatures<Node, String>, ObservableValue<String>>() {
-            public ObservableValue<String> call(CellDataFeatures<Node, String> p) {
-             // p.getValue() returns the Person instance for a particular TableView row
-             return new ReadOnlyObjectWrapper(p.getValue().toString().split("\\[")[0]);
-            }
-        });
+        shapesColumn.setCellValueFactory((CellDataFeatures<Node, String> p) -> new ReadOnlyObjectWrapper(p.getValue().toString().split("\\[")[0]) // p.getValue() returns the Person instance for a particular TableView row
+        );
                      
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
