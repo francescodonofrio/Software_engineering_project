@@ -1,11 +1,13 @@
 package serializedIO;
 
-import javafx.collections.ObservableList;
+import java.beans.DefaultPersistenceDelegate;
+import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
 import javafx.scene.layout.Pane;
 import java.io.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.scene.shape.Shape;
+import java.nio.file.Files;
+import javafx.scene.Node;
+import javafx.scene.paint.Color;
 
 public class FileIO {
 
@@ -27,22 +29,16 @@ public class FileIO {
      * where the shapes drawed in the actual pane will saved.
      * 
      * @param file      file to save to
+     * @throws java.io.IOException
      */
-    public void save(File file) {
+    public void save(File file) throws IOException {
         if (file == null) return;
-        try (ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file.getAbsolutePath())))) {
-        
-            ObservableList list = drawingPane.getChildren();
-            int len = list.size();
-            out.writeInt(len);
-            for (int i = 0; i < len; i++) {
-                out.writeObject(list.get(i));
-            }
-
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(FileIO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(FileIO.class.getName()).log(Level.SEVERE, null, ex);
+        try ( XMLEncoder encoder = new XMLEncoder(new BufferedOutputStream(Files.newOutputStream(file.toPath())))) {
+            encoder.setExceptionListener(e -> {
+                throw new RuntimeException(e);
+            });
+            encoder.setPersistenceDelegate(Color.class, new DefaultPersistenceDelegate(new String[]{"red", "green", "blue", "opacity"}));
+            encoder.writeObject(drawingPane.getChildren().toArray(new Node[0]));
         }
 
     }
@@ -52,23 +48,17 @@ public class FileIO {
      * where the shapes previously saved will loaded in the actual pane.
      * 
      * @param file      file to load from
+     * @throws java.io.IOException
      */
-    public void load(File file) {
+    public void load(File file) throws IOException {
         if (file == null) return;
         drawingPane.getChildren().clear();
-        Shape temp;
-        try (ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file.getAbsolutePath())))) {
+        try ( XMLDecoder decoder = new XMLDecoder(new BufferedInputStream(Files.newInputStream(file.toPath())))) {
+            decoder.setExceptionListener(e -> {
+                throw new RuntimeException(e);
+            });
 
-            int len = in.readInt();
-            for (int i = 0; i < len; i++) {
-                temp = (Shape) in.readObject();
-                drawingPane.getChildren().add(temp);
-            }
-
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(FileIO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException | ClassNotFoundException ex) {
-            Logger.getLogger(FileIO.class.getName()).log(Level.SEVERE, null, ex);
+            drawingPane.getChildren().setAll((Node[]) decoder.readObject());
         }
     }
 
