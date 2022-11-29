@@ -10,8 +10,8 @@ public class DrawAction implements Action {
 
     private final ShapeInterface shape;
     private final Pane drawingPane;
-    private final Color colorPickerInternal;
-    private final Color colorPickerContour;
+    private final ObjectProperty<Color> colorPickerInternal;
+    private final ObjectProperty<Color> colorPickerContour;
     private double initialX;
     private double initialY;
     
@@ -28,8 +28,8 @@ public class DrawAction implements Action {
     public DrawAction(ShapeInterface shape, ObjectProperty<Color> colorPickerInternal, ObjectProperty<Color> colorPickerContour, Pane drawingPane) {
         this.shape = shape;
         this.drawingPane = drawingPane;
-        this.colorPickerInternal = colorPickerInternal.getValue();
-        this.colorPickerContour = colorPickerContour.getValue();
+        this.colorPickerInternal = colorPickerInternal;
+        this.colorPickerContour = colorPickerContour;
     }
 
     /**
@@ -40,7 +40,7 @@ public class DrawAction implements Action {
         drawingPane.getChildren().add(shape.getShape());
         initialX = event.getX();
         initialY = event.getY();
-        shape.setProperties(initialX, initialY, colorPickerInternal, colorPickerContour);
+        shape.setProperties(initialX, initialY, colorPickerInternal.getValue(), colorPickerContour.getValue());
     }
 
     /**
