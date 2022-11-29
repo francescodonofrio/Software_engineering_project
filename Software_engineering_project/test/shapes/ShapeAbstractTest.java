@@ -1,30 +1,29 @@
 package shapes;
 
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import org.junit.Before;
 import org.junit.Test;
-
 import static org.junit.Assert.*;
 
-public class OpenContourShapeTest {
-
+public class ShapeAbstractTest {
+    
     private Shape test;
     private MockShape shape;
 
-    public OpenContourShapeTest() {
-        System.out.println("Test OpenContourShape");
+    public ShapeAbstractTest() {
+        System.out.println("Test CloseContourShape");
     }
 
     @Before
     public void setUp() {
-        this.test = new Line();
+        this.test = new Rectangle();
         this.shape = new MockShape(this.test);
     }
 
     /**
-     * Test of getShape method, of class OpenContourShape.
+     * Test of getShape method, of class CloseContourShape.
      */
     @Test
     public void testGetShape() {
@@ -36,7 +35,7 @@ public class OpenContourShapeTest {
     }
 
     /**
-     * Test of setInternalColor method, of class OpenContourShape.
+     * Test of setInternalColor method, of class CloseContourShape.
      */
     @Test
     public void testSetInternalColor() {
@@ -44,13 +43,13 @@ public class OpenContourShapeTest {
 
         Color selectedColor = Color.YELLOW;
         shape.setInternalColor(selectedColor);
-        assertEquals(test.getFill(), null);
+        assertEquals(test.getFill(), selectedColor);
 
         System.out.println("Passed");
     }
 
     /**
-     * Test of setX method, of class OpenContourShape.
+     * Test of setX method, of class CloseContourShape.
      */
     @Test
     public void testSetX() {
@@ -64,7 +63,7 @@ public class OpenContourShapeTest {
     }
 
     /**
-     * Test of setY method, of class OpenContourShape.
+     * Test of setY method, of class CloseContourShape.
      */
     @Test
     public void testSetY() {
@@ -78,7 +77,7 @@ public class OpenContourShapeTest {
     }
 
     /**
-     * Test of setContourColor method, of class OpenContourShape.
+     * Test of setContourColor method, of class CloseContourShape.
      */
     @Test
     public void testSetContourColor() {
@@ -92,15 +91,17 @@ public class OpenContourShapeTest {
     }
 
     /**
-     * Test of draw method, of class OpenContourShape.
+     * Test of setProperties method, of class CloseContourShape.
      */
     @Test
-    public void testDraw() {
+    public void testSetProperties() {
         System.out.print("draw: ");
 
+        Color internalColor = Color.CHOCOLATE;
         Color contourColor = Color.YELLOW;
-        shape.setProperties(50, 60, contourColor, contourColor);
+        shape.setProperties(50, 60, internalColor, contourColor);
         assertEquals(test.getStroke(), contourColor);
+        assertEquals(test.getFill(), internalColor);
         assertEquals(test.getLayoutX(), 50, 0.1);
         assertEquals(test.getLayoutY(), 60, 0.1);
 
@@ -108,13 +109,14 @@ public class OpenContourShapeTest {
         System.out.println("Passed");
     }
 
-    public class MockShape extends OpenContourShape {
+    public class MockShape extends ShapeAbstract {
         public MockShape(Shape shape) {
             this.shape = shape;
         }
-
+        
         @Override
-        public void setDim(double initialDim1, double initialDim2, double finalDim1, double finalDim2) {
+        public void setDim(double initialX, double initialY, double finalX, double finalY) {
         }
     }
+    
 }

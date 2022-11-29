@@ -3,7 +3,7 @@ package shapes;
 
 import javafx.scene.shape.Rectangle;
 
-public class RectangleShape extends CloseContourShape {
+public class RectangleShape extends ShapeAbstract {
 
     private double width, height;
     private final Rectangle rectangle;

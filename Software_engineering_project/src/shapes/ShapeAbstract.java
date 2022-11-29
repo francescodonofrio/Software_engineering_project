@@ -1,24 +1,40 @@
 package shapes;
 
 import javafx.scene.paint.Color;
-import java.io.Serializable;
 import javafx.scene.shape.Shape;
 
-public abstract class OpenContourShape implements ShapeInterface, Serializable {
+public abstract class ShapeAbstract implements ShapeInterface {
+
     protected Shape shape;
 
+    /**
+     * Returns the shape contained in the current object
+     *
+     * @return the shape contained
+     */
     @Override
     public Shape getShape() {
         return this.shape;
     }
 
     /**
-     * Sets a new color for a shape
+     * Sets a new internal color for a shape
      *
      * @param newColor the new color to set
      */
     @Override
     public void setInternalColor(Color newColor) {
+        shape.setFill(newColor);
+    }
+
+    /**
+     * Sets a new contour color for a shape
+     *
+     * @param newColor the new color to set
+     */
+    @Override
+    public void setContourColor(Color newColor) {
+        shape.setStroke(newColor);
     }
 
     /**
@@ -42,16 +58,6 @@ public abstract class OpenContourShape implements ShapeInterface, Serializable {
     }
 
     /**
-     * Sets a new contour color for a shape
-     *
-     * @param newColor the new color to set
-     */
-    @Override
-    public void setContourColor(Color newColor) {
-        shape.setStroke(newColor);
-    }
-
-    /**
      * Updates the current shape as defined by the parameters
      *
      * @param X             the new X coordinate
@@ -66,5 +72,5 @@ public abstract class OpenContourShape implements ShapeInterface, Serializable {
         this.setInternalColor(internalColor);
         this.setContourColor(contourColor);
     }
-
+    
 }
