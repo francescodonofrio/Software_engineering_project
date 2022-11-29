@@ -23,6 +23,9 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.shape.Shape;
 import shapes.ShapeInterface;
 
 public class WindowController implements Initializable {
@@ -55,6 +58,10 @@ public class WindowController implements Initializable {
     private Color internalColor;
     private Color contourColor;
     private Action action;
+    @FXML
+    private TableView<Shape> shapesTable;
+    @FXML
+    private TableColumn<Shape, String> insertedShapes;
 
     /**
      * Called to initialize a controller after its root element has been
