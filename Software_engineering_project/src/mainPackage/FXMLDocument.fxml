@@ -8,14 +8,16 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="542.0" prefWidth="863.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainPackage.WindowController">
+<AnchorPane id="AnchorPane" prefHeight="542.0" prefWidth="863.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainPackage.WindowController">
     <children>
-        <VBox prefHeight="542.0" prefWidth="863.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <children>
+      <SplitPane dividerPositions="0.5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" orientation="VERTICAL" prefHeight="542.0" prefWidth="863.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
                 <MenuBar>
                     <menus>
                         <Menu mnemonicParsing="false" text="File">
@@ -26,55 +28,60 @@
                         </Menu>
                     </menus>
                 </MenuBar>
-                <HBox prefHeight="542.0" prefWidth="863.0">
-                    <children>
-                        <VBox prefHeight="542.0" prefWidth="180.0" style="-fx-border-color: black; -fx-background-color: white;">
-                            <children>
-                                <Button fx:id="lineSegmentBtn" mnemonicParsing="false" onAction="#lineSegmentSelection" prefHeight="27.0" prefWidth="867.0" style="-fx-border-color: black;" text="Line segment">
-                                    <VBox.margin>
-                                        <Insets top="10.0" />
-                                    </VBox.margin>
-                                </Button>
-                                <Button fx:id="rectangleBtn" mnemonicParsing="false" onAction="#rectangleSelection" prefHeight="27.0" prefWidth="867.0" style="-fx-border-color: black;" text="Rectangle">
-                                    <VBox.margin>
-                                        <Insets top="10.0" />
-                                    </VBox.margin>
-                                </Button>
-                                <Button fx:id="ellipseBtn" mnemonicParsing="false" onAction="#ellipseSelection" prefHeight="27.0" prefWidth="867.0" style="-fx-border-color: black;" text="Ellipse">
-                                    <VBox.margin>
-                                        <Insets top="10.0" />
-                                    </VBox.margin>
-                                </Button>
-                                <Label text="Choose internal color ">
-                                    <VBox.margin>
-                                        <Insets left="10.0" right="10.0" top="50.0" />
-                                    </VBox.margin>
-                                </Label>
-                                <ColorPicker fx:id="colorPickerInternal">
-                                    <VBox.margin>
-                                        <Insets left="10.0" right="10.0" top="10.0" />
-                                    </VBox.margin>
-                                </ColorPicker>
-                                <Label text="Choose contour color">
-                                    <VBox.margin>
-                                        <Insets left="10.0" right="10.0" top="20.0" />
-                                    </VBox.margin>
-                                </Label>
-                                <ColorPicker fx:id="colorPickerContour">
-                                    <VBox.margin>
-                                        <Insets left="10.0" right="10.0" top="10.0" />
-                                    </VBox.margin>
-                                </ColorPicker>
-                            </children>
-                        </VBox>
-                        <ScrollPane fx:id="scrollPane" prefHeight="432.0" prefWidth="684.0">
-                            <content>
-                                <AnchorPane fx:id="drawingPane" minHeight="0.0" minWidth="0.0" onMouseDragged="#drawingWindowOnMouseDragged" onMousePressed="#drawingWindowOnMousePressed" onMouseReleased="#drawingWindowOnMouseReleased" prefHeight="516.0" prefWidth="682.0" />
-                            </content>
-                        </ScrollPane>
-                    </children>
-                </HBox>
-            </children>
-        </VBox>
+            <SplitPane dividerPositions="0.17, 0.8" focusTraversable="false" prefHeight="160.0" prefWidth="200.0">
+               <items>
+                  <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="542.0" minWidth="180.0" prefHeight="542.0" prefWidth="180.0" style="-fx-background-color: white;">
+                     <children>
+                        <Button fx:id="lineSegmentBtn" mnemonicParsing="false" onAction="#lineSegmentSelection" prefHeight="27.0" prefWidth="132.0" text="Line segment">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button fx:id="rectangleBtn" mnemonicParsing="false" onAction="#rectangleSelection" prefHeight="27.0" prefWidth="132.0" text="Rectangle">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button fx:id="ellipseBtn" mnemonicParsing="false" onAction="#ellipseSelection" prefHeight="27.0" prefWidth="132.0" text="Ellipse">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Label text="Choose internal color ">
+                           <VBox.margin>
+                              <Insets left="10.0" right="10.0" top="50.0" />
+                           </VBox.margin>
+                        </Label>
+                        <ColorPicker fx:id="colorPickerInternal">
+                           <VBox.margin>
+                              <Insets left="10.0" right="10.0" top="10.0" />
+                           </VBox.margin>
+                        </ColorPicker>
+                        <Label text="Choose contour color">
+                           <VBox.margin>
+                              <Insets left="10.0" right="10.0" top="20.0" />
+                           </VBox.margin>
+                        </Label>
+                        <ColorPicker fx:id="colorPickerContour">
+                           <VBox.margin>
+                              <Insets left="10.0" right="10.0" top="10.0" />
+                           </VBox.margin>
+                        </ColorPicker>
+                     </children>
+                  </VBox>
+                  <ScrollPane fx:id="scrollPane" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="432.0" prefWidth="684.0">
+                     <content>
+                        <AnchorPane fx:id="drawingPane" minHeight="0.0" minWidth="0.0" onMouseDragged="#drawingWindowOnMouseDragged" onMousePressed="#drawingWindowOnMousePressed" onMouseReleased="#drawingWindowOnMouseReleased" prefHeight="516.0" prefWidth="682.0" />
+                     </content>
+                  </ScrollPane>
+                  <TableView fx:id="shapesTable" prefHeight="200.0" prefWidth="200.0">
+                    <columns>
+                      <TableColumn fx:id="insertedShapes" editable="false" maxWidth="1.7976931348623157E308" prefWidth="151.0" text="Inserted shapes" />
+                    </columns>
+                  </TableView>
+               </items>
+            </SplitPane>
+        </items>
+      </SplitPane>
     </children>
 </AnchorPane>
