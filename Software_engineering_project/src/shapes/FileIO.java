@@ -1,4 +1,4 @@
-package serializedIO;
+package shapes;
 
 import java.beans.DefaultPersistenceDelegate;
 import java.beans.XMLDecoder;

@@ -61,6 +61,7 @@ public class InvokerTest {
      */
     @Test
     public void testExecuteOnMouseDragged() {
+        System.out.print("executeOnMouseDragged: ");
         event = new MouseEvent(new EventType("test1"), 180, 200, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
        
         num = 5;
@@ -69,6 +70,7 @@ public class InvokerTest {
         assertEquals((int)event.getX(), (int)this.test.get(0));
         assertEquals((int)event.getY(), (int)this.test.get(1));
         
+        System.out.println("Passed");
     }  
     
     /**
@@ -76,6 +78,7 @@ public class InvokerTest {
      */
     @Test
     public void testExecuteOnMouseReleased() {
+        System.out.print("executeOnMouseReleased: ");
         event = new MouseEvent(new EventType("test2"), 180, 200, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
        
         num = 5;
@@ -84,6 +87,7 @@ public class InvokerTest {
         assertEquals((int)event.getX(), (int)this.test.get(0));
         assertEquals((int)event.getY(), (int)this.test.get(1));
         
+        System.out.println("Passed");
     }    
     
     public class MockAction implements Action {

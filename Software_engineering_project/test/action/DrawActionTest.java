@@ -68,7 +68,7 @@ public class DrawActionTest {
      */
     @Test
     public void testExecute() {
-        System.out.print("draw :");
+        System.out.print("execute :");
         
         event = new MouseEvent(new EventType("test1"), 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
     
@@ -138,7 +138,8 @@ public class DrawActionTest {
      * Test of onMouseDragged method, of class DrawAction.
      */
     @Test
-    public void onMouseDragged() {
+    public void testOnMouseDragged() {
+        System.out.print("onMouseDragged :");
         event = new MouseEvent(new EventType("test4"), 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
         
         instanceDrawActionRectangle = new DrawAction(rectangleShape, internalColorProperty, contourColorProperty, drawingPane);
@@ -158,13 +159,16 @@ public class DrawActionTest {
         Line line = (Line) lineShape.getShape();
         assertEquals(line.getEndX(), event.getX(), 0.1);
         assertEquals(line.getEndY(), event.getY(), 0.1);
+        
+        System.out.println("Passed");
     }
     
     /**
      * Test of onMouseReleased method, of class DrawAction.
      */
     @Test
-    public void onMouseReleased() {
+    public void testOnMouseReleased() {
+        System.out.print("onMouseReleased :");
         event = new MouseEvent(new EventType("test5"), 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
         
         instanceDrawActionRectangle = new DrawAction(rectangleShape, internalColorProperty, contourColorProperty, drawingPane);
@@ -179,5 +183,7 @@ public class DrawActionTest {
         instanceDrawActionLine = new DrawAction(lineShape, internalColorProperty, contourColorProperty, drawingPane);
         instanceDrawActionLine.onMouseReleased(event);
         assertEquals(drawingPane.disableProperty().getValue(), true);
+        
+        System.out.println("Passed");
     }    
 }
