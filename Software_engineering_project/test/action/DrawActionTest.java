@@ -1,5 +1,10 @@
 package action;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.event.EventType;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
@@ -17,10 +22,12 @@ import shapes.ShapeInterface;
 
 public class DrawActionTest {
 
-    private double internalRed, internalGreen, internalBlue, internalOpacity, contourGreen, contourRed, contourBlue, contourOpacity, width, height, radiusX, radiusY, startX, startY, endX, endY;
+    private double width, height, radiusX, radiusY, startX, startY, endX, endY;
     private ShapeInterface rectangleShape, ellipseShape, lineShape;
-    private Color internalColor, contourColor;
     private Pane drawingPane;
+    private ObjectProperty<Color> internalColorProperty, contourColorProperty;
+    private MouseEvent event;
+    private DrawAction instanceDrawActionLine, instanceDrawActionRectangle, instanceDrawActionEllipse;
 
     public DrawActionTest() {
         System.out.println("Test DrawAction");
@@ -28,14 +35,6 @@ public class DrawActionTest {
 
     @Before
     public void setUp() {
-        internalRed = 0.5;
-        internalGreen = 0.2;
-        internalBlue = 0.15;
-        internalOpacity = 0.2;
-        contourRed = 0.8;
-        contourGreen = 0.1;
-        contourBlue = 0.15;
-        contourOpacity = 0.2;
 
         // Shapes set up
         rectangleShape = new RectangleShape();
@@ -54,10 +53,14 @@ public class DrawActionTest {
         startY = line.getStartY();
         endX = line.getEndX();
         endY = line.getEndY();
-
-        internalColor = new Color(internalRed, internalGreen, internalBlue, internalOpacity);
-        contourColor = new Color(contourRed, contourGreen, contourBlue, contourOpacity);
+        
         drawingPane = new Pane();
+        
+        internalColorProperty = new SimpleObjectProperty<>();
+        contourColorProperty = new SimpleObjectProperty<>();
+        internalColorProperty.set(Color.BLUE);
+        contourColorProperty.set(Color.BLACK);
+    
     }
 
     /**
@@ -66,62 +69,115 @@ public class DrawActionTest {
     @Test
     public void testExecute() {
         System.out.print("draw :");
-
-        DrawAction instanceRectangle = new DrawAction(rectangleShape, 100, 150, internalColor, contourColor, drawingPane);
-        instanceRectangle.execute();
+        
+        event = new MouseEvent(new EventType("test1"), 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+    
+        instanceDrawActionRectangle = new DrawAction(rectangleShape, internalColorProperty, contourColorProperty, drawingPane);
+        instanceDrawActionRectangle.execute(event);
         Rectangle rectangleRetrieved = (Rectangle) drawingPane.getChildren().get(0);
         Color colorFillRectangle = (Color) rectangleRetrieved.getFill();
         Color colorStrokeRectangle = (Color) rectangleRetrieved.getStroke();
 
-        assertEquals(rectangleRetrieved.getLayoutX(), 100, 0.1);
-        assertEquals(rectangleRetrieved.getLayoutY(), 150, 0.1);
+        assertEquals(rectangleRetrieved.getLayoutX(), event.getX(), 0.1);
+        assertEquals(rectangleRetrieved.getLayoutY(), event.getY(), 0.1);
         assertEquals(rectangleRetrieved.getHeight(), height, 0.1);
         assertEquals(rectangleRetrieved.getWidth(), width, 0.1);
-        assertEquals(colorFillRectangle.getRed(), internalRed, 0.1);
-        assertEquals(colorFillRectangle.getGreen(), internalGreen, 0.1);
-        assertEquals(colorFillRectangle.getBlue(), internalBlue, 0.1);
-        assertEquals(colorFillRectangle.getOpacity(), internalOpacity, 0.1);
-        assertEquals(colorStrokeRectangle.getRed(), contourRed, 0.1);
-        assertEquals(colorStrokeRectangle.getGreen(), contourGreen, 0.1);
-        assertEquals(colorStrokeRectangle.getBlue(), contourBlue, 0.1);
-        assertEquals(colorStrokeRectangle.getOpacity(), contourOpacity, 0.1);
+        assertEquals(colorFillRectangle.getRed(), Color.BLUE.getRed(), 0.1);
+        assertEquals(colorFillRectangle.getGreen(), Color.BLUE.getGreen(), 0.1);
+        assertEquals(colorFillRectangle.getBlue(), Color.BLUE.getBlue(), 0.1);
+        assertEquals(colorFillRectangle.getOpacity(), Color.BLUE.getOpacity(), 0.1);
+        assertEquals(colorStrokeRectangle.getRed(), Color.BLACK.getRed(), 0.1);
+        assertEquals(colorStrokeRectangle.getGreen(), Color.BLACK.getGreen(), 0.1);
+        assertEquals(colorStrokeRectangle.getBlue(), Color.BLACK.getBlue(), 0.1);
+        assertEquals(colorStrokeRectangle.getOpacity(), Color.BLACK.getOpacity(), 0.1);
 
-        DrawAction instanceEllipse = new DrawAction(ellipseShape, 180, 200, internalColor, contourColor, drawingPane);
-        instanceEllipse.execute();
+        
+        event = new MouseEvent(new EventType("test2"), 180, 200, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+    
+        instanceDrawActionEllipse = new DrawAction(ellipseShape, internalColorProperty, contourColorProperty, drawingPane);
+        instanceDrawActionEllipse.execute(event);
         Ellipse shapeRetrievedEllipse = (Ellipse) drawingPane.getChildren().get(1);
         Color colorFillEllipse = (Color) shapeRetrievedEllipse.getFill();
         Color colorStrokeEllipse = (Color) shapeRetrievedEllipse.getStroke();
 
-        assertEquals(shapeRetrievedEllipse.getLayoutX(), 180, 0.1);
-        assertEquals(shapeRetrievedEllipse.getLayoutY(), 200, 0.1);
+        assertEquals(shapeRetrievedEllipse.getLayoutX(), event.getX(), 0.1);
+        assertEquals(shapeRetrievedEllipse.getLayoutY(), event.getY(), 0.1);
         assertEquals(shapeRetrievedEllipse.getRadiusX(), radiusX, 0.1);
         assertEquals(shapeRetrievedEllipse.getRadiusY(), radiusY, 0.1);
-        assertEquals(colorFillEllipse.getRed(), internalRed, 0.1);
-        assertEquals(colorFillEllipse.getGreen(), internalGreen, 0.1);
-        assertEquals(colorFillEllipse.getBlue(), internalBlue, 0.1);
-        assertEquals(colorFillEllipse.getOpacity(), internalOpacity, 0.1);
-        assertEquals(colorStrokeEllipse.getRed(), contourRed, 0.1);
-        assertEquals(colorStrokeEllipse.getGreen(), contourGreen, 0.1);
-        assertEquals(colorStrokeEllipse.getBlue(), contourBlue, 0.1);
-        assertEquals(colorStrokeEllipse.getOpacity(), contourOpacity, 0.1);
+        assertEquals(colorFillEllipse.getRed(), Color.BLUE.getRed(), 0.1);
+        assertEquals(colorFillEllipse.getGreen(), Color.BLUE.getGreen(), 0.1);
+        assertEquals(colorFillEllipse.getBlue(), Color.BLUE.getBlue(), 0.1);
+        assertEquals(colorFillEllipse.getOpacity(), Color.BLUE.getOpacity(), 0.1);
+        assertEquals(colorStrokeEllipse.getRed(), Color.BLACK.getRed(), 0.1);
+        assertEquals(colorStrokeEllipse.getGreen(), Color.BLACK.getGreen(), 0.1);
+        assertEquals(colorStrokeEllipse.getBlue(), Color.BLACK.getBlue(), 0.1);
+        assertEquals(colorStrokeEllipse.getOpacity(), Color.BLACK.getOpacity(), 0.1);
 
-        DrawAction instanceLine = new DrawAction(lineShape, 100, 150, internalColor, contourColor, drawingPane);
-        instanceLine.execute();
+        event = new MouseEvent(new EventType("test3"), 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+    
+        instanceDrawActionLine = new DrawAction(lineShape, internalColorProperty, contourColorProperty, drawingPane);
+        instanceDrawActionLine.execute(event);
         Line shapeRetrievedLine = (Line) drawingPane.getChildren().get(2);
         Color colorStrokeLine = (Color) shapeRetrievedLine.getStroke();
 
-        assertEquals(shapeRetrievedLine.getLayoutX(), 100, 0.1);
-        assertEquals(shapeRetrievedLine.getLayoutY(), 150, 0.1);
+        assertEquals(shapeRetrievedLine.getLayoutX(), event.getX(), 0.1);
+        assertEquals(shapeRetrievedLine.getLayoutY(), event.getY(), 0.1);
         assertEquals(shapeRetrievedLine.getStartX(), startX, 0.1);
         assertEquals(shapeRetrievedLine.getStartY(), startY, 0.1);
         assertEquals(shapeRetrievedLine.getEndX(), endX, 0.1);
         assertEquals(shapeRetrievedLine.getEndY(), endY, 0.1);
-        assertEquals(colorStrokeLine.getRed(), contourRed, 0.1);
-        assertEquals(colorStrokeLine.getGreen(), contourGreen, 0.1);
-        assertEquals(colorStrokeLine.getBlue(), contourBlue, 0.1);
-        assertEquals(colorStrokeLine.getOpacity(), contourOpacity, 0.1);
+        assertEquals(colorStrokeLine.getRed(),  Color.BLACK.getRed(), 0.1);
+        assertEquals(colorStrokeLine.getGreen(), Color.BLACK.getGreen(), 0.1);
+        assertEquals(colorStrokeLine.getBlue(), Color.BLACK.getBlue(), 0.1);
+        assertEquals(colorStrokeLine.getOpacity(), Color.BLACK.getOpacity(), 0.1);
 
         System.out.println("Passed");
     }
 
+    /**
+     * Test of onMouseDragged method, of class DrawAction.
+     */
+    @Test
+    public void onMouseDragged() {
+        event = new MouseEvent(new EventType("test4"), 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+        
+        instanceDrawActionRectangle = new DrawAction(rectangleShape, internalColorProperty, contourColorProperty, drawingPane);
+        instanceDrawActionRectangle.onMouseDragged(event);
+        Rectangle rectangle = (Rectangle) rectangleShape.getShape();
+        assertEquals(rectangle.getWidth(), event.getX(), 0.1);
+        assertEquals(rectangle.getHeight(), event.getY(), 0.1);
+        
+        instanceDrawActionEllipse = new DrawAction(ellipseShape, internalColorProperty, contourColorProperty, drawingPane);
+        instanceDrawActionEllipse.onMouseDragged(event);
+        Ellipse ellipse = (Ellipse) ellipseShape.getShape();
+        assertEquals(ellipse.getRadiusX(), event.getX(), 0.1);
+        assertEquals(ellipse.getRadiusY(), event.getY(), 0.1);
+        
+        instanceDrawActionLine = new DrawAction(lineShape, internalColorProperty, contourColorProperty, drawingPane);
+        instanceDrawActionLine.onMouseDragged(event);
+        Line line = (Line) lineShape.getShape();
+        assertEquals(line.getEndX(), event.getX(), 0.1);
+        assertEquals(line.getEndY(), event.getY(), 0.1);
+    }
+    
+    /**
+     * Test of onMouseReleased method, of class DrawAction.
+     */
+    @Test
+    public void onMouseReleased() {
+        event = new MouseEvent(new EventType("test5"), 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+        
+        instanceDrawActionRectangle = new DrawAction(rectangleShape, internalColorProperty, contourColorProperty, drawingPane);
+        instanceDrawActionRectangle.onMouseReleased(event);
+        assertEquals(drawingPane.disableProperty().getValue(), true);
+        
+        
+        instanceDrawActionEllipse = new DrawAction(ellipseShape, internalColorProperty, contourColorProperty, drawingPane);
+        instanceDrawActionEllipse.onMouseReleased(event);
+        assertEquals(drawingPane.disableProperty().getValue(), true);
+        
+        instanceDrawActionLine = new DrawAction(lineShape, internalColorProperty, contourColorProperty, drawingPane);
+        instanceDrawActionLine.onMouseReleased(event);
+        assertEquals(drawingPane.disableProperty().getValue(), true);
+    }    
 }

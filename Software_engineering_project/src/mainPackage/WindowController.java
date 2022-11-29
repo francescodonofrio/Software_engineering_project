@@ -165,7 +165,7 @@ public class WindowController implements Initializable {
      */
     @FXML
     private void drawingWindowOnMouseReleased(MouseEvent event) {
-        action.onMouseReleased(event);
+        invoker.executeOnMouseReleased(action, event);
     }
 
     /**
@@ -175,7 +175,7 @@ public class WindowController implements Initializable {
      */
     @FXML
     private void drawingWindowOnMouseDragged(MouseEvent event) {
-        action.onMouseDragged(event);
+        invoker.executeOnMouseDragged(action, event);
     }
 
     /**
@@ -185,9 +185,7 @@ public class WindowController implements Initializable {
      */
     @FXML
     private void drawingWindowOnMousePressed(MouseEvent event) {
-        invoker.execute(action);
-        action.onMousePressed(event);
-        
+        invoker.execute(action, event);
     }
 
 }
