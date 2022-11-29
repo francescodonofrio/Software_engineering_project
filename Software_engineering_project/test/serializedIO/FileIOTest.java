@@ -1,10 +1,16 @@
 package serializedIO;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -22,9 +28,9 @@ import org.junit.runners.MethodSorters;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FileIOTest {
 
-    private SerializableEllipse testEllipse;
-    private SerializableLine testLine;
-    private SerializableRectangle testRectangle;
+    private Ellipse testEllipse;
+    private Line testLine;
+    private Rectangle testRectangle;
     private Pane testPane;
     private Pane testPaneEmpty;
     private File testFile;
@@ -38,9 +44,9 @@ public class FileIOTest {
     @Before
     public void setUp() {
         
-        testEllipse = new SerializableEllipse(29, 73, 24, 55);
-        testLine = new SerializableLine(45, 93, 84, 123);
-        testRectangle = new SerializableRectangle(66, 82, 23, 17);
+        testEllipse = new Ellipse(29, 73, 24, 55);
+        testLine = new Line(45, 93, 84, 123);
+        testRectangle = new Rectangle(66, 82, 23, 17);
 
         testEllipse.setFill(Color.CHOCOLATE);
         testRectangle.setFill(Color.MEDIUMORCHID);
@@ -53,9 +59,9 @@ public class FileIOTest {
         testPane.getChildren().add(testEllipse);
         testPane.getChildren().add(testRectangle);
 
-        testFile = new File("testFile.bin");
+        testFile = new File("testFile.xml");
                 
-        testFileEmpty = new File("testFileEmpty.bin");
+        testFileEmpty = new File("testFileEmpty.xml");
         testPaneEmpty = new Pane();
         testFileNull = null;
         
@@ -69,7 +75,11 @@ public class FileIOTest {
         System.out.println("Save Test:");
 
         FileIO saveEmpty = new FileIO(testPaneEmpty);
-        saveEmpty.save(testFileEmpty);
+        try {
+            saveEmpty.save(testFileEmpty);
+        } catch (IOException ex) {
+            Logger.getLogger(FileIOTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         assertNotNull(testFileEmpty);
         assertTrue(testFileEmpty.exists());
@@ -77,8 +87,16 @@ public class FileIOTest {
         assertNotEquals(0, testFileEmpty.length()); // file is not really "empty" because the number of shapes is writed on it also is it 0.
         
         FileIO save = new FileIO(testPane); 
-        save.save(testFile);
-        save.save(testFileNull);
+        try {
+            save.save(testFile);
+        } catch (IOException ex) {
+            Logger.getLogger(FileIOTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            save.save(testFileNull);
+        } catch (IOException ex) {
+            Logger.getLogger(FileIOTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         assertNotNull(save);  
         assertNotNull(testFile);
@@ -98,7 +116,11 @@ public class FileIOTest {
 
         Pane loadedPane = new Pane();
         FileIO loadEmpty = new FileIO(loadedPane);
-        loadEmpty.load(testFileEmpty);
+        try {
+            loadEmpty.load(testFileEmpty);
+        } catch (IOException ex) {
+            Logger.getLogger(FileIOTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         List expectedList = testPaneEmpty.getChildren();
         List actualList = loadedPane.getChildren();
@@ -108,8 +130,16 @@ public class FileIOTest {
         assertEquals(expectedList.toString(), actualList.toString());
         
         FileIO load = new FileIO(loadedPane);
-        load.load(testFile);
-        load.load(testFileNull);
+        try {
+            load.load(testFile);
+        } catch (IOException ex) {
+            Logger.getLogger(FileIOTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            load.load(testFileNull);
+        } catch (IOException ex) {
+            Logger.getLogger(FileIOTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         expectedList = testPane.getChildren();
         actualList = loadedPane.getChildren();
