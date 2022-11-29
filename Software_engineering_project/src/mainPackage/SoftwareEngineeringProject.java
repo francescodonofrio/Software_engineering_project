@@ -29,6 +29,8 @@ public class SoftwareEngineeringProject extends Application {
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
+        stage.setMinHeight(500);
+        stage.setMinWidth(800);
         stage.show();
     }
 
