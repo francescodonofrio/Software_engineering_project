@@ -1,7 +1,6 @@
 package shapes;
 
 import javafx.scene.shape.Line;
-import serializedIO.SerializableLine;
 
 public class LineShape extends OpenContourShape {
 
@@ -11,7 +10,7 @@ public class LineShape extends OpenContourShape {
      * Creates a new instance of LineShape
      */
     public LineShape() {
-        this.shape = new SerializableLine();
+        this.shape = new Line();
         this.line = (Line)shape;
     }
 

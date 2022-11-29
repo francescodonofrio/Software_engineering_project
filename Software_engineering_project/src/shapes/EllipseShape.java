@@ -1,7 +1,6 @@
 package shapes;
 
 import javafx.scene.shape.Ellipse;
-import serializedIO.SerializableEllipse;
 
 public class EllipseShape extends CloseContourShape {
 
@@ -12,7 +11,7 @@ public class EllipseShape extends CloseContourShape {
      * Creates a new instance of  EllipseShape
      */
     public EllipseShape() {
-        this.shape = new SerializableEllipse();
+        this.shape = new Ellipse();
         this.ellipse = (Ellipse)this.shape;
     }
 

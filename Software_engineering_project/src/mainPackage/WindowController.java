@@ -17,8 +17,11 @@ import shapes.EllipseShape;
 import shapes.LineShape;
 import shapes.RectangleShape;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.Button;
 import shapes.ShapeInterface;
 
@@ -75,7 +78,7 @@ public class WindowController implements Initializable {
         colorPickerContour.setValue(Color.BLACK);
         
         fileChooser = new FileChooser();
-        extensionFilter = new FileChooser.ExtensionFilter("Binary File (*.bin)", "*.bin");
+        extensionFilter = new FileChooser.ExtensionFilter("XML File (*.xml)", "*.xml");
         fileChooser.getExtensionFilters().add(extensionFilter);
         shapesInputOutput = new FileIO(this.drawingPane);
     }
@@ -122,7 +125,11 @@ public class WindowController implements Initializable {
     private void saveWindow(ActionEvent event) {
         fileChooser.setTitle("Save File");
         file = fileChooser.showSaveDialog(drawingPane.getScene().getWindow());
-        shapesInputOutput.save(file);
+        try {
+            shapesInputOutput.save(file);
+        } catch (IOException ex) {
+            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -134,7 +141,11 @@ public class WindowController implements Initializable {
     private void loadWindow(ActionEvent event) {
         fileChooser.setTitle("Open File");
         file = fileChooser.showOpenDialog(drawingPane.getScene().getWindow());
-        shapesInputOutput.load(file);
+        try {
+            shapesInputOutput.load(file);
+        } catch (IOException ex) {
+            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
