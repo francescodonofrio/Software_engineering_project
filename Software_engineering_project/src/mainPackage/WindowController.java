@@ -22,10 +22,16 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.shape.Shape;
+import javafx.util.Callback;
 import shapes.ShapeInterface;
 
 public class WindowController implements Initializable {
@@ -59,9 +65,9 @@ public class WindowController implements Initializable {
     private Color contourColor;
     private Action action;
     @FXML
-    private TableView<Shape> shapesTable;
+    private TableView<Node> shapesTable;
     @FXML
-    private TableColumn<Shape, String> insertedShapes;
+    private TableColumn<Node, String> shapesColumn;
 
     /**
      * Called to initialize a controller after its root element has been
@@ -78,6 +84,14 @@ public class WindowController implements Initializable {
         
         this.invoker = new Invoker();
         
+        shapesTable.setItems(drawingPane.getChildren());
+        shapesColumn.setCellValueFactory(new Callback<CellDataFeatures<Node, String>, ObservableValue<String>>() {
+            public ObservableValue<String> call(CellDataFeatures<Node, String> p) {
+             // p.getValue() returns the Person instance for a particular TableView row
+             return new ReadOnlyObjectWrapper(p.getValue().toString().split("\\[")[0]);
+            }
+        });
+                     
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         

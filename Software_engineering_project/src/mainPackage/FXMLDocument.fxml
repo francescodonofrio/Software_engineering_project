@@ -76,7 +76,7 @@
                   </ScrollPane>
                   <TableView fx:id="shapesTable" maxWidth="250.0" prefHeight="200.0" prefWidth="200.0" SplitPane.resizableWithParent="false">
                     <columns>
-                      <TableColumn fx:id="insertedShapes" editable="false" maxWidth="1.7976931348623157E308" prefWidth="151.0" text="Inserted shapes" />
+                      <TableColumn fx:id="shapesColumn" editable="false" maxWidth="1.7976931348623157E308" prefWidth="151.0" text="Inserted shapes" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
