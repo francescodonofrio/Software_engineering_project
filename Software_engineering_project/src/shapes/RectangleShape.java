@@ -2,7 +2,6 @@ package shapes;
 
 
 import javafx.scene.shape.Rectangle;
-import serializedIO.SerializableRectangle;
 
 public class RectangleShape extends CloseContourShape {
 
@@ -13,7 +12,7 @@ public class RectangleShape extends CloseContourShape {
      * Creates a new instance of RectangleShape
      */
     public RectangleShape() {
-        this.shape = new SerializableRectangle();
+        this.shape = new Rectangle();
         this.rectangle = (Rectangle)shape;
     }
 
