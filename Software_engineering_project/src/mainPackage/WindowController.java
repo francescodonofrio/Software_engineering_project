@@ -89,6 +89,7 @@ public class WindowController implements Initializable {
     private void lineSegmentSelection(ActionEvent event) {
         selectedShape = new LineShape();
         drawingPane.setDisable(false);
+        action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), drawingPane);
     }
 
     /**
@@ -100,6 +101,7 @@ public class WindowController implements Initializable {
     private void rectangleSelection(ActionEvent event) {
         selectedShape = new RectangleShape();
         drawingPane.setDisable(false);
+        action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), drawingPane);
     }
 
     /**
@@ -111,6 +113,7 @@ public class WindowController implements Initializable {
     private void ellipseSelection(ActionEvent event) {
         selectedShape = new EllipseShape();
         drawingPane.setDisable(false);
+        action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), drawingPane);
     }
 
     /**
@@ -144,7 +147,7 @@ public class WindowController implements Initializable {
      */
     @FXML
     private void drawingWindowOnMouseReleased(MouseEvent event) {
-        drawingPane.setDisable(true);
+        action.onMouseReleased(event);
     }
 
     /**
@@ -154,9 +157,7 @@ public class WindowController implements Initializable {
      */
     @FXML
     private void drawingWindowOnMouseDragged(MouseEvent event) {
-        finalX = event.getX();
-        finalY = event.getY();
-        selectedShape.setDim(initialX, initialY, finalX, finalY);
+        action.onMouseDragged(event);
     }
 
     /**
@@ -166,12 +167,9 @@ public class WindowController implements Initializable {
      */
     @FXML
     private void drawingWindowOnMousePressed(MouseEvent event) {
-        internalColor = colorPickerInternal.getValue();
-        contourColor = colorPickerContour.getValue();
-        initialX = event.getX();
-        initialY = event.getY();
-        action = new DrawAction(selectedShape, initialX, initialY, internalColor, contourColor, drawingPane);
         invoker.execute(action);
+        action.onMousePressed(event);
+        
     }
 
 }
