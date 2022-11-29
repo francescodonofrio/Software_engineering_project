@@ -12,7 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
-import shapes.FileIO;
+import shapes.IO.FileIO;
 import shapes.EllipseShape;
 import shapes.LineShape;
 import shapes.RectangleShape;
