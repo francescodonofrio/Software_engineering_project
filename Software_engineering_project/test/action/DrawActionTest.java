@@ -68,7 +68,7 @@ public class DrawActionTest {
      */
     @Test
     public void testExecute() {
-        System.out.print("execute :");
+        System.out.print("execute: ");
         
         event = new MouseEvent(new EventType("test1"), 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
     
@@ -139,7 +139,7 @@ public class DrawActionTest {
      */
     @Test
     public void testOnMouseDragged() {
-        System.out.print("onMouseDragged :");
+        System.out.print("onMouseDragged: ");
         event = new MouseEvent(new EventType("test4"), 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
         
         instanceDrawActionRectangle = new DrawAction(rectangleShape, internalColorProperty, contourColorProperty, drawingPane);
@@ -168,7 +168,7 @@ public class DrawActionTest {
      */
     @Test
     public void testOnMouseReleased() {
-        System.out.print("onMouseReleased :");
+        System.out.print("onMouseReleased: ");
         event = new MouseEvent(new EventType("test5"), 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
         
         instanceDrawActionRectangle = new DrawAction(rectangleShape, internalColorProperty, contourColorProperty, drawingPane);

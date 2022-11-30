@@ -2,7 +2,7 @@ package shapes;
 
 import javafx.scene.shape.Ellipse;
 
-public class EllipseShape extends ShapeAbstract {
+public class EllipseShape extends CloseContourShape {
 
     private double radiusX, radiusY;
     private final Ellipse ellipse;
