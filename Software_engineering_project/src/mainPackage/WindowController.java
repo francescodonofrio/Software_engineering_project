@@ -25,6 +25,8 @@ import shapes.ShapeInterface;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,7 +50,7 @@ public class WindowController implements Initializable {
 
     private Invoker invoker;
     private ShapeInterface selectedShape;
-    private Shape selectedInsertedShape;
+    private Deque<Shape> selectedInsertedShape;
 
     private double initialX;
     private double initialY;
@@ -78,6 +80,7 @@ public class WindowController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.invoker = new Invoker();
+        this.selectedInsertedShape=new ArrayDeque();
         this.action = new MoveAction(selectedInsertedShape);
 
         shapesTable.setItems(drawingPane.getChildren());

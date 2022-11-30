@@ -4,11 +4,14 @@ import exceptions.VoidActionException;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Shape;
 
+import java.util.Deque;
+
 public class MoveAction implements Action {
     private double initialX, initialY, finalX, finalY, offsetX, offsetY;
-    private Shape currentShape;
+    private Deque currentShape;
+    private Shape selectedShape;
 
-    public MoveAction(Shape currentShape) {
+    public MoveAction(Deque<Shape> currentShape) {
         this.currentShape = currentShape;
     }
 
@@ -20,18 +23,20 @@ public class MoveAction implements Action {
      */
     @Override
     public void execute(MouseEvent event) {
+        currentShape.clear();
         initialX = -1;
         initialY = -1;
 
         Object actionTarget = event.getTarget();
         if (actionTarget instanceof Shape) {
-            currentShape = (Shape) actionTarget;
+            selectedShape=(Shape) actionTarget;
+            currentShape.push(selectedShape);
 
-            initialX = currentShape.getLayoutX();
-            initialY = currentShape.getLayoutY();
+            initialX = selectedShape.getLayoutX();
+            initialY = selectedShape.getLayoutY();
 
-            offsetX = currentShape.getLayoutX() - event.getX();
-            offsetY = currentShape.getLayoutY() - event.getY();
+            offsetX = selectedShape.getLayoutX() - event.getX();
+            offsetY = selectedShape.getLayoutY() - event.getY();
         }
     }
 
@@ -43,8 +48,8 @@ public class MoveAction implements Action {
     @Override
     public void onMouseDragged(MouseEvent event) {
         if (initialY != -1 && initialX != -1) {
-            currentShape.setLayoutX(offsetX + event.getX());
-            currentShape.setLayoutY(offsetY + event.getY());
+            selectedShape.setLayoutX(offsetX + event.getX());
+            selectedShape.setLayoutY(offsetY + event.getY());
         }
     }
 
@@ -61,8 +66,8 @@ public class MoveAction implements Action {
 
         finalX = event.getX();
         finalY = event.getY();
-        currentShape.setLayoutX(offsetX + event.getX());
-        currentShape.setLayoutY(offsetY + event.getY());
+        selectedShape.setLayoutX(offsetX + event.getX());
+        selectedShape.setLayoutY(offsetY + event.getY());
 
         if (finalX == initialX && finalY == initialY)
             throw new VoidActionException("Starting position equals final one");

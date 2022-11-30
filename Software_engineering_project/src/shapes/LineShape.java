@@ -5,13 +5,13 @@ import javafx.scene.shape.Line;
 public class LineShape extends OpenContourShape {
 
     private final Line line;
-    
+
     /**
      * Creates a new instance of LineShape
      */
     public LineShape() {
         this.shape = new Line();
-        this.line = (Line)shape;
+        this.line = (Line) shape;
     }
 
     /**

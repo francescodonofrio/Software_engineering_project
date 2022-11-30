@@ -5,15 +5,15 @@ import javafx.scene.shape.Rectangle;
 
 public class RectangleShape extends CloseContourShape {
 
-    private double width, height;
     private final Rectangle rectangle;
-    
+    private double width, height;
+
     /**
      * Creates a new instance of RectangleShape
      */
     public RectangleShape() {
         this.shape = new Rectangle();
-        this.rectangle = (Rectangle)shape;
+        this.rectangle = (Rectangle) shape;
     }
 
     /**

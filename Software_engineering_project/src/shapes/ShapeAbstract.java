@@ -54,7 +54,7 @@ public abstract class ShapeAbstract implements ShapeInterface {
      * @param Y the new Y coordinate
      */
     @Override
-    public void move( double X, double Y){
+    public void move(double X, double Y) {
         this.setX(X);
         this.setY(Y);
     }

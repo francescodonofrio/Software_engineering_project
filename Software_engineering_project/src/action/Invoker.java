@@ -28,7 +28,7 @@ public class Invoker {
             action.execute(event);
             this.actions.push(action);
         } catch (Exception ex) {
-            System.out.println("Unable to execute this action: \" " + ex + " \" !\n");
+            System.out.println("Unable to execute this action: \"" + ex + "\" !\n");
         }
     }
 
@@ -53,7 +53,7 @@ public class Invoker {
             action.onMouseReleased(event);
         } catch (VoidActionException ex) {
             this.actions.pop();
-            System.out.println("Unable to execute this action: \" " + ex + " \" !");
+            System.out.println("Unable to execute this action: \"" + ex + "\" !");
         }
     }
 
