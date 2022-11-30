@@ -54,8 +54,7 @@ public class DrawAction implements Action {
     }
 
     /**
-     * Disable the drawing pane
-     * 
+     *  
      * @param event the mouse event of the click
      */
     @Override
