@@ -1,6 +1,7 @@
 package shapes;
 
 
+import java.util.Objects;
 import javafx.scene.shape.Rectangle;
 
 public class RectangleShape extends ShapeAbstract {
@@ -42,5 +43,24 @@ public class RectangleShape extends ShapeAbstract {
         rectangle.setWidth(width);
         rectangle.setHeight(height);
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 71 * hash + (int) (Double.doubleToLongBits(this.width) ^ (Double.doubleToLongBits(this.width) >>> 32));
+        hash = 71 * hash + (int) (Double.doubleToLongBits(this.height) ^ (Double.doubleToLongBits(this.height) >>> 32));
+        hash = 71 * hash + Objects.hashCode(this.rectangle);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Rectangle a = (Rectangle)obj;
+        if(a == this.shape)
+            return true;
+        return false;
+    }
+    
+    
 
 }

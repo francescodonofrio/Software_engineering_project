@@ -22,9 +22,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -51,7 +53,6 @@ public class WindowController implements Initializable {
     private TableView<ShapeInterface> shapesTable;
     @FXML
     private TableColumn<ShapeInterface, String> shapesColumn;
-
 
     private Invoker invoker;
     private ShapeInterface selectedShape;
@@ -97,7 +98,7 @@ public class WindowController implements Initializable {
         
         shapesColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         shapesTable.setItems(listInsertedShapes);
-
+        
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         
@@ -186,7 +187,8 @@ public class WindowController implements Initializable {
     @FXML
     private void drawingWindowOnMouseReleased(MouseEvent event) {
         invoker.executeOnMouseReleased(action, event);
-        drawingPane.setDisable(true);
+        drawingPane.setDisable(true);                           // Da eliminare quando sarà aggiunto la default action
+
     }
 
     /**
