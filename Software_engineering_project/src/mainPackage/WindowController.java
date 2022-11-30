@@ -3,36 +3,31 @@ package mainPackage;
 import action.Action;
 import action.DrawAction;
 import action.Invoker;
+import action.MoveAction;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.Node;
+import javafx.scene.control.*;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Shape;
 import javafx.stage.FileChooser;
-import shapes.IO.FileIO;
 import shapes.EllipseShape;
+import shapes.IO.FileIO;
 import shapes.LineShape;
 import shapes.RectangleShape;
+import shapes.ShapeInterface;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.shape.Shape;
-import javafx.util.Callback;
-import shapes.ShapeInterface;
 
 public class WindowController implements Initializable {
 
@@ -53,6 +48,8 @@ public class WindowController implements Initializable {
 
     private Invoker invoker;
     private ShapeInterface selectedShape;
+    private Shape selectedInsertedShape;
+
     private double initialX;
     private double initialY;
     private double finalX;
@@ -80,20 +77,19 @@ public class WindowController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        drawingPane.setDisable(true);
-        
         this.invoker = new Invoker();
-        
+        this.action = new MoveAction(selectedInsertedShape);
+
         shapesTable.setItems(drawingPane.getChildren());
         shapesColumn.setCellValueFactory((CellDataFeatures<Node, String> p) -> new ReadOnlyObjectWrapper(p.getValue().toString().split("\\[")[0]) // p.getValue() returns the Person instance for a particular TableView row
         );
-                     
+
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        
+
         colorPickerInternal.setValue(Color.TRANSPARENT);
         colorPickerContour.setValue(Color.BLACK);
-        
+
         fileChooser = new FileChooser();
         extensionFilter = new FileChooser.ExtensionFilter("XML File (*.xml)", "*.xml");
         fileChooser.getExtensionFilters().add(extensionFilter);
@@ -108,7 +104,6 @@ public class WindowController implements Initializable {
     @FXML
     private void lineSegmentSelection(ActionEvent event) {
         selectedShape = new LineShape();
-        drawingPane.setDisable(false);
         action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), drawingPane);
     }
 
@@ -120,7 +115,6 @@ public class WindowController implements Initializable {
     @FXML
     private void rectangleSelection(ActionEvent event) {
         selectedShape = new RectangleShape();
-        drawingPane.setDisable(false);
         action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), drawingPane);
     }
 
@@ -132,7 +126,6 @@ public class WindowController implements Initializable {
     @FXML
     private void ellipseSelection(ActionEvent event) {
         selectedShape = new EllipseShape();
-        drawingPane.setDisable(false);
         action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), drawingPane);
     }
 
@@ -176,6 +169,9 @@ public class WindowController implements Initializable {
     @FXML
     private void drawingWindowOnMouseReleased(MouseEvent event) {
         invoker.executeOnMouseReleased(action, event);
+
+        // Here we reset the default action to move action
+        this.action = new MoveAction(selectedInsertedShape);
     }
 
     /**

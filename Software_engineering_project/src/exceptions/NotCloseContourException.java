@@ -1,7 +1,11 @@
 package exceptions;
 
 public class NotCloseContourException extends Exception {
-    public NotCloseContourException(){
+    public NotCloseContourException() {
         super();
+    }
+
+    public NotCloseContourException(String message) {
+        super(message);
     }
 }

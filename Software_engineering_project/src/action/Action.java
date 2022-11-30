@@ -1,5 +1,6 @@
 package action;
 
+import exceptions.VoidActionException;
 import javafx.scene.input.MouseEvent;
 
 public interface Action {
@@ -12,7 +13,7 @@ public interface Action {
     void execute(MouseEvent event) throws Exception;
 
     void onMouseDragged(MouseEvent event);
-    
-    void onMouseReleased(MouseEvent event);
+
+    void onMouseReleased(MouseEvent event) throws VoidActionException;
 
 }

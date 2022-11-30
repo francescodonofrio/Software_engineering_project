@@ -14,16 +14,16 @@ public class DrawAction implements Action {
     private final ObjectProperty<Color> colorPickerContour;
     private double initialX;
     private double initialY;
-    
+
 
     /**
      * Returns a new instance of DrawAction, given the shape to draw, its coordinates,
      * its internal and contour color and the pane where to draw at
      *
-     * @param shape         the shape to draw
-     * @param colorPickerInternal   an ObjectProperty<Color> from whom the shape's internal color is taken
-     * @param colorPickerContour    an ObjectProperty<Color> from whom the shape's contour color is taken
-     * @param drawingPane   the drawing pane
+     * @param shape               the shape to draw
+     * @param colorPickerInternal an ObjectProperty<Color> from whom the shape's internal color is taken
+     * @param colorPickerContour  an ObjectProperty<Color> from whom the shape's contour color is taken
+     * @param drawingPane         the drawing pane
      */
     public DrawAction(ShapeInterface shape, ObjectProperty<Color> colorPickerInternal, ObjectProperty<Color> colorPickerContour, Pane drawingPane) {
         this.shape = shape;
@@ -45,7 +45,7 @@ public class DrawAction implements Action {
 
     /**
      * Set the dimension of the shape
-     * 
+     *
      * @param event the mouse event of the click
      */
     @Override
@@ -55,14 +55,12 @@ public class DrawAction implements Action {
 
     /**
      * Disable the drawing pane
-     * 
+     *
      * @param event the mouse event of the click
      */
     @Override
     public void onMouseReleased(MouseEvent event) {
-        drawingPane.setDisable(true);
     }
-    
-    
+
 
 }

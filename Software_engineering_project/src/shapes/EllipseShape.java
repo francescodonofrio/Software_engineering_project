@@ -4,15 +4,15 @@ import javafx.scene.shape.Ellipse;
 
 public class EllipseShape extends CloseContourShape {
 
-    private double radiusX, radiusY;
     private final Ellipse ellipse;
-    
+    private double radiusX, radiusY;
+
     /**
      * Creates a new instance of  EllipseShape
      */
     public EllipseShape() {
         this.shape = new Ellipse();
-        this.ellipse = (Ellipse)this.shape;
+        this.ellipse = (Ellipse) this.shape;
     }
 
     /**

@@ -2,7 +2,7 @@ package shapes;
 
 import javafx.scene.paint.Color;
 
-public abstract class CloseContourShape extends ShapeAbstract{
+public abstract class CloseContourShape extends ShapeAbstract {
     /**
      * Sets a new internal color for a shape
      *

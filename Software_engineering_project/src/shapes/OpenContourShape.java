@@ -2,7 +2,6 @@ package shapes;
 
 import exceptions.NotCloseContourException;
 import javafx.scene.paint.Color;
-import shapes.ShapeAbstract;
 
 public abstract class OpenContourShape extends ShapeAbstract {
     /**
@@ -11,7 +10,7 @@ public abstract class OpenContourShape extends ShapeAbstract {
      * @param newColor the new color to set
      */
     @Override
-    public void setInternalColor(Color newColor) throws NotCloseContourException{
+    public void setInternalColor(Color newColor) throws NotCloseContourException {
         throw new NotCloseContourException();
     }
 
