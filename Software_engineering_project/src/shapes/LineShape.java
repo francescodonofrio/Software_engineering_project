@@ -2,7 +2,7 @@ package shapes;
 
 import javafx.scene.shape.Line;
 
-public class LineShape extends ShapeAbstract {
+public class LineShape extends OpenContourShape {
 
     private final Line line;
     

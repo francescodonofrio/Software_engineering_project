@@ -20,16 +20,6 @@ public abstract class ShapeAbstract implements ShapeInterface {
     }
 
     /**
-     * Sets a new internal color for a shape
-     *
-     * @param newColor the new color to set
-     */
-    @Override
-    public void setInternalColor(Color newColor) {
-        shape.setFill(newColor);
-    }
-
-    /**
      * Sets a new contour color for a shape
      *
      * @param newColor the new color to set
@@ -60,19 +50,15 @@ public abstract class ShapeAbstract implements ShapeInterface {
     }
 
     /**
-     * Updates the current shape as defined by the parameters
+     * Moves the shape to a new position
      *
-     * @param X             the new X coordinate
-     * @param Y             the new Y coordinate
-     * @param internalColor the internal color
-     * @param contourColor  the contour color
+     * @param X the new X coordinate
+     * @param Y the new Y coordinate
      */
     @Override
-    public void setProperties(double X, double Y, Color internalColor, Color contourColor) {
+    public void move( double X, double Y){
         this.setX(X);
         this.setY(Y);
-        this.setInternalColor(internalColor);
-        this.setContourColor(contourColor);
     }
     
     @Override

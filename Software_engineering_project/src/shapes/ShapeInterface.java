@@ -1,5 +1,6 @@
 package shapes;
 
+import exceptions.NotCloseContourException;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 
@@ -39,7 +40,7 @@ public interface ShapeInterface {
      * @param newColor the new color to set
      * @throws exceptions.NotCloseContourException
      */
-    void setInternalColor(Color newColor);
+    void setInternalColor(Color newColor) throws NotCloseContourException;
 
     /**
      * Sets a new contour color for a shape

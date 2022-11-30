@@ -1,5 +1,6 @@
 package shapes;
 
+import exceptions.NotCloseContourException;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -13,7 +14,7 @@ public class ShapeAbstractTest {
     private MockShape shape;
 
     public ShapeAbstractTest() {
-        System.out.println("Test CloseContourShape");
+        System.out.println("Test ShapeAbstract");
     }
 
     @Before
@@ -23,7 +24,7 @@ public class ShapeAbstractTest {
     }
 
     /**
-     * Test of getShape method, of class CloseContourShape.
+     * Test of getShape method, of class ShapeAbstract.
      */
     @Test
     public void testGetShape() {
@@ -35,21 +36,7 @@ public class ShapeAbstractTest {
     }
 
     /**
-     * Test of setInternalColor method, of class CloseContourShape.
-     */
-    @Test
-    public void testSetInternalColor() {
-        System.out.print("setInternalColor: ");
-
-        Color selectedColor = Color.YELLOW;
-        shape.setInternalColor(selectedColor);
-        assertEquals(test.getFill(), selectedColor);
-
-        System.out.println("Passed");
-    }
-
-    /**
-     * Test of setX method, of class CloseContourShape.
+     * Test of setX method, of class ShapeAbstract.
      */
     @Test
     public void testSetX() {
@@ -63,7 +50,7 @@ public class ShapeAbstractTest {
     }
 
     /**
-     * Test of setY method, of class CloseContourShape.
+     * Test of setY method, of class ShapeAbstract.
      */
     @Test
     public void testSetY() {
@@ -77,7 +64,7 @@ public class ShapeAbstractTest {
     }
 
     /**
-     * Test of setContourColor method, of class CloseContourShape.
+     * Test of setContourColor method, of class ShapeAbstract.
      */
     @Test
     public void testSetContourColor() {
@@ -91,19 +78,16 @@ public class ShapeAbstractTest {
     }
 
     /**
-     * Test of setProperties method, of class CloseContourShape.
+     * Test of move method, of class ShapeAbstract.
      */
     @Test
-    public void testSetProperties() {
-        System.out.print("draw: ");
+    public void testMove() {
+        System.out.print("move: ");
 
-        Color internalColor = Color.CHOCOLATE;
-        Color contourColor = Color.YELLOW;
-        shape.setProperties(50, 60, internalColor, contourColor);
-        assertEquals(test.getStroke(), contourColor);
-        assertEquals(test.getFill(), internalColor);
-        assertEquals(test.getLayoutX(), 50, 0.1);
-        assertEquals(test.getLayoutY(), 60, 0.1);
+        double newX=50, newY=60;
+        shape.move(newX, newY);
+        assertEquals(test.getLayoutX(), newX, 0.1);
+        assertEquals(test.getLayoutY(), newY, 0.1);
 
 
         System.out.println("Passed");
@@ -116,6 +100,14 @@ public class ShapeAbstractTest {
         
         @Override
         public void setDim(double initialX, double initialY, double finalX, double finalY) {
+        }
+
+        @Override
+        public void setInternalColor(Color newColor) throws NotCloseContourException {
+        }
+
+        @Override
+        public void setProperties(double X, double Y, Color internalColor, Color contourColor) {
         }
     }
     
