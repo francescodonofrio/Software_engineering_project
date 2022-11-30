@@ -1,15 +1,15 @@
 package action;
 
 import javafx.beans.property.ObjectProperty;
+import javafx.collections.ObservableList;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import shapes.ShapeInterface;
 
 public class DrawAction implements Action {
 
     private final ShapeInterface shape;
-    private final Pane drawingPane;
+    private final ObservableList<ShapeInterface> listInsertedShapes;
     private final ObjectProperty<Color> colorPickerInternal;
     private final ObjectProperty<Color> colorPickerContour;
     private double initialX;
@@ -23,11 +23,11 @@ public class DrawAction implements Action {
      * @param shape         the shape to draw
      * @param colorPickerInternal   an ObjectProperty<Color> from whom the shape's internal color is taken
      * @param colorPickerContour    an ObjectProperty<Color> from whom the shape's contour color is taken
-     * @param drawingPane   the drawing pane
+     * @param listInsertedShapes    the list in which are stored the shapes
      */
-    public DrawAction(ShapeInterface shape, ObjectProperty<Color> colorPickerInternal, ObjectProperty<Color> colorPickerContour, Pane drawingPane) {
+    public DrawAction(ShapeInterface shape, ObjectProperty<Color> colorPickerInternal, ObjectProperty<Color> colorPickerContour, ObservableList<ShapeInterface> listInsertedShapes) {
         this.shape = shape;
-        this.drawingPane = drawingPane;
+        this.listInsertedShapes = listInsertedShapes;
         this.colorPickerInternal = colorPickerInternal;
         this.colorPickerContour = colorPickerContour;
     }
@@ -37,7 +37,7 @@ public class DrawAction implements Action {
      */
     @Override
     public void execute(MouseEvent event) {
-        drawingPane.getChildren().add(shape.getShape());
+        listInsertedShapes.add(shape);
         initialX = event.getX();
         initialY = event.getY();
         shape.setProperties(initialX, initialY, colorPickerInternal.getValue(), colorPickerContour.getValue());
@@ -60,7 +60,6 @@ public class DrawAction implements Action {
      */
     @Override
     public void onMouseReleased(MouseEvent event) {
-        drawingPane.setDisable(true);
     }
     
     

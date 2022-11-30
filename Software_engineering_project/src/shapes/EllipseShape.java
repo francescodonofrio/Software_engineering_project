@@ -13,6 +13,8 @@ public class EllipseShape extends ShapeAbstract {
     public EllipseShape() {
         this.shape = new Ellipse();
         this.ellipse = (Ellipse)this.shape;
+        this.name = "Ellipse "+EllipseShape.cont;
+        EllipseShape.cont++;
     }
 
     /**

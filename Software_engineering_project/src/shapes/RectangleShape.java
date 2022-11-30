@@ -14,6 +14,8 @@ public class RectangleShape extends ShapeAbstract {
     public RectangleShape() {
         this.shape = new Rectangle();
         this.rectangle = (Rectangle)shape;
+        this.name = "Rectangle "+RectangleShape.cont;
+        RectangleShape.cont++;
     }
 
     /**

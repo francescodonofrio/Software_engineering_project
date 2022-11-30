@@ -25,11 +25,19 @@ public interface ShapeInterface {
      * @return the shape contained
      */
     Shape getShape();
+    
+    /**
+     * Returns the name of the current object
+     * 
+     * @return the name 
+     */
+    String getName();
 
     /**
      * Sets a new internal color for a shape
      *
      * @param newColor the new color to set
+     * @throws exceptions.NotCloseContourException
      */
     void setInternalColor(Color newColor);
 
@@ -59,4 +67,14 @@ public interface ShapeInterface {
      * @param finalY   the final Y coordinate
      */
     void setDim(double initialX, double initialY, double finalX, double finalY);
+
+    /**
+     * Moves the shape to a new position
+     *
+     * @param X the new X coordinate
+     * @param Y the new Y coordinate
+     */
+    void move(double X, double Y);
+    
+    void setShape(Shape shape);
 }

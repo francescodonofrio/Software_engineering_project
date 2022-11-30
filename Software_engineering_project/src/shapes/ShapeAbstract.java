@@ -6,6 +6,8 @@ import javafx.scene.shape.Shape;
 public abstract class ShapeAbstract implements ShapeInterface {
 
     protected Shape shape;
+    protected String name = "CIAO";
+    protected static int cont = 1;
 
     /**
      * Returns the shape contained in the current object
@@ -73,4 +75,17 @@ public abstract class ShapeAbstract implements ShapeInterface {
         this.setContourColor(contourColor);
     }
     
+    @Override
+    public String getName(){
+        return name;
+    } 
+    
+    public static void resetCont() {
+        cont = 1;
+    }
+    
+    @Override
+    public void setShape(Shape shape){
+        this.shape = shape;
+    }
 }

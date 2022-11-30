@@ -12,6 +12,8 @@ public class LineShape extends ShapeAbstract {
     public LineShape() {
         this.shape = new Line();
         this.line = (Line)shape;
+        this.name = "Line "+LineShape.cont;
+        LineShape.cont++;
     }
 
     /**
