@@ -85,11 +85,11 @@ public class WindowController implements Initializable {
         listInsertedShapes = FXCollections.observableArrayList();
         listInsertedShapes.addListener((ListChangeListener.Change<? extends ShapeInterface> change) -> {
             while(change.next()){
-                change.getRemoved().forEach(remitem -> {
-                    drawingPane.getChildren().remove(remitem.getShape());
+                change.getRemoved().forEach(remItem -> {
+                    drawingPane.getChildren().remove(remItem.getShape());
                 });
-                change.getAddedSubList().forEach(additem -> {
-                    drawingPane.getChildren().add(additem.getShape());
+                change.getAddedSubList().forEach(addItem -> {
+                    drawingPane.getChildren().add(addItem.getShape());
                 });
             }
         });

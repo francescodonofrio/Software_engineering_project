@@ -68,11 +68,11 @@ public class DrawActionTest {
         listInsertedShapes = FXCollections.observableArrayList();
         listInsertedShapes.addListener((ListChangeListener.Change<? extends ShapeInterface> change) -> {
             while(change.next()){
-                change.getRemoved().forEach(remitem -> {
-                    drawingPane.getChildren().remove(remitem.getShape());
+                change.getRemoved().forEach(remItem -> {
+                    drawingPane.getChildren().remove(remItem.getShape());
                 });
-                change.getAddedSubList().forEach(_item -> {
-                    drawingPane.getChildren().add(listInsertedShapes.get(listInsertedShapes.size()-1).getShape());
+                change.getAddedSubList().forEach(addItem -> {
+                    drawingPane.getChildren().add(addItem.getShape());
                 });
             }
         });
