@@ -2,7 +2,6 @@ package shapes;
 
 import exceptions.NotCloseContourException;
 import javafx.scene.paint.Color;
-import shapes.ShapeAbstract;
 
 public abstract class OpenContourShape extends ShapeAbstract {
     /**

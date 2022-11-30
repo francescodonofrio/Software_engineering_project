@@ -6,7 +6,7 @@ import javafx.scene.shape.Shape;
 public abstract class ShapeAbstract implements ShapeInterface {
 
     protected Shape shape;
-    protected String name = "CIAO";
+    protected String name;
     protected static int cont = 1;
 
     /**

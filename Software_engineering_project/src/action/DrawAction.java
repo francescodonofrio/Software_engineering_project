@@ -4,7 +4,6 @@ import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import shapes.RectangleShape;
 import shapes.ShapeInterface;
 
 public class DrawAction implements Action {

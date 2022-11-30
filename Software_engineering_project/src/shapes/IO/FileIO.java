@@ -22,7 +22,8 @@ public class FileIO {
      * Returns a new instance of FileIO, given the Pane to save or load 
      * through the appropriate methods.
      *
-     * @param drawingPane         the drawing pane to save.
+     * @param drawingPane         the drawing pane to save
+     * @param listInsertedShapes  the list containing the shapes
      */
 
     public FileIO(Pane drawingPane, ObservableList<ShapeInterface> listInsertedShapes) {
@@ -66,8 +67,6 @@ public class FileIO {
             decoder.setExceptionListener(e -> {
                 throw new RuntimeException(e);
             });
-
-            //drawingPane.getChildren().setAll((Node[]) decoder.readObject());
             Node[] a = (Node[]) decoder.readObject();
             listInsertedShapes.setAll((ShapeInterface[]) decoder.readObject());
             for(int i = 0; i < a.length; i++){
