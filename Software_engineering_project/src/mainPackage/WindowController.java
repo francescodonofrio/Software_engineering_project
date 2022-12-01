@@ -14,7 +14,6 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Shape;
 import javafx.stage.FileChooser;
 import shapes.EllipseShape;
 import shapes.IO.FileIO;
@@ -26,6 +25,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -33,7 +33,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import shapes.ShapeAbstract;
 import shapes.ShapeInterface;
 
 public class WindowController implements Initializable {
@@ -56,6 +55,8 @@ public class WindowController implements Initializable {
     private TableView<ShapeInterface> shapesTable;
     @FXML
     private TableColumn<ShapeInterface, String> shapesColumn;
+    @FXML
+    private ContextMenu contextMenuTableView;
 
     private Invoker invoker;
     private ShapeInterface selectedShape;
@@ -80,21 +81,25 @@ public class WindowController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         invoker = new Invoker();
+        
         selectedInsertedShape=FXCollections.observableArrayList();
         selectedInsertedShape.addListener((ListChangeListener.Change<? extends ShapeInterface> change) -> {
             while(change.next()){
                 change.getRemoved().forEach(remItem -> {
-                    remItem.setDefocus();
+                    if(remItem != null){
+                        remItem.setDefocus();
+                        int index = listInsertedShapes.indexOf(remItem);
+                        shapesTable.getSelectionModel().clearSelection(index);
+                    }
                 });
                 change.getAddedSubList().forEach(addItem -> {
-                    addItem.setFocus();
-                    int index = listInsertedShapes.indexOf(addItem);
-                    shapesTable.requestFocus();
-                    shapesTable.getSelectionModel().select(index);
-                    shapesTable.getFocusModel().focus(index);
-
-                    colorPickerContour.setValue((Color) addItem.getShape().getStroke());
-                    colorPickerInternal.setValue((Color) addItem.getShape().getFill());
+                    if(addItem != null){
+                        addItem.setFocus();
+                        int index = listInsertedShapes.indexOf(addItem);
+                        shapesTable.getSelectionModel().select(index);
+                        colorPickerContour.setValue((Color) addItem.getShape().getStroke());
+                        colorPickerInternal.setValue((Color) addItem.getShape().getFill());
+                    }
                 });
             }
         });
@@ -110,11 +115,13 @@ public class WindowController implements Initializable {
                 });
             }
         });
-
-
+        
+        contextMenuTableView.getItems().forEach(menuItem -> {
+            menuItem.disableProperty().bind(Bindings.isEmpty(selectedInsertedShape));
+        });
+        
         selectedShape = new LineShape();
         action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes);
-
 
         shapesColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         shapesTable.setItems(listInsertedShapes);
@@ -206,7 +213,7 @@ public class WindowController implements Initializable {
         invoker.executeOnMouseReleased(action, event);
 
         // Here we reset the default action to move action
-        this.action = new MoveAction(selectedInsertedShape,listInsertedShapes);
+        action = new MoveAction(selectedInsertedShape,listInsertedShapes);
     }
 
     /**
@@ -241,9 +248,11 @@ public class WindowController implements Initializable {
     @FXML
     private void copyButtonOnClick(ActionEvent event) {
     }
-        @FXML
+    
+    @FXML
     private void shapesTableOnMouseClicked(MouseEvent event) {
-            selectedInsertedShape.clear();
+        selectedInsertedShape.clear();
+        if(shapesTable.getSelectionModel().getSelectedItem() != null)
             selectedInsertedShape.add(shapesTable.getSelectionModel().getSelectedItem());
     }
 

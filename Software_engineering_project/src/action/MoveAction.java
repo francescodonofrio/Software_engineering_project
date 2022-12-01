@@ -9,7 +9,8 @@ import shapes.ShapeInterface;
 
 public class MoveAction implements Action {
     private double initialX, initialY, finalX, finalY, offsetX, offsetY;
-    private ObservableList<ShapeInterface> listInsertedShapes,currentShape;
+    private final ObservableList<ShapeInterface> listInsertedShapes;
+    private final ObservableList<ShapeInterface> currentShape;
 
     /**
      * Returns a new instance of MoveAction
@@ -26,7 +27,6 @@ public class MoveAction implements Action {
      * Executes the action specified by the calling class when the mouse is clicked
      *
      * @param event the event of the mouse click
-     * @throws Exception if something goes wrong
      */
     @Override
     public void execute(Event event){

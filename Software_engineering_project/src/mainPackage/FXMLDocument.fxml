@@ -83,9 +83,9 @@
                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                             </columnResizePolicy>
                      <contextMenu>
-                        <ContextMenu>
+                        <ContextMenu fx:id="contextMenuTableView">
                           <items>
-                            <MenuItem mnemonicParsing="false" onAction="#resizeButtonOnClick" text="Resize" />
+                            <MenuItem fx:id="resizeItem" mnemonicParsing="false" onAction="#resizeButtonOnClick" text="Resize" />
                               <MenuItem mnemonicParsing="false" onAction="#copyButtonOnClick" text="Copy" />
                           </items>
                         </ContextMenu>
