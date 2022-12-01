@@ -4,6 +4,7 @@ import action.Action;
 import action.DrawAction;
 import action.Invoker;
 import action.MoveAction;
+import action.ResizeAction;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -30,7 +31,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import shapes.ShapeAbstract;
 import shapes.ShapeInterface;
 
 public class WindowController implements Initializable {
@@ -209,20 +209,22 @@ public class WindowController implements Initializable {
         invoker.execute(action, event);
     }
 
-    /**
-     *
-     * @param actionEvent
+    /*
+     * Called when the Resize menu item is clicked
+     * 
+     * @param actionEvent the action that has triggered the execution of this method
      */
     @FXML
     public void resizeButtonOnClick(ActionEvent actionEvent) {
+        action = new ResizeAction(selectedInsertedShape[0]);
     }
-
+    
     @FXML
     private void copyButtonOnClick(ActionEvent event) {
     }
 
     @FXML
-    private void focusOnMouseClick(MouseEvent event) {
+    private void shapesTableOnMouseClicked(MouseEvent event) {
         forFocusShape=shapesTable.getSelectionModel().getSelectedItem();
         forFocusShape.setFocus();
     }

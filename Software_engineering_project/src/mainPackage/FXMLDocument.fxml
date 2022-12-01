@@ -75,7 +75,7 @@
                                 <AnchorPane fx:id="drawingPane" minHeight="0.0" minWidth="0.0" onMouseDragged="#drawingWindowOnMouseDragged" onMousePressed="#drawingWindowOnMousePressed" onMouseReleased="#drawingWindowOnMouseReleased" prefHeight="516.0" prefWidth="682.0" />
                             </content>
                         </ScrollPane>
-                        <TableView fx:id="shapesTable" maxWidth="250.0" onMouseClicked="#focusOnMouseClick" prefHeight="200.0" prefWidth="200.0" SplitPane.resizableWithParent="false">
+                        <TableView fx:id="shapesTable" maxWidth="250.0" onMouseClicked="#shapesTableOnMouseClicked" prefHeight="200.0" prefWidth="200.0" SplitPane.resizableWithParent="false">
                             <columns>
                                 <TableColumn fx:id="shapesColumn" editable="false" maxWidth="1.7976931348623157E308" prefWidth="151.0" text="Inserted shapes" />
                             </columns>
