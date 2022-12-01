@@ -79,13 +79,18 @@ public class InvokerTest {
     @Test
     public void testExecuteOnMouseReleased() {
         System.out.print("executeOnMouseReleased: ");
-        event = new MouseEvent(new EventType("test2"), 180, 200, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+        event = new MouseEvent(new EventType("test3"), 180, 200, 20, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
        
         num = 5;
         Action action = new MockAction(this.test, num);
         invoker.executeOnMouseReleased(action, event);
         assertEquals((int)event.getX(), (int)this.test.get(0));
         assertEquals((int)event.getY(), (int)this.test.get(1));
+        
+        event = new MouseEvent(new EventType("test4"), 180, 180, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+        
+        invoker.execute(action, event);
+        invoker.executeOnMouseReleased(action, event);
         
         System.out.println("Passed");
     }    
@@ -106,9 +111,11 @@ public class InvokerTest {
         }
 
         @Override
-        public void onMouseReleased(MouseEvent event) {
+        public void onMouseReleased(MouseEvent event) throws Exception{
             list.add(0, (int)event.getX());
             list.add(1, (int)event.getY());
+            if(event.getX() == event.getY())
+                throw new Exception();
         }
 
         @Override

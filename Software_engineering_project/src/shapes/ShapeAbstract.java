@@ -6,6 +6,8 @@ import javafx.scene.shape.Shape;
 public abstract class ShapeAbstract implements ShapeInterface {
 
     protected Shape shape;
+    protected String name;
+    protected static int cont = 1;
 
     /**
      * Returns the shape contained in the current object
@@ -57,5 +59,31 @@ public abstract class ShapeAbstract implements ShapeInterface {
     public void move(double X, double Y) {
         this.setX(X);
         this.setY(Y);
+    }
+     /**
+      * Returns the name contained in the current object
+      * 
+      * @return the name contained
+      */
+    @Override
+    public String getName(){
+        return name;
+    } 
+    
+    /**
+     * Reset the static variable used for numering the created shapes
+     */
+    public static void resetCont() {
+        cont = 1;
+    }
+    
+    /**
+     * Set the internal shape to shape
+     * 
+     * @param shape the new shape to set
+     */
+    @Override
+    public void setShape(Shape shape){
+        this.shape = shape;
     }
 }

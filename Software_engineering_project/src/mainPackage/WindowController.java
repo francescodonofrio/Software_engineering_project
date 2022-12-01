@@ -3,6 +3,7 @@ package mainPackage;
 import action.Action;
 import action.DrawAction;
 import action.Invoker;
+import action.ResizeAction;
 import action.MoveAction;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.event.ActionEvent;
@@ -30,6 +31,14 @@ import java.util.Deque;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import shapes.ShapeInterface;
 
 public class WindowController implements Initializable {
 
@@ -47,6 +56,10 @@ public class WindowController implements Initializable {
     private Button rectangleBtn;
     @FXML
     private Button ellipseBtn;
+    @FXML
+    private TableView<ShapeInterface> shapesTable;
+    @FXML
+    private TableColumn<ShapeInterface, String> shapesColumn;
 
     private Invoker invoker;
     private ShapeInterface selectedShape;
@@ -63,10 +76,7 @@ public class WindowController implements Initializable {
     private Color internalColor;
     private Color contourColor;
     private Action action;
-    @FXML
-    private TableView<Node> shapesTable;
-    @FXML
-    private TableColumn<Node, String> shapesColumn;
+    private ObservableList<ShapeInterface> listInsertedShapes;
 
     /**
      * Called to initialize a controller after its root element has been
@@ -79,7 +89,25 @@ public class WindowController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        drawingPane.setDisable(true);
+        
         this.invoker = new Invoker();
+        
+        listInsertedShapes = FXCollections.observableArrayList();
+        listInsertedShapes.addListener((ListChangeListener.Change<? extends ShapeInterface> change) -> {
+            while(change.next()){
+                change.getRemoved().forEach(remItem -> {
+                    drawingPane.getChildren().remove(remItem.getShape());
+                });
+                change.getAddedSubList().forEach(addItem -> {
+                    drawingPane.getChildren().add(addItem.getShape());
+                });
+            }
+        });
+
+        shapesColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        shapesTable.setItems(listInsertedShapes);
+
         this.selectedInsertedShape=new Shape[1];
         this.action = new MoveAction(selectedInsertedShape);
 
@@ -89,14 +117,14 @@ public class WindowController implements Initializable {
 
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-
+        
         colorPickerInternal.setValue(Color.TRANSPARENT);
         colorPickerContour.setValue(Color.BLACK);
-
+        
         fileChooser = new FileChooser();
         extensionFilter = new FileChooser.ExtensionFilter("XML File (*.xml)", "*.xml");
         fileChooser.getExtensionFilters().add(extensionFilter);
-        shapesInputOutput = new FileIO(this.drawingPane);
+        shapesInputOutput = new FileIO(this.listInsertedShapes);
     }
 
     /**

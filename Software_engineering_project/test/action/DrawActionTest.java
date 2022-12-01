@@ -2,6 +2,9 @@ package action;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.EventType;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -25,6 +28,7 @@ public class DrawActionTest {
     private double width, height, radiusX, radiusY, startX, startY, endX, endY;
     private ShapeInterface rectangleShape, ellipseShape, lineShape;
     private Pane drawingPane;
+    private ObservableList<ShapeInterface> listInsertedShapes;
     private ObjectProperty<Color> internalColorProperty, contourColorProperty;
     private MouseEvent event;
     private DrawAction instanceDrawActionLine, instanceDrawActionRectangle, instanceDrawActionEllipse;
@@ -61,6 +65,18 @@ public class DrawActionTest {
         internalColorProperty.set(Color.BLUE);
         contourColorProperty.set(Color.BLACK);
     
+        listInsertedShapes = FXCollections.observableArrayList();
+        listInsertedShapes.addListener((ListChangeListener.Change<? extends ShapeInterface> change) -> {
+            while(change.next()){
+                change.getRemoved().forEach(remItem -> {
+                    drawingPane.getChildren().remove(remItem.getShape());
+                });
+                change.getAddedSubList().forEach(addItem -> {
+                    drawingPane.getChildren().add(addItem.getShape());
+                });
+            }
+        });
+        
     }
 
     /**
@@ -72,7 +88,7 @@ public class DrawActionTest {
         
         event = new MouseEvent(new EventType("test1"), 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
     
-        instanceDrawActionRectangle = new DrawAction(rectangleShape, internalColorProperty, contourColorProperty, drawingPane);
+        instanceDrawActionRectangle = new DrawAction(rectangleShape, internalColorProperty, contourColorProperty, listInsertedShapes);
         instanceDrawActionRectangle.execute(event);
         Rectangle rectangleRetrieved = (Rectangle) drawingPane.getChildren().get(0);
         Color colorFillRectangle = (Color) rectangleRetrieved.getFill();
@@ -94,7 +110,7 @@ public class DrawActionTest {
         
         event = new MouseEvent(new EventType("test2"), 180, 200, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
     
-        instanceDrawActionEllipse = new DrawAction(ellipseShape, internalColorProperty, contourColorProperty, drawingPane);
+        instanceDrawActionEllipse = new DrawAction(ellipseShape, internalColorProperty, contourColorProperty, listInsertedShapes);
         instanceDrawActionEllipse.execute(event);
         Ellipse shapeRetrievedEllipse = (Ellipse) drawingPane.getChildren().get(1);
         Color colorFillEllipse = (Color) shapeRetrievedEllipse.getFill();
@@ -115,7 +131,7 @@ public class DrawActionTest {
 
         event = new MouseEvent(new EventType("test3"), 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
     
-        instanceDrawActionLine = new DrawAction(lineShape, internalColorProperty, contourColorProperty, drawingPane);
+        instanceDrawActionLine = new DrawAction(lineShape, internalColorProperty, contourColorProperty, listInsertedShapes);
         instanceDrawActionLine.execute(event);
         Line shapeRetrievedLine = (Line) drawingPane.getChildren().get(2);
         Color colorStrokeLine = (Color) shapeRetrievedLine.getStroke();
@@ -142,19 +158,19 @@ public class DrawActionTest {
         System.out.print("onMouseDragged: ");
         event = new MouseEvent(new EventType("test4"), 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
         
-        instanceDrawActionRectangle = new DrawAction(rectangleShape, internalColorProperty, contourColorProperty, drawingPane);
+        instanceDrawActionRectangle = new DrawAction(rectangleShape, internalColorProperty, contourColorProperty, listInsertedShapes);
         instanceDrawActionRectangle.onMouseDragged(event);
         Rectangle rectangle = (Rectangle) rectangleShape.getShape();
         assertEquals(rectangle.getWidth(), event.getX(), 0.1);
         assertEquals(rectangle.getHeight(), event.getY(), 0.1);
         
-        instanceDrawActionEllipse = new DrawAction(ellipseShape, internalColorProperty, contourColorProperty, drawingPane);
+        instanceDrawActionEllipse = new DrawAction(ellipseShape, internalColorProperty, contourColorProperty, listInsertedShapes);
         instanceDrawActionEllipse.onMouseDragged(event);
         Ellipse ellipse = (Ellipse) ellipseShape.getShape();
         assertEquals(ellipse.getRadiusX(), event.getX(), 0.1);
         assertEquals(ellipse.getRadiusY(), event.getY(), 0.1);
         
-        instanceDrawActionLine = new DrawAction(lineShape, internalColorProperty, contourColorProperty, drawingPane);
+        instanceDrawActionLine = new DrawAction(lineShape, internalColorProperty, contourColorProperty, listInsertedShapes);
         instanceDrawActionLine.onMouseDragged(event);
         Line line = (Line) lineShape.getShape();
         assertEquals(line.getEndX(), event.getX(), 0.1);
@@ -162,28 +178,4 @@ public class DrawActionTest {
         
         System.out.println("Passed");
     }
-    
-    /**
-     * Test of onMouseReleased method, of class DrawAction.
-     */
-    @Test
-    public void testOnMouseReleased() {
-        System.out.print("onMouseReleased: ");
-        event = new MouseEvent(new EventType("test5"), 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
-        
-        instanceDrawActionRectangle = new DrawAction(rectangleShape, internalColorProperty, contourColorProperty, drawingPane);
-        instanceDrawActionRectangle.onMouseReleased(event);
-        assertEquals(drawingPane.disableProperty().getValue(), true);
-        
-        
-        instanceDrawActionEllipse = new DrawAction(ellipseShape, internalColorProperty, contourColorProperty, drawingPane);
-        instanceDrawActionEllipse.onMouseReleased(event);
-        assertEquals(drawingPane.disableProperty().getValue(), true);
-        
-        instanceDrawActionLine = new DrawAction(lineShape, internalColorProperty, contourColorProperty, drawingPane);
-        instanceDrawActionLine.onMouseReleased(event);
-        assertEquals(drawingPane.disableProperty().getValue(), true);
-        
-        System.out.println("Passed");
-    }    
 }

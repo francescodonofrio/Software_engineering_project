@@ -2,6 +2,7 @@ package shapes;
 
 import exceptions.NotCloseContourException;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import org.junit.Before;
@@ -34,6 +35,31 @@ public class ShapeAbstractTest {
 
         System.out.println("Passed");
     }
+   
+    /**
+     * Test of setShape method, of class ShapeAbstract.
+     */
+    @Test
+    public void testSetShape() {
+        System.out.print("setShape: ");
+        Shape testLine = new Line();
+        shape.setShape(testLine);
+        assertEquals(testLine, shape.getShape());
+
+        System.out.println("Passed");
+    }
+    
+    /**
+     * Test of getName method, of class ShapeAbstract.
+     */
+    @Test
+    public void testGetName() {
+        System.out.print("getName: ");
+
+        assertEquals("Rectangle1", shape.getName());
+
+        System.out.println("Passed");
+    }    
 
     /**
      * Test of setX method, of class ShapeAbstract.
@@ -96,6 +122,7 @@ public class ShapeAbstractTest {
     public class MockShape extends ShapeAbstract {
         public MockShape(Shape shape) {
             this.shape = shape;
+            this.name = "Rectangle1";
         }
         
         @Override
@@ -108,6 +135,16 @@ public class ShapeAbstractTest {
 
         @Override
         public void setProperties(double X, double Y, Color internalColor, Color contourColor) {
+        }
+        
+        @Override
+        public void setShape(Shape shape){
+            this.shape = shape;
+        }
+        
+        @Override
+        public String getName(){
+            return this.name;
         }
     }
     

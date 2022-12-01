@@ -1,16 +1,19 @@
 package shapes;
 
 import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Shape;
 
 public class EllipseShape extends CloseContourShape {
 
     private double radiusX, radiusY;
-
+    
     /**
      * Creates a new instance of  EllipseShape
      */
     public EllipseShape() {
         this.shape = new Ellipse();
+        this.name = "Ellipse "+EllipseShape.cont;
+        EllipseShape.cont++;
     }
 
     /**
@@ -35,5 +38,14 @@ public class EllipseShape extends CloseContourShape {
         ((Ellipse)shape).setRadiusX(radiusX);
         ((Ellipse)shape).setRadiusY(radiusY);
     }
-
+    
+    /**
+     * Set the internal implementation of javafx.scene.shape.Shape interface
+     * 
+     * @param shape the shape to be set
+     */
+    @Override
+    public void setShape(Shape shape){
+        this.shape = shape;
+    }
 }

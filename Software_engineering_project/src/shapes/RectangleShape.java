@@ -2,16 +2,19 @@ package shapes;
 
 
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 
 public class RectangleShape extends CloseContourShape {
 
     private double width, height;
-
+    
     /**
      * Creates a new instance of RectangleShape
      */
     public RectangleShape() {
         this.shape = new Rectangle();
+        this.name = "Rectangle "+RectangleShape.cont;
+        RectangleShape.cont++;
     }
 
     /**
@@ -35,8 +38,17 @@ public class RectangleShape extends CloseContourShape {
             shape.setLayoutY(finalY);
         }
 
-        (( Rectangle)shape).setWidth(width);
-        (( Rectangle)shape).setHeight(height);
+        ((Rectangle)shape).setWidth(width);
+        ((Rectangle)shape).setHeight(height);
     }
-
+    
+    /**
+     * Set the internal implementation of javafx.scene.shape.Shape interface
+     * 
+     * @param shape the shape to be set
+     */
+    @Override
+    public void setShape(Shape shape){
+        this.shape = shape;
+    }
 }
