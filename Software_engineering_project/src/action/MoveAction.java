@@ -1,10 +1,8 @@
 package action;
 
-import exceptions.VoidActionException;
+import exceptions.NotMovedException;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Shape;
-
-import java.util.Deque;
 
 public class MoveAction implements Action {
     private double initialX, initialY, finalX, finalY, offsetX, offsetY;
@@ -19,7 +17,6 @@ public class MoveAction implements Action {
      * Executes the action specified by the calling class when the mouse is clicked
      *
      * @param event the event of the mouse click
-     * @throws Exception
      */
     @Override
     public void execute(MouseEvent event) {
@@ -57,11 +54,12 @@ public class MoveAction implements Action {
      * Executes the action specified by the calling class when the mouse is released
      *
      * @param event the event of the mouse click
+     * @throws exceptions.NotMovedException
      */
     @Override
-    public void onMouseReleased(MouseEvent event) throws VoidActionException {
+    public void onMouseReleased(MouseEvent event) throws NotMovedException {
         if ((initialY == -1 && initialX == -1)) {
-            throw new VoidActionException("Didn't drag any shape");
+            throw new NotMovedException();
         }
 
         finalX = event.getX();
@@ -70,6 +68,6 @@ public class MoveAction implements Action {
         selectedShape.setLayoutY(offsetY + event.getY());
 
         if (finalX == initialX && finalY == initialY)
-            throw new VoidActionException("Starting position equals final one");
+            throw new NotMovedException();
     }
 }

@@ -1,6 +1,5 @@
 package action;
 
-import exceptions.VoidActionException;
 import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayDeque;
@@ -53,7 +52,6 @@ public class Invoker {
             action.onMouseReleased(event);
         } catch (Exception ex) {
             this.actions.pop();
-            System.out.println("Unable to execute this action: \"" + ex + "\" !");
         }
     }
 
