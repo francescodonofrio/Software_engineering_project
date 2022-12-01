@@ -1,6 +1,8 @@
 package mainPackage;
 
 import action.Action;
+import action.ChangeContourColorAction;
+import action.ChangeInternalColorAction;
 import action.DrawAction;
 import action.Invoker;
 import action.MoveAction;
@@ -223,5 +225,17 @@ public class WindowController implements Initializable {
     private void focusOnMouseClick(MouseEvent event) {
         forFocusShape=shapesTable.getSelectionModel().getSelectedItem();
         forFocusShape.setFocus();
+    }
+
+    @FXML
+    private void chanheContourColorOnClick(ActionEvent event) {
+        action= new ChangeContourColorAction(forFocusShape,colorPickerContour.valueProperty());
+        invoker.execute(action,event);
+    }
+
+    @FXML
+    private void chanheInternalColorOnClick(ActionEvent event) {
+        action= new ChangeInternalColorAction(forFocusShape,colorPickerInternal.valueProperty());
+        invoker.execute(action,event);
     }
 }

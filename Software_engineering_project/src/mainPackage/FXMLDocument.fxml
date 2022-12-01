@@ -86,6 +86,8 @@
                         <ContextMenu>
                           <items>
                             <MenuItem mnemonicParsing="false" onAction="#resizeButtonOnClick" text="Resize" />
+                            <MenuItem mnemonicParsing="false" onAction="#chanheContourColorOnClick" text="Change contour color" />
+                            <MenuItem mnemonicParsing="false" onAction="#chanheInternalColorOnClick" text="Change internal color" />
                               <MenuItem mnemonicParsing="false" onAction="#copyButtonOnClick" text="Copy" />
                           </items>
                         </ContextMenu>
