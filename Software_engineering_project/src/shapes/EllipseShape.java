@@ -1,7 +1,6 @@
 package shapes;
 
 import javafx.scene.shape.Ellipse;
-import javafx.scene.shape.Shape;
 
 public class EllipseShape extends CloseContourShape {
 

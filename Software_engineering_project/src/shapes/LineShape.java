@@ -1,7 +1,6 @@
 package shapes;
 
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Shape;
 
 public class LineShape extends OpenContourShape {
     
