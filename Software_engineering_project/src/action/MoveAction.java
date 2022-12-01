@@ -40,6 +40,7 @@ public class MoveAction implements Action {
             for(ShapeInterface current:listInsertedShapes) {
                 if(current.getShape().equals(selectedShape)){
                     currentShape[0]=current;
+                    current.setFocus();
                     break;
                 }
             }
@@ -80,8 +81,8 @@ public class MoveAction implements Action {
         finalY = event.getY();
         currentShape[0].move(offsetX + event.getX(),offsetY + event.getY());
 
-        System.out.println("Old: "+initialX+" "+initialY+"\nNew: "+finalX+ " "+finalY);
-        if (finalX == initialX && finalY == initialY)
+        if (finalX == initialX && finalY == initialY) {
             throw new NotMovedException();
+        }
     }
 }

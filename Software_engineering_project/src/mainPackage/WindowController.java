@@ -94,6 +94,8 @@ public class WindowController implements Initializable {
             }
         });
 
+        
+
         shapesColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         shapesTable.setItems(listInsertedShapes);
 
