@@ -47,7 +47,11 @@ public class Invoker {
      * @param event the event passed to the onMouseReleased method of the action
      */       
     public void executeOnMouseReleased(Action action, MouseEvent event){
-        action.onMouseReleased(event);
+        try {
+            action.onMouseReleased(event);
+        } catch (Exception ex) {
+            this.actions.removeLast();
+        }
     }
 
 }

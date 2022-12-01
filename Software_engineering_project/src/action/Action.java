@@ -13,6 +13,6 @@ public interface Action {
 
     void onMouseDragged(MouseEvent event);
     
-    void onMouseReleased(MouseEvent event);
+    void onMouseReleased(MouseEvent event) throws Exception;
 
 }
