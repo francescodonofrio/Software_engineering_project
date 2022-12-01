@@ -178,20 +178,4 @@ public class RectangleShapeTest {
 
         System.out.println("Passed");
     }
-    
-        /**
-     * Test of setShape method, of class RectangleShape.
-     */
-    @Test
-    public void testSetShape() {
-        System.out.print("setShape: ");
-        
-        Rectangle rectangle = new Rectangle(10,15);
-        RectangleShape rectangleShape = new RectangleShape();     
-        
-        rectangleShape.setShape(rectangle);
-        assertEquals(rectangle.toString(), rectangleShape.getShape().toString());
-        
-        System.out.println("Passed");
-    }
 }

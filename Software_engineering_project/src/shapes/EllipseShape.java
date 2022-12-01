@@ -38,14 +38,4 @@ public class EllipseShape extends CloseContourShape {
         ((Ellipse)shape).setRadiusX(radiusX);
         ((Ellipse)shape).setRadiusY(radiusY);
     }
-    
-    /**
-     * Set the internal implementation of javafx.scene.shape.Shape interface
-     * 
-     * @param shape the shape to be set
-     */
-    @Override
-    public void setShape(Shape shape){
-        this.shape = shape;
-    }
 }

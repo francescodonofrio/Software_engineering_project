@@ -168,20 +168,4 @@ public class EllipseShapeTest {
 
         System.out.println("Passed");
     }
-    
-    /**
-     * Test of setShape method, of class EllipseShape.
-     */
-    @Test
-    public void testSetShape() {
-        System.out.print("setShape: ");
-        
-        Ellipse ellipse = new Ellipse(20,25);   
-        EllipseShape ellipseShape = new EllipseShape(); 
-        
-        ellipseShape.setShape(ellipse);
-        assertEquals(ellipse.toString(), ellipseShape.getShape().toString());
-        
-        System.out.println("Passed");
-    }
 }

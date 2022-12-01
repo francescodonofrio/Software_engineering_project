@@ -168,20 +168,4 @@ public class LineShapeTest {
 
         System.out.println("passed");
     }
-    
-    /**
-     * Test of setShape method, of class LineShape.
-     */
-    @Test
-    public void testSetShape() {
-        System.out.print("setShape: ");
-        
-        Line line = new Line(20,25,150,300);   
-        LineShape lineShape = new LineShape(); 
-        
-        lineShape.setShape(line);
-        assertEquals(line.toString(), lineShape.getShape().toString());
-        
-        System.out.println("Passed");
-    }
 }

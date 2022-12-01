@@ -3,15 +3,11 @@ package mainPackage;
 import action.Action;
 import action.DrawAction;
 import action.Invoker;
-import action.ResizeAction;
 import action.MoveAction;
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -21,13 +17,9 @@ import shapes.EllipseShape;
 import shapes.IO.FileIO;
 import shapes.LineShape;
 import shapes.RectangleShape;
-import shapes.ShapeInterface;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayDeque;
-import java.util.Deque;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -64,17 +56,10 @@ public class WindowController implements Initializable {
     private Invoker invoker;
     private ShapeInterface selectedShape;
     private Shape[] selectedInsertedShape;
-
-    private double initialX;
-    private double initialY;
-    private double finalX;
-    private double finalY;
     private FileChooser fileChooser;
     private FileChooser.ExtensionFilter extensionFilter;
     private File file;
     private FileIO shapesInputOutput;
-    private Color internalColor;
-    private Color contourColor;
     private Action action;
     private ObservableList<ShapeInterface> listInsertedShapes;
 

@@ -27,14 +27,4 @@ public class LineShape extends OpenContourShape {
         ((Line)shape).setEndX(finalX - initialX);
         ((Line)shape).setEndY(finalY - initialY);
     }
-    
-    /**
-     * Set the internal implementation of javafx.scene.shape.Shape interface
-     * 
-     * @param shape the shape to be set
-     */
-    @Override
-    public void setShape(Shape shape){
-        this.shape = shape;
-    }
 }
