@@ -33,12 +33,11 @@ public class FileIOTest {
     private LineShape testLine;
     private RectangleShape testRectangle;
     private Pane testPane;
-    private Pane testPaneEmpty;
     private File testFile;
     private File testFileEmpty;
     private File testFileNull;
     private ObservableList<ShapeInterface> listInsertedShapes;
-    private double layoutX, layoutY, initialDim1, initialDim2, finalDim1, finalDim2, radiusX, radiusY, height, width;
+    private double layoutX, layoutY, initialDim1, initialDim2, finalDim1, finalDim2;
     Color internalColor, contourColor;
 
     public FileIOTest() {
@@ -88,11 +87,8 @@ public class FileIOTest {
         testLine.setProperties(layoutX, layoutY, internalColor, contourColor);
         
         testFile = new File("testFile.xml");
-                
         testFileEmpty = new File("testFileEmpty.xml");
-        testPaneEmpty = new Pane();
         testFileNull = null;
-        
     }
 
     /**
@@ -102,7 +98,7 @@ public class FileIOTest {
     public void testASave() {
         System.out.println("Save Test:");
 
-        FileIO saveEmpty = new FileIO(testPaneEmpty,listInsertedShapes);
+        FileIO saveEmpty = new FileIO(listInsertedShapes);
         try {
             saveEmpty.save(testFileEmpty);
         } catch (IOException ex) {
@@ -114,7 +110,7 @@ public class FileIOTest {
         assertTrue(testFileEmpty.canWrite());
         assertNotEquals(0, testFileEmpty.length());
         
-        FileIO save = new FileIO(testPane,listInsertedShapes); 
+        FileIO save = new FileIO(listInsertedShapes); 
         try {
             save.save(testFile);
         } catch (IOException ex) {
@@ -144,7 +140,7 @@ public class FileIOTest {
 
         List expectedList = testPane.getChildren();
         
-        FileIO loadEmpty = new FileIO(testPane,listInsertedShapes);
+        FileIO loadEmpty = new FileIO(listInsertedShapes);
         try {
             loadEmpty.load(testFileEmpty);
         } catch (IOException ex) {
@@ -157,7 +153,7 @@ public class FileIOTest {
         assertTrue(testFileEmpty.canRead());
         assertEquals(expectedList.toString(), actualList.toString());
         
-        FileIO load = new FileIO(testPane, listInsertedShapes);
+        FileIO load = new FileIO( listInsertedShapes);
         try {
             load.load(testFile);
         } catch (IOException ex) {

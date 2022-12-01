@@ -3,6 +3,7 @@ package mainPackage;
 import action.Action;
 import action.DrawAction;
 import action.Invoker;
+import action.ResizeAction;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -106,7 +107,7 @@ public class WindowController implements Initializable {
         fileChooser = new FileChooser();
         extensionFilter = new FileChooser.ExtensionFilter("XML File (*.xml)", "*.xml");
         fileChooser.getExtensionFilters().add(extensionFilter);
-        shapesInputOutput = new FileIO(this.drawingPane, this.listInsertedShapes);
+        shapesInputOutput = new FileIO(this.listInsertedShapes);
     }
 
     /**
@@ -143,6 +144,9 @@ public class WindowController implements Initializable {
         selectedShape = new EllipseShape();
         drawingPane.setDisable(false);
         action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes);
+//        selectedShape = listInsertedShapes.get(listInsertedShapes.size()-1);
+//        drawingPane.setDisable(false);
+//        action = new ResizeAction(selectedShape);
     }
 
     /**
