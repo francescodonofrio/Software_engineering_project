@@ -90,6 +90,9 @@ public class WindowController implements Initializable {
                 });
                 change.getAddedSubList().forEach(addItem -> {
                     addItem.setFocus();
+
+                    colorPickerContour.setValue((Color) addItem.getShape().getStroke());
+                    colorPickerInternal.setValue((Color) addItem.getShape().getFill());
                 });
             }
         });
