@@ -1,37 +1,69 @@
 package action;
 
-import javafx.scene.layout.Pane;
+import javafx.beans.property.ObjectProperty;
+import javafx.collections.ObservableList;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import shapes.ShapeInterface;
 
 public class DrawAction implements Action {
 
     private final ShapeInterface shape;
-    private final Pane drawingPane;
+    private final ObservableList<ShapeInterface> listInsertedShapes;
+    private final ObjectProperty<Color> colorPickerInternal;
+    private final ObjectProperty<Color> colorPickerContour;
+    private double initialX, initialY, finalX, finalY;
+    
 
     /**
      * Returns a new instance of DrawAction, given the shape to draw, its coordinates,
      * its internal and contour color and the pane where to draw at
      *
      * @param shape         the shape to draw
-     * @param X             the X coordinate of the shape
-     * @param Y             the Y coordinate of the shape
-     * @param internalColor the internal color of the shape
-     * @param contourColor  the contour color of the shape
-     * @param drawingPane   the drawing pane
+     * @param colorPickerInternal   an ObjectProperty<Color> from whom the shape's internal color is taken
+     * @param colorPickerContour    an ObjectProperty<Color> from whom the shape's contour color is taken
+     * @param listInsertedShapes    the list in which are stored the shapes
      */
-    public DrawAction(ShapeInterface shape, double X, double Y, Color internalColor, Color contourColor, Pane drawingPane) {
+    public DrawAction(ShapeInterface shape, ObjectProperty<Color> colorPickerInternal, ObjectProperty<Color> colorPickerContour, ObservableList<ShapeInterface> listInsertedShapes) {
         this.shape = shape;
-        this.drawingPane = drawingPane;
-        shape.setProperties(X, Y, internalColor, contourColor);
+        this.listInsertedShapes = listInsertedShapes;
+        this.colorPickerInternal = colorPickerInternal;
+        this.colorPickerContour = colorPickerContour;
     }
 
     /**
      * Executes the draw action as instantiated before
+     * 
+     * @param event the mouse event of the click
      */
     @Override
-    public void execute() {
-        drawingPane.getChildren().add(shape.getShape());
+    public void execute(MouseEvent event) {
+        listInsertedShapes.add(shape);
+        initialX = event.getX();
+        initialY = event.getY();
+        shape.setProperties(initialX, initialY, colorPickerInternal.getValue(), colorPickerContour.getValue());
     }
+
+    /**
+     * Set the dimension of the shape
+     * 
+     * @param event the mouse event of the click
+     */
+    @Override
+    public void onMouseDragged(MouseEvent event) {
+        finalX = event.getX();
+        finalY = event.getY();
+        shape.setDim(initialX, initialY, finalX, finalY);
+    }
+
+    /**
+     *  
+     * @param event the mouse event of the click
+     */
+    @Override
+    public void onMouseReleased(MouseEvent event) {
+    }
+    
+    
 
 }

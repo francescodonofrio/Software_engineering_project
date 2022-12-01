@@ -1,11 +1,11 @@
 package shapes;
 
+import javafx.scene.shape.Rectangle;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
 public class RectangleShapeTest {
-    private RectangleShape rectangleShape;
 
     public RectangleShapeTest() {
         System.out.println("Test RectangleShape");

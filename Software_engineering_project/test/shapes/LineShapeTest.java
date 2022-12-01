@@ -1,11 +1,11 @@
 package shapes;
 
+import javafx.scene.shape.Line;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
 public class LineShapeTest {
-    private LineShape lineShape;
 
     public LineShapeTest() {
         System.out.println("Test LineShape");

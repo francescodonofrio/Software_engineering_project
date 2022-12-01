@@ -1,19 +1,18 @@
 package shapes;
 
 import javafx.scene.shape.Ellipse;
-import serializedIO.SerializableEllipse;
 
 public class EllipseShape extends CloseContourShape {
 
     private double radiusX, radiusY;
-    private final Ellipse ellipse;
     
     /**
      * Creates a new instance of  EllipseShape
      */
     public EllipseShape() {
-        this.shape = new SerializableEllipse();
-        this.ellipse = (Ellipse)this.shape;
+        this.shape = new Ellipse();
+        this.name = "Ellipse "+EllipseShape.cont;
+        EllipseShape.cont++;
     }
 
     /**
@@ -35,8 +34,7 @@ public class EllipseShape extends CloseContourShape {
             radiusY = -radiusY;
         }
 
-        ellipse.setRadiusX(radiusX);
-        ellipse.setRadiusY(radiusY);
+        ((Ellipse)shape).setRadiusX(radiusX);
+        ((Ellipse)shape).setRadiusY(radiusY);
     }
-
 }

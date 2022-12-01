@@ -9,7 +9,6 @@ public class LineShape extends OpenContourShape {
      */
     public LineShape() {
         this.shape = new Line();
-        this.shape.setStrokeWidth(2);
         this.name = "Line "+LineShape.cont;
         LineShape.cont++;
     }
