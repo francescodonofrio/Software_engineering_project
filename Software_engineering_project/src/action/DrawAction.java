@@ -2,7 +2,7 @@ package action;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import shapes.ShapeInterface;
@@ -14,6 +14,7 @@ public class DrawAction implements Action {
     private final ObjectProperty<Color> colorPickerInternal;
     private final ObjectProperty<Color> colorPickerContour;
     private double initialX, initialY, finalX, finalY;
+    private MouseEvent mouseEvent;
     
 
     /**
@@ -38,10 +39,11 @@ public class DrawAction implements Action {
      * @param event the mouse event of the click
      */
     @Override
-    public void execute(MouseEvent event) {
+    public void execute(Event event) {
         listInsertedShapes.add(shape);
-        initialX = event.getX();
-        initialY = event.getY();
+        mouseEvent = (MouseEvent)event;
+        initialX = mouseEvent.getX();
+        initialY = mouseEvent.getY();
         shape.setProperties(initialX, initialY, colorPickerInternal.getValue(), colorPickerContour.getValue());
     }
 
@@ -51,9 +53,10 @@ public class DrawAction implements Action {
      * @param event the mouse event of the click
      */
     @Override
-    public void onMouseDragged(MouseEvent event) {
-        finalX = event.getX();
-        finalY = event.getY();
+    public void onMouseDragged(Event event) {
+        mouseEvent = (MouseEvent)event;
+        finalX = mouseEvent.getX();
+        finalY = mouseEvent.getY();
         shape.setDim(initialX, initialY, finalX, finalY);
     }
 
@@ -62,14 +65,6 @@ public class DrawAction implements Action {
      * @param event the mouse event of the click
      */
     @Override
-    public void onMouseReleased(MouseEvent event) {
+    public void onMouseReleased(Event event) {
     }
-
-    @Override
-    public void execute(ActionEvent event) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    
-
 }

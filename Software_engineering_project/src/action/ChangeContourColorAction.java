@@ -1,16 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package action;
 
-
 import javafx.beans.property.ObjectProperty;
-import javafx.event.ActionEvent;
-import javafx.scene.input.MouseEvent;
+import javafx.event.Event;
 import javafx.scene.paint.Color;
 import shapes.ShapeInterface;
-    
     
 public class ChangeContourColorAction implements Action{
     
@@ -23,20 +16,15 @@ public class ChangeContourColorAction implements Action{
     }
 
     @Override
-    public void execute(MouseEvent event) throws Exception {
-    }
-    
-    @Override
-    public void execute(ActionEvent event) throws Exception {
-        shape.setContourColor(colorPickerContour.getValue());
+    public void execute(Event event) throws Exception {
     }
 
     @Override
-    public void onMouseDragged(MouseEvent event) {
+    public void onMouseDragged(Event event) {
     }
 
     @Override
-    public void onMouseReleased(MouseEvent event) throws Exception {
+    public void onMouseReleased(Event event) throws Exception {
     }
    
 }

@@ -1,7 +1,7 @@
 package action;
 
 import exceptions.NotResizedException;
-import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.scene.input.MouseEvent;
 import shapes.ShapeInterface;
 
@@ -25,7 +25,7 @@ public class ResizeAction implements Action{
      * @param event the event of the mouse click
      */
     @Override
-    public void execute(MouseEvent event) {
+    public void execute(Event event) {
         initialX = selectedShape.getShape().getLayoutX();
         initialY = selectedShape.getShape().getLayoutY();
         this.onMouseDragged(event);
@@ -37,9 +37,10 @@ public class ResizeAction implements Action{
      * @param event the event of the mouse click
      */
     @Override
-    public void onMouseDragged(MouseEvent event) {
-        finalX = event.getX();
-        finalY = event.getY();
+    public void onMouseDragged(Event event) {
+        MouseEvent mouseEvent = (MouseEvent)event;
+        finalX = mouseEvent.getX();
+        finalY = mouseEvent.getY();
         selectedShape.setDim(initialX, initialY, finalX, finalY);
     }
 
@@ -50,14 +51,9 @@ public class ResizeAction implements Action{
      * @throws NotResizedException if the initial and final coordinates are the same
      */
     @Override
-    public void onMouseReleased(MouseEvent event) throws NotResizedException {
+    public void onMouseReleased(Event event) throws NotResizedException {
         if(initialX == finalX && initialY == finalY)
             throw new NotResizedException();
-    }
-
-    @Override
-    public void execute(ActionEvent event) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import javafx.event.EventType;
+import javafx.event.Event;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
@@ -98,6 +98,7 @@ public class InvokerTest {
     public class MockAction implements Action {
         private final List<Integer> list;
         private final int num;
+        private MouseEvent mouseEvent;
 
         public MockAction(List list, int num) {
             this.list = list;
@@ -105,21 +106,23 @@ public class InvokerTest {
         }
 
         @Override
-        public void onMouseDragged(MouseEvent event) {
-            list.add(0, (int)event.getX());
-            list.add(1, (int)event.getY());
+        public void onMouseDragged(Event event) {
+            mouseEvent = (MouseEvent)event;
+            list.add(0, (int)mouseEvent.getX());
+            list.add(1, (int)mouseEvent.getY());
         }
 
         @Override
-        public void onMouseReleased(MouseEvent event) throws Exception{
-            list.add(0, (int)event.getX());
-            list.add(1, (int)event.getY());
-            if(event.getX() == event.getY())
+        public void onMouseReleased(Event event) throws Exception{
+            mouseEvent = (MouseEvent)event;
+            list.add(0, (int)mouseEvent.getX());
+            list.add(1, (int)mouseEvent.getY());
+            if(mouseEvent.getX() == mouseEvent.getY())
                 throw new Exception();
         }
 
         @Override
-        public void execute(MouseEvent event) throws Exception {
+        public void execute(Event event) throws Exception {
             for (int i = 0; i < this.num; i++)
                 list.add(i);
         }

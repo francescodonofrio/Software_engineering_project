@@ -1,7 +1,6 @@
 package action;
 
-import javafx.event.ActionEvent;
-import javafx.scene.input.MouseEvent;
+import javafx.event.Event;
 
 public interface Action {
     /**
@@ -10,22 +9,14 @@ public interface Action {
      * @param event the event of the mouse click
      * @throws Exception if something goes wrong
      */
-    void execute(MouseEvent event) throws Exception;
-
-    /**
-     * Executes the action specified by the calling class when there are some action
-     *
-     * @param event the event of some action
-     * @throws Exception if something goes wrong
-     */
-    void execute(ActionEvent event) throws Exception;
+    void execute(Event event) throws Exception;
     
     /**
      * Executes the action specified by the calling class when the mouse is dragged
      *
      * @param event the event of the mouse click
      */
-    void onMouseDragged(MouseEvent event);
+    void onMouseDragged(Event event);
 
     /**
      * Executes the action specified by the calling class when the mouse is released
@@ -33,6 +24,6 @@ public interface Action {
      * @param event the event of the mouse click
      * @throws Exception if something goes wrong
      */
-    void onMouseReleased(MouseEvent event) throws Exception;
+    void onMouseReleased(Event event) throws Exception;
 
 }
