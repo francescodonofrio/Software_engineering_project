@@ -66,8 +66,6 @@ public class WindowController implements Initializable {
     private FileIO shapesInputOutput;
     private Action action;
     private ObservableList<ShapeInterface> listInsertedShapes;
-    
-    private ShapeInterface forFocusShape;
 
     /**
      * Called to initialize a controller after its root element has been
@@ -90,6 +88,10 @@ public class WindowController implements Initializable {
                 });
                 change.getAddedSubList().forEach(addItem -> {
                     addItem.setFocus();
+                    int index = listInsertedShapes.indexOf(addItem);
+                    shapesTable.requestFocus();
+                    shapesTable.getSelectionModel().select(index);
+                    shapesTable.getFocusModel().focus(index);
 
                     colorPickerContour.setValue((Color) addItem.getShape().getStroke());
                     colorPickerInternal.setValue((Color) addItem.getShape().getFill());
@@ -242,22 +244,24 @@ public class WindowController implements Initializable {
         @FXML
     private void shapesTableOnMouseClicked(MouseEvent event) {
             selectedInsertedShape.clear();
-
             selectedInsertedShape.add(shapesTable.getSelectionModel().getSelectedItem());
     }
 
     @FXML
-    private void changeContourColorOnClick(ActionEvent event) {
-        action= new ChangeContourColorAction(selectedInsertedShape.get(0),colorPickerContour.valueProperty());
-        invoker.execute(action,event);
-        action = new MoveAction(selectedInsertedShape, listInsertedShapes);
-
+    private void changeInternalColorOnAction(ActionEvent event) {
+        if(!selectedInsertedShape.isEmpty()){
+            action= new ChangeInternalColorAction(selectedInsertedShape.get(0),colorPickerInternal.valueProperty());
+            invoker.execute(action,event);
+            action = new MoveAction(selectedInsertedShape, listInsertedShapes);
+        }
     }
 
     @FXML
-    private void changeInternalColorOnClick(ActionEvent event) {
-        action= new ChangeInternalColorAction(selectedInsertedShape.get(0),colorPickerInternal.valueProperty());
-        invoker.execute(action,event);
-        action = new MoveAction(selectedInsertedShape, listInsertedShapes);
+    private void changeContourColorOnAction(ActionEvent event) {
+        if(!selectedInsertedShape.isEmpty()){
+            action= new ChangeContourColorAction(selectedInsertedShape.get(0),colorPickerContour.valueProperty());
+            invoker.execute(action,event);
+            action = new MoveAction(selectedInsertedShape, listInsertedShapes);
+        }
     }
 }

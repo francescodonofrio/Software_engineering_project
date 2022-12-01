@@ -1,6 +1,5 @@
 package action;
 
-import exceptions.NotCloseContourException;
 import javafx.beans.property.ObjectProperty;
 import javafx.event.Event;
 import javafx.scene.paint.Color;
