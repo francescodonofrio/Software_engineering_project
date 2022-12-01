@@ -76,8 +76,21 @@ public interface ShapeInterface {
      * @param Y the new Y coordinate
      */
     void move(double X, double Y);
-    
+
+    /**
+     * Sets the internal shape to shape
+     *
+     * @param shape the new shape
+     */
     void setShape(Shape shape);
-    
+
+    /**
+     * Enables the focus on a shape
+     */
     void setFocus();
+
+    /**
+     * Disables the focus on a shape
+     */
+    void setDefocus();
 }

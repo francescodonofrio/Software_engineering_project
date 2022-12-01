@@ -33,6 +33,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import shapes.ShapeAbstract;
 import shapes.ShapeInterface;
 
 public class WindowController implements Initializable {
@@ -58,13 +59,15 @@ public class WindowController implements Initializable {
 
     private Invoker invoker;
     private ShapeInterface selectedShape;
-    private ShapeInterface[] selectedInsertedShape;
+    private ObservableList<ShapeInterface> selectedInsertedShape;
     private FileChooser fileChooser;
     private FileChooser.ExtensionFilter extensionFilter;
     private File file;
     private FileIO shapesInputOutput;
     private Action action;
     private ObservableList<ShapeInterface> listInsertedShapes;
+    
+    private ShapeInterface forFocusShape;
 
     /**
      * Called to initialize a controller after its root element has been
@@ -78,9 +81,20 @@ public class WindowController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        this.invoker = new Invoker();
-        this.selectedInsertedShape=new ShapeInterface[1];
-        this.action = new MoveAction(selectedInsertedShape,listInsertedShapes);
+        invoker = new Invoker();
+        selectedInsertedShape=FXCollections.observableArrayList();
+        selectedInsertedShape.addListener((ListChangeListener.Change<? extends ShapeInterface> change) -> {
+            while(change.next()){
+                change.getRemoved().forEach(remItem -> {
+                    remItem.setDefocus();
+                });
+                change.getAddedSubList().forEach(addItem -> {
+                    addItem.setFocus();
+                });
+            }
+        });
+
+        action = new MoveAction(selectedInsertedShape,listInsertedShapes);
 
         listInsertedShapes = FXCollections.observableArrayList();
         listInsertedShapes.addListener((ListChangeListener.Change<? extends ShapeInterface> change) -> {
@@ -209,21 +223,23 @@ public class WindowController implements Initializable {
         invoker.execute(action, event);
     }
 
-    /*
-     * Called when the Resize menu item is clicked
-     * 
-     * @param actionEvent the action that has triggered the execution of this method
+    /**
+     *
+     * @param actionEvent
      */
     @FXML
     public void resizeButtonOnClick(ActionEvent actionEvent) {
         action = new ResizeAction(selectedInsertedShape[0]);
     }
-    
+
     @FXML
     private void copyButtonOnClick(ActionEvent event) {
     }
 
     @FXML
+    private void focusOnMouseClick(MouseEvent event) {
+        selectedInsertedShape.clear();
+        selectedInsertedShape.add(shapesTable.getSelectionModel().getSelectedItem());
     private void shapesTableOnMouseClicked(MouseEvent event) {
         selectedInsertedShape[0]=shapesTable.getSelectionModel().getSelectedItem();
         selectedInsertedShape[0].setFocus();
@@ -234,7 +250,7 @@ public class WindowController implements Initializable {
         action= new ChangeContourColorAction(selectedInsertedShape[0],colorPickerContour.valueProperty());
         invoker.execute(action,event);
         action = new MoveAction(selectedInsertedShape, listInsertedShapes);
-        
+
     }
 
     @FXML

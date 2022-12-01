@@ -2,16 +2,13 @@ package action;
 
 import exceptions.NotMovedException;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Shape;
 import shapes.ShapeInterface;
 
 public class MoveAction implements Action {
     private double initialX, initialY, finalX, finalY, offsetX, offsetY;
-    private ShapeInterface[] currentShape;
-    private ObservableList<ShapeInterface> listInsertedShapes;
-    private MouseEvent mouseEvent;
+    private ObservableList<ShapeInterface> listInsertedShapes,currentShape;
 
     /**
      * Returns a new instance of MoveAction
@@ -19,7 +16,7 @@ public class MoveAction implements Action {
      * @param currentShape the current selected shape
      * @param listInsertedShapes the list of already inserted shapes
      */
-    public MoveAction(ShapeInterface[] currentShape, ObservableList<ShapeInterface> listInsertedShapes) {
+    public MoveAction(ObservableList<ShapeInterface> currentShape, ObservableList<ShapeInterface> listInsertedShapes) {
         this.currentShape = currentShape;
         this.listInsertedShapes=listInsertedShapes;
     }
@@ -28,11 +25,12 @@ public class MoveAction implements Action {
      * Executes the action specified by the calling class when the mouse is clicked
      *
      * @param event the event of the mouse click
-     * 
+     * @throws Exception if something goes wrong
      */
     @Override
-    public void execute(Event event) {
-        currentShape[0]=null;
+    public void execute(MouseEvent event){
+        currentShape.clear();
+
         initialX = -1;
         initialY = -1;
 
@@ -41,19 +39,16 @@ public class MoveAction implements Action {
             Shape selectedShape=(Shape) actionTarget;
             for(ShapeInterface current:listInsertedShapes) {
                 if(current.getShape().equals(selectedShape)){
-                    currentShape[0]=current;
-                    current.setFocus();
+                    currentShape.add(current);
                     break;
                 }
             }
-            
-            mouseEvent = (MouseEvent)event;
-            
-            initialX = mouseEvent.getX();
-            initialY = mouseEvent.getY();
 
-            offsetX = selectedShape.getLayoutX() - mouseEvent.getX();
-            offsetY = selectedShape.getLayoutY() - mouseEvent.getY();
+            initialX = event.getX();
+            initialY = event.getY();
+
+            offsetX = selectedShape.getLayoutX() - event.getX();
+            offsetY = selectedShape.getLayoutY() - event.getY();
         }
     }
 
@@ -63,10 +58,9 @@ public class MoveAction implements Action {
      * @param event the event of the mouse click
      */
     @Override
-    public void onMouseDragged(Event event) {
+    public void onMouseDragged(MouseEvent event) {
         if (initialY != -1 && initialX != -1) {
-            mouseEvent = (MouseEvent)event;
-            currentShape[0].move(offsetX + mouseEvent.getX(),offsetY + mouseEvent.getY());
+            currentShape.get(0).move(offsetX + event.getX(),offsetY + event.getY());
         }
     }
 
@@ -77,16 +71,14 @@ public class MoveAction implements Action {
      * @throws NotMovedException if the initial and final coordinates are the same
      */
     @Override
-    public void onMouseReleased(Event event) throws NotMovedException {
+    public void onMouseReleased(MouseEvent event) throws NotMovedException {
         if ((initialY == -1 && initialX == -1)) {
             throw new NotMovedException();
         }
 
-        mouseEvent = (MouseEvent)event;
-        
-        finalX = mouseEvent.getX();
-        finalY = mouseEvent.getY();
-        currentShape[0].move(offsetX + mouseEvent.getX(),offsetY + mouseEvent.getY());
+        finalX = event.getX();
+        finalY = event.getY();
+        currentShape.get(0).move(offsetX + event.getX(),offsetY + event.getY());
 
         if (finalX == initialX && finalY == initialY) {
             throw new NotMovedException();

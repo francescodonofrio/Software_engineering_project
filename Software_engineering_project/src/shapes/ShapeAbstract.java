@@ -79,9 +79,9 @@ public abstract class ShapeAbstract implements ShapeInterface {
     }
     
     /**
-     * Set the internal shape to shape
+     * Sets the internal shape to shape
      * 
-     * @param shape the new shape to set
+     * @param shape the new shape
      */
     @Override
     public void setShape(Shape shape){
@@ -95,5 +95,13 @@ public abstract class ShapeAbstract implements ShapeInterface {
     public void setFocus(){
         Effect effect = new DropShadow(BlurType.GAUSSIAN, Color.DODGERBLUE, 5, 0.75, 0, 0);
         this.shape.setEffect(effect);
+    }
+
+    /**
+     * Disables the focus on a shape
+     */
+    @Override
+    public void setDefocus(){
+        this.shape.setEffect(null);
     }
 }
