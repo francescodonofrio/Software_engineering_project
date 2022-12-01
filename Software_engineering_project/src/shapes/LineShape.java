@@ -1,18 +1,17 @@
 package shapes;
 
 import javafx.scene.shape.Line;
-import serializedIO.SerializableLine;
 
 public class LineShape extends OpenContourShape {
-
-    private final Line line;
     
     /**
      * Creates a new instance of LineShape
      */
     public LineShape() {
-        this.shape = new SerializableLine();
-        this.line = (Line)shape;
+        this.shape = new Line();
+        this.shape.setStrokeWidth(2);
+        this.name = "Line "+LineShape.cont;
+        LineShape.cont++;
     }
 
     /**
@@ -25,8 +24,7 @@ public class LineShape extends OpenContourShape {
      */
     @Override
     public void setDim(double initialX, double initialY, double finalX, double finalY) {
-        line.setEndX(finalX - initialX);
-        line.setEndY(finalY - initialY);
+        ((Line)shape).setEndX(finalX - initialX);
+        ((Line)shape).setEndY(finalY - initialY);
     }
-
 }

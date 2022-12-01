@@ -3,24 +3,34 @@ package mainPackage;
 import action.Action;
 import action.DrawAction;
 import action.Invoker;
+import action.MoveAction;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Shape;
 import javafx.stage.FileChooser;
-import serializedIO.FileIO;
 import shapes.EllipseShape;
+import shapes.IO.FileIO;
 import shapes.LineShape;
 import shapes.RectangleShape;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.scene.Node;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import shapes.ShapeAbstract;
 import shapes.ShapeInterface;
 
 public class WindowController implements Initializable {
@@ -39,20 +49,22 @@ public class WindowController implements Initializable {
     private Button rectangleBtn;
     @FXML
     private Button ellipseBtn;
+    @FXML
+    private TableView<ShapeInterface> shapesTable;
+    @FXML
+    private TableColumn<ShapeInterface, String> shapesColumn;
 
     private Invoker invoker;
     private ShapeInterface selectedShape;
-    private double initialX;
-    private double initialY;
-    private double finalX;
-    private double finalY;
+    private ObservableList<ShapeInterface> selectedInsertedShape;
     private FileChooser fileChooser;
     private FileChooser.ExtensionFilter extensionFilter;
     private File file;
     private FileIO shapesInputOutput;
-    private Color internalColor;
-    private Color contourColor;
     private Action action;
+    private ObservableList<ShapeInterface> listInsertedShapes;
+    
+    private ShapeInterface forFocusShape;
 
     /**
      * Called to initialize a controller after its root element has been
@@ -65,17 +77,51 @@ public class WindowController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        drawingPane.setDisable(true);
         
-        this.invoker = new Invoker();
-        
+        invoker = new Invoker();
+        selectedInsertedShape=FXCollections.observableArrayList();
+        selectedInsertedShape.addListener((ListChangeListener.Change<? extends ShapeInterface> change) -> {
+            while(change.next()){
+                change.getRemoved().forEach(remItem -> {remItem.setDefocus();                    System.out.println("rem Size: "+selectedInsertedShape.size());
+                });
+                change.getAddedSubList().forEach(addItem -> {
+                    addItem.setFocus();
+                    if(selectedInsertedShape.size()!=1)
+                        selectedInsertedShape.remove(0);
+                    System.out.println("Size: "+selectedInsertedShape.size());
+                });
+            }
+        });
+
+        action = new MoveAction(selectedInsertedShape,listInsertedShapes);
+
+        listInsertedShapes = FXCollections.observableArrayList();
+        listInsertedShapes.addListener((ListChangeListener.Change<? extends ShapeInterface> change) -> {
+            while(change.next()){
+                change.getRemoved().forEach(remItem -> {
+                    drawingPane.getChildren().remove(remItem.getShape());
+                });
+                change.getAddedSubList().forEach(addItem -> {
+                    drawingPane.getChildren().add(addItem.getShape());
+                });
+            }
+        });
+
+
+
+        shapesColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        shapesTable.setItems(listInsertedShapes);
+
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         
+        colorPickerInternal.setValue(Color.TRANSPARENT);
+        colorPickerContour.setValue(Color.BLACK);
+        
         fileChooser = new FileChooser();
-        extensionFilter = new FileChooser.ExtensionFilter("Binary File (*.bin)", "*.bin");
+        extensionFilter = new FileChooser.ExtensionFilter("XML File (*.xml)", "*.xml");
         fileChooser.getExtensionFilters().add(extensionFilter);
-        shapesInputOutput = new FileIO(this.drawingPane);
+        shapesInputOutput = new FileIO(this.listInsertedShapes);
     }
 
     /**
@@ -86,8 +132,7 @@ public class WindowController implements Initializable {
     @FXML
     private void lineSegmentSelection(ActionEvent event) {
         selectedShape = new LineShape();
-        lineSegmentBtn.setStyle("-fx-border-color: #ff0000; -fx-border-color : black;");
-        drawingPane.setDisable(false);
+        action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes);
     }
 
     /**
@@ -98,8 +143,7 @@ public class WindowController implements Initializable {
     @FXML
     private void rectangleSelection(ActionEvent event) {
         selectedShape = new RectangleShape();
-        rectangleBtn.setStyle("-fx-border-color: #ff0000; -fx-border-color : black;");
-        drawingPane.setDisable(false);
+        action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes);
     }
 
     /**
@@ -110,8 +154,7 @@ public class WindowController implements Initializable {
     @FXML
     private void ellipseSelection(ActionEvent event) {
         selectedShape = new EllipseShape();
-        ellipseBtn.setStyle("-fx-border-color: #ff0000; -fx-border-color : black;");
-        drawingPane.setDisable(false);
+        action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes);
     }
 
     /**
@@ -123,7 +166,11 @@ public class WindowController implements Initializable {
     private void saveWindow(ActionEvent event) {
         fileChooser.setTitle("Save File");
         file = fileChooser.showSaveDialog(drawingPane.getScene().getWindow());
-        shapesInputOutput.save(file);
+        try {
+            shapesInputOutput.save(file);
+        } catch (IOException ex) {
+            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -135,7 +182,11 @@ public class WindowController implements Initializable {
     private void loadWindow(ActionEvent event) {
         fileChooser.setTitle("Open File");
         file = fileChooser.showOpenDialog(drawingPane.getScene().getWindow());
-        shapesInputOutput.load(file);
+        try {
+            shapesInputOutput.load(file);
+        } catch (IOException ex) {
+            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -144,11 +195,11 @@ public class WindowController implements Initializable {
      * @param event the event of the click
      */
     @FXML
-    private void DrawingWindowOnMouseReleased(MouseEvent event) {
-        drawingPane.setDisable(true);
-        lineSegmentBtn.setStyle("-fx-background-color : white; -fx-border-color : black");
-        ellipseBtn.setStyle("-fx-background-color : white; -fx-border-color : black");
-        rectangleBtn.setStyle("-fx-background-color : white; -fx-border-color : black");
+    private void drawingWindowOnMouseReleased(MouseEvent event) {
+        invoker.executeOnMouseReleased(action, event);
+
+        // Here we reset the default action to move action
+        this.action = new MoveAction(selectedInsertedShape,listInsertedShapes);
     }
 
     /**
@@ -157,10 +208,8 @@ public class WindowController implements Initializable {
      * @param event the event of the click
      */
     @FXML
-    private void DrawingWindowOnMouseDragged(MouseEvent event) {
-        finalX = event.getX();
-        finalY = event.getY();
-        selectedShape.setDim(initialX, initialY, finalX, finalY);
+    private void drawingWindowOnMouseDragged(MouseEvent event) {
+        invoker.executeOnMouseDragged(action, event);
     }
 
     /**
@@ -169,13 +218,24 @@ public class WindowController implements Initializable {
      * @param event the event of the click
      */
     @FXML
-    private void DrawingWindowOnMousePressed(MouseEvent event) {
-        internalColor = colorPickerInternal.getValue();
-        contourColor = colorPickerContour.getValue();
-        initialX = event.getX();
-        initialY = event.getY();
-        action = new DrawAction(selectedShape, initialX, initialY, internalColor, contourColor, drawingPane);
-        invoker.execute(action);
+    private void drawingWindowOnMousePressed(MouseEvent event) {
+        invoker.execute(action, event);
     }
 
+    /**
+     *
+     * @param actionEvent
+     */
+    @FXML
+    public void resizeButtonOnClick(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    private void copyButtonOnClick(ActionEvent event) {
+    }
+
+    @FXML
+    private void focusOnMouseClick(MouseEvent event) {
+        listInsertedShapes.add(shapesTable.getSelectionModel().getSelectedItem());
+    }
 }
