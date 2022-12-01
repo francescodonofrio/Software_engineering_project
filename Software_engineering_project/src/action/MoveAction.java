@@ -2,6 +2,7 @@ package action;
 
 import exceptions.NotMovedException;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Shape;
 import shapes.ShapeInterface;
@@ -84,5 +85,10 @@ public class MoveAction implements Action {
         if (finalX == initialX && finalY == initialY) {
             throw new NotMovedException();
         }
+    }
+
+    @Override
+    public void execute(ActionEvent event) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

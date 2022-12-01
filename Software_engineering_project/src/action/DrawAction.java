@@ -2,6 +2,7 @@ package action;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import shapes.ShapeInterface;
@@ -62,6 +63,11 @@ public class DrawAction implements Action {
      */
     @Override
     public void onMouseReleased(MouseEvent event) {
+    }
+
+    @Override
+    public void execute(ActionEvent event) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

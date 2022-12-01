@@ -4,6 +4,7 @@
  */
 package action;
 
+import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -24,6 +25,11 @@ public class CopyAction implements Action {
 
     @Override
     public void onMouseReleased(MouseEvent event) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void execute(ActionEvent event) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

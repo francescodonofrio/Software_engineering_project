@@ -1,6 +1,7 @@
 package action;
 
 import exceptions.NotResizedException;
+import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
 import shapes.ShapeInterface;
 
@@ -52,6 +53,11 @@ public class ResizeAction implements Action{
     public void onMouseReleased(MouseEvent event) throws NotResizedException {
         if(initialX == finalX && initialY == finalY)
             throw new NotResizedException();
+    }
+
+    @Override
+    public void execute(ActionEvent event) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
