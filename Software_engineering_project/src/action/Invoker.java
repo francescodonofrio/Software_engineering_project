@@ -51,7 +51,7 @@ public class Invoker {
     public void executeOnMouseReleased(Action action, MouseEvent event) {
         try {
             action.onMouseReleased(event);
-        } catch (VoidActionException ex) {
+        } catch (Exception ex) {
             this.actions.pop();
             System.out.println("Unable to execute this action: \"" + ex + "\" !");
         }

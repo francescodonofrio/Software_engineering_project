@@ -89,10 +89,11 @@ public class WindowController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        drawingPane.setDisable(true);
         
         this.invoker = new Invoker();
-        
+        this.selectedInsertedShape=new Shape[1];
+        this.action = new MoveAction(selectedInsertedShape);
+
         listInsertedShapes = FXCollections.observableArrayList();
         listInsertedShapes.addListener((ListChangeListener.Change<? extends ShapeInterface> change) -> {
             while(change.next()){
@@ -107,13 +108,6 @@ public class WindowController implements Initializable {
 
         shapesColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         shapesTable.setItems(listInsertedShapes);
-
-        this.selectedInsertedShape=new Shape[1];
-        this.action = new MoveAction(selectedInsertedShape);
-
-        shapesTable.setItems(drawingPane.getChildren());
-        shapesColumn.setCellValueFactory((CellDataFeatures<Node, String> p) -> new ReadOnlyObjectWrapper(p.getValue().toString().split("\\[")[0]) // p.getValue() returns the Person instance for a particular TableView row
-        );
 
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -135,7 +129,7 @@ public class WindowController implements Initializable {
     @FXML
     private void lineSegmentSelection(ActionEvent event) {
         selectedShape = new LineShape();
-        action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), drawingPane);
+        action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes);
     }
 
     /**
@@ -146,7 +140,7 @@ public class WindowController implements Initializable {
     @FXML
     private void rectangleSelection(ActionEvent event) {
         selectedShape = new RectangleShape();
-        action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), drawingPane);
+        action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes);
     }
 
     /**
@@ -157,7 +151,7 @@ public class WindowController implements Initializable {
     @FXML
     private void ellipseSelection(ActionEvent event) {
         selectedShape = new EllipseShape();
-        action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), drawingPane);
+        action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes);
     }
 
     /**
