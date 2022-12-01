@@ -65,8 +65,6 @@ public class WindowController implements Initializable {
     private FileIO shapesInputOutput;
     private Action action;
     private ObservableList<ShapeInterface> listInsertedShapes;
-    
-    private ShapeInterface forFocusShape;
 
     /**
      * Called to initialize a controller after its root element has been
@@ -227,19 +225,22 @@ public class WindowController implements Initializable {
 
     @FXML
     private void shapesTableOnMouseClicked(MouseEvent event) {
-        forFocusShape=shapesTable.getSelectionModel().getSelectedItem();
-        forFocusShape.setFocus();
+        selectedInsertedShape[0]=shapesTable.getSelectionModel().getSelectedItem();
+        selectedInsertedShape[0].setFocus();
     }
 
     @FXML
-    private void chanheContourColorOnClick(ActionEvent event) {
-        action= new ChangeContourColorAction(forFocusShape,colorPickerContour.valueProperty());
+    private void changeContourColorOnClick(ActionEvent event) {
+        action= new ChangeContourColorAction(selectedInsertedShape[0],colorPickerContour.valueProperty());
         invoker.execute(action,event);
+        action = new MoveAction(selectedInsertedShape, listInsertedShapes);
+        
     }
 
     @FXML
-    private void chanheInternalColorOnClick(ActionEvent event) {
-        action= new ChangeInternalColorAction(forFocusShape,colorPickerInternal.valueProperty());
+    private void changeInternalColorOnClick(ActionEvent event) {
+        action= new ChangeInternalColorAction(selectedInsertedShape[0],colorPickerInternal.valueProperty());
         invoker.execute(action,event);
+        action = new MoveAction(selectedInsertedShape, listInsertedShapes);
     }
 }

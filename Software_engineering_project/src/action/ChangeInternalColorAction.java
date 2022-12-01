@@ -1,5 +1,6 @@
 package action;
 
+import exceptions.NotCloseContourException;
 import javafx.beans.property.ObjectProperty;
 import javafx.event.Event;
 import javafx.scene.paint.Color;
@@ -16,6 +17,7 @@ public class ChangeInternalColorAction implements Action{
 
     @Override
     public void execute(Event event) throws Exception {
+        shape.setInternalColor(colorPickerInternal.getValue());
     }
 
     @Override

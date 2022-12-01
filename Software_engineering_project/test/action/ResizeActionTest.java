@@ -45,7 +45,7 @@ public class ResizeActionTest {
         Rectangle rectangle = (Rectangle) rectangleShape.getShape();
         assertEquals(rectangle.getWidth(), event.getX(), 0.1);
         assertEquals(rectangle.getHeight(), event.getY(), 0.1);   
-        
+      
         action = new ResizeAction(ellipseShape);
         action.execute(event);
         Ellipse ellipse = (Ellipse) ellipseShape.getShape();

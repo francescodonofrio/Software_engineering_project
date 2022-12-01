@@ -17,6 +17,8 @@ public class ChangeContourColorAction implements Action{
 
     @Override
     public void execute(Event event) throws Exception {
+        shape.setContourColor(colorPickerContour.getValue());
+
     }
 
     @Override
