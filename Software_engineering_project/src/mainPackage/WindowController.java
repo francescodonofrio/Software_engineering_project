@@ -212,4 +212,8 @@ public class WindowController implements Initializable {
     @FXML
     public void resizeButtonOnClick(ActionEvent actionEvent) {
     }
+
+    @FXML
+    private void copyButtonOnClick(ActionEvent event) {
+    }
 }
