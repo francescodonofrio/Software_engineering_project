@@ -6,14 +6,12 @@ import javafx.scene.shape.Shape;
 public class EllipseShape extends CloseContourShape {
 
     private double radiusX, radiusY;
-    private Ellipse ellipse;
     
     /**
      * Creates a new instance of  EllipseShape
      */
     public EllipseShape() {
         this.shape = new Ellipse();
-        this.ellipse = (Ellipse)this.shape;
         this.name = "Ellipse "+EllipseShape.cont;
         EllipseShape.cont++;
     }
@@ -37,8 +35,8 @@ public class EllipseShape extends CloseContourShape {
             radiusY = -radiusY;
         }
 
-        ellipse.setRadiusX(radiusX);
-        ellipse.setRadiusY(radiusY);
+        ((Ellipse)shape).setRadiusX(radiusX);
+        ((Ellipse)shape).setRadiusY(radiusY);
     }
     
     /**
@@ -49,6 +47,5 @@ public class EllipseShape extends CloseContourShape {
     @Override
     public void setShape(Shape shape){
         this.shape = shape;
-        this.ellipse = (Ellipse)shape;
     }
 }
