@@ -35,7 +35,7 @@ public class InvokerTest {
     public void testExecute() {
         System.out.print("execute: ");
         
-        event = new MouseEvent(new EventType("test"), 180, 200, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+        event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 180, 200, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
 
         num = 5;
         Action action = new MockAction(this.test, num);
@@ -62,7 +62,7 @@ public class InvokerTest {
     @Test
     public void testExecuteOnMouseDragged() {
         System.out.print("executeOnMouseDragged: ");
-        event = new MouseEvent(new EventType("test1"), 180, 200, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+        event = new MouseEvent(MouseEvent.MOUSE_DRAGGED, 180, 200, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
        
         num = 5;
         Action action = new MockAction(this.test, num);
@@ -79,7 +79,7 @@ public class InvokerTest {
     @Test
     public void testExecuteOnMouseReleased() {
         System.out.print("executeOnMouseReleased: ");
-        event = new MouseEvent(new EventType("test3"), 180, 200, 20, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+        event = new MouseEvent(MouseEvent.MOUSE_RELEASED, 180, 200, 20, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
        
         num = 5;
         Action action = new MockAction(this.test, num);
@@ -87,7 +87,7 @@ public class InvokerTest {
         assertEquals((int)event.getX(), (int)this.test.get(0));
         assertEquals((int)event.getY(), (int)this.test.get(1));
         
-        event = new MouseEvent(new EventType("test4"), 180, 180, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+        event = new MouseEvent(MouseEvent.MOUSE_RELEASED, 180, 180, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
         
         invoker.execute(action, event);
         invoker.executeOnMouseReleased(action, event);

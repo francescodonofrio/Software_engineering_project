@@ -1,7 +1,6 @@
 package action;
 
 import exceptions.NotResizedException;
-import javafx.event.EventType;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Ellipse;
@@ -39,7 +38,7 @@ public class ResizeActionTest {
     public void testExecute() {
         System.out.print("execute");
         
-        event = new MouseEvent(new EventType("test1"), 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+        event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
     
         action = new ResizeAction(rectangleShape);
         action.execute(event);
@@ -69,7 +68,7 @@ public class ResizeActionTest {
     public void testOnMouseDragged() {
         System.out.print("onMouseDragged");
         
-        event = new MouseEvent(new EventType("test2"), 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+        event = new MouseEvent(MouseEvent.MOUSE_DRAGGED, 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
     
         action = new ResizeAction(rectangleShape);
         action.onMouseDragged(event);
@@ -101,7 +100,7 @@ public class ResizeActionTest {
     public void testOnMouseReleased() throws Exception {
         System.out.print("onMouseReleased");
         
-        event = new MouseEvent(new EventType("test3"), 100, 100, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+        event = new MouseEvent(MouseEvent.MOUSE_RELEASED, 100, 100, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
     
         action = new ResizeAction(rectangleShape);
         action.onMouseReleased(event);

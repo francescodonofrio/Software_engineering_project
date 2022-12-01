@@ -5,7 +5,6 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.event.EventType;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -86,7 +85,7 @@ public class DrawActionTest {
     public void testExecute() {
         System.out.print("execute: ");
         
-        event = new MouseEvent(new EventType("test1"), 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+        event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
     
         instanceDrawActionRectangle = new DrawAction(rectangleShape, internalColorProperty, contourColorProperty, listInsertedShapes);
         instanceDrawActionRectangle.execute(event);
@@ -108,7 +107,7 @@ public class DrawActionTest {
         assertEquals(colorStrokeRectangle.getOpacity(), Color.BLACK.getOpacity(), 0.1);
 
         
-        event = new MouseEvent(new EventType("test2"), 180, 200, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+        event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 180, 200, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
     
         instanceDrawActionEllipse = new DrawAction(ellipseShape, internalColorProperty, contourColorProperty, listInsertedShapes);
         instanceDrawActionEllipse.execute(event);
@@ -129,7 +128,7 @@ public class DrawActionTest {
         assertEquals(colorStrokeEllipse.getBlue(), Color.BLACK.getBlue(), 0.1);
         assertEquals(colorStrokeEllipse.getOpacity(), Color.BLACK.getOpacity(), 0.1);
 
-        event = new MouseEvent(new EventType("test3"), 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+        event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
     
         instanceDrawActionLine = new DrawAction(lineShape, internalColorProperty, contourColorProperty, listInsertedShapes);
         instanceDrawActionLine.execute(event);
@@ -156,7 +155,7 @@ public class DrawActionTest {
     @Test
     public void testOnMouseDragged() {
         System.out.print("onMouseDragged: ");
-        event = new MouseEvent(new EventType("test4"), 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+        event = new MouseEvent(MouseEvent.MOUSE_DRAGGED, 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
         
         instanceDrawActionRectangle = new DrawAction(rectangleShape, internalColorProperty, contourColorProperty, listInsertedShapes);
         instanceDrawActionRectangle.onMouseDragged(event);
