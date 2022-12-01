@@ -82,13 +82,11 @@ public class WindowController implements Initializable {
         selectedInsertedShape=FXCollections.observableArrayList();
         selectedInsertedShape.addListener((ListChangeListener.Change<? extends ShapeInterface> change) -> {
             while(change.next()){
-                change.getRemoved().forEach(remItem -> {remItem.setDefocus();                    System.out.println("rem Size: "+selectedInsertedShape.size());
+                change.getRemoved().forEach(remItem -> {
+                    remItem.setDefocus();
                 });
                 change.getAddedSubList().forEach(addItem -> {
                     addItem.setFocus();
-                    if(selectedInsertedShape.size()!=1)
-                        selectedInsertedShape.remove(0);
-                    System.out.println("Size: "+selectedInsertedShape.size());
                 });
             }
         });
@@ -236,6 +234,7 @@ public class WindowController implements Initializable {
 
     @FXML
     private void focusOnMouseClick(MouseEvent event) {
-        listInsertedShapes.add(shapesTable.getSelectionModel().getSelectedItem());
+        selectedInsertedShape.clear();
+        selectedInsertedShape.add(shapesTable.getSelectionModel().getSelectedItem());
     }
 }

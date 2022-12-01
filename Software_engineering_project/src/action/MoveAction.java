@@ -28,7 +28,9 @@ public class MoveAction implements Action {
      * @throws Exception if something goes wrong
      */
     @Override
-    public void execute(MouseEvent event) {
+    public void execute(MouseEvent event){
+        currentShape.clear();
+
         initialX = -1;
         initialY = -1;
 
