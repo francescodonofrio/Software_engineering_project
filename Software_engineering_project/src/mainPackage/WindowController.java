@@ -94,8 +94,6 @@ public class WindowController implements Initializable {
             }
         });
 
-        action = new MoveAction(selectedInsertedShape,listInsertedShapes);
-
         listInsertedShapes = FXCollections.observableArrayList();
         listInsertedShapes.addListener((ListChangeListener.Change<? extends ShapeInterface> change) -> {
             while(change.next()){
@@ -108,7 +106,10 @@ public class WindowController implements Initializable {
             }
         });
 
-        
+
+        selectedShape = new LineShape();
+        action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes);
+
 
         shapesColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         shapesTable.setItems(listInsertedShapes);
@@ -229,25 +230,22 @@ public class WindowController implements Initializable {
      */
     @FXML
     public void resizeButtonOnClick(ActionEvent actionEvent) {
-        action = new ResizeAction(selectedInsertedShape[0]);
+        action = new ResizeAction(selectedInsertedShape.get(0));
     }
 
     @FXML
     private void copyButtonOnClick(ActionEvent event) {
     }
-
-    @FXML
-    private void focusOnMouseClick(MouseEvent event) {
-        selectedInsertedShape.clear();
-        selectedInsertedShape.add(shapesTable.getSelectionModel().getSelectedItem());
+        @FXML
     private void shapesTableOnMouseClicked(MouseEvent event) {
-        selectedInsertedShape[0]=shapesTable.getSelectionModel().getSelectedItem();
-        selectedInsertedShape[0].setFocus();
+            selectedInsertedShape.clear();
+
+            selectedInsertedShape.add(shapesTable.getSelectionModel().getSelectedItem());
     }
 
     @FXML
     private void changeContourColorOnClick(ActionEvent event) {
-        action= new ChangeContourColorAction(selectedInsertedShape[0],colorPickerContour.valueProperty());
+        action= new ChangeContourColorAction(selectedInsertedShape.get(0),colorPickerContour.valueProperty());
         invoker.execute(action,event);
         action = new MoveAction(selectedInsertedShape, listInsertedShapes);
 
@@ -255,7 +253,7 @@ public class WindowController implements Initializable {
 
     @FXML
     private void changeInternalColorOnClick(ActionEvent event) {
-        action= new ChangeInternalColorAction(selectedInsertedShape[0],colorPickerInternal.valueProperty());
+        action= new ChangeInternalColorAction(selectedInsertedShape.get(0),colorPickerInternal.valueProperty());
         invoker.execute(action,event);
         action = new MoveAction(selectedInsertedShape, listInsertedShapes);
     }
