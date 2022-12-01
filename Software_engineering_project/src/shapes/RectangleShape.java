@@ -5,7 +5,6 @@ import javafx.scene.shape.Rectangle;
 
 public class RectangleShape extends CloseContourShape {
 
-    private final Rectangle rectangle;
     private double width, height;
 
     /**
@@ -13,7 +12,6 @@ public class RectangleShape extends CloseContourShape {
      */
     public RectangleShape() {
         this.shape = new Rectangle();
-        this.rectangle = (Rectangle) shape;
     }
 
     /**
@@ -30,15 +28,15 @@ public class RectangleShape extends CloseContourShape {
         height = finalY - initialY;
         if (width < 0) {
             width = -width;
-            rectangle.setLayoutX(finalX);
+            shape.setLayoutX(finalX);
         }
         if (height < 0) {
             height = -height;
-            rectangle.setLayoutY(finalY);
+            shape.setLayoutY(finalY);
         }
 
-        rectangle.setWidth(width);
-        rectangle.setHeight(height);
+        (( Rectangle)shape).setWidth(width);
+        (( Rectangle)shape).setHeight(height);
     }
 
 }
