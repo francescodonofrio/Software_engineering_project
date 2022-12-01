@@ -56,7 +56,7 @@ public class WindowController implements Initializable {
 
     private Invoker invoker;
     private ShapeInterface selectedShape;
-    private Shape[] selectedInsertedShape;
+    private ShapeInterface[] selectedInsertedShape;
     private FileChooser fileChooser;
     private FileChooser.ExtensionFilter extensionFilter;
     private File file;
@@ -77,8 +77,8 @@ public class WindowController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         this.invoker = new Invoker();
-        this.selectedInsertedShape=new Shape[1];
-        this.action = new MoveAction(selectedInsertedShape);
+        this.selectedInsertedShape=new ShapeInterface[1];
+        this.action = new MoveAction(selectedInsertedShape,listInsertedShapes);
 
         listInsertedShapes = FXCollections.observableArrayList();
         listInsertedShapes.addListener((ListChangeListener.Change<? extends ShapeInterface> change) -> {
@@ -182,7 +182,7 @@ public class WindowController implements Initializable {
         invoker.executeOnMouseReleased(action, event);
 
         // Here we reset the default action to move action
-        this.action = new MoveAction(selectedInsertedShape);
+        this.action = new MoveAction(selectedInsertedShape,listInsertedShapes);
     }
 
     /**
@@ -206,7 +206,7 @@ public class WindowController implements Initializable {
     }
 
     /**
-     * 
+     *
      * @param actionEvent
      */
     @FXML

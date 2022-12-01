@@ -19,9 +19,9 @@ public class ResizeAction implements Action{
     }
 
     /**
-     * Execute the ResizeAction
-     * 
-     * @param event the mouse event of the click
+     * Executes the action specified by the calling class when the mouse is clicked
+     *
+     * @param event the event of the mouse click
      */
     @Override
     public void execute(MouseEvent event) {
@@ -31,9 +31,9 @@ public class ResizeAction implements Action{
     }
 
     /**
-     * Update the dimension of the selectedShape
-     * 
-     * @param event the mouse event of the click
+     * Executes the action specified by the calling class when the mouse is dragged
+     *
+     * @param event the event of the mouse click
      */
     @Override
     public void onMouseDragged(MouseEvent event) {
@@ -43,11 +43,10 @@ public class ResizeAction implements Action{
     }
 
     /**
-     * Check if the selectedShape has been resized through this action. 
-     * If it hasn't, then a NotResizedException is thrown.
-     * 
-     * @param event the mouse event of the click
-     * @throws NotResizedException
+     * Executes the action specified by the calling class when the mouse is released
+     *
+     * @param event the event of the mouse click
+     * @throws NotResizedException if the initial and final coordinates are the same
      */
     @Override
     public void onMouseReleased(MouseEvent event) throws NotResizedException {
