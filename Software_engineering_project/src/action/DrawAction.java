@@ -14,7 +14,6 @@ public class DrawAction implements Action {
     private final ObjectProperty<Color> colorPickerInternal;
     private final ObjectProperty<Color> colorPickerContour;
     private double initialX, initialY, finalX, finalY;
-    private MouseEvent mouseEvent;
     
 
     /**
@@ -41,7 +40,7 @@ public class DrawAction implements Action {
     @Override
     public void execute(Event event) {
         listInsertedShapes.add(shape);
-        mouseEvent = (MouseEvent)event;
+        MouseEvent mouseEvent = (MouseEvent)event;
         initialX = mouseEvent.getX();
         initialY = mouseEvent.getY();
         shape.setProperties(initialX, initialY, colorPickerInternal.getValue(), colorPickerContour.getValue());
@@ -54,7 +53,7 @@ public class DrawAction implements Action {
      */
     @Override
     public void onMouseDragged(Event event) {
-        mouseEvent = (MouseEvent)event;
+        MouseEvent mouseEvent = (MouseEvent)event;
         finalX = mouseEvent.getX();
         finalY = mouseEvent.getY();
         shape.setDim(initialX, initialY, finalX, finalY);

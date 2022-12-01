@@ -26,7 +26,6 @@ public class Invoker {
             action.execute(event);
             this.actions.push(action);
         } catch (Exception ex) {
-            System.out.println("Unable to execute this action: \"" + ex + "\" !\n");
         }
     }
 
