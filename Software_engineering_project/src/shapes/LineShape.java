@@ -1,10 +1,11 @@
 package shapes;
 
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Shape;
 
 public class LineShape extends OpenContourShape {
 
-    private final Line line;
+    private Line line;
     
     /**
      * Creates a new instance of LineShape
@@ -29,5 +30,15 @@ public class LineShape extends OpenContourShape {
         line.setEndX(finalX - initialX);
         line.setEndY(finalY - initialY);
     }
-
+    
+    /**
+     * Set the internal implementation of javafx.scene.shape.Shape interface
+     * 
+     * @param shape the shape to be set
+     */
+    @Override
+    public void setShape(Shape shape){
+        this.shape = shape;
+        this.line = (Line)shape;
+    }
 }

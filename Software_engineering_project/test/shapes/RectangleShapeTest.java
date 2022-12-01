@@ -1,11 +1,11 @@
 package shapes;
 
+import javafx.scene.shape.Rectangle;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
 public class RectangleShapeTest {
-    private RectangleShape rectangleShape;
 
     public RectangleShapeTest() {
         System.out.println("Test RectangleShape");
@@ -176,6 +176,22 @@ public class RectangleShapeTest {
         assertEquals(shape.getWidth(), width, 0.1);
         assertEquals(shape.getHeight(), height, 0.1);
 
+        System.out.println("Passed");
+    }
+    
+        /**
+     * Test of setShape method, of class RectangleShape.
+     */
+    @Test
+    public void testSetShape() {
+        System.out.print("setShape: ");
+        
+        Rectangle rectangle = new Rectangle(10,15);
+        RectangleShape rectangleShape = new RectangleShape();     
+        
+        rectangleShape.setShape(rectangle);
+        assertEquals(rectangle.toString(), rectangleShape.getShape().toString());
+        
         System.out.println("Passed");
     }
 }

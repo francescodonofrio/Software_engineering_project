@@ -60,7 +60,6 @@ public class FileIO {
      */
     public void load(File file) throws IOException {
         if (file == null) return;
-        drawingPane.getChildren().clear();
         listInsertedShapes.clear();
         ShapeAbstract.resetCont();
         try ( XMLDecoder decoder = new XMLDecoder(new BufferedInputStream(Files.newInputStream(file.toPath())))) {

@@ -1,12 +1,11 @@
 package shapes;
 
+import javafx.scene.shape.Ellipse;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
 public class EllipseShapeTest {
-
-    private ShapeInterface ellipseShape;
 
     public EllipseShapeTest() {
         System.out.println("Test EllipseShape");
@@ -167,6 +166,22 @@ public class EllipseShapeTest {
         assertEquals(shape.getRadiusX(), radiusX, 0.1);
         assertEquals(shape.getRadiusY(), radiusY, 0.1);
 
+        System.out.println("Passed");
+    }
+    
+    /**
+     * Test of setShape method, of class EllipseShape.
+     */
+    @Test
+    public void testSetShape() {
+        System.out.print("setShape: ");
+        
+        Ellipse ellipse = new Ellipse(20,25);   
+        EllipseShape ellipseShape = new EllipseShape(); 
+        
+        ellipseShape.setShape(ellipse);
+        assertEquals(ellipse.toString(), ellipseShape.getShape().toString());
+        
         System.out.println("Passed");
     }
 }
