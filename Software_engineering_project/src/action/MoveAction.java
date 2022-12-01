@@ -8,10 +8,10 @@ import java.util.Deque;
 
 public class MoveAction implements Action {
     private double initialX, initialY, finalX, finalY, offsetX, offsetY;
-    private Deque currentShape;
+    private Shape[] currentShape;
     private Shape selectedShape;
 
-    public MoveAction(Deque<Shape> currentShape) {
+    public MoveAction(Shape[] currentShape) {
         this.currentShape = currentShape;
     }
 
@@ -23,14 +23,14 @@ public class MoveAction implements Action {
      */
     @Override
     public void execute(MouseEvent event) {
-        currentShape.clear();
+        currentShape[0]=null;
         initialX = -1;
         initialY = -1;
 
         Object actionTarget = event.getTarget();
         if (actionTarget instanceof Shape) {
             selectedShape=(Shape) actionTarget;
-            currentShape.push(selectedShape);
+            currentShape[0]=selectedShape;
 
             initialX = selectedShape.getLayoutX();
             initialY = selectedShape.getLayoutY();

@@ -50,7 +50,7 @@ public class WindowController implements Initializable {
 
     private Invoker invoker;
     private ShapeInterface selectedShape;
-    private Deque<Shape> selectedInsertedShape;
+    private Shape[] selectedInsertedShape;
 
     private double initialX;
     private double initialY;
@@ -80,7 +80,7 @@ public class WindowController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.invoker = new Invoker();
-        this.selectedInsertedShape=new ArrayDeque();
+        this.selectedInsertedShape=new Shape[1];
         this.action = new MoveAction(selectedInsertedShape);
 
         shapesTable.setItems(drawingPane.getChildren());
