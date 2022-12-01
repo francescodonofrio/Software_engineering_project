@@ -85,7 +85,7 @@
                      <contextMenu>
                         <ContextMenu>
                           <items>
-                            <MenuItem mnemonicParsing="false" text="item" />
+                            <MenuItem mnemonicParsing="false" text="Resize"  onAction="#resizeButtonOnClick"/>
                           </items>
                         </ContextMenu>
                      </contextMenu>

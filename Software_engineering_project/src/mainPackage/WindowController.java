@@ -205,4 +205,11 @@ public class WindowController implements Initializable {
         invoker.execute(action, event);
     }
 
+    /**
+     * 
+     * @param actionEvent
+     */
+    @FXML
+    public void resizeButtonOnClick(ActionEvent actionEvent) {
+    }
 }
