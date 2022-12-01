@@ -30,6 +30,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import shapes.ShapeAbstract;
 import shapes.ShapeInterface;
 
 public class WindowController implements Initializable {
