@@ -89,19 +89,6 @@ public class ShapeAbstractTest {
         System.out.println("Passed");
     }
 
-    /**
-     * Test of setContourColor method, of class ShapeAbstract.
-     */
-    @Test
-    public void testSetContourColor() {
-        System.out.print("setContourColor: ");
-
-        Color selectedColor = Color.CHOCOLATE;
-        shape.setContourColor(selectedColor);
-        assertEquals(test.getStroke(), selectedColor);
-
-        System.out.println("Passed");
-    }
 
     /**
      * Test of move method, of class ShapeAbstract.

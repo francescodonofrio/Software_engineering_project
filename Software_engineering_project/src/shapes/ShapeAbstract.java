@@ -1,5 +1,6 @@
 package shapes;
 
+import javafx.scene.effect.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 
@@ -85,5 +86,14 @@ public abstract class ShapeAbstract implements ShapeInterface {
     @Override
     public void setShape(Shape shape){
         this.shape = shape;
+    }
+    
+    /**
+     * Set the focus to shape
+     */
+    @Override
+    public void setFocus(){
+        Effect effect = new DropShadow(BlurType.GAUSSIAN, Color.DODGERBLUE, 5, 0.75, 0, 0);
+        this.shape.setEffect(effect);
     }
 }

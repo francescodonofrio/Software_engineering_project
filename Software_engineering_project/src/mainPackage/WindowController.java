@@ -63,6 +63,8 @@ public class WindowController implements Initializable {
     private FileIO shapesInputOutput;
     private Action action;
     private ObservableList<ShapeInterface> listInsertedShapes;
+    
+    private ShapeInterface forFocusShape;
 
     /**
      * Called to initialize a controller after its root element has been
@@ -215,5 +217,11 @@ public class WindowController implements Initializable {
 
     @FXML
     private void copyButtonOnClick(ActionEvent event) {
+    }
+
+    @FXML
+    private void focusOnMouseClick(MouseEvent event) {
+        forFocusShape=shapesTable.getSelectionModel().getSelectedItem();
+        forFocusShape.setFocus();
     }
 }

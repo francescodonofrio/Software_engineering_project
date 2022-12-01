@@ -78,4 +78,6 @@ public interface ShapeInterface {
     void move(double X, double Y);
     
     void setShape(Shape shape);
+    
+    void setFocus();
 }
