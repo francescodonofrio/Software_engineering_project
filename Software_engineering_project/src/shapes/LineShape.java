@@ -4,15 +4,12 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
 
 public class LineShape extends OpenContourShape {
-
-    private Line line;
     
     /**
      * Creates a new instance of LineShape
      */
     public LineShape() {
         this.shape = new Line();
-        this.line = (Line)shape;
         this.name = "Line "+LineShape.cont;
         LineShape.cont++;
     }
@@ -27,8 +24,8 @@ public class LineShape extends OpenContourShape {
      */
     @Override
     public void setDim(double initialX, double initialY, double finalX, double finalY) {
-        line.setEndX(finalX - initialX);
-        line.setEndY(finalY - initialY);
+        ((Line)shape).setEndX(finalX - initialX);
+        ((Line)shape).setEndY(finalY - initialY);
     }
     
     /**
@@ -39,6 +36,5 @@ public class LineShape extends OpenContourShape {
     @Override
     public void setShape(Shape shape){
         this.shape = shape;
-        this.line = (Line)shape;
     }
 }
