@@ -120,9 +120,6 @@ public class WindowController implements Initializable {
             menuItem.disableProperty().bind(Bindings.isEmpty(selectedInsertedShape));
         });
         
-        selectedShape = new LineShape();
-        action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes);
-
         shapesColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         shapesTable.setItems(listInsertedShapes);
 

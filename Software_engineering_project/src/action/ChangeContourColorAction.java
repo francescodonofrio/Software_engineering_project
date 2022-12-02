@@ -10,11 +10,22 @@ public class ChangeContourColorAction implements Action{
     private final ObjectProperty<Color> colorPickerContour;
     private final ShapeInterface shape;
     
-    public ChangeContourColorAction(ShapeInterface shape, ObjectProperty<Color> colorPickerContour){
-        this.shape=shape;
+    /**
+     * Returns a new instance of ChangeContourColorAction
+     * 
+     * @param selectedShape the shape to change the contour color to
+     * @param colorPickerContour the new contour color
+     */
+    public ChangeContourColorAction(ShapeInterface selectedShape, ObjectProperty<Color> colorPickerContour){
+        this.shape=selectedShape;
         this.colorPickerContour = colorPickerContour;
     }
 
+    /**
+     * Executes the action specified by the calling class when the colorPicker in clicked
+     *
+     * @param event the event of the mouse click
+     */
     @Override
     public void execute(Event event) throws Exception {
         shape.setContourColor(colorPickerContour.getValue());
