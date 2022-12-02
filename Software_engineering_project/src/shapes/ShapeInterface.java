@@ -4,7 +4,7 @@ import exceptions.NotCloseContourException;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 
-public interface ShapeInterface {
+public interface ShapeInterface{
 
     /**
      * Sets the X coordinate for this shape
@@ -48,6 +48,18 @@ public interface ShapeInterface {
      * @param newColor the new color to set
      */
     void setContourColor(Color newColor);
+    
+    /**
+     * Retur the contour color of that shape
+     * @return Color
+     */
+    Color getCountourColor();
+    
+    /**
+     * Retur the internal color of that shape
+     * @return Color
+     */
+    Color getInternalColor();
 
     /**
      * Updates the current shape as defined by the parameters
@@ -90,4 +102,6 @@ public interface ShapeInterface {
      * @param value the status of the focus
      */
     void setFocus(boolean value);
+    
+    ShapeInterface clone() throws CloneNotSupportedException;
 }

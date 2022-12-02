@@ -1,5 +1,6 @@
 package shapes;
 
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
 public class LineShape extends OpenContourShape {
@@ -32,5 +33,10 @@ public class LineShape extends OpenContourShape {
         ((Line)shape).setEndY(finalY - initialY);
 
         hasBeenInserted=true;
+    }
+
+    @Override
+    public Color getInternalColor() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

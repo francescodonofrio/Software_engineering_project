@@ -3,10 +3,12 @@ package mainPackage;
 import action.Action;
 import action.ChangeContourColorAction;
 import action.ChangeInternalColorAction;
+import action.CopyAction;
 import action.DrawAction;
 import action.Invoker;
 import action.MoveAction;
 import action.ResizeAction;
+import action.PasteAction;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -33,7 +35,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import shapes.ShapeAbstract;
 import shapes.ShapeInterface;
+import shapes.util.Clipboard;
 
 public class WindowController implements Initializable {
 
@@ -67,6 +71,7 @@ public class WindowController implements Initializable {
     private FileIO shapesInputOutput;
     private Action action;
     private ObservableList<ShapeInterface> listInsertedShapes;
+    private Clipboard clipboard;
 
     /**
      * Called to initialize a controller after its root element has been
@@ -137,6 +142,8 @@ public class WindowController implements Initializable {
         extensionFilter = new FileChooser.ExtensionFilter("XML File (*.xml)", "*.xml");
         fileChooser.getExtensionFilters().add(extensionFilter);
         shapesInputOutput = new FileIO(this.listInsertedShapes);
+        
+        clipboard = Clipboard.getClipboard();
     }
 
     /**
@@ -248,6 +255,12 @@ public class WindowController implements Initializable {
 
     @FXML
     private void copyButtonOnClick(ActionEvent event) {
+        ShapeInterface copiedShape = shapesTable.getSelectionModel().getSelectedItem();
+        System.out.println(copiedShape);
+        if (copiedShape == null) return; // ECCEZIONE NON HAI copiato UNA SHAPE
+        this.action = new CopyAction(clipboard, copiedShape);
+        invoker.execute(this.action, event);
+        this.action = new PasteAction(clipboard, listInsertedShapes);
     }
     
     @FXML

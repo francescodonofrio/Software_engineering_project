@@ -4,9 +4,10 @@ import javafx.scene.effect.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 
-public abstract class ShapeAbstract implements ShapeInterface {
+public abstract class ShapeAbstract implements ShapeInterface, java.lang.Cloneable{
 
     protected Shape shape;
+    protected Color countourColor;
     protected String name;
     protected static int cont = 1;
     protected static boolean hasBeenInserted=false;
@@ -28,6 +29,7 @@ public abstract class ShapeAbstract implements ShapeInterface {
      */
     @Override
     public void setContourColor(Color newColor) {
+        this.countourColor = newColor;
         shape.setStroke(newColor);
     }
 
@@ -62,6 +64,12 @@ public abstract class ShapeAbstract implements ShapeInterface {
         this.setX(X);
         this.setY(Y);
     }
+
+    @Override
+    public Color getCountourColor() {
+        return countourColor;
+    }
+    
      /**
       * Returns the name contained in the current object
       * 
@@ -116,4 +124,15 @@ public abstract class ShapeAbstract implements ShapeInterface {
     public static void finalizeLoad(){
         isBeingLoaded=true;
     }
+    
+    @Override
+    public ShapeAbstract clone() throws CloneNotSupportedException{
+        ShapeAbstract temp = (ShapeAbstract) super.clone();
+        String oldName = Integer.toString(cont);
+        cont++;
+        String newName = Integer.toString(cont);
+        temp.name = temp.name.replace(oldName, newName);
+        return temp;
+    }
+    
 }

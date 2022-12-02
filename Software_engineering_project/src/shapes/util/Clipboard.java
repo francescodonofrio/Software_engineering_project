@@ -1,6 +1,11 @@
 package shapes.util;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Shape;
 import shapes.ShapeInterface;
+import javafx.scene.shape.Line;
 
 public class Clipboard {
     private ShapeInterface value;
@@ -28,6 +33,8 @@ public class Clipboard {
      * @return the memorized shape
      */
     public ShapeInterface getValue(){
+        System.out.println("getValue:");
+        System.out.println(value);
         return value;
     }
 
@@ -36,6 +43,23 @@ public class Clipboard {
      * @param value the new shape
      */
     public void setValue(ShapeInterface value){
-        this.value=value;
+        System.out.println("setValue:");
+        System.out.println(value);
+        Shape copiedShape = value.getShape();
+        
+        Shape empty = new Line();
+//        empty.setLayoutX(copiedShape.getLayoutX());
+//        empty.setLayoutY(copiedShape.getLayoutY());
+        
+        Shape change = Shape.union(copiedShape, empty);
+        change.setStroke(Paint.valueOf("0f0f0f"));
+        
+        try {
+            this.value= value.clone();
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(Clipboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.value.setShape(change);
     }
 }
