@@ -9,7 +9,8 @@ public abstract class ShapeAbstract implements ShapeInterface {
     protected Shape shape;
     protected String name;
     protected static int cont = 1;
-
+    protected static boolean hasBeenInserted=false;
+    protected static boolean isBeingLoaded=false;
     /**
      * Returns the shape contained in the current object
      *
@@ -77,7 +78,7 @@ public abstract class ShapeAbstract implements ShapeInterface {
     public static void resetCont() {
         cont = 1;
     }
-    
+
     /**
      * Sets the internal shape to shape
      * 
@@ -89,19 +90,30 @@ public abstract class ShapeAbstract implements ShapeInterface {
     }
     
     /**
-     * Set the focus to shape
+     * Set the focus of a shape
+     *
+     * @param value the status of the focus
      */
     @Override
-    public void setFocus(){
-        Effect effect = new DropShadow(BlurType.GAUSSIAN, Color.DODGERBLUE, 5, 0.75, 0, 0);
+    public void setFocus(boolean value){
+        Effect effect=null;
+        if(value)
+            effect = new DropShadow(BlurType.GAUSSIAN, Color.DODGERBLUE, 5, 0.75, 0, 0);
         this.shape.setEffect(effect);
     }
 
     /**
-     * Disables the focus on a shape
+     * Prepares the class for being read from file
      */
-    @Override
-    public void setDefocus(){
-        this.shape.setEffect(null);
+    public static void initializeLoad(){
+        cont=0;
+        isBeingLoaded=true;
+    }
+
+    /**
+     * Prepares the class for being used with the standard behaviour
+     */
+    public static void finalizeLoad(){
+        isBeingLoaded=true;
     }
 }

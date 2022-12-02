@@ -85,12 +85,9 @@ public interface ShapeInterface {
     void setShape(Shape shape);
 
     /**
-     * Enables the focus on a shape
+     * Set the focus of a shape
+     *
+     * @param value the status of the focus
      */
-    void setFocus();
-
-    /**
-     * Disables the focus on a shape
-     */
-    void setDefocus();
+    void setFocus(boolean value);
 }

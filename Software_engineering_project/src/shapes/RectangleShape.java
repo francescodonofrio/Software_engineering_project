@@ -12,8 +12,13 @@ public class RectangleShape extends CloseContourShape {
      */
     public RectangleShape() {
         this.shape = new Rectangle();
+
+        if(isBeingLoaded || hasBeenInserted) {
+            RectangleShape.cont++;
+            hasBeenInserted=false;
+        }
+
         this.name = "Rectangle "+RectangleShape.cont;
-        RectangleShape.cont++;
     }
 
     /**
@@ -39,5 +44,7 @@ public class RectangleShape extends CloseContourShape {
 
         ((Rectangle)shape).setWidth(width);
         ((Rectangle)shape).setHeight(height);
+
+        hasBeenInserted=true;
     }
 }

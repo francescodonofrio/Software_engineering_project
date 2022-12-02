@@ -9,8 +9,13 @@ public class LineShape extends OpenContourShape {
      */
     public LineShape() {
         this.shape = new Line();
+
+        if(isBeingLoaded || hasBeenInserted) {
+            LineShape.cont++;
+            hasBeenInserted=false;
+        }
+
         this.name = "Line "+LineShape.cont;
-        LineShape.cont++;
     }
 
     /**
@@ -25,5 +30,7 @@ public class LineShape extends OpenContourShape {
     public void setDim(double initialX, double initialY, double finalX, double finalY) {
         ((Line)shape).setEndX(finalX - initialX);
         ((Line)shape).setEndY(finalY - initialY);
+
+        hasBeenInserted=true;
     }
 }

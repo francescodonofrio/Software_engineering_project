@@ -87,14 +87,14 @@ public class WindowController implements Initializable {
             while(change.next()){
                 change.getRemoved().forEach(remItem -> {
                     if(remItem != null){
-                        remItem.setDefocus();
+                        remItem.setFocus(false);
                         int index = listInsertedShapes.indexOf(remItem);
                         shapesTable.getSelectionModel().clearSelection(index);
                     }
                 });
                 change.getAddedSubList().forEach(addItem -> {
                     if(addItem != null){
-                        addItem.setFocus();
+                        addItem.setFocus(true);
                         int index = listInsertedShapes.indexOf(addItem);
                         shapesTable.getSelectionModel().select(index);
                         colorPickerContour.setValue((Color) addItem.getShape().getStroke());
@@ -119,7 +119,11 @@ public class WindowController implements Initializable {
         contextMenuTableView.getItems().forEach(menuItem -> {
             menuItem.disableProperty().bind(Bindings.isEmpty(selectedInsertedShape));
         });
-        
+
+        selectedShape = new LineShape();
+        action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes);
+
+
         shapesColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         shapesTable.setItems(listInsertedShapes);
 

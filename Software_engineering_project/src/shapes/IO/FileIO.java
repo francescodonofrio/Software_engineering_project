@@ -57,12 +57,16 @@ public class FileIO {
         if (file == null) return;
         listInsertedShapes.clear();
         ShapeAbstract.resetCont();
+        ShapeAbstract.initializeLoad();
+
         try ( XMLDecoder decoder = new XMLDecoder(new BufferedInputStream(Files.newInputStream(file.toPath())))) {
             decoder.setExceptionListener(e -> {
                 throw new RuntimeException(e);
             });
         listInsertedShapes.setAll((ShapeInterface[]) decoder.readObject());
         }
+
+        ShapeAbstract.finalizeLoad();
     }
 
 }
