@@ -1,4 +1,4 @@
-package shapes.IO;
+package shapes.util;
 
 import java.beans.DefaultPersistenceDelegate;
 import java.beans.XMLDecoder;

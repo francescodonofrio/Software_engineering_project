@@ -16,7 +16,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import shapes.EllipseShape;
-import shapes.IO.FileIO;
+import shapes.util.FileIO;
 import shapes.LineShape;
 import shapes.RectangleShape;
 import java.io.File;
@@ -252,9 +252,12 @@ public class WindowController implements Initializable {
     
     @FXML
     private void shapesTableOnMouseClicked(MouseEvent event) {
+        ShapeInterface lastSelectedShape = shapesTable.getSelectionModel().getSelectedItem();
         selectedInsertedShape.clear();
-        if(shapesTable.getSelectionModel().getSelectedItem() != null)
-            selectedInsertedShape.add(shapesTable.getSelectionModel().getSelectedItem());
+
+        if(lastSelectedShape != null)
+            selectedInsertedShape.add(lastSelectedShape);
+
     }
 
     @FXML

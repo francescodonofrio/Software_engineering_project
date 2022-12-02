@@ -47,8 +47,8 @@ public class MoveAction implements Action {
                 }
             }
 
-            initialX = mouseEvent.getX();
-            initialY = mouseEvent.getY();
+            initialX = selectedShape.getLayoutX();
+            initialY = selectedShape.getLayoutY();
 
             offsetX = selectedShape.getLayoutX() - mouseEvent.getX();
             offsetY = selectedShape.getLayoutY() - mouseEvent.getY();
@@ -82,8 +82,8 @@ public class MoveAction implements Action {
 
         MouseEvent mouseEvent = (MouseEvent) event;
 
-        finalX = mouseEvent.getX();
-        finalY = mouseEvent.getY();
+        finalX = offsetX+mouseEvent.getX();
+        finalY = offsetY+mouseEvent.getY();
         currentShape.get(0).move(offsetX + mouseEvent.getX(),offsetY + mouseEvent.getY());
 
         if (finalX == initialX && finalY == initialY) {
