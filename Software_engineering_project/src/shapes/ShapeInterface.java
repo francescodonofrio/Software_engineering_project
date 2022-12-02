@@ -35,6 +35,12 @@ public interface ShapeInterface {
     String getName();
 
     /**
+     * Sets a new name for a shape
+     * @param name the new name
+     */
+    void setName(String name);
+
+    /**
      * Sets a new internal color for a shape
      *
      * @param newColor the new color to set
