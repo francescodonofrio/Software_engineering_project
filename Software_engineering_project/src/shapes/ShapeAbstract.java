@@ -78,7 +78,16 @@ public abstract class ShapeAbstract implements ShapeInterface, java.lang.Cloneab
     @Override
     public String getName(){
         return name;
-    } 
+    }
+
+    /**
+     * Sets a new name for a shape
+     * @param name the new name
+     */
+    @Override
+    public void setName(String name){
+        this.name=name;
+    }
     
     /**
      * Sets a new name for a shape
