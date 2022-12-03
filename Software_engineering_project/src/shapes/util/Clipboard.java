@@ -42,7 +42,7 @@ public class Clipboard {
 
         try (XMLDecoder decoder = new XMLDecoder(new ByteArrayInputStream(content))) {
             shape = (ShapeInterface) decoder.readObject();
-            shape.setName(shape.getName() + " - Copia");
+            shape.setName(shape.getName() + " - Copy");
         } catch (IllegalArgumentException ex) {
             return null;
         }
