@@ -60,7 +60,6 @@ public class Clipboard {
 
         try (XMLEncoder encoder = new XMLEncoder(stream)) {
             encoder.setPersistenceDelegate(Color.class, new DefaultPersistenceDelegate(new String[]{"red", "green", "blue", "opacity"}));
-            encoder.setPersistenceDelegate(Shape.class, new DefaultPersistenceDelegate(new String[]{"shape"}));
             encoder.writeObject(content);
         } catch (IllegalArgumentException ex) {
             this.content = null;
