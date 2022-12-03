@@ -245,12 +245,15 @@ public class WindowController implements Initializable {
     @FXML
     private void copyButtonOnClick(ActionEvent event) {
         ShapeInterface copiedShape = shapesTable.getSelectionModel().getSelectedItem();
+        
         try {
             this.action = new CopyAction(clipboard, copiedShape);
         } catch (NotShapeToCopyException ex) {
             Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
+            return;
         }
         invoker.execute(this.action, event);
+        
         this.action = new PasteAction(clipboard, listInsertedShapes);
     }
 
