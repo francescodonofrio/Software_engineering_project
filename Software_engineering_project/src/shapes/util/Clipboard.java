@@ -46,6 +46,7 @@ public class Clipboard {
         } catch (IllegalArgumentException ex) {
             return null;
         }
+        shape.getShape().setEffect(null);
         return shape;
     }
 
