@@ -5,7 +5,6 @@
 package exceptions;
 
 /**
- *
  * @author vince
  */
 public class NotShapeToCopyException extends Exception {

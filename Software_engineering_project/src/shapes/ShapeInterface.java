@@ -4,7 +4,7 @@ import exceptions.NotCloseContourException;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 
-public interface ShapeInterface{
+public interface ShapeInterface {
 
     /**
      * Sets the X coordinate for this shape
@@ -26,25 +26,48 @@ public interface ShapeInterface{
      * @return the shape contained
      */
     Shape getShape();
-    
+
+    /**
+     * Sets the internal shape to shape
+     *
+     * @param shape the new shape
+     */
+    void setShape(Shape shape);
+
     /**
      * Returns the name of the current object
-     * 
-     * @return the name 
+     *
+     * @return the name
      */
     String getName();
-    
+
     /**
      * Sets a new name for a shape
+     *
      * @param name the new name
      */
     void setName(String name);
 
     /**
-     * Sets a new name for a shape
-     * @param name the new name
+     * Sets a new contour color for a shape
+     *
+     * @param newColor the new color to set
      */
-    void setName(String name);
+    void setContourColor(Color newColor);
+
+    /**
+     * Retur the contour color of that shape
+     *
+     * @return Color
+     */
+    Color getCountourColor();
+
+    /**
+     * Retur the internal color of that shape
+     *
+     * @return Color
+     */
+    Color getInternalColor();
 
     /**
      * Sets a new internal color for a shape
@@ -53,25 +76,6 @@ public interface ShapeInterface{
      * @throws exceptions.NotCloseContourException
      */
     void setInternalColor(Color newColor) throws NotCloseContourException;
-
-    /**
-     * Sets a new contour color for a shape
-     *
-     * @param newColor the new color to set
-     */
-    void setContourColor(Color newColor);
-    
-    /**
-     * Retur the contour color of that shape
-     * @return Color
-     */
-    Color getCountourColor();
-    
-    /**
-     * Retur the internal color of that shape
-     * @return Color
-     */
-    Color getInternalColor();
 
     /**
      * Updates the current shape as defined by the parameters
@@ -102,18 +106,11 @@ public interface ShapeInterface{
     void move(double X, double Y);
 
     /**
-     * Sets the internal shape to shape
-     *
-     * @param shape the new shape
-     */
-    void setShape(Shape shape);
-
-    /**
      * Set the focus of a shape
      *
      * @param value the status of the focus
      */
     void setFocus(boolean value);
-    
+
     ShapeInterface clone() throws CloneNotSupportedException;
 }

@@ -4,9 +4,8 @@ import exceptions.NotCloseContourException;
 import javafx.scene.paint.Color;
 
 public abstract class OpenContourShape extends ShapeAbstract {
-    
-    
-    
+
+
     /**
      * Sets a new internal color for a shape
      *

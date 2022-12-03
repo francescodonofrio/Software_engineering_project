@@ -5,21 +5,22 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import org.junit.Before;
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 public class CloseContourShapeTest {
-    
+
     private MockCloseContourShape shape;
     private Shape test;
-    
+
     public CloseContourShapeTest() {
         System.out.println("Test CloseContourShape");
     }
-    
+
     @Before
     public void setUp() {
-        shape=new MockCloseContourShape();
-        test= shape.getShape();
+        shape = new MockCloseContourShape();
+        test = shape.getShape();
     }
 
     /**
@@ -31,8 +32,8 @@ public class CloseContourShapeTest {
 
         Color internalColor = Color.CHOCOLATE;
         shape.setInternalColor(internalColor);
-        assertEquals(test.getFill(),internalColor);
-        
+        assertEquals(test.getFill(), internalColor);
+
         System.out.println("Passed");
     }
 
@@ -56,14 +57,14 @@ public class CloseContourShapeTest {
     }
 
     public class MockCloseContourShape extends CloseContourShape {
-        
-        public MockCloseContourShape(){
-            this.shape=new Rectangle();
+
+        public MockCloseContourShape() {
+            this.shape = new Rectangle();
         }
-        
+
         @Override
         public void setDim(double initialX, double initialY, double finalX, double finalY) {
         }
     }
-    
+
 }

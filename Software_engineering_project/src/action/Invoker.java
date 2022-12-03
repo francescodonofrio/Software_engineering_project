@@ -1,8 +1,9 @@
 package action;
 
+import javafx.event.Event;
+
 import java.util.ArrayDeque;
 import java.util.Deque;
-import javafx.event.Event;
 
 public class Invoker {
     private final Deque<Action> actions;

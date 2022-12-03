@@ -7,6 +7,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javafx.event.Event;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -34,14 +35,14 @@ public class InvokerTest {
     @Test
     public void testExecute() {
         System.out.print("execute: ");
-        
+
         event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 180, 200, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
 
         num = 5;
         Action action = new MockAction(this.test, num);
         invoker.execute(action, event);
         assertEquals(num, this.test.size());
-        
+
         this.test.clear();
         num1 = 3;
         action = new MockAction(this.test, num1);
@@ -55,7 +56,7 @@ public class InvokerTest {
 
         System.out.println("Passed");
     }
-    
+
     /**
      * Test of executeOnMouseDragged method, of class Invoker.
      */
@@ -63,16 +64,16 @@ public class InvokerTest {
     public void testExecuteOnMouseDragged() {
         System.out.print("executeOnMouseDragged: ");
         event = new MouseEvent(MouseEvent.MOUSE_DRAGGED, 180, 200, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
-       
+
         num = 5;
         Action action = new MockAction(this.test, num);
         invoker.executeOnMouseDragged(action, event);
-        assertEquals((int)event.getX(), (int)this.test.get(0));
-        assertEquals((int)event.getY(), (int)this.test.get(1));
-        
+        assertEquals((int) event.getX(), (int) this.test.get(0));
+        assertEquals((int) event.getY(), (int) this.test.get(1));
+
         System.out.println("Passed");
-    }  
-    
+    }
+
     /**
      * Test of executeOnMouseReleased method, of class Invoker.
      */
@@ -80,21 +81,21 @@ public class InvokerTest {
     public void testExecuteOnMouseReleased() {
         System.out.print("executeOnMouseReleased: ");
         event = new MouseEvent(MouseEvent.MOUSE_RELEASED, 180, 200, 20, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
-       
+
         num = 5;
         Action action = new MockAction(this.test, num);
         invoker.executeOnMouseReleased(action, event);
-        assertEquals((int)event.getX(), (int)this.test.get(0));
-        assertEquals((int)event.getY(), (int)this.test.get(1));
-        
+        assertEquals((int) event.getX(), (int) this.test.get(0));
+        assertEquals((int) event.getY(), (int) this.test.get(1));
+
         event = new MouseEvent(MouseEvent.MOUSE_RELEASED, 180, 180, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
-        
+
         invoker.execute(action, event);
         invoker.executeOnMouseReleased(action, event);
-        
+
         System.out.println("Passed");
-    }    
-    
+    }
+
     public class MockAction implements Action {
         private final List<Integer> list;
         private final int num;
@@ -107,17 +108,17 @@ public class InvokerTest {
 
         @Override
         public void onMouseDragged(Event event) {
-            mouseEvent = (MouseEvent)event;
-            list.add(0, (int)mouseEvent.getX());
-            list.add(1, (int)mouseEvent.getY());
+            mouseEvent = (MouseEvent) event;
+            list.add(0, (int) mouseEvent.getX());
+            list.add(1, (int) mouseEvent.getY());
         }
 
         @Override
-        public void onMouseReleased(Event event) throws Exception{
-            mouseEvent = (MouseEvent)event;
-            list.add(0, (int)mouseEvent.getX());
-            list.add(1, (int)mouseEvent.getY());
-            if(mouseEvent.getX() == mouseEvent.getY())
+        public void onMouseReleased(Event event) throws Exception {
+            mouseEvent = (MouseEvent) event;
+            list.add(0, (int) mouseEvent.getX());
+            list.add(1, (int) mouseEvent.getY());
+            if (mouseEvent.getX() == mouseEvent.getY())
                 throw new Exception();
         }
 

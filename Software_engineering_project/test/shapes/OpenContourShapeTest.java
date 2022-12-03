@@ -8,45 +8,45 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
 import org.junit.Before;
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 /**
- *
  * @author Paolo
  */
 public class OpenContourShapeTest {
-    
+
     private MockOpenContourShape shape;
     private Shape test;
-    
+
     public OpenContourShapeTest() {
         System.out.println("Test OpenContourShape");
     }
-    
+
     @Before
     public void setUp() {
-        shape=new MockOpenContourShape();
-        test= shape.getShape();
+        shape = new MockOpenContourShape();
+        test = shape.getShape();
     }
 
     /**
      * Test of setInternalColor method, of class OpenContourShape.
      */
-    @Test (expected=NotCloseContourException.class)
+    @Test(expected = NotCloseContourException.class)
     public void testSetInternalColor() throws Exception {
         System.out.print("setInternalColor: ");
 
         Color internalColor = Color.CHOCOLATE;
         shape.setInternalColor(internalColor);
-        assertEquals(test.getFill(),internalColor);
-        
+        assertEquals(test.getFill(), internalColor);
+
         System.out.println("Passed");
     }
 
     /**
      * Test of setProperties method, of class CloseContourShape.
      */
-    @Test 
+    @Test
     public void testSetProperties() {
         System.out.print("setProperties: ");
 
@@ -62,11 +62,11 @@ public class OpenContourShapeTest {
     }
 
     public class MockOpenContourShape extends OpenContourShape {
-        
-        public MockOpenContourShape(){
-            this.shape=new Line();
+
+        public MockOpenContourShape() {
+            this.shape = new Line();
         }
-        
+
         @Override
         public void setDim(double initialX, double initialY, double finalX, double finalY) {
         }
@@ -76,5 +76,5 @@ public class OpenContourShapeTest {
             return (Color) this.shape.getFill();
         }
     }
-    
+
 }

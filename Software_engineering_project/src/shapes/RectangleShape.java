@@ -6,19 +6,19 @@ import javafx.scene.shape.Rectangle;
 public class RectangleShape extends CloseContourShape {
 
     private double width, height;
-    
+
     /**
      * Creates a new instance of RectangleShape
      */
     public RectangleShape() {
         this.shape = new Rectangle();
 
-        if(isBeingLoaded || hasBeenInserted) {
+        if (isBeingLoaded || hasBeenInserted) {
             RectangleShape.cont++;
-            hasBeenInserted=false;
+            hasBeenInserted = false;
         }
 
-        this.name = "Rectangle "+RectangleShape.cont;
+        this.name = "Rectangle " + RectangleShape.cont;
     }
 
     /**
@@ -42,9 +42,9 @@ public class RectangleShape extends CloseContourShape {
             shape.setLayoutY(finalY);
         }
 
-        ((Rectangle)shape).setWidth(width);
-        ((Rectangle)shape).setHeight(height);
+        ((Rectangle) shape).setWidth(width);
+        ((Rectangle) shape).setHeight(height);
 
-        hasBeenInserted=true;
+        hasBeenInserted = true;
     }
 }

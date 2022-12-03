@@ -1,43 +1,33 @@
 package mainPackage;
 
-import action.Action;
-import action.ChangeContourColorAction;
-import action.ChangeInternalColorAction;
-import action.CopyAction;
-import action.DrawAction;
-import action.Invoker;
-import action.MoveAction;
-import action.ResizeAction;
-import action.PasteAction;
+import action.*;
 import exceptions.NotShapeToCopyException;
+import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import shapes.EllipseShape;
-import shapes.util.FileIO;
 import shapes.LineShape;
 import shapes.RectangleShape;
+import shapes.ShapeInterface;
+import shapes.util.Clipboard;
+import shapes.util.FileIO;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.binding.Bindings;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import shapes.ShapeInterface;
-import shapes.util.Clipboard;
 
 public class WindowController implements Initializable {
 
@@ -84,21 +74,21 @@ public class WindowController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         invoker = new Invoker();
-        
-        selectedInsertedShape=FXCollections.observableArrayList();
+
+        selectedInsertedShape = FXCollections.observableArrayList();
         selectedInsertedShape.addListener((ListChangeListener.Change<? extends ShapeInterface> change) -> {
-            while(change.next()){
+            while (change.next()) {
                 change.getRemoved().forEach(remItem -> {
-                    if(remItem != null){
+                    if (remItem != null) {
                         remItem.setFocus(false);
                         int index = listInsertedShapes.indexOf(remItem);
                         shapesTable.getSelectionModel().clearSelection(index);
                     }
                 });
                 change.getAddedSubList().forEach(addItem -> {
-                    if(addItem != null){
+                    if (addItem != null) {
                         addItem.setFocus(true);
                         int index = listInsertedShapes.indexOf(addItem);
                         shapesTable.getSelectionModel().select(index);
@@ -111,7 +101,7 @@ public class WindowController implements Initializable {
 
         listInsertedShapes = FXCollections.observableArrayList();
         listInsertedShapes.addListener((ListChangeListener.Change<? extends ShapeInterface> change) -> {
-            while(change.next()){
+            while (change.next()) {
                 change.getRemoved().forEach(remItem -> {
                     drawingPane.getChildren().remove(remItem.getShape());
                 });
@@ -120,7 +110,7 @@ public class WindowController implements Initializable {
                 });
             }
         });
-        
+
         contextMenuTableView.getItems().forEach(menuItem -> {
             menuItem.disableProperty().bind(Bindings.isEmpty(selectedInsertedShape));
         });
@@ -134,15 +124,15 @@ public class WindowController implements Initializable {
 
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        
+
         colorPickerInternal.setValue(Color.TRANSPARENT);
         colorPickerContour.setValue(Color.BLACK);
-        
+
         fileChooser = new FileChooser();
         extensionFilter = new FileChooser.ExtensionFilter("XML File (*.xml)", "*.xml");
         fileChooser.getExtensionFilters().add(extensionFilter);
         shapesInputOutput = new FileIO(this.listInsertedShapes);
-        
+
         clipboard = Clipboard.getClipboard();
     }
 
@@ -221,7 +211,7 @@ public class WindowController implements Initializable {
         invoker.executeOnMouseReleased(action, event);
 
         // Here we reset the default action to move action
-        action = new MoveAction(selectedInsertedShape,listInsertedShapes);
+        action = new MoveAction(selectedInsertedShape, listInsertedShapes);
     }
 
     /**
@@ -245,7 +235,6 @@ public class WindowController implements Initializable {
     }
 
     /**
-     *
      * @param actionEvent
      */
     @FXML
@@ -264,31 +253,31 @@ public class WindowController implements Initializable {
         invoker.execute(this.action, event);
         this.action = new PasteAction(clipboard, listInsertedShapes);
     }
-    
+
     @FXML
     private void shapesTableOnMouseClicked(MouseEvent event) {
         ShapeInterface lastSelectedShape = shapesTable.getSelectionModel().getSelectedItem();
         selectedInsertedShape.clear();
 
-        if(lastSelectedShape != null)
+        if (lastSelectedShape != null)
             selectedInsertedShape.add(lastSelectedShape);
 
     }
 
     @FXML
     private void changeInternalColorOnAction(ActionEvent event) {
-        if(!selectedInsertedShape.isEmpty()){
-            action= new ChangeInternalColorAction(selectedInsertedShape.get(0),colorPickerInternal.valueProperty());
-            invoker.execute(action,event);
+        if (!selectedInsertedShape.isEmpty()) {
+            action = new ChangeInternalColorAction(selectedInsertedShape.get(0), colorPickerInternal.valueProperty());
+            invoker.execute(action, event);
             action = new MoveAction(selectedInsertedShape, listInsertedShapes);
         }
     }
 
     @FXML
     private void changeContourColorOnAction(ActionEvent event) {
-        if(!selectedInsertedShape.isEmpty()){
-            action= new ChangeContourColorAction(selectedInsertedShape.get(0),colorPickerContour.valueProperty());
-            invoker.execute(action,event);
+        if (!selectedInsertedShape.isEmpty()) {
+            action = new ChangeContourColorAction(selectedInsertedShape.get(0), colorPickerContour.valueProperty());
+            invoker.execute(action, event);
             action = new MoveAction(selectedInsertedShape, listInsertedShapes);
         }
     }

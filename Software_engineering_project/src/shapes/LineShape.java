@@ -4,19 +4,19 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
 public class LineShape extends OpenContourShape {
-    
+
     /**
      * Creates a new instance of LineShape
      */
     public LineShape() {
         this.shape = new Line();
 
-        if(isBeingLoaded || hasBeenInserted) {
+        if (isBeingLoaded || hasBeenInserted) {
             LineShape.cont++;
-            hasBeenInserted=false;
+            hasBeenInserted = false;
         }
 
-        this.name = "Line "+LineShape.cont;
+        this.name = "Line " + LineShape.cont;
     }
 
     /**
@@ -29,10 +29,10 @@ public class LineShape extends OpenContourShape {
      */
     @Override
     public void setDim(double initialX, double initialY, double finalX, double finalY) {
-        ((Line)shape).setEndX(finalX - initialX);
-        ((Line)shape).setEndY(finalY - initialY);
+        ((Line) shape).setEndX(finalX - initialX);
+        ((Line) shape).setEndY(finalY - initialY);
 
-        hasBeenInserted=true;
+        hasBeenInserted = true;
     }
 
     @Override

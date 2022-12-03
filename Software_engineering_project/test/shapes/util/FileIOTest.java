@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -32,6 +33,7 @@ import shapes.ShapeInterface;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FileIOTest {
 
+    Color internalColor, contourColor;
     private EllipseShape testEllipse;
     private LineShape testLine;
     private RectangleShape testRectangle;
@@ -41,7 +43,6 @@ public class FileIOTest {
     private File testFileNull;
     private ObservableList<ShapeInterface> listInsertedShapes;
     private double layoutX, layoutY, initialDim1, initialDim2, finalDim1, finalDim2;
-    Color internalColor, contourColor;
 
     public FileIOTest() {
         System.out.println("Test File I/O (Load and Save)");
@@ -49,11 +50,11 @@ public class FileIOTest {
 
     @Before
     public void setUp() {
-        
+
         testPane = new Pane();
         listInsertedShapes = FXCollections.observableArrayList();
         listInsertedShapes.addListener((ListChangeListener.Change<? extends ShapeInterface> change) -> {
-            while(change.next()){
+            while (change.next()) {
                 change.getRemoved().forEach(remItem -> {
                     testPane.getChildren().remove(remItem.getShape());
                 });
@@ -62,15 +63,15 @@ public class FileIOTest {
                 });
             }
         });
-        
+
         testRectangle = new RectangleShape();
         testEllipse = new EllipseShape();
         testLine = new LineShape();
-        
+
         listInsertedShapes.add(testRectangle);
         listInsertedShapes.add(testEllipse);
         listInsertedShapes.add(testLine);
-        
+
         layoutX = 100;
         layoutY = 150;
         internalColor = Color.GREEN;
@@ -79,16 +80,16 @@ public class FileIOTest {
         initialDim2 = 130.0;
         finalDim1 = 150.0;
         finalDim2 = 300.0;
-        
+
         testRectangle.setDim(initialDim1, initialDim2, finalDim1, finalDim2);
         testRectangle.setProperties(layoutX, layoutY, internalColor, contourColor);
-        
+
         testEllipse.setDim(initialDim1, initialDim2, finalDim1, finalDim2);
         testEllipse.setProperties(layoutX, layoutY, internalColor, contourColor);
-        
+
         testLine.setDim(initialDim1, initialDim2, finalDim1, finalDim2);
         testLine.setProperties(layoutX, layoutY, internalColor, contourColor);
-        
+
         testFile = new File("testFile.xml");
         testFileEmpty = new File("testFileEmpty.xml");
         testFileNull = null;
@@ -107,13 +108,13 @@ public class FileIOTest {
         } catch (IOException ex) {
             Logger.getLogger(FileIOTest.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         assertNotNull(testFileEmpty);
         assertTrue(testFileEmpty.exists());
         assertTrue(testFileEmpty.canWrite());
         assertNotEquals(0, testFileEmpty.length());
-        
-        FileIO save = new FileIO(listInsertedShapes); 
+
+        FileIO save = new FileIO(listInsertedShapes);
         try {
             save.save(testFile);
         } catch (IOException ex) {
@@ -125,9 +126,9 @@ public class FileIOTest {
             Logger.getLogger(FileIOTest.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        assertNotNull(save);  
+        assertNotNull(save);
         assertNotNull(testFile);
-        assertNull(testFileNull);  
+        assertNull(testFileNull);
         assertTrue(testFile.exists());
         assertTrue(testFile.canWrite());
         assertNotEquals(0, testFile.length());
@@ -142,21 +143,21 @@ public class FileIOTest {
         System.out.println("Load Test:");
 
         List expectedList = testPane.getChildren();
-        
+
         FileIO loadEmpty = new FileIO(listInsertedShapes);
         try {
             loadEmpty.load(testFileEmpty);
         } catch (IOException ex) {
             Logger.getLogger(FileIOTest.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         List actualList = testPane.getChildren();
-        
+
         assertNotNull(loadEmpty);
         assertTrue(testFileEmpty.canRead());
         assertEquals(expectedList.toString(), actualList.toString());
-        
-        FileIO load = new FileIO( listInsertedShapes);
+
+        FileIO load = new FileIO(listInsertedShapes);
         try {
             load.load(testFile);
         } catch (IOException ex) {
@@ -177,7 +178,7 @@ public class FileIOTest {
         assertEquals(expectedList.get(0).toString(), testRectangle.getShape().toString());
         assertEquals(expectedList.get(1).toString(), testEllipse.getShape().toString());
         assertEquals(expectedList.get(2).toString(), testLine.getShape().toString());
-        
+
         System.out.println("Passed");
     }
 

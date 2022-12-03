@@ -10,7 +10,7 @@ public interface Action {
      * @throws Exception if something goes wrong
      */
     void execute(Event event) throws Exception;
-    
+
     /**
      * Executes the action specified by the calling class when the mouse is dragged
      *

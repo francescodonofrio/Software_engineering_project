@@ -14,16 +14,16 @@ public class DrawAction implements Action {
     private final ObjectProperty<Color> colorPickerInternal;
     private final ObjectProperty<Color> colorPickerContour;
     private double initialX, initialY, finalX, finalY;
-    
+
 
     /**
-     * Returns a new instance of DrawAction, given the shape to draw, its coordinates,
+     * Returns a new instance of DrawAction, given the shape to draw,
      * its internal and contour color and the pane where to draw at
      *
-     * @param shape         the shape to draw
-     * @param colorPickerInternal   an ObjectProperty<Color> from whom the shape's internal color is taken
-     * @param colorPickerContour    an ObjectProperty<Color> from whom the shape's contour color is taken
-     * @param listInsertedShapes    the list in which are stored the shapes
+     * @param shape               the shape to draw
+     * @param colorPickerInternal an ObjectProperty<Color> from whom the shape's internal color is taken
+     * @param colorPickerContour  an ObjectProperty<Color> from whom the shape's contour color is taken
+     * @param listInsertedShapes  the list in which are stored the shapes
      */
     public DrawAction(ShapeInterface shape, ObjectProperty<Color> colorPickerInternal, ObjectProperty<Color> colorPickerContour, ObservableList<ShapeInterface> listInsertedShapes) {
         this.shape = shape;
@@ -40,7 +40,7 @@ public class DrawAction implements Action {
     @Override
     public void execute(Event event) {
         listInsertedShapes.add(shape);
-        MouseEvent mouseEvent = (MouseEvent)event;
+        MouseEvent mouseEvent = (MouseEvent) event;
         initialX = mouseEvent.getX();
         initialY = mouseEvent.getY();
         shape.setProperties(initialX, initialY, colorPickerInternal.getValue(), colorPickerContour.getValue());
@@ -53,7 +53,7 @@ public class DrawAction implements Action {
      */
     @Override
     public void onMouseDragged(Event event) {
-        MouseEvent mouseEvent = (MouseEvent)event;
+        MouseEvent mouseEvent = (MouseEvent) event;
         finalX = mouseEvent.getX();
         finalY = mouseEvent.getY();
         shape.setDim(initialX, initialY, finalX, finalY);

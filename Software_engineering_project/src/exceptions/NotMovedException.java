@@ -1,7 +1,7 @@
 package exceptions;
 
 public class NotMovedException extends Exception {
-    public NotMovedException(){
+    public NotMovedException() {
         super();
     }
 }

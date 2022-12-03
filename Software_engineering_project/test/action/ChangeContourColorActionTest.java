@@ -9,66 +9,65 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import org.junit.Before;
 import org.junit.Test;
+
 import static org.junit.Assert.*;
+
 import shapes.EllipseShape;
 import shapes.LineShape;
 import shapes.RectangleShape;
 import shapes.ShapeInterface;
 
 public class ChangeContourColorActionTest {
-    
+
     private ShapeInterface rectangleShape, ellipseShape, lineShape;
-    private ObjectProperty<Color>  contourColorProperty;
-    private  ChangeContourColorAction action;
+    private ObjectProperty<Color> contourColorProperty;
+    private ChangeContourColorAction action;
     private ActionEvent event;
-    
+
     public ChangeContourColorActionTest() {
         System.out.println("Test DrawAction");
     }
-    
-     @Before
+
+    @Before
     public void setUp() {
         // Shapes set up
         rectangleShape = new RectangleShape();
         ellipseShape = new EllipseShape();
-        lineShape = new LineShape(); 
-        
-        contourColorProperty= new SimpleObjectProperty<>();
+        lineShape = new LineShape();
+
+        contourColorProperty = new SimpleObjectProperty<>();
         contourColorProperty.set(Color.BLACK);
     }
-    
+
     @Test
     public void testExecute() throws Exception {
         System.out.print("execute");
-        
+
         event = new ActionEvent();
-    
-        action = new ChangeContourColorAction(rectangleShape,contourColorProperty);
+
+        action = new ChangeContourColorAction(rectangleShape, contourColorProperty);
         action.execute(event);
-       
+
         Rectangle rectangle = (Rectangle) rectangleShape.getShape();
         assertEquals(rectangle.getStroke(), Color.BLACK);
-        
-        action = new ChangeContourColorAction(ellipseShape,contourColorProperty);
+
+        action = new ChangeContourColorAction(ellipseShape, contourColorProperty);
         action.execute(event);
-       
+
         Ellipse ellipse = (Ellipse) ellipseShape.getShape();
         assertEquals(ellipse.getStroke(), Color.BLACK);
-        
-        
-        
-        
-        action = new ChangeContourColorAction(lineShape,contourColorProperty);
+
+
+        action = new ChangeContourColorAction(lineShape, contourColorProperty);
         action.execute(event);
-       
+
         Line line = (Line) lineShape.getShape();
         assertEquals(line.getStroke(), Color.BLACK);
-        
-    
-    
+
+
     }
-    
-    
-    }
+
+
+}
     
    

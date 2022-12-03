@@ -7,10 +7,11 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import org.junit.Before;
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 public class ShapeAbstractTest {
-    
+
     private Shape test;
     private MockShape shape;
 
@@ -35,7 +36,7 @@ public class ShapeAbstractTest {
 
         System.out.println("Passed");
     }
-   
+
     /**
      * Test of setShape method, of class ShapeAbstract.
      */
@@ -48,7 +49,7 @@ public class ShapeAbstractTest {
 
         System.out.println("Passed");
     }
-    
+
     /**
      * Test of getName method, of class ShapeAbstract.
      */
@@ -59,7 +60,7 @@ public class ShapeAbstractTest {
         assertEquals("Rectangle1", shape.getName());
 
         System.out.println("Passed");
-    }    
+    }
 
     /**
      * Test of setX method, of class ShapeAbstract.
@@ -97,7 +98,7 @@ public class ShapeAbstractTest {
     public void testMove() {
         System.out.print("move: ");
 
-        double newX=50, newY=60;
+        double newX = 50, newY = 60;
         shape.move(newX, newY);
         assertEquals(test.getLayoutX(), newX, 0.1);
         assertEquals(test.getLayoutY(), newY, 0.1);
@@ -111,26 +112,22 @@ public class ShapeAbstractTest {
             this.shape = shape;
             this.name = "Rectangle1";
         }
-        
+
         @Override
         public void setDim(double initialX, double initialY, double finalX, double finalY) {
         }
 
         @Override
-        public void setInternalColor(Color newColor) throws NotCloseContourException {
+        public void setProperties(double X, double Y, Color internalColor, Color contourColor) {
         }
 
         @Override
-        public void setProperties(double X, double Y, Color internalColor, Color contourColor) {
-        }
-        
-        @Override
-        public void setShape(Shape shape){
+        public void setShape(Shape shape) {
             this.shape = shape;
         }
-        
+
         @Override
-        public String getName(){
+        public String getName() {
             return this.name;
         }
 
@@ -138,6 +135,10 @@ public class ShapeAbstractTest {
         public Color getInternalColor() {
             return (Color) this.shape.getFill();
         }
+
+        @Override
+        public void setInternalColor(Color newColor) throws NotCloseContourException {
+        }
     }
-    
+
 }

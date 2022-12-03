@@ -3,19 +3,8 @@ package shapes;
 import javafx.scene.paint.Color;
 
 public abstract class CloseContourShape extends ShapeAbstract {
-    
+
     private Color internalColor;
-    
-    /**
-     * Sets a new internal color for a shape
-     *
-     * @param newColor the new color to set
-     */
-    @Override
-    public void setInternalColor(Color newColor) {
-        this.internalColor = internalColor;
-        shape.setFill(newColor);
-    }
 
     /**
      * Updates the current shape as defined by the parameters
@@ -37,8 +26,17 @@ public abstract class CloseContourShape extends ShapeAbstract {
     public Color getInternalColor() {
         return internalColor;
     }
-    
-    
-    
-    
+
+    /**
+     * Sets a new internal color for a shape
+     *
+     * @param newColor the new color to set
+     */
+    @Override
+    public void setInternalColor(Color newColor) {
+        this.internalColor = internalColor;
+        shape.setFill(newColor);
+    }
+
+
 }

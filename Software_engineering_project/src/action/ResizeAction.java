@@ -5,14 +5,14 @@ import javafx.event.Event;
 import javafx.scene.input.MouseEvent;
 import shapes.ShapeInterface;
 
-public class ResizeAction implements Action{
+public class ResizeAction implements Action {
 
     private final ShapeInterface selectedShape;
     private double initialX, initialY, finalX, finalY;
-    
+
     /**
      * Returns a new instance of ResizeAction
-     * 
+     *
      * @param selectedShape the shape to be resized
      */
     public ResizeAction(ShapeInterface selectedShape) {
@@ -38,7 +38,7 @@ public class ResizeAction implements Action{
      */
     @Override
     public void onMouseDragged(Event event) {
-        MouseEvent mouseEvent = (MouseEvent)event;
+        MouseEvent mouseEvent = (MouseEvent) event;
         finalX = mouseEvent.getX();
         finalY = mouseEvent.getY();
         selectedShape.setDim(initialX, initialY, finalX, finalY);
@@ -52,8 +52,8 @@ public class ResizeAction implements Action{
      */
     @Override
     public void onMouseReleased(Event event) throws NotResizedException {
-        if(initialX == finalX && initialY == finalY)
+        if (initialX == finalX && initialY == finalY)
             throw new NotResizedException();
     }
-    
+
 }
