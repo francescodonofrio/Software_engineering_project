@@ -19,7 +19,7 @@ public class CopyAction implements Action {
 
     @Override
     public void execute(Event event) throws Exception {
-        clipboard.setValue(shapeToCopy);
+        clipboard.setContent(shapeToCopy);
     }
 
     @Override

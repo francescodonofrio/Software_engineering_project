@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package action;
 
 import javafx.collections.ObservableList;
@@ -10,10 +6,6 @@ import javafx.scene.input.MouseEvent;
 import shapes.ShapeInterface;
 import shapes.util.Clipboard;
 
-/**
- *
- * @author vince
- */
 public class PasteAction implements Action{
     
     private final Clipboard clipboard;
@@ -27,7 +19,7 @@ public class PasteAction implements Action{
     @Override
     public void execute(Event event) throws Exception {
         MouseEvent mouseEvent = (MouseEvent)event;
-        ShapeInterface shapeToPaste = clipboard.getValue();
+        ShapeInterface shapeToPaste = clipboard.getContent();
         shapeToPaste.setX(mouseEvent.getX());
         shapeToPaste.setY(mouseEvent.getY());
         listInsertedShapes.add(shapeToPaste);        

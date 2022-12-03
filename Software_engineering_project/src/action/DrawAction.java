@@ -33,9 +33,9 @@ public class DrawAction implements Action {
     }
 
     /**
-     * Executes the draw action as instantiated before
-     * 
-     * @param event the mouse event of the click
+     * Executes the action specified by the calling class when the mouse is clicked
+     *
+     * @param event the event of the mouse click
      */
     @Override
     public void execute(Event event) {
@@ -47,9 +47,9 @@ public class DrawAction implements Action {
     }
 
     /**
-     * Set the dimension of the shape
-     * 
-     * @param event the mouse event of the click
+     * Executes the action specified by the calling class when the mouse is dragged
+     *
+     * @param event the event of the mouse click
      */
     @Override
     public void onMouseDragged(Event event) {
@@ -60,8 +60,10 @@ public class DrawAction implements Action {
     }
 
     /**
-     *  
-     * @param event the mouse event of the click
+     * Executes the action specified by the calling class when the mouse is released
+     *
+     * @param event the event of the mouse click
+     * @throws Exception if something goes wrong
      */
     @Override
     public void onMouseReleased(Event event) {
