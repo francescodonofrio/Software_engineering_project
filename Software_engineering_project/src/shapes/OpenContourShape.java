@@ -17,6 +17,16 @@ public abstract class OpenContourShape extends ShapeAbstract {
     }
 
     /**
+     * Get the internal color of the shape
+     * 
+     * @return the internal color of the shape
+     */
+    @Override
+    public Color getInternalColor() {
+        return null;
+    }
+    
+    /**
      * Updates the current shape as defined by the parameters
      *
      * @param X             the new X coordinate

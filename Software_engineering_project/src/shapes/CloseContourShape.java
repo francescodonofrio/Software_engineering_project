@@ -23,6 +23,12 @@ public abstract class CloseContourShape extends ShapeAbstract {
         this.setContourColor(contourColor);
     }
 
+    /**
+     * Get the internal color of the shape
+     * 
+     * @return the internal color of the shape
+     */
+    @Override
     public Color getInternalColor() {
         return internalColor;
     }
@@ -34,7 +40,6 @@ public abstract class CloseContourShape extends ShapeAbstract {
      */
     @Override
     public void setInternalColor(Color newColor) {
-        this.internalColor = internalColor;
         shape.setFill(newColor);
     }
 

@@ -63,7 +63,6 @@ public class DrawAction implements Action {
      * Executes the action specified by the calling class when the mouse is released
      *
      * @param event the event of the mouse click
-     * @throws Exception if something goes wrong
      */
     @Override
     public void onMouseReleased(Event event) {
