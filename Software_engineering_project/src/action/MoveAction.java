@@ -38,7 +38,8 @@ public class MoveAction implements Action {
         MouseEvent mouseEvent = (MouseEvent) event;
 
         Object actionTarget = event.getTarget();
-        if (actionTarget instanceof Shape selectedShape) {
+        if (actionTarget instanceof Shape) {
+            Shape selectedShape = (Shape) actionTarget;
             for (ShapeInterface current : listInsertedShapes) {
                 if (current.getShape().equals(selectedShape)) {
                     currentShape.add(current);
