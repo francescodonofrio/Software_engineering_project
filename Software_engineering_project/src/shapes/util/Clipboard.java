@@ -11,14 +11,14 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
 public class Clipboard {
-    private String value;
+    private byte[] content;
     private static Clipboard instance=null;
 
     /**
      * Creates a new instance of Clipboard
      */
     private Clipboard(){
-        this.instance=this;
+        Clipboard.instance=this;
     }
 
     /**
@@ -35,10 +35,10 @@ public class Clipboard {
      * Returns the shape memorized in the clipboard
      * @return the memorized shape
      */
-    public ShapeInterface getValue(){
+    public ShapeInterface getContent(){
         ShapeInterface shape;
 
-        try(XMLDecoder decoder = new XMLDecoder(new ByteArrayInputStream(value.getBytes()))) {
+        try(XMLDecoder decoder = new XMLDecoder(new ByteArrayInputStream(content))) {
             shape=(ShapeInterface) decoder.readObject();
             shape.setName(shape.getName()+" - Copia");
         }catch(IllegalArgumentException ex) {
@@ -49,20 +49,20 @@ public class Clipboard {
 
     /**
      * Saves a new shape into the clipboard
-     * @param value the new shape
+     * @param content the new shape
      */
-    public void setValue(ShapeInterface value){
+    public void setContent(ShapeInterface content){
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         
         try(XMLEncoder encoder = new XMLEncoder(stream)) {
             encoder.setPersistenceDelegate(Color.class, new DefaultPersistenceDelegate(new String[]{"red", "green", "blue", "opacity"}));
             encoder.setPersistenceDelegate(Shape.class, new DefaultPersistenceDelegate(new String[]{"shape"}));
-            encoder.writeObject(value);
+            encoder.writeObject(content);
         }catch(IllegalArgumentException ex){
-            this.value=null;
+            this.content=null;
             return;
         }
 
-        this.value=new String(stream.toByteArray());
+        this.content=stream.toByteArray();
     }
 }
