@@ -68,10 +68,6 @@ public class FileIOTest {
         testEllipse = new EllipseShape();
         testLine = new LineShape();
 
-        listInsertedShapes.add(testRectangle);
-        listInsertedShapes.add(testEllipse);
-        listInsertedShapes.add(testLine);
-
         layoutX = 100;
         layoutY = 150;
         internalColor = Color.GREEN;
@@ -113,6 +109,10 @@ public class FileIOTest {
         assertTrue(testFileEmpty.exists());
         assertTrue(testFileEmpty.canWrite());
         assertNotEquals(0, testFileEmpty.length());
+        
+        listInsertedShapes.add(testRectangle);
+        listInsertedShapes.add(testEllipse);
+        listInsertedShapes.add(testLine);
 
         FileIO save = new FileIO(listInsertedShapes);
         try {
