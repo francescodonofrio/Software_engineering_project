@@ -133,6 +133,11 @@ public class ShapeAbstractTest {
         public String getName(){
             return this.name;
         }
+
+        @Override
+        public Color getInternalColor() {
+            return (Color) this.shape.getFill();
+        }
     }
     
 }

@@ -1,6 +1,5 @@
-package shapes;
+package shapes.util;
 
-import shapes.util.FileIO;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -19,6 +18,10 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
+import shapes.EllipseShape;
+import shapes.LineShape;
+import shapes.RectangleShape;
+import shapes.ShapeInterface;
 
 /*
     The test methods need to execute in order.

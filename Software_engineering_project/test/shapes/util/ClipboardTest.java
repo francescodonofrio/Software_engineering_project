@@ -48,10 +48,15 @@ public class ClipboardTest {
         ShapeInterface shape=new RectangleShape();
         
         clipboard.setValue(shape);
-        assertEquals(shape,clipboard.getValue());
+        ShapeInterface savedShape=clipboard.getValue();
         
+        assertEquals(shape.getClass(),savedShape.getClass());
+        assertEquals(shape.getShape().getStroke(),savedShape.getShape().getStroke());
+        assertEquals(shape.getShape().getFill(),savedShape.getShape().getFill());
+        assertEquals(shape.getShape().getLayoutX(),savedShape.getShape().getLayoutX(),0.1);
+        assertEquals(shape.getShape().getLayoutY(),savedShape.getShape().getLayoutY(),0.1);
+
         System.out.println("Passed");
-        
     }
    
 }

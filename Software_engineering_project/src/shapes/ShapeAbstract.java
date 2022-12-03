@@ -81,6 +81,15 @@ public abstract class ShapeAbstract implements ShapeInterface, java.lang.Cloneab
     } 
     
     /**
+     * Sets a new name for a shape
+     * @param name the new name
+     */
+    @Override
+    public void setName(String name){
+        this.name=name;
+    }
+    
+    /**
      * Reset the static variable used for numering the created shapes
      */
     public static void resetCont() {

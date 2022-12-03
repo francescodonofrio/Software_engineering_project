@@ -70,6 +70,11 @@ public class OpenContourShapeTest {
         @Override
         public void setDim(double initialX, double initialY, double finalX, double finalY) {
         }
+
+        @Override
+        public Color getInternalColor() {
+            return (Color) this.shape.getFill();
+        }
     }
     
 }
