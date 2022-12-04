@@ -31,8 +31,8 @@ public class FileIO {
     }
 
     /**
-     * Perform a save operation, given a legal istance of file
-     * where the shapes drawed in the actual list will saved.
+     * Perform a save operation, given a legal instance of file
+     * where the shapes drawn in the actual list will be saved.
      *
      * @param file file to save to
      * @throws java.io.IOException
@@ -51,8 +51,8 @@ public class FileIO {
     }
 
     /**
-     * Perform a load operation, given a legal istance of file,
-     * where the shapes previously saved will loaded in the actual list.
+     * Perform a load operation, given a legal instance of file,
+     * where the shapes previously saved will be loaded in the actual list.
      *
      * @param file file to load from
      * @throws java.io.IOException
