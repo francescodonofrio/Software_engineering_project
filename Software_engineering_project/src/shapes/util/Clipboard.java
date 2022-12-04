@@ -42,10 +42,11 @@ public class Clipboard {
 
         try (XMLDecoder decoder = new XMLDecoder(new ByteArrayInputStream(content))) {
             shape = (ShapeInterface) decoder.readObject();
-            shape.setName(shape.getName() + " - Copia");
+            shape.setName(shape.getName() + " - Copy");
         } catch (IllegalArgumentException ex) {
             return null;
         }
+        shape.getShape().setEffect(null);
         return shape;
     }
 
@@ -59,7 +60,6 @@ public class Clipboard {
 
         try (XMLEncoder encoder = new XMLEncoder(stream)) {
             encoder.setPersistenceDelegate(Color.class, new DefaultPersistenceDelegate(new String[]{"red", "green", "blue", "opacity"}));
-            encoder.setPersistenceDelegate(Shape.class, new DefaultPersistenceDelegate(new String[]{"shape"}));
             encoder.writeObject(content);
         } catch (IllegalArgumentException ex) {
             this.content = null;

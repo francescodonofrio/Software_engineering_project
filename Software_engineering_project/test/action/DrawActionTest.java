@@ -86,7 +86,7 @@ public class DrawActionTest {
         System.out.print("execute: ");
 
         event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
-
+        
         instanceDrawActionRectangle = new DrawAction(rectangleShape, internalColorProperty, contourColorProperty, listInsertedShapes);
         instanceDrawActionRectangle.execute(event);
         Rectangle rectangleRetrieved = (Rectangle) drawingPane.getChildren().get(0);

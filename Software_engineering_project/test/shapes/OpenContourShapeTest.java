@@ -31,6 +31,7 @@ public class OpenContourShapeTest {
 
     /**
      * Test of setInternalColor method, of class OpenContourShape.
+     * @throws java.lang.Exception
      */
     @Test(expected = NotCloseContourException.class)
     public void testSetInternalColor() throws Exception {
@@ -73,7 +74,7 @@ public class OpenContourShapeTest {
 
         @Override
         public Color getInternalColor() {
-            return (Color) this.shape.getFill();
+            return null;
         }
     }
 

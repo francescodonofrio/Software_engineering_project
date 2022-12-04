@@ -44,7 +44,6 @@ public class FileIO {
                 throw new RuntimeException(e);
             });
             encoder.setPersistenceDelegate(Color.class, new DefaultPersistenceDelegate(new String[]{"red", "green", "blue", "opacity"}));
-            encoder.setPersistenceDelegate(Shape.class, new DefaultPersistenceDelegate(new String[]{"shape"}));
             encoder.writeObject(listInsertedShapes.toArray(new ShapeInterface[0]));
         }
 
