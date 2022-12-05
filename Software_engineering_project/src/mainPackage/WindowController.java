@@ -180,6 +180,7 @@ public class WindowController implements Initializable {
     @FXML
     private void saveWindow(ActionEvent event) {
         fileChooser.setTitle("Save File");
+        selectedInsertedShape.clear();
         file = fileChooser.showSaveDialog(drawingPane.getScene().getWindow());
         try {
             shapesInputOutput.save(file);
