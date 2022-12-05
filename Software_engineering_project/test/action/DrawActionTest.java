@@ -177,4 +177,47 @@ public class DrawActionTest {
 
         System.out.println("Passed");
     }
+    
+    public void testUndo() {
+        System.out.print("undo: ");
+        
+        instanceDrawActionRectangle = new DrawAction(rectangleShape, internalColorProperty, contourColorProperty, listInsertedShapes);
+        instanceDrawActionRectangle.execute(event);
+        
+        instanceDrawActionRectangle.undo();
+        assertEquals(listInsertedShapes.isEmpty(),true);
+        assertEquals(listInsertedShapes.contains(rectangleShape),false);
+        
+        instanceDrawActionRectangle = new DrawAction(ellipseShape, internalColorProperty, contourColorProperty, listInsertedShapes);
+        instanceDrawActionRectangle.execute(event);
+        
+        instanceDrawActionRectangle.undo();
+        assertEquals(listInsertedShapes.isEmpty(),true);
+        assertEquals(listInsertedShapes.contains(ellipseShape),false);
+        
+        instanceDrawActionRectangle = new DrawAction(lineShape, internalColorProperty, contourColorProperty, listInsertedShapes);
+        instanceDrawActionRectangle.execute(event);
+        
+        instanceDrawActionRectangle.undo();
+        assertEquals(listInsertedShapes.isEmpty(),true);
+        assertEquals(listInsertedShapes.contains(lineShape),false);
+        
+        instanceDrawActionRectangle = new DrawAction(rectangleShape, internalColorProperty, contourColorProperty, listInsertedShapes);
+        instanceDrawActionRectangle.execute(event);
+        instanceDrawActionRectangle = new DrawAction(ellipseShape, internalColorProperty, contourColorProperty, listInsertedShapes);
+        instanceDrawActionRectangle.execute(event);
+        instanceDrawActionRectangle = new DrawAction(lineShape, internalColorProperty, contourColorProperty, listInsertedShapes);
+        instanceDrawActionRectangle.execute(event);
+        
+        
+        assertEquals(listInsertedShapes.isEmpty(),false);
+        assertEquals(listInsertedShapes.contains(rectangleShape),false);
+        assertEquals(listInsertedShapes.isEmpty(),false);
+        assertEquals(listInsertedShapes.contains(ellipseShape),false);
+        assertEquals(listInsertedShapes.isEmpty(),true);
+        assertEquals(listInsertedShapes.contains(lineShape),false);
+        
+        
+        System.out.println("Passed");
+    }
 }

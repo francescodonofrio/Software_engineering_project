@@ -73,6 +73,6 @@ public class DrawAction implements Action {
      */
     @Override
     public void undo() {
-
+        listInsertedShapes.remove(shape);
     }
 }

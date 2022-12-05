@@ -57,21 +57,24 @@ public class Invoker {
             action.onMouseReleased(event);
         } catch (Exception ex) {
             this.actions.pop();
-            if(this.actions.size()==0)
+            if(this.actions.isEmpty())
                 this.emptyQueue.set(true);
         }
     }
 
     /**
      * Undoes the last executed action
+     * @throws exceptions.NoActionsException
      */
     public void undo() throws NoActionsException{
-        if(this.actions.size()==0)
+        if(this.actions.isEmpty())
             throw new NoActionsException();
 
         this.actions.pop().undo();
 
-        if(this.actions.size()==0)
+        System.out.println(this.actions.size());
+        
+        if(this.actions.isEmpty())
             this.emptyQueue.set(true);
     }
 

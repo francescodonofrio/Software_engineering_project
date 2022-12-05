@@ -1,6 +1,7 @@
 package mainPackage;
 
 import action.*;
+import exceptions.NoActionsException;
 import exceptions.NotShapeToCopyException;
 import exceptions.NotShapeToCutException;
 import javafx.beans.binding.Bindings;
@@ -52,6 +53,10 @@ public class WindowController implements Initializable {
     private TableColumn<ShapeInterface, String> shapesColumn;
     @FXML
     private ContextMenu contextMenuTableView;
+    @FXML
+    private MenuItem resizeItem;
+    @FXML
+    private Button undoBtn;
 
     private Invoker invoker;
     private ShapeInterface selectedShape;
@@ -63,8 +68,6 @@ public class WindowController implements Initializable {
     private Action action;
     private ObservableList<ShapeInterface> listInsertedShapes;
     private Clipboard clipboard;
-    @FXML
-    private MenuItem resizeItem;
 
     /**
      * Called to initialize a controller after its root element has been
@@ -79,6 +82,7 @@ public class WindowController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         invoker = new Invoker();
+        undoBtn.disableProperty().bind(invoker.emptyQueueProperty());
 
         selectedInsertedShape = FXCollections.observableArrayList();
         selectedInsertedShape.addListener((ListChangeListener.Change<? extends ShapeInterface> change) -> {
@@ -317,5 +321,10 @@ public class WindowController implements Initializable {
     @FXML
     private void shapesButtonsOnMouseReleased(MouseEvent event) {
         selectedInsertedShape.clear();
+    }
+
+    @FXML
+    private void undoBtnOnAction(ActionEvent event) throws NoActionsException {
+        invoker.undo();
     }
 }
