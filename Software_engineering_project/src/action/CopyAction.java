@@ -54,4 +54,12 @@ public class CopyAction implements Action {
     public void onMouseReleased(Event event) {
     }
 
+    /**
+     * Undoes the action
+     */
+    @Override
+    public void undo() {
+
+    }
+
 }

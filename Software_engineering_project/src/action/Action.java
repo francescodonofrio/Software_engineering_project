@@ -26,4 +26,9 @@ public interface Action {
      */
     void onMouseReleased(Event event) throws Exception;
 
+    /**
+     * Undoes the action
+     */
+    void undo();
+
 }

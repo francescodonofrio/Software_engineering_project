@@ -56,4 +56,12 @@ public class ResizeAction implements Action {
             throw new NotResizedException();
     }
 
+    /**
+     * Undoes the action
+     */
+    @Override
+    public void undo() {
+
+    }
+
 }

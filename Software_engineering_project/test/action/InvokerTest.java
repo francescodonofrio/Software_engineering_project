@@ -1,5 +1,6 @@
 package action;
 
+import exceptions.NoActionsException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -7,6 +8,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.beans.property.SimpleBooleanProperty;
 
 import javafx.event.Event;
 import javafx.scene.input.MouseButton;
@@ -127,6 +129,65 @@ public class InvokerTest {
             for (int i = 0; i < this.num; i++)
                 list.add(i);
         }
+
+        @Override
+        public void undo() {
+            for(int i =0;i<this.num;i++)
+                list.remove(0);
+        }
+    }
+
+    /**
+     * Test of undo method, of class Invoker.
+     */
+    @Test
+    public void testUndo() throws NoActionsException{
+        System.out.print("Test undo: ");
+        event = new MouseEvent(MouseEvent.MOUSE_DRAGGED, 180, 200, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+
+        num = 5;
+        Action action = new MockAction(this.test, num);
+        invoker.execute(action, event);
+        
+        assertEquals(test.size(), 5);
+
+        invoker.undo();
+        
+        
+        assertEquals(test.size(), 0);
+        
+        System.out.println("Passed");
+    }
+
+    /**
+     * Test of emptyQueueProperty method, of class Invoker.
+     */
+    @Test(expected=NoActionsException.class)
+    public void testEmptyQueueProperty() throws NoActionsException {
+        System.out.println("Test emptyQueueProperty: ");
+        event = new MouseEvent(MouseEvent.MOUSE_DRAGGED, 180, 200, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+
+        num = 5;
+        Action action = new MockAction(this.test, num);
+        
+        SimpleBooleanProperty emptyProperty= (SimpleBooleanProperty)invoker.emptyQueueProperty();
+        assertEquals(emptyProperty.get(),true);
+        
+        invoker.execute(action, event);
+        assertEquals(emptyProperty.get(),false);
+
+        invoker.execute(action, event);
+        assertEquals(emptyProperty.get(),false);
+        
+        invoker.undo();
+        assertEquals(emptyProperty.get(),false);
+        
+        invoker.undo();
+        assertEquals(emptyProperty.get(),true);
+
+        invoker.undo();
+
+        System.out.println("Passed");
     }
 
 }

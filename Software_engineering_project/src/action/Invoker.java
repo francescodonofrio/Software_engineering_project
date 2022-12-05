@@ -1,5 +1,8 @@
 package action;
 
+import exceptions.NoActionsException;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.Event;
 
 import java.util.ArrayDeque;
@@ -7,6 +10,7 @@ import java.util.Deque;
 
 public class Invoker {
     private final Deque<Action> actions;
+    private final SimpleBooleanProperty emptyQueue;
 
     /**
      * Returns a new instance of Invoker, capable of memorizing the sequence
@@ -14,6 +18,7 @@ public class Invoker {
      */
     public Invoker() {
         this.actions = new ArrayDeque<>();
+        emptyQueue = new SimpleBooleanProperty(true);
     }
 
     /**
@@ -26,6 +31,7 @@ public class Invoker {
         try {
             action.execute(event);
             this.actions.push(action);
+            this.emptyQueue.set(false);
         } catch (Exception ex) {
         }
     }
@@ -51,7 +57,30 @@ public class Invoker {
             action.onMouseReleased(event);
         } catch (Exception ex) {
             this.actions.pop();
+            if(this.actions.size()==0)
+                this.emptyQueue.set(true);
         }
+    }
+
+    /**
+     * Undoes the last executed action
+     */
+    public void undo() throws NoActionsException{
+        if(this.actions.size()==0)
+            throw new NoActionsException();
+
+        this.actions.pop().undo();
+
+        if(this.actions.size()==0)
+            this.emptyQueue.set(true);
+    }
+
+    /**
+     * Returns a boolean property representing the status of the actions queue
+     * @return the emptyQueue property
+     */
+    public BooleanProperty emptyQueueProperty(){
+        return this.emptyQueue;
     }
 
 }
