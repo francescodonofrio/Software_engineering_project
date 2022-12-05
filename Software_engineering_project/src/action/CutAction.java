@@ -1,20 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package action;
 
-import exceptions.NotShapeToCopyException;
 import exceptions.NotShapeToCutException;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import shapes.ShapeInterface;
 import shapes.util.Clipboard;
 
-/**
- *
- * @author vince
- */
 public class CutAction implements Action {
     
     private final Clipboard clipboard;
@@ -56,6 +47,11 @@ public class CutAction implements Action {
 
     @Override
     public void onMouseReleased(Event event) throws Exception {
+    }
+
+    @Override
+    public void undo() {
+        listInsertedShapes.add(shapeToCut);
     }
     
     
