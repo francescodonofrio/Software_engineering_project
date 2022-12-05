@@ -8,6 +8,7 @@ import shapes.ShapeInterface;
 public class ChangeInternalColorAction implements Action {
     private final ObjectProperty<Color> colorPickerInternal;
     private final ShapeInterface shape;
+    private  Color initialColor;
 
     /**
      * Returns a new instance of ChangeContourColorAction
@@ -27,6 +28,7 @@ public class ChangeInternalColorAction implements Action {
      */
     @Override
     public void execute(Event event) throws Exception {
+        initialColor=shape.getInternalColor();
         shape.setInternalColor(colorPickerInternal.getValue());
     }
 
@@ -53,6 +55,6 @@ public class ChangeInternalColorAction implements Action {
      */
     @Override
     public void undo() {
-
+        shape.setInternalColor(initialColor);
     }
 }

@@ -1,6 +1,8 @@
 package action;
 
 import exceptions.NotCloseContourException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 import javafx.beans.property.ObjectProperty;
@@ -68,5 +70,43 @@ public class ChangeInternalColorActionTest {
         assertEquals(line.getFill(), Color.TRANSPARENT);
 
 
+    }
+    
+    /**
+     * Test of onMouseDragged method, of class ChangeInternalColorAction.
+     */
+    @Test
+    public void testOnMouseDragged() {
+    }
+
+    /**
+     * Test of onMouseReleased method, of class ChangeInternalColorAction.
+     */
+    @Test
+    public void testOnMouseReleased() {
+    }
+
+    /**
+     * Test of undo method, of class ChangeInternalColorAction.
+     */
+    @Test
+    public void testUndo() {
+        System.out.print("undo: ");
+        
+        Ellipse ellipse = (Ellipse) ellipseShape.getShape();
+        ellipse.setFill(Color.RED);
+            
+        action = new ChangeInternalColorAction(lineShape, internalColorProperty);
+        try {
+            action.execute(event);
+        } catch (Exception ex) {
+            Logger.getLogger(ChangeInternalColorActionTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        action.undo();
+        
+        assertEquals(Color.RED,ellipse.getFill());
+        
+        System.out.println("Passed");
     }
 }

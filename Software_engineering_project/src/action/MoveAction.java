@@ -10,7 +10,8 @@ import shapes.ShapeInterface;
 public class MoveAction implements Action {
     private final ObservableList<ShapeInterface> listInsertedShapes;
     private final ObservableList<ShapeInterface> currentShape;
-    private double initialX, initialY, finalX, finalY, offsetX, offsetY;
+    private double initialX, initialY, offsetX, offsetY;
+    private ShapeInterface movedShape;
 
     /**
      * Returns a new instance of MoveAction
@@ -42,6 +43,7 @@ public class MoveAction implements Action {
             Shape selectedShape = (Shape) actionTarget;
             for (ShapeInterface current : listInsertedShapes) {
                 if (current.getShape().equals(selectedShape)) {
+                    movedShape=current;
                     currentShape.add(current);
                     break;
                 }
@@ -50,8 +52,8 @@ public class MoveAction implements Action {
             initialX = selectedShape.getLayoutX();
             initialY = selectedShape.getLayoutY();
 
-            offsetX = selectedShape.getLayoutX() - mouseEvent.getX();
-            offsetY = selectedShape.getLayoutY() - mouseEvent.getY();
+            offsetX = initialX - mouseEvent.getX();
+            offsetY = initialY - mouseEvent.getY();
         }
     }
 
@@ -82,12 +84,20 @@ public class MoveAction implements Action {
 
         MouseEvent mouseEvent = (MouseEvent) event;
 
-        finalX = offsetX + mouseEvent.getX();
-        finalY = offsetY + mouseEvent.getY();
+        double finalX = offsetX + mouseEvent.getX();
+        double finalY = offsetY + mouseEvent.getY();
         currentShape.get(0).move(offsetX + mouseEvent.getX(), offsetY + mouseEvent.getY());
 
         if (finalX == initialX && finalY == initialY) {
             throw new NotMovedException();
         }
+    }
+
+    /**
+     * Undoes the action
+     */
+    @Override
+    public void undo() {
+        movedShape.move(initialX,initialY);
     }
 }
