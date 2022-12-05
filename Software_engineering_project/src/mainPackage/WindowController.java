@@ -2,6 +2,7 @@ package mainPackage;
 
 import action.*;
 import exceptions.NotShapeToCopyException;
+import exceptions.NotShapeToCutException;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -62,6 +63,8 @@ public class WindowController implements Initializable {
     private Action action;
     private ObservableList<ShapeInterface> listInsertedShapes;
     private Clipboard clipboard;
+    @FXML
+    private MenuItem resizeItem;
 
     /**
      * Called to initialize a controller after its root element has been
@@ -241,7 +244,12 @@ public class WindowController implements Initializable {
     public void resizeButtonOnClick(ActionEvent actionEvent) {
         action = new ResizeAction(selectedInsertedShape.get(0));
     }
-
+    
+    /**
+     * Called when the MenuItem Copy is being clicked
+     *
+     * @param event the event of the click
+     */
     @FXML
     private void copyButtonOnClick(ActionEvent event) {
         ShapeInterface copiedShape = shapesTable.getSelectionModel().getSelectedItem();
@@ -283,5 +291,25 @@ public class WindowController implements Initializable {
             invoker.execute(action, event);
             action = new MoveAction(selectedInsertedShape, listInsertedShapes);
         }
+    }
+    
+    /**
+     * Called when the MenuItem Cut is being clicked
+     *
+     * @param event the event of the click
+     */
+    @FXML
+    private void cutButtonOnClick(ActionEvent event) {
+        ShapeInterface cuttedShape = shapesTable.getSelectionModel().getSelectedItem();
+        
+        try {
+            this.action = new CutAction(clipboard, listInsertedShapes, cuttedShape);
+        } catch (NotShapeToCutException ex) {
+            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
+            return;
+        }
+        invoker.execute(this.action, event);
+        
+        this.action = new PasteAction(clipboard, listInsertedShapes);
     }
 }

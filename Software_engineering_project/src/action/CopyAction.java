@@ -21,7 +21,8 @@ public class CopyAction implements Action {
         this.clipboard = clipboard;
         if (shapeToCopy == null)
             throw new NotShapeToCopyException();
-        this.shapeToCopy = shapeToCopy;
+        else
+            this.shapeToCopy = shapeToCopy;
     }
 
     /**

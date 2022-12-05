@@ -4,22 +4,22 @@
  */
 package exceptions;
 
-public class NotShapeToCopyException extends Exception {
+public class NotShapeToCutException extends Exception {
 
     /**
-     * Creates a new instance of <code>NotShapeToCopyException</code> without
+     * Creates a new instance of <code>NotShapeToCutException</code> without
      * detail message.
      */
-    public NotShapeToCopyException() {
+    public NotShapeToCutException() {
     }
 
     /**
-     * Constructs an instance of <code>NotShapeToCopyException</code> with the
+     * Constructs an instance of <code>NotShapeToCutException</code> with the
      * specified detail message.
      *
      * @param msg the detail message.
      */
-    public NotShapeToCopyException(String msg) {
+    public NotShapeToCutException(String msg) {
         super(msg);
     }
 }
