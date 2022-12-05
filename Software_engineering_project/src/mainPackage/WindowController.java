@@ -312,4 +312,9 @@ public class WindowController implements Initializable {
         
         this.action = new PasteAction(clipboard, listInsertedShapes);
     }
+
+    @FXML
+    private void shapesButtonsOnMouseReleased(MouseEvent event) {
+        selectedInsertedShape.clear();
+    }
 }
