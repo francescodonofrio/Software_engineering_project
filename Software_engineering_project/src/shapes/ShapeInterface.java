@@ -111,6 +111,4 @@ public interface ShapeInterface {
      * @param value the status of the focus
      */
     void setFocus(boolean value);
-
-    ShapeInterface clone() throws CloneNotSupportedException;
 }

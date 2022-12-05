@@ -6,7 +6,7 @@ import javafx.scene.effect.Effect;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 
-public abstract class ShapeAbstract implements ShapeInterface, java.lang.Cloneable {
+public abstract class ShapeAbstract implements ShapeInterface{
 
     protected static int cont = 1;
     protected static boolean hasBeenInserted = false;
@@ -136,16 +136,6 @@ public abstract class ShapeAbstract implements ShapeInterface, java.lang.Cloneab
         if (value)
             effect = new DropShadow(BlurType.GAUSSIAN, Color.DODGERBLUE, 5, 0.75, 0, 0);
         this.shape.setEffect(effect);
-    }
-
-    @Override
-    public ShapeAbstract clone() throws CloneNotSupportedException {
-        ShapeAbstract temp = (ShapeAbstract) super.clone();
-        String oldName = Integer.toString(cont);
-        cont++;
-        String newName = Integer.toString(cont);
-        temp.name = temp.name.replace(oldName, newName);
-        return temp;
     }
 
 }
