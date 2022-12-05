@@ -1,6 +1,8 @@
 package shapes;
 
-import exceptions.NotCloseContourException;
+import javafx.scene.effect.BlurType;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Effect;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
@@ -106,7 +108,89 @@ public class ShapeAbstractTest {
 
         System.out.println("Passed");
     }
+    
+    /**
+     * Test of setProperties method, of class ShapeAbstract.
+     */
+    @Test
+    public void testSetProperties() {
+        System.out.print("setProperties: ");
 
+        shape.setProperties(20, 100, Color.GREENYELLOW, Color.CHOCOLATE);
+        
+        assertEquals(shape.getShape().getLayoutX(),20,0.1);
+        assertEquals(shape.getShape().getLayoutY(),100,0.1);
+        assertEquals(shape.getInternalColor().getBlue(),Color.GREENYELLOW.getBlue(),0.1);
+        assertEquals(shape.getInternalColor().getRed(),Color.GREENYELLOW.getRed(),0.1);
+        assertEquals(shape.getInternalColor().getGreen(),Color.GREENYELLOW.getGreen(),0.1);
+        assertEquals(shape.getInternalColor().getOpacity(),Color.GREENYELLOW.getOpacity(),0.1);
+        assertEquals(shape.getCountourColor().getBlue(),Color.CHOCOLATE.getBlue(),0.1);
+        assertEquals(shape.getCountourColor().getRed(),Color.CHOCOLATE.getRed(),0.1);
+        assertEquals(shape.getCountourColor().getGreen(),Color.CHOCOLATE.getGreen(),0.1);
+        assertEquals(shape.getCountourColor().getOpacity(),Color.CHOCOLATE.getOpacity(),0.1);
+        
+        System.out.println("Passed");
+    }
+
+    /**
+     * Test of setInternalColor method, of class ShapeAbstract.
+     */
+    @Test
+    public void testSetInternalColor() {
+        System.out.print("setInternalColor: ");
+
+        shape.setInternalColor(Color.YELLOW);
+        
+        assertEquals(shape.getInternalColor().getBlue(),Color.YELLOW.getBlue(),0.1);
+        assertEquals(shape.getInternalColor().getRed(),Color.YELLOW.getRed(),0.1);
+        assertEquals(shape.getInternalColor().getGreen(),Color.YELLOW.getGreen(),0.1);
+        assertEquals(shape.getInternalColor().getOpacity(),Color.YELLOW.getOpacity(),0.1);
+        
+        System.out.println("Passed");
+    }
+
+    /**
+     * Test of setContourColor method, of class ShapeAbstract.
+     */
+    @Test
+    public void testsetContourColor() {
+        System.out.print("setContourColor: ");
+        
+        shape.setContourColor(Color.YELLOW);
+        
+        assertEquals(shape.getCountourColor(),Color.YELLOW);
+
+        System.out.println("Passed");
+    }
+
+    /**
+     * Test of getContourColor method, of class ShapeAbstract.
+     */
+    @Test
+    public void testGetContourColor() {
+        System.out.print("getContourColor: ");
+        
+        shape.setContourColor(Color.YELLOW);
+        
+        assertEquals(shape.getCountourColor(),Color.YELLOW);
+
+        System.out.println("Passed");
+    }
+
+    /**
+     * Test of setName method, of class ShapeAbstract.
+     */
+    @Test
+    public void testSetName() {
+        System.out.print("setName: ");
+        
+        shape.setName("Test");
+        
+        assertEquals(shape.getName(),"Test");
+
+        System.out.println("Passed");
+    }
+    
     public class MockShape extends ShapeAbstract {
         public MockShape(Shape shape) {
             this.shape = shape;
@@ -118,27 +202,8 @@ public class ShapeAbstractTest {
         }
 
         @Override
-        public void setProperties(double X, double Y, Color internalColor, Color contourColor) {
-        }
-
-        @Override
-        public void setShape(Shape shape) {
-            this.shape = shape;
-        }
-
-        @Override
-        public String getName() {
-            return this.name;
-        }
-
-        @Override
-        public Color getInternalColor() {
-            return (Color) this.shape.getFill();
-        }
-
-        @Override
-        public void setInternalColor(Color newColor) throws NotCloseContourException {
+        public void setInternalColor(Color newColor){
+            shape.setFill(newColor);
         }
     }
-
 }
