@@ -137,5 +137,31 @@ public abstract class ShapeAbstract implements ShapeInterface{
             effect = new DropShadow(BlurType.GAUSSIAN, Color.DODGERBLUE, 5, 0.75, 0, 0);
         this.shape.setEffect(effect);
     }
+    
+    /**
+     * Updates the current shape as defined by the parameters
+     *
+     * @param X             the new X coordinate
+     * @param Y             the new Y coordinate
+     * @param internalColor the internal color
+     * @param contourColor  the contour color
+     */
+    @Override
+    public void setProperties(double X, double Y, Color internalColor, Color contourColor) {
+        this.setX(X);
+        this.setY(Y);
+        this.setInternalColor(internalColor);
+        this.setContourColor(contourColor);
+    }
+    
+    /**
+     * Get the internal color of the shape
+     * 
+     * @return the internal color of the shape
+     */
+    @Override
+    public Color getInternalColor() {
+       return (Color)shape.getFill();
+    }
 
 }

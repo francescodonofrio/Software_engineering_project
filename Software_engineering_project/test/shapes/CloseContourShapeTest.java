@@ -2,7 +2,6 @@ package shapes;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,7 +10,6 @@ import static org.junit.Assert.*;
 public class CloseContourShapeTest {
 
     private MockCloseContourShape shape;
-    private Shape test;
 
     public CloseContourShapeTest() {
         System.out.println("Test CloseContourShape");
@@ -20,7 +18,6 @@ public class CloseContourShapeTest {
     @Before
     public void setUp() {
         shape = new MockCloseContourShape();
-        test = shape.getShape();
     }
 
     /**
@@ -30,28 +27,11 @@ public class CloseContourShapeTest {
     public void testSetInternalColor() {
         System.out.print("setInternalColor: ");
 
-        Color internalColor = Color.CHOCOLATE;
-        shape.setInternalColor(internalColor);
-        assertEquals(test.getFill(), internalColor);
-
-        System.out.println("Passed");
-    }
-
-    /**
-     * Test of setProperties method, of class CloseContourShape.
-     */
-    @Test
-    public void testSetProperties() {
-        System.out.print("setProperties: ");
-
-        Color internalColor = Color.CHOCOLATE;
-        Color contourColor = Color.YELLOW;
-        shape.setProperties(50, 60, internalColor, contourColor);
-        assertEquals(test.getStroke(), contourColor);
-        assertEquals(test.getFill(), internalColor);
-        assertEquals(test.getLayoutX(), 50, 0.1);
-        assertEquals(test.getLayoutY(), 60, 0.1);
-
+        shape.setInternalColor(Color.CHOCOLATE);
+        assertEquals(shape.getInternalColor().getBlue(), Color.CHOCOLATE.getBlue(),0.1);
+        assertEquals(shape.getInternalColor().getRed(), Color.CHOCOLATE.getRed(),0.1);
+        assertEquals(shape.getInternalColor().getGreen(), Color.CHOCOLATE.getGreen(),0.1);
+        assertEquals(shape.getInternalColor().getOpacity(), Color.CHOCOLATE.getOpacity(),0.1);
 
         System.out.println("Passed");
     }

@@ -2,8 +2,6 @@ package action;
 
 import exceptions.NotCloseContourException;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -44,7 +42,7 @@ public class ChangeInternalColorActionTest {
         internalColorProperty.set(Color.BLACK);
     }
 
-    @Test(expected = NotCloseContourException.class)
+    @Test
     public void testExecute() throws Exception {
         System.out.print("execute");
 
@@ -67,7 +65,7 @@ public class ChangeInternalColorActionTest {
 
 
         Line line = (Line) lineShape.getShape();
-        assertEquals(line.getFill(), null);
+        assertEquals(line.getFill(), Color.TRANSPARENT);
 
 
     }

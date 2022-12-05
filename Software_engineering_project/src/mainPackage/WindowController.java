@@ -180,6 +180,7 @@ public class WindowController implements Initializable {
     @FXML
     private void saveWindow(ActionEvent event) {
         fileChooser.setTitle("Save File");
+        selectedInsertedShape.clear();
         file = fileChooser.showSaveDialog(drawingPane.getScene().getWindow());
         try {
             shapesInputOutput.save(file);
@@ -311,5 +312,10 @@ public class WindowController implements Initializable {
         invoker.execute(this.action, event);
         
         this.action = new PasteAction(clipboard, listInsertedShapes);
+    }
+
+    @FXML
+    private void shapesButtonsOnMouseReleased(MouseEvent event) {
+        selectedInsertedShape.clear();
     }
 }
