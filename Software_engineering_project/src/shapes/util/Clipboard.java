@@ -50,7 +50,6 @@ public class Clipboard {
         } catch (Exception ex) {
             return null;
         }
-        shape.getShape().setEffect(null);
         return shape;
     }
 
@@ -62,6 +61,7 @@ public class Clipboard {
     public void setContent(ShapeInterface content) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
 
+        content.getShape().setEffect(null);
         try (XMLEncoder encoder = new XMLEncoder(stream)) {
             encoder.setPersistenceDelegate(Color.class, new DefaultPersistenceDelegate(new String[]{"red", "green", "blue", "opacity"}));
             encoder.writeObject(content);
