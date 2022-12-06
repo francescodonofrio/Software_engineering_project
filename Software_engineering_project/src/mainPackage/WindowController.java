@@ -431,4 +431,13 @@ public class WindowController implements Initializable {
         }
 
     }
+
+    @FXML
+    private void toBackOnClick(ActionEvent event) {
+        if (!selectedInsertedShape.isEmpty()) {
+            action = new ToBackAction(selectedInsertedShape.get(0),drawingPane.getChildren());
+            invoker.execute(action, event);
+            action = new MoveAction(selectedInsertedShape, listInsertedShapes);
+        }
+    }
 }

@@ -9,15 +9,15 @@ import shapes.EllipseShape;
 import shapes.RectangleShape;
 import shapes.ShapeInterface;
 
-public class ToFrontActionTest {
+public class ToBackActionTest {
     
     private ShapeInterface rectangleShape,ellipseShape;
     private ActionEvent event;
-    private ToFrontAction action;
+    private ToBackAction action;
     private Pane drawingPane;
     private int startPositionRectangle,startPositionEllipse;
     
-    public ToFrontActionTest() {
+    public ToBackActionTest() {
         System.out.println("Test ToFrontAction");
     }
     
@@ -38,28 +38,28 @@ public class ToFrontActionTest {
     }
     
     /**
-     * Test of execute method, of class ToFrontAction.
+     * Test of execute method, of class ToBakAction.
      */
     @Test
     public void testExecute() throws Exception {
         System.out.print("execute");
         
-        action = new ToFrontAction(rectangleShape,drawingPane.getChildren());
+        action = new ToBackAction(rectangleShape,drawingPane.getChildren());
         action.execute(event);
         
-        assertEquals(drawingPane.getChildren().indexOf(rectangleShape.getShape()),drawingPane.getChildren().size()-1);
+        assertEquals(drawingPane.getChildren().indexOf(rectangleShape.getShape()),0);
         
         System.out.println("Passed");
     }
     
     /**
-     * Test of undo method, of class ToFrontAction.
+     * Test of undo method, of class ToBackAction.
      */
     @Test
     public void testUndo() throws Exception {
         System.out.print("execute");
         
-        action = new ToFrontAction(rectangleShape,drawingPane.getChildren());
+        action = new ToBackAction(rectangleShape,drawingPane.getChildren());
         action.execute(event);
         
         action.undo();
