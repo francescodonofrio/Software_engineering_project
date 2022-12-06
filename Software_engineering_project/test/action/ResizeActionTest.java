@@ -110,4 +110,67 @@ public class ResizeActionTest {
         System.out.println("Passed");
     }
 
+    /**
+     * Test of undo method, of class ResizeAction.
+     *
+     *
+     */
+    @Test
+    public void testUndo() {
+        System.out.print("undo: ");
+
+        event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 100, 150, 10, 25, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+
+        Rectangle rectangleTest = (Rectangle)rectangleShape.getShape();
+        double width = rectangleTest.getWidth();
+        double height = rectangleTest.getHeight();
+        double layoutXRectangle = rectangleTest.getLayoutX();
+        double layoutYRectangle = rectangleTest.getLayoutY();
+        
+        Ellipse ellipseTest = (Ellipse)ellipseShape.getShape();
+        double radiusX = ellipseTest.getRadiusX();
+        double radiusY = ellipseTest.getRadiusY();
+        double layoutXEllipse = ellipseTest.getLayoutX();
+        double layoutYEllipse = ellipseTest.getLayoutY();
+        
+        Line lineTest = (Line)lineShape.getShape();
+        double startX = lineTest.getStartX();
+        double startY = lineTest.getStartY();
+        double endX = lineTest.getEndX();
+        double endY = lineTest.getEndY();
+        double layoutXLine = lineTest.getLayoutX();
+        double layoutYLine = lineTest.getLayoutY();
+        
+        action = new ResizeAction(rectangleShape);
+        action.execute(event);
+        action.undo();
+        Rectangle rectangle = (Rectangle) rectangleShape.getShape();
+        assertEquals(rectangle.getWidth(), width, 0.1);
+        assertEquals(rectangle.getHeight(), height, 0.1);
+        assertEquals(rectangle.getLayoutX(), layoutXRectangle, 0.1);
+        assertEquals(rectangle.getLayoutY(), layoutYRectangle, 0.1);
+
+        action = new ResizeAction(ellipseShape);
+        action.execute(event);
+        action.undo();
+        Ellipse ellipse = (Ellipse) ellipseShape.getShape();
+        assertEquals(ellipse.getRadiusX(), radiusX, 0.1);
+        assertEquals(ellipse.getRadiusY(), radiusY, 0.1);
+        assertEquals(ellipse.getLayoutX(), layoutXEllipse, 0.1);
+        assertEquals(ellipse.getLayoutY(), layoutYEllipse, 0.1);
+
+        action = new ResizeAction(lineShape);
+        action.execute(event);
+        action.undo();
+        Line line = (Line) lineShape.getShape();
+        assertEquals(line.getStartX(), startX, 0.1);
+        assertEquals(line.getStartY(), startY, 0.1);
+        assertEquals(line.getEndX(), endX, 0.8);
+        assertEquals(line.getEndY(), endY, 0.8);
+        assertEquals(line.getLayoutX(), layoutXLine, 0.1);
+        assertEquals(line.getLayoutY(), layoutYLine, 0.1);
+
+        System.out.println("Passed");
+    }
+
 }

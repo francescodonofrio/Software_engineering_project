@@ -8,7 +8,7 @@ import shapes.ShapeInterface;
 public class ResizeAction implements Action {
 
     private final ShapeInterface selectedShape;
-    private double initialX, initialY, finalX, finalY;
+    private double initialX, initialY, finalX, finalY, previousFinalX, previousFinalY;
 
     /**
      * Returns a new instance of ResizeAction
@@ -28,6 +28,9 @@ public class ResizeAction implements Action {
     public void execute(Event event) {
         initialX = selectedShape.getShape().getLayoutX();
         initialY = selectedShape.getShape().getLayoutY();
+        
+        previousFinalX = selectedShape.getShape().getBoundsInParent().getMaxX();
+        previousFinalY = selectedShape.getShape().getBoundsInParent().getMaxY();
         this.onMouseDragged(event);
     }
 
@@ -61,7 +64,9 @@ public class ResizeAction implements Action {
      */
     @Override
     public void undo() {
-
+        selectedShape.setX(initialX);
+        selectedShape.setY(initialY);
+        selectedShape.setDim(initialX, initialY, previousFinalX, previousFinalY);
     }
 
 }
