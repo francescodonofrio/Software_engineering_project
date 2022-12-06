@@ -14,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
@@ -82,6 +83,8 @@ public class WindowController implements Initializable {
     @FXML
     private Button moreZoomBtn;
 
+    // DA TOGLIERE APPENA VIENE AGGIORNATA L'INTERFACCIA @VINZ
+    private GridPane gridPane=new GridPane();
     /**
      * Called to initialize a controller after its root element has been
      * completely processed.
@@ -96,7 +99,7 @@ public class WindowController implements Initializable {
 
         invoker = new Invoker();
         undoBtn.disableProperty().bind(invoker.emptyQueueProperty());
-        
+
         zoomLevel = new SimpleObjectProperty<>();
         zoomLevel.set(1);
         lessZoomBtn.disableProperty().bind(zoomLevel.isEqualTo(1));
@@ -291,6 +294,11 @@ public class WindowController implements Initializable {
         invoker.execute(this.action, event);
     }
 
+    /**
+     * Called when the table of inserted shapes is being clicked
+     *
+     * @param event the event of the click
+     */
     @FXML
     private void shapesTableOnMouseClicked(MouseEvent event) {
         ShapeInterface lastSelectedShape = shapesTable.getSelectionModel().getSelectedItem();
@@ -301,6 +309,10 @@ public class WindowController implements Initializable {
 
     }
 
+    /**
+     * Called when the internal color picker is being used
+     * @param event the event of the use
+     */
     @FXML
     private void changeInternalColorOnAction(ActionEvent event) {
         if (!selectedInsertedShape.isEmpty()) {
@@ -310,6 +322,10 @@ public class WindowController implements Initializable {
         }
     }
 
+    /**
+     * Called when the contour color picker is being used
+     * @param event the event of the use
+     */
     @FXML
     private void changeContourColorOnAction(ActionEvent event) {
         if (!selectedInsertedShape.isEmpty()) {
@@ -337,11 +353,20 @@ public class WindowController implements Initializable {
         invoker.execute(this.action, event);
     }
 
+    /**
+     * Called when one of the shapes button is being released
+     * @param event the event of the release
+     */
     @FXML
     private void shapesButtonsOnMouseReleased(MouseEvent event) {
         selectedInsertedShape.clear();
     }
 
+    /**
+     * Called when the undo button is being clicked
+     * @param event the event of the click
+     * @throws NoActionsException if there are no undoable actions
+     */
     @FXML
     private void undoBtnOnAction(ActionEvent event) throws NoActionsException {
         invoker.undo();
@@ -365,7 +390,7 @@ public class WindowController implements Initializable {
     /**
      * Executed when the less zoom button is clicked.
      * It decreases the level of zoom of the drawing pane
-     * 
+     *
      * @param event the event of the click
      */
     @FXML
@@ -378,7 +403,7 @@ public class WindowController implements Initializable {
     /**
      * Executed when the more zoom button is clicked.
      * It increases the level of zoom of the drawing pane
-     * 
+     *
      * @param event the event of the click
      */
     @FXML
@@ -386,5 +411,14 @@ public class WindowController implements Initializable {
         drawingPane.setScaleX(drawingPane.getScaleX() + zoomOffset);
         drawingPane.setScaleY(drawingPane.getScaleY() + zoomOffset);
         zoomLevel.set((int)zoomLevel.getValue() + 1);
+    }
+
+    /**
+     * Called when the toggle grid button is being clicked
+     * @param event the event of the click
+     */
+    @FXML
+    private void toggleGrid(ActionEvent event) {
+        gridPane.setGridLinesVisible(!gridPane.isGridLinesVisible());
     }
 }
