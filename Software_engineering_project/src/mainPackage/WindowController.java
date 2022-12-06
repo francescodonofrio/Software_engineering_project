@@ -30,6 +30,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.input.MouseButton;
 
 public class WindowController implements Initializable {
@@ -74,6 +75,12 @@ public class WindowController implements Initializable {
     @FXML
     private MenuItem pasteMenuItem;
     private MouseEvent rightClickPane;
+    private final double zoomOffset = 0.2;
+    private SimpleObjectProperty zoomLevel;
+    @FXML
+    private Button lessZoomBtn;
+    @FXML
+    private Button moreZoomBtn;
 
     /**
      * Called to initialize a controller after its root element has been
@@ -89,6 +96,11 @@ public class WindowController implements Initializable {
 
         invoker = new Invoker();
         undoBtn.disableProperty().bind(invoker.emptyQueueProperty());
+        
+        zoomLevel = new SimpleObjectProperty<>();
+        zoomLevel.set(1);
+        lessZoomBtn.disableProperty().bind(zoomLevel.isEqualTo(1));
+        moreZoomBtn.disableProperty().bind(zoomLevel.isEqualTo(8));
 
         selectedInsertedShape = FXCollections.observableArrayList();
         selectedInsertedShape.addListener((ListChangeListener.Change<? extends ShapeInterface> change) -> {
@@ -348,5 +360,31 @@ public class WindowController implements Initializable {
         invoker.execute(action, rightClickPane);
         // Here we reset the default action to move action
         action = new MoveAction(selectedInsertedShape, listInsertedShapes);
+    }
+
+    /**
+     * Executed when the less zoom button is clicked.
+     * It decreases the level of zoom of the drawing pane
+     * 
+     * @param event the event of the click
+     */
+    @FXML
+    private void lessZoomBtnOnAction(ActionEvent event) {
+        drawingPane.setScaleX(drawingPane.getScaleX() - zoomOffset);
+        drawingPane.setScaleY(drawingPane.getScaleY() - zoomOffset);
+        zoomLevel.set((int)zoomLevel.getValue() - 1);
+    }
+
+    /**
+     * Executed when the more zoom button is clicked.
+     * It increases the level of zoom of the drawing pane
+     * 
+     * @param event the event of the click
+     */
+    @FXML
+    private void moreZoomBtnOnAction(ActionEvent event) {
+        drawingPane.setScaleX(drawingPane.getScaleX() + zoomOffset);
+        drawingPane.setScaleY(drawingPane.getScaleY() + zoomOffset);
+        zoomLevel.set((int)zoomLevel.getValue() + 1);
     }
 }
