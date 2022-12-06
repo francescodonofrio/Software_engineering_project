@@ -421,4 +421,14 @@ public class WindowController implements Initializable {
     private void toggleGrid(ActionEvent event) {
         gridPane.setGridLinesVisible(!gridPane.isGridLinesVisible());
     }
+
+    @FXML
+    private void toFrontOnClick(ActionEvent event) {
+        if (!selectedInsertedShape.isEmpty()) {
+            action = new ToFrontAction(selectedInsertedShape.get(0),drawingPane.getChildren());
+            invoker.execute(action, event);
+            action = new MoveAction(selectedInsertedShape, listInsertedShapes);
+        }
+
+    }
 }
