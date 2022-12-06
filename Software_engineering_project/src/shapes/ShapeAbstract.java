@@ -12,7 +12,6 @@ public abstract class ShapeAbstract implements ShapeInterface{
     protected static boolean hasBeenInserted = false;
     protected static boolean isBeingLoaded = false;
     protected Shape shape;
-    protected Color countourColor;
     protected String name;
 
     /**
@@ -64,7 +63,6 @@ public abstract class ShapeAbstract implements ShapeInterface{
      */
     @Override
     public void setContourColor(Color newColor) {
-        this.countourColor = newColor;
         shape.setStroke(newColor);
     }
 
@@ -100,9 +98,14 @@ public abstract class ShapeAbstract implements ShapeInterface{
         this.setY(Y);
     }
 
+    /**
+     * Get the contour color of the shape
+     * 
+     * @return the contour color of the shape
+     */
     @Override
     public Color getCountourColor() {
-        return countourColor;
+        return (Color)shape.getStroke();
     }
 
     /**
@@ -163,5 +166,5 @@ public abstract class ShapeAbstract implements ShapeInterface{
     public Color getInternalColor() {
        return (Color)shape.getFill();
     }
-
+    
 }

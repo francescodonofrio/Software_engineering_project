@@ -9,6 +9,7 @@ public class ChangeContourColorAction implements Action {
 
     private final ObjectProperty<Color> colorPickerContour;
     private final ShapeInterface shape;
+    private Color oldColor;
 
     /**
      * Returns a new instance of ChangeContourColorAction
@@ -18,6 +19,7 @@ public class ChangeContourColorAction implements Action {
      */
     public ChangeContourColorAction(ShapeInterface selectedShape, ObjectProperty<Color> colorPickerContour) {
         this.shape = selectedShape;
+        this.oldColor=selectedShape.getCountourColor();
         this.colorPickerContour = colorPickerContour;
     }
 
@@ -55,7 +57,7 @@ public class ChangeContourColorAction implements Action {
      */
     @Override
     public void undo() {
-
+        shape.setContourColor(oldColor);
     }
 }
 
