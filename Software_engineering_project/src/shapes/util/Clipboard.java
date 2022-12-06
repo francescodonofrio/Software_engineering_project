@@ -1,7 +1,6 @@
 package shapes.util;
 
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Shape;
 import shapes.ShapeInterface;
 
 import java.beans.DefaultPersistenceDelegate;
@@ -9,16 +8,21 @@ import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 
 public class Clipboard {
     private static Clipboard instance = null;
     private byte[] content;
+    private BooleanProperty hasContent;
 
     /**
      * Creates a new instance of Clipboard
      */
     private Clipboard() {
         Clipboard.instance = this;
+        hasContent = new SimpleBooleanProperty();
+        hasContent.set(false);
     }
 
     /**
@@ -39,11 +43,11 @@ public class Clipboard {
      */
     public ShapeInterface getContent() {
         ShapeInterface shape;
-
+        
         try (XMLDecoder decoder = new XMLDecoder(new ByteArrayInputStream(content))) {
             shape = (ShapeInterface) decoder.readObject();
             shape.setName(shape.getName() + " - Copy");
-        } catch (IllegalArgumentException ex) {
+        } catch (Exception ex) {
             return null;
         }
         shape.getShape().setEffect(null);
@@ -63,9 +67,19 @@ public class Clipboard {
             encoder.writeObject(content);
         } catch (IllegalArgumentException ex) {
             this.content = null;
-            return;
         }
-
+        hasContent.set(true);
         this.content = stream.toByteArray();
     }
+    
+    /**
+     * Return a property to know if the clipboard has a content
+     *
+     * @return hasContent 
+     */
+    public BooleanProperty hasContent() {
+        return hasContent;
+    }
+    
+    
 }
