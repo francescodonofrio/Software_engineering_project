@@ -1,5 +1,6 @@
 package action;
 
+import exceptions.NotExecutedActionException;
 import javafx.event.Event;
 
 public interface Action {
@@ -29,6 +30,6 @@ public interface Action {
     /**
      * Undoes the action
      */
-    void undo();
+    void undo() throws NotExecutedActionException;
 
 }
