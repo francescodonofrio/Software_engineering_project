@@ -30,6 +30,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.input.MouseButton;
 
 public class WindowController implements Initializable {
 
@@ -68,6 +69,11 @@ public class WindowController implements Initializable {
     private Action action;
     private ObservableList<ShapeInterface> listInsertedShapes;
     private Clipboard clipboard;
+    @FXML
+    private ContextMenu contextMenuDrawingPane;
+    @FXML
+    private MenuItem pasteMenuItem;
+    private MouseEvent rightClickPane;
 
     /**
      * Called to initialize a controller after its root element has been
@@ -141,6 +147,8 @@ public class WindowController implements Initializable {
         shapesInputOutput = new FileIO(this.listInsertedShapes);
 
         clipboard = Clipboard.getClipboard();
+
+        pasteMenuItem.disableProperty().bind(clipboard.hasContent().not());
     }
 
     /**
@@ -239,7 +247,10 @@ public class WindowController implements Initializable {
      */
     @FXML
     private void drawingWindowOnMousePressed(MouseEvent event) {
-        invoker.execute(action, event);
+        if(event.getButton()==MouseButton.SECONDARY)
+            rightClickPane = event;
+        else
+            invoker.execute(action, event);
     }
 
     /**
@@ -266,8 +277,6 @@ public class WindowController implements Initializable {
             return;
         }
         invoker.execute(this.action, event);
-        
-        this.action = new PasteAction(clipboard, listInsertedShapes);
     }
 
     @FXML
@@ -314,8 +323,6 @@ public class WindowController implements Initializable {
             return;
         }
         invoker.execute(this.action, event);
-        
-        this.action = new PasteAction(clipboard, listInsertedShapes);
     }
 
     @FXML
@@ -326,5 +333,20 @@ public class WindowController implements Initializable {
     @FXML
     private void undoBtnOnAction(ActionEvent event) throws NoActionsException {
         invoker.undo();
+    }
+    
+    /**
+     * Called when the MenuItem Paste is being clicked.
+     * Is used an utility variable called rightClickPane for
+     * detecting the position where the shape will copied
+     * 
+     * @param event the event of the click
+     */
+    @FXML
+    private void pasteButtonOnClick(ActionEvent event) {
+        this.action = new PasteAction(clipboard, listInsertedShapes);
+        invoker.execute(action, rightClickPane);
+        // Here we reset the default action to move action
+        action = new MoveAction(selectedInsertedShape, listInsertedShapes);
     }
 }
