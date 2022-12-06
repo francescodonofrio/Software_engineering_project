@@ -49,6 +49,8 @@ public class ClipboardTest {
         Clipboard clipboard = Clipboard.getClipboard();
         ShapeInterface shape = new RectangleShape();
 
+        assertEquals(clipboard.hasContent().get(), false);
+        
         clipboard.setContent(shape);
         ShapeInterface savedShape = clipboard.getContent();
 
@@ -57,6 +59,7 @@ public class ClipboardTest {
         assertEquals(shape.getShape().getFill(), savedShape.getShape().getFill());
         assertEquals(shape.getShape().getLayoutX(), savedShape.getShape().getLayoutX(), 0.1);
         assertEquals(shape.getShape().getLayoutY(), savedShape.getShape().getLayoutY(), 0.1);
+        assertEquals(clipboard.hasContent().get(), true);
 
         ShapeInterface newShape = new EllipseShape();
         clipboard.setContent(newShape);
@@ -67,6 +70,7 @@ public class ClipboardTest {
         assertEquals(newShape.getShape().getFill(), savedShape.getShape().getFill());
         assertEquals(newShape.getShape().getLayoutX(), savedShape.getShape().getLayoutX(), 0.1);
         assertEquals(newShape.getShape().getLayoutY(), savedShape.getShape().getLayoutY(), 0.1);
+        assertEquals(clipboard.hasContent().get(), true);
 
 
         System.out.println("Passed");

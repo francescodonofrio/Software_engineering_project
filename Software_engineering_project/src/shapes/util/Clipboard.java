@@ -1,21 +1,17 @@
 package shapes.util;
 
-import javafx.scene.paint.Color;
 import shapes.ShapeInterface;
-
-import java.beans.DefaultPersistenceDelegate;
-import java.beans.XMLDecoder;
-import java.beans.XMLEncoder;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import java.util.LinkedList;
 
 public class Clipboard {
     private static Clipboard instance = null;
     private byte[] content;
-    private BooleanProperty hasContent;
-
+    private final BooleanProperty hasContent;
+    private final ShapesIO shapesIO = new ShapesIO();
+    
     /**
      * Creates a new instance of Clipboard
      */
@@ -42,34 +38,34 @@ public class Clipboard {
      * @return the memorized shape
      */
     public ShapeInterface getContent() {
-        ShapeInterface shape;
-        
-        try (XMLDecoder decoder = new XMLDecoder(new ByteArrayInputStream(content))) {
-            shape = (ShapeInterface) decoder.readObject();
-            shape.setName(shape.getName() + " - Copy");
+        LinkedList<ShapeInterface> shape = new LinkedList<>();
+        try {
+            shapesIO.loadStreamByte(content, shape);
+            shape.get(0).setName(shape.get(0).getName() + " - Copy");
+            shape.get(0).getShape().setEffect(null);  
+            return shape.removeFirst();
         } catch (Exception ex) {
             return null;
         }
-        return shape;
+        
     }
 
     /**
      * Saves a new shape into the clipboard
      *
-     * @param content the new shape
+     * @param shape the shape to be save on the clipboard
      */
-    public void setContent(ShapeInterface content) {
+    public void setContent(ShapeInterface shape){
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-
-        content.getShape().setEffect(null);
-        try (XMLEncoder encoder = new XMLEncoder(stream)) {
-            encoder.setPersistenceDelegate(Color.class, new DefaultPersistenceDelegate(new String[]{"red", "green", "blue", "opacity"}));
-            encoder.writeObject(content);
-        } catch (IllegalArgumentException ex) {
-            this.content = null;
+        
+        try {
+            shapesIO.saveStreamByte(stream, shape);
+            this.content = stream.toByteArray();
+        } catch (Exception ex) {
+            content = null;
         }
         hasContent.set(true);
-        this.content = stream.toByteArray();
+
     }
     
     /**
