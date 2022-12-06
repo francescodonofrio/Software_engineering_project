@@ -1,5 +1,6 @@
 package action;
 
+import exceptions.NotExecutedActionException;
 import exceptions.NotResizedException;
 import javafx.event.Event;
 import javafx.scene.input.MouseEvent;
@@ -9,7 +10,7 @@ public class ResizeAction implements Action {
 
     private final ShapeInterface selectedShape;
     private double initialX, initialY, finalX, finalY, previousFinalX, previousFinalY;
-
+    private boolean hasNotBeenExecuted;
     /**
      * Returns a new instance of ResizeAction
      *
@@ -17,6 +18,7 @@ public class ResizeAction implements Action {
      */
     public ResizeAction(ShapeInterface selectedShape) {
         this.selectedShape = selectedShape;
+        this.hasNotBeenExecuted=true;
     }
 
     /**
@@ -32,6 +34,7 @@ public class ResizeAction implements Action {
         previousFinalX = selectedShape.getShape().getBoundsInParent().getMaxX();
         previousFinalY = selectedShape.getShape().getBoundsInParent().getMaxY();
         this.onMouseDragged(event);
+        this.hasNotBeenExecuted=false;
     }
 
     /**
@@ -63,7 +66,9 @@ public class ResizeAction implements Action {
      * Undoes the action
      */
     @Override
-    public void undo() {
+    public void undo() throws NotExecutedActionException {
+        if(hasNotBeenExecuted)
+            throw new NotExecutedActionException();
         selectedShape.setX(initialX);
         selectedShape.setY(initialY);
         selectedShape.setDim(initialX, initialY, previousFinalX, previousFinalY);

@@ -1,5 +1,6 @@
 package action;
 
+import exceptions.NotExecutedActionException;
 import exceptions.NotShapeToCutException;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -11,7 +12,7 @@ public class CutAction implements Action {
     private final Clipboard clipboard;
     private final ObservableList<ShapeInterface> listInsertedShapes;
     private final ShapeInterface shapeToCut;
-    
+    private boolean hasNotBeenExecuted;
     /**
      * Returns a new instance of CutAction
      *
@@ -27,6 +28,7 @@ public class CutAction implements Action {
             throw new NotShapeToCutException();
         else
             this.shapeToCut = shapeToCut;
+        this.hasNotBeenExecuted=true;
     }
 
     /**
@@ -39,6 +41,7 @@ public class CutAction implements Action {
     public void execute(Event event) throws Exception {
         clipboard.setContent(shapeToCut);
         listInsertedShapes.remove(shapeToCut);
+        hasNotBeenExecuted=false;
     }
 
     @Override
@@ -50,7 +53,9 @@ public class CutAction implements Action {
     }
 
     @Override
-    public void undo() {
+    public void undo() throws NotExecutedActionException {
+        if(hasNotBeenExecuted)
+            throw new NotExecutedActionException();
         listInsertedShapes.add(shapeToCut);
     }
     

@@ -2,6 +2,7 @@ package mainPackage;
 
 import action.*;
 import exceptions.NoActionsException;
+import exceptions.NotExecutedActionException;
 import exceptions.NotShapeToCopyException;
 import exceptions.NotShapeToCutException;
 import javafx.beans.binding.Bindings;
@@ -368,7 +369,7 @@ public class WindowController implements Initializable {
      * @throws NoActionsException if there are no undoable actions
      */
     @FXML
-    private void undoBtnOnAction(ActionEvent event) throws NoActionsException {
+    private void undoBtnOnAction(ActionEvent event) throws NoActionsException, NotExecutedActionException {
         invoker.undo();
     }
     
