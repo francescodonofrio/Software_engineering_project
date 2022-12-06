@@ -10,6 +10,7 @@ public class PasteAction implements Action {
 
     private final Clipboard clipboard;
     private final ObservableList<ShapeInterface> listInsertedShapes;
+    private ShapeInterface shapeToPaste;
 
     /**
      * Returns a new instance of PasteAction
@@ -31,7 +32,7 @@ public class PasteAction implements Action {
     @Override
     public void execute(Event event) throws Exception {
         MouseEvent mouseEvent = (MouseEvent) event;
-        ShapeInterface shapeToPaste = clipboard.getContent();
+        shapeToPaste = clipboard.getContent();
         shapeToPaste.setX(mouseEvent.getX());
         shapeToPaste.setY(mouseEvent.getY());
         listInsertedShapes.add(shapeToPaste);
@@ -60,7 +61,7 @@ public class PasteAction implements Action {
      */
     @Override
     public void undo() {
-
+        listInsertedShapes.remove(shapeToPaste);
     }
 
 }

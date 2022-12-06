@@ -93,4 +93,26 @@ public class PasteActionTest {
         System.out.println("Passed");
     }
     
+    @Test
+    public void undo()throws Exception{
+        System.out.println("undo: ");
+        event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+        int initialSize=drawingPane.getChildren().size();
+        PasteAction instance = new PasteAction(clipboard, listInsertedShapes);
+        instance.execute(event);
+        instance.undo();
+        
+        assertEquals(drawingPane.getChildren().size(),initialSize);
+        drawingPane.getChildren().clear();
+        
+        initialSize=drawingPane.getChildren().size();
+        instance.execute(event);
+        instance.execute(event);
+        
+        instance.undo();
+        assertEquals(drawingPane.getChildren().size(),initialSize+1);
+        
+        System.out.println("Passed");
+    }
+    
 }
