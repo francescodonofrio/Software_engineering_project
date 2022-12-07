@@ -463,4 +463,8 @@ public class WindowController implements Initializable {
         invoker.execute(action, event);
         action = new MoveAction(selectedInsertedShape, listInsertedShapes);
     }
+
+    @FXML
+    private void RotateButtonOnClick(ActionEvent event) {
+    }
 }
