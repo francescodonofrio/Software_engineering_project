@@ -1,5 +1,6 @@
 package action;
 
+import exceptions.NotExecutedActionException;
 import javafx.beans.property.ObjectProperty;
 import javafx.event.Event;
 import javafx.scene.paint.Color;
@@ -10,6 +11,7 @@ public class ChangeContourColorAction implements Action {
     private final ObjectProperty<Color> colorPickerContour;
     private final ShapeInterface shape;
     private Color oldColor;
+    private boolean hasNotBeenExecuted;
 
     /**
      * Returns a new instance of ChangeContourColorAction
@@ -19,8 +21,8 @@ public class ChangeContourColorAction implements Action {
      */
     public ChangeContourColorAction(ShapeInterface selectedShape, ObjectProperty<Color> colorPickerContour) {
         this.shape = selectedShape;
-        this.oldColor=selectedShape.getCountourColor();
         this.colorPickerContour = colorPickerContour;
+        this.hasNotBeenExecuted=true;
     }
 
     /**
@@ -30,8 +32,9 @@ public class ChangeContourColorAction implements Action {
      */
     @Override
     public void execute(Event event) throws Exception {
+        oldColor=shape.getCountourColor();
         shape.setContourColor(colorPickerContour.getValue());
-
+        this.hasNotBeenExecuted=false;
     }
 
     /**
@@ -56,7 +59,10 @@ public class ChangeContourColorAction implements Action {
      * Undoes the action
      */
     @Override
-    public void undo() {
+    public void undo() throws NotExecutedActionException {
+        if(hasNotBeenExecuted)
+            throw new NotExecutedActionException();
+
         shape.setContourColor(oldColor);
     }
 }

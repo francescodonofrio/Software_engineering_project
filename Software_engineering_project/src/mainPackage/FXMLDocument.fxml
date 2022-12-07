@@ -123,6 +123,8 @@
                                     <items>
                                         <MenuItem fx:id="resizeItem" mnemonicParsing="false" onAction="#resizeButtonOnClick" text="Resize" />
                                         <MenuItem mnemonicParsing="false" onAction="#copyButtonOnClick" text="Copy" />
+                                        <MenuItem mnemonicParsing="false" onAction="#toFrontOnClick" text="Move to front" />
+                                        <MenuItem mnemonicParsing="false" onAction="#toBackOnClick" text="Move to back" />
                               <MenuItem mnemonicParsing="false" onAction="#cutButtonOnClick" text="Cut" />
                                     </items>
                                 </ContextMenu>

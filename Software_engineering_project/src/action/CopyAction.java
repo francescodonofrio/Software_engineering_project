@@ -1,5 +1,6 @@
 package action;
 
+import exceptions.NotExecutedActionException;
 import exceptions.NotShapeToCopyException;
 import javafx.event.Event;
 import shapes.ShapeInterface;
@@ -9,7 +10,8 @@ public class CopyAction implements Action {
 
     private final Clipboard clipboard;
     private final ShapeInterface shapeToCopy;
-
+    private boolean hasNotBeenExecuted;
+    private ShapeInterface lastContent;
     /**
      * Returns a new instance of CopyAction
      *
@@ -23,6 +25,7 @@ public class CopyAction implements Action {
             throw new NotShapeToCopyException();
         else
             this.shapeToCopy = shapeToCopy;
+        this.hasNotBeenExecuted=true;
     }
 
     /**
@@ -33,7 +36,12 @@ public class CopyAction implements Action {
      */
     @Override
     public void execute(Event event) throws Exception {
+        lastContent=null;
+        if(clipboard.hasContent().get())
+            lastContent=clipboard.getContent();
+
         clipboard.setContent(shapeToCopy);
+        hasNotBeenExecuted=false;
     }
 
     /**
@@ -58,8 +66,11 @@ public class CopyAction implements Action {
      * Undoes the action
      */
     @Override
-    public void undo() {
+    public void undo() throws NotExecutedActionException {
+        if (hasNotBeenExecuted)
+            throw new NotExecutedActionException();
 
+        clipboard.setContent(lastContent);
     }
 
 }

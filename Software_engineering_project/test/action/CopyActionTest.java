@@ -22,6 +22,7 @@ public class CopyActionTest {
     public CopyActionTest() throws NotCloseContourException {
         System.out.println("Test CopyAction");
         clipboard = Clipboard.getClipboard();
+        clipboard.setContent(null);
         
         rectangleShape = new RectangleShape();
         rectangleShape.setInternalColor(Color.BLUE);
@@ -33,7 +34,7 @@ public class CopyActionTest {
      */
     @Test
     public void testExecute() throws Exception {
-        System.out.println("execute: ");
+        System.out.print("execute: ");
         Event event = null;
         CopyAction instance;
         
@@ -61,5 +62,33 @@ public class CopyActionTest {
         
         System.out.println("Passed");
     }
-    
+
+    /**
+     * Test of undo method, of class CopyAction.
+     */
+    @Test
+    public void testUndo() throws Exception {
+        System.out.print("undo: ");
+        Event event = null;
+        CopyAction instance;
+
+        instance = new CopyAction(clipboard, rectangleShape);
+        boolean oldValue=clipboard.hasContent().get();
+
+        instance.execute(event);
+        Rectangle rectangle = (Rectangle) rectangleShape.getShape();
+
+
+        instance.undo();
+
+        assertEquals(oldValue,clipboard.hasContent().get());
+
+        oldValue=clipboard.hasContent().get();
+        instance.execute(event);
+        instance.execute(event);
+
+        assertNotEquals(!oldValue,clipboard.hasContent().get());
+
+        System.out.println("Passed");
+    }
 }

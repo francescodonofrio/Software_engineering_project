@@ -65,7 +65,7 @@ public class PasteActionTest {
      */
     @Test
     public void testExecute() throws Exception{
-        System.out.println("execute: ");
+        System.out.print("execute: ");
         event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
         
         PasteAction instance = new PasteAction(clipboard, listInsertedShapes);
@@ -95,7 +95,7 @@ public class PasteActionTest {
     
     @Test
     public void undo()throws Exception{
-        System.out.println("undo: ");
+        System.out.print("undo: ");
         event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
         int initialSize=drawingPane.getChildren().size();
         PasteAction instance = new PasteAction(clipboard, listInsertedShapes);

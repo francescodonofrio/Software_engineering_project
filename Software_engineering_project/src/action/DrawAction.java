@@ -1,5 +1,6 @@
 package action;
 
+import exceptions.NotExecutedActionException;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -14,6 +15,7 @@ public class DrawAction implements Action {
     private final ObjectProperty<Color> colorPickerInternal;
     private final ObjectProperty<Color> colorPickerContour;
     private double initialX, initialY, finalX, finalY;
+    private boolean hasNotBeenExecuted;
 
 
     /**
@@ -30,6 +32,7 @@ public class DrawAction implements Action {
         this.listInsertedShapes = listInsertedShapes;
         this.colorPickerInternal = colorPickerInternal;
         this.colorPickerContour = colorPickerContour;
+        this.hasNotBeenExecuted=true;
     }
 
     /**
@@ -44,6 +47,7 @@ public class DrawAction implements Action {
         initialX = mouseEvent.getX();
         initialY = mouseEvent.getY();
         shape.setProperties(initialX, initialY, colorPickerInternal.getValue(), colorPickerContour.getValue());
+        hasNotBeenExecuted=false;
     }
 
     /**
@@ -72,7 +76,10 @@ public class DrawAction implements Action {
      * Undoes the action
      */
     @Override
-    public void undo() {
+    public void undo() throws NotExecutedActionException {
+        if(hasNotBeenExecuted)
+            throw new NotExecutedActionException();
+
         listInsertedShapes.remove(shape);
     }
 }

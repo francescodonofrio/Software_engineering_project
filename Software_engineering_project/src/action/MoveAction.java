@@ -1,5 +1,6 @@
 package action;
 
+import exceptions.NotExecutedActionException;
 import exceptions.NotMovedException;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -12,6 +13,7 @@ public class MoveAction implements Action {
     private final ObservableList<ShapeInterface> currentShape;
     private double initialX, initialY, offsetX, offsetY;
     private ShapeInterface movedShape;
+    private boolean hasNotBeenExecuted;
 
     /**
      * Returns a new instance of MoveAction
@@ -22,6 +24,7 @@ public class MoveAction implements Action {
     public MoveAction(ObservableList<ShapeInterface> currentShape, ObservableList<ShapeInterface> listInsertedShapes) {
         this.currentShape = currentShape;
         this.listInsertedShapes = listInsertedShapes;
+        this.hasNotBeenExecuted=true;
     }
 
     /**
@@ -55,6 +58,7 @@ public class MoveAction implements Action {
             offsetX = initialX - mouseEvent.getX();
             offsetY = initialY - mouseEvent.getY();
         }
+        hasNotBeenExecuted=false;
     }
 
     /**
@@ -97,7 +101,9 @@ public class MoveAction implements Action {
      * Undoes the action
      */
     @Override
-    public void undo() {
+    public void undo() throws NotExecutedActionException {
+        if(hasNotBeenExecuted)
+            throw new NotExecutedActionException();
         movedShape.move(initialX,initialY);
     }
 }

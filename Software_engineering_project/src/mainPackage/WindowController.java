@@ -2,6 +2,7 @@ package mainPackage;
 
 import action.*;
 import exceptions.NoActionsException;
+import exceptions.NotExecutedActionException;
 import exceptions.NotShapeToCopyException;
 import exceptions.NotShapeToCutException;
 import javafx.beans.binding.Bindings;
@@ -239,7 +240,10 @@ public class WindowController implements Initializable {
      */
     @FXML
     private void drawingWindowOnMouseReleased(MouseEvent event) {
-        invoker.executeOnMouseReleased(action, event);
+        if(event.getButton()==MouseButton.SECONDARY)
+            rightClickPane = event;
+        else
+            invoker.executeOnMouseReleased(action, event);
 
         // Here we reset the default action to move action
         action = new MoveAction(selectedInsertedShape, listInsertedShapes);
@@ -252,7 +256,10 @@ public class WindowController implements Initializable {
      */
     @FXML
     private void drawingWindowOnMouseDragged(MouseEvent event) {
-        invoker.executeOnMouseDragged(action, event);
+        if(event.getButton()==MouseButton.SECONDARY)
+            rightClickPane = event;
+        else
+            invoker.executeOnMouseDragged(action, event);
     }
 
     /**
@@ -368,7 +375,7 @@ public class WindowController implements Initializable {
      * @throws NoActionsException if there are no undoable actions
      */
     @FXML
-    private void undoBtnOnAction(ActionEvent event) throws NoActionsException {
+    private void undoBtnOnAction(ActionEvent event) throws NoActionsException, NotExecutedActionException {
         invoker.undo();
     }
     
@@ -442,5 +449,24 @@ public class WindowController implements Initializable {
     @FXML
     private void toggleGrid(ActionEvent event) {
         gridPane.setGridLinesVisible(!gridPane.isGridLinesVisible());
+    }
+
+    @FXML
+    private void toFrontOnClick(ActionEvent event) {
+        if (!selectedInsertedShape.isEmpty()) {
+            action = new ToFrontAction(selectedInsertedShape.get(0),drawingPane.getChildren());
+            invoker.execute(action, event);
+            action = new MoveAction(selectedInsertedShape, listInsertedShapes);
+        }
+
+    }
+
+    @FXML
+    private void toBackOnClick(ActionEvent event) {
+        if (!selectedInsertedShape.isEmpty()) {
+            action = new ToBackAction(selectedInsertedShape.get(0),drawingPane.getChildren());
+            invoker.execute(action, event);
+            action = new MoveAction(selectedInsertedShape, listInsertedShapes);
+        }
     }
 }

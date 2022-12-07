@@ -1,6 +1,7 @@
 package action;
 
 import exceptions.NoActionsException;
+import exceptions.NotExecutedActionException;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.Event;
@@ -66,14 +67,12 @@ public class Invoker {
      * Undoes the last executed action
      * @throws exceptions.NoActionsException
      */
-    public void undo() throws NoActionsException{
+    public void undo() throws NoActionsException, NotExecutedActionException {
         if(this.actions.isEmpty())
             throw new NoActionsException();
 
         this.actions.pop().undo();
 
-        System.out.println(this.actions.size());
-        
         if(this.actions.isEmpty())
             this.emptyQueue.set(true);
     }

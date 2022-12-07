@@ -1,5 +1,6 @@
 package action;
 
+import exceptions.NotExecutedActionException;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.scene.input.MouseEvent;
@@ -11,6 +12,7 @@ public class PasteAction implements Action {
     private final Clipboard clipboard;
     private final ObservableList<ShapeInterface> listInsertedShapes;
     private ShapeInterface shapeToPaste;
+    private boolean hasNotBeenExecuted;
 
     /**
      * Returns a new instance of PasteAction
@@ -21,6 +23,7 @@ public class PasteAction implements Action {
     public PasteAction(Clipboard clipboard, ObservableList<ShapeInterface> listInsertedShapes) {
         this.clipboard = clipboard;
         this.listInsertedShapes = listInsertedShapes;
+        this.hasNotBeenExecuted=true;
     }
 
     /**
@@ -36,6 +39,7 @@ public class PasteAction implements Action {
         shapeToPaste.setX(mouseEvent.getX());
         shapeToPaste.setY(mouseEvent.getY());
         listInsertedShapes.add(shapeToPaste);
+        hasNotBeenExecuted=false;
     }
 
     /**
@@ -60,7 +64,9 @@ public class PasteAction implements Action {
      * Undoes the action
      */
     @Override
-    public void undo() {
+    public void undo() throws NotExecutedActionException {
+        if(hasNotBeenExecuted)
+            throw new NotExecutedActionException();
         listInsertedShapes.remove(shapeToPaste);
     }
 
