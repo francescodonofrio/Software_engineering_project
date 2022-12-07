@@ -48,7 +48,6 @@ public class ToBackAction implements Action {
     public void undo() {
         listInsertedShapes.remove(shapeToBack);
         listInsertedShapes.add(initialPosition, shapeToBack);
-
     }
     
 }
