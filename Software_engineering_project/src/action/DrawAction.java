@@ -74,6 +74,7 @@ public class DrawAction implements Action {
 
     /**
      * Undoes the action
+     * @throws exceptions.NotExecutedActionException
      */
     @Override
     public void undo() throws NotExecutedActionException {
@@ -81,5 +82,6 @@ public class DrawAction implements Action {
             throw new NotExecutedActionException();
 
         listInsertedShapes.remove(shape);
+        hasNotBeenExecuted=true;
     }
 }
