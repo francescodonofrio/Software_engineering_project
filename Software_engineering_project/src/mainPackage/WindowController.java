@@ -1,12 +1,10 @@
 package mainPackage;
 
 import action.*;
-import exceptions.NoActionsException;
-import exceptions.NotExecutedActionException;
-import exceptions.NotShapeToCopyException;
-import exceptions.NotShapeToCutException;
-import exceptions.ShapeNullException;
+import exceptions.*;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -15,10 +13,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.transform.Scale;
 import javafx.stage.FileChooser;
 import shapes.EllipseShape;
 import shapes.LineShape;
@@ -26,6 +26,7 @@ import shapes.RectangleShape;
 import shapes.ShapeInterface;
 import shapes.util.Clipboard;
 import shapes.util.ShapesIO;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -33,12 +34,11 @@ import java.util.ArrayDeque;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.scene.input.MouseButton;
-import javafx.scene.transform.Scale;
 
 public class WindowController implements Initializable {
 
+    private final double zoomOffset = 0.2;
+    private final SimpleBooleanProperty disableClick = new SimpleBooleanProperty(false);
     @FXML
     private Pane drawingPane;
     @FXML
@@ -71,24 +71,22 @@ public class WindowController implements Initializable {
     private ContextMenu contextMenuDrawingPane;
     @FXML
     private MenuItem pasteMenuItem;
-
     private Invoker invoker;
     private ShapeInterface selectedShape;
     private ObservableList<ShapeInterface> selectedInsertedShape;
     private FileChooser fileChooser;
-    private FileChooser.ExtensionFilter extensionFilter;
     private File file;
     private ShapesIO shapesInputOutput;
     private Action action;
     private ObservableList<ShapeInterface> listInsertedShapes;
     private Clipboard clipboard;
     private MouseEvent rightClickPane;
-    private final double zoomOffset = 0.2;
-    private SimpleObjectProperty zoomLevel;
+    private SimpleObjectProperty<Integer> zoomLevel;
     private ArrayDeque<Double> queue;
 
     // DA TOGLIERE APPENA VIENE AGGIORNATA L'INTERFACCIA @VINZ
-    private GridPane gridPane=new GridPane();
+    private final GridPane gridPane = new GridPane();
+
     /**
      * Called to initialize a controller after its root element has been
      * completely processed.
@@ -100,7 +98,7 @@ public class WindowController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         queue = new ArrayDeque<>();
 
         invoker = new Invoker();
@@ -136,18 +134,12 @@ public class WindowController implements Initializable {
         listInsertedShapes = FXCollections.observableArrayList();
         listInsertedShapes.addListener((ListChangeListener.Change<? extends ShapeInterface> change) -> {
             while (change.next()) {
-                change.getRemoved().forEach(remItem -> {
-                    drawingPane.getChildren().remove(remItem.getShape());
-                });
-                change.getAddedSubList().forEach(addItem -> {
-                    drawingPane.getChildren().add(addItem.getShape());
-                });
+                change.getRemoved().forEach(remItem -> drawingPane.getChildren().remove(remItem.getShape()));
+                change.getAddedSubList().forEach(addItem -> drawingPane.getChildren().add(addItem.getShape()));
             }
         });
 
-        contextMenuTableView.getItems().forEach(menuItem -> {
-            menuItem.disableProperty().bind(Bindings.isEmpty(selectedInsertedShape));
-        });
+        contextMenuTableView.getItems().forEach(menuItem -> menuItem.disableProperty().bind(Bindings.isEmpty(selectedInsertedShape)));
 
         selectedShape = new LineShape();
         action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes);
@@ -163,7 +155,7 @@ public class WindowController implements Initializable {
         colorPickerContour.setValue(Color.BLACK);
 
         fileChooser = new FileChooser();
-        extensionFilter = new FileChooser.ExtensionFilter("XML File (*.xml)", "*.xml");
+        FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("XML File (*.xml)", "*.xml");
         fileChooser.getExtensionFilters().add(extensionFilter);
         shapesInputOutput = new ShapesIO();
 
@@ -181,6 +173,7 @@ public class WindowController implements Initializable {
     private void lineSegmentSelection(ActionEvent event) {
         selectedShape = new LineShape();
         action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes);
+        disableClick.set(false);
     }
 
     /**
@@ -192,6 +185,7 @@ public class WindowController implements Initializable {
     private void rectangleSelection(ActionEvent event) {
         selectedShape = new RectangleShape();
         action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes);
+        disableClick.set(false);
     }
 
     /**
@@ -203,6 +197,7 @@ public class WindowController implements Initializable {
     private void ellipseSelection(ActionEvent event) {
         selectedShape = new EllipseShape();
         action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes);
+        disableClick.set(false);
     }
 
     /**
@@ -212,8 +207,14 @@ public class WindowController implements Initializable {
      */
     @FXML
     private void polygonSelection(ActionEvent event) {
-        //selectedShape = new EllipseShape();
-        //action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes);
+        if (disableClick.get()) {
+            disableClick.set(false);
+            action = new MoveAction(selectedInsertedShape, listInsertedShapes);
+        } else {
+            disableClick.set(true);
+            action = new DrawPolygonAction(colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes, disableClick);
+        }
+
     }
 
     /**
@@ -256,13 +257,15 @@ public class WindowController implements Initializable {
      */
     @FXML
     private void drawingWindowOnMouseReleased(MouseEvent event) {
-        if(event.getButton()==MouseButton.SECONDARY)
+        if (event.getButton() == MouseButton.SECONDARY)
             rightClickPane = event;
-        else
+        else {
             invoker.executeOnMouseReleased(action, event);
-
-        // Here we reset the default action to move action
-        action = new MoveAction(selectedInsertedShape, listInsertedShapes);
+            if (!disableClick.get()) {
+                // Here we reset the default action to move action if a polygon has been inserted
+                action = new MoveAction(selectedInsertedShape, listInsertedShapes);
+            }
+        }
     }
 
     /**
@@ -272,7 +275,7 @@ public class WindowController implements Initializable {
      */
     @FXML
     private void drawingWindowOnMouseDragged(MouseEvent event) {
-        if(event.getButton()==MouseButton.SECONDARY)
+        if (event.getButton() == MouseButton.SECONDARY)
             rightClickPane = event;
         else
             invoker.executeOnMouseDragged(action, event);
@@ -285,7 +288,7 @@ public class WindowController implements Initializable {
      */
     @FXML
     private void drawingWindowOnMousePressed(MouseEvent event) {
-        if(event.getButton()==MouseButton.SECONDARY)
+        if (event.getButton() == MouseButton.SECONDARY)
             rightClickPane = event;
         else
             invoker.execute(action, event);
@@ -293,7 +296,7 @@ public class WindowController implements Initializable {
 
     /**
      * Called when the MenuItem Resize id being clicked
-     * 
+     *
      * @param actionEvent the event of the click
      */
     @FXML
@@ -305,7 +308,7 @@ public class WindowController implements Initializable {
             action = new MoveAction(selectedInsertedShape, listInsertedShapes);
         }
     }
-    
+
     /**
      * Called when the MenuItem Copy is being clicked
      *
@@ -314,7 +317,7 @@ public class WindowController implements Initializable {
     @FXML
     private void copyButtonOnClick(ActionEvent event) {
         ShapeInterface copiedShape = shapesTable.getSelectionModel().getSelectedItem();
-        
+
         try {
             this.action = new CopyAction(clipboard, copiedShape);
         } catch (NotShapeToCopyException ex) {
@@ -341,6 +344,7 @@ public class WindowController implements Initializable {
 
     /**
      * Called when the internal color picker is being used
+     *
      * @param event the event of the use
      */
     @FXML
@@ -354,6 +358,7 @@ public class WindowController implements Initializable {
 
     /**
      * Called when the contour color picker is being used
+     *
      * @param event the event of the use
      */
     @FXML
@@ -364,7 +369,7 @@ public class WindowController implements Initializable {
             action = new MoveAction(selectedInsertedShape, listInsertedShapes);
         }
     }
-    
+
     /**
      * Called when the MenuItem Cut is being clicked
      *
@@ -373,7 +378,7 @@ public class WindowController implements Initializable {
     @FXML
     private void cutButtonOnClick(ActionEvent event) {
         ShapeInterface cuttedShape = shapesTable.getSelectionModel().getSelectedItem();
-        
+
         try {
             this.action = new CutAction(clipboard, listInsertedShapes, cuttedShape);
         } catch (NotShapeToCutException ex) {
@@ -385,6 +390,7 @@ public class WindowController implements Initializable {
 
     /**
      * Called when one of the shapes button is being released
+     *
      * @param event the event of the release
      */
     @FXML
@@ -394,19 +400,22 @@ public class WindowController implements Initializable {
 
     /**
      * Called when the undo button is being clicked
+     *
      * @param event the event of the click
      * @throws NoActionsException if there are no undoable actions
      */
     @FXML
     private void undoBtnOnAction(ActionEvent event) throws NoActionsException, NotExecutedActionException {
         invoker.undo();
+        if (disableClick.get()) {
+            action = new MoveAction(selectedInsertedShape, listInsertedShapes);
+            disableClick.set(false);
+        }
     }
-    
+
     /**
      * Called when the MenuItem Paste is being clicked.
-     * Is used an utility variable called rightClickPane for
-     * detecting the position where the shape will copied
-     * 
+     *
      * @param event the event of the click
      */
     @FXML
@@ -425,10 +434,10 @@ public class WindowController implements Initializable {
      */
     @FXML
     private void lessZoomBtnOnAction(ActionEvent event) {
-        drawingPane.getTransforms().remove(drawingPane.getTransforms().size()-1);
+        drawingPane.getTransforms().remove(drawingPane.getTransforms().size() - 1);
         drawingPane.setPrefHeight(queue.removeLast());
         drawingPane.setPrefWidth(queue.removeLast());
-        zoomLevel.set((int)zoomLevel.getValue() - 1);
+        zoomLevel.set(zoomLevel.getValue() - 1);
     }
 
     /**
@@ -447,13 +456,14 @@ public class WindowController implements Initializable {
         drawingPane.getTransforms().add(newScale);
         queue.add(drawingPane.getPrefWidth());
         queue.add(drawingPane.getPrefHeight());
-        drawingPane.setPrefWidth(drawingPane.getPrefWidth() + drawingPane.getPrefWidth()*zoomOffset);
-        drawingPane.setPrefHeight(drawingPane.getPrefHeight() + drawingPane.getPrefHeight()*zoomOffset);
-        zoomLevel.set((int)zoomLevel.getValue() + 1);
+        drawingPane.setPrefWidth(drawingPane.getPrefWidth() + drawingPane.getPrefWidth() * zoomOffset);
+        drawingPane.setPrefHeight(drawingPane.getPrefHeight() + drawingPane.getPrefHeight() * zoomOffset);
+        zoomLevel.set(zoomLevel.getValue() + 1);
     }
 
     /**
      * Called when the toggle grid button is being clicked
+     *
      * @param event the event of the click
      */
     @FXML
@@ -463,14 +473,14 @@ public class WindowController implements Initializable {
 
     @FXML
     private void toFrontOnClick(ActionEvent event) {
-        action = new ToFrontAction(selectedInsertedShape.get(0),drawingPane.getChildren());
+        action = new ToFrontAction(selectedInsertedShape.get(0), drawingPane.getChildren());
         invoker.execute(action, event);
         action = new MoveAction(selectedInsertedShape, listInsertedShapes);
     }
 
     @FXML
     private void toBackOnClick(ActionEvent event) {
-        action = new ToBackAction(selectedInsertedShape.get(0),drawingPane.getChildren());
+        action = new ToBackAction(selectedInsertedShape.get(0), drawingPane.getChildren());
         invoker.execute(action, event);
         action = new MoveAction(selectedInsertedShape, listInsertedShapes);
     }

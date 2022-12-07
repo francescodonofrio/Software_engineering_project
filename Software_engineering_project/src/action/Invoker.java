@@ -31,7 +31,8 @@ public class Invoker {
     public void execute(Action action, Event event) {
         try {
             action.execute(event);
-            this.actions.push(action);
+            if (!this.actions.contains(action))
+                this.actions.push(action);
             this.emptyQueue.set(false);
         } catch (Exception ex) {
         }
@@ -58,31 +59,38 @@ public class Invoker {
             action.onMouseReleased(event);
         } catch (Exception ex) {
             this.actions.pop();
-            if(this.actions.isEmpty())
+            if (this.actions.isEmpty())
                 this.emptyQueue.set(true);
         }
     }
 
     /**
      * Undoes the last executed action
+     *
      * @throws exceptions.NoActionsException
      * @throws exceptions.NotExecutedActionException
      */
     public void undo() throws NoActionsException, NotExecutedActionException {
-        if(this.actions.isEmpty())
+        if (this.actions.isEmpty())
             throw new NoActionsException();
 
-        this.actions.pop().undo();
-
-        if(this.actions.isEmpty())
+        try {
+            Action a = this.actions.pop();
+            System.out.println(a);
+            a.undo();
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        if (this.actions.isEmpty())
             this.emptyQueue.set(true);
     }
 
     /**
      * Returns a boolean property representing the status of the actions queue
+     *
      * @return the emptyQueue property
      */
-    public BooleanProperty emptyQueueProperty(){
+    public BooleanProperty emptyQueueProperty() {
         return this.emptyQueue;
     }
 

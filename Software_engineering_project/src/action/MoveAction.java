@@ -24,7 +24,7 @@ public class MoveAction implements Action {
     public MoveAction(ObservableList<ShapeInterface> currentShape, ObservableList<ShapeInterface> listInsertedShapes) {
         this.currentShape = currentShape;
         this.listInsertedShapes = listInsertedShapes;
-        this.hasNotBeenExecuted=true;
+        this.hasNotBeenExecuted = true;
     }
 
     /**
@@ -42,11 +42,10 @@ public class MoveAction implements Action {
         MouseEvent mouseEvent = (MouseEvent) event;
 
         Object actionTarget = event.getTarget();
-        if (actionTarget instanceof Shape) {
-            Shape selectedShape = (Shape) actionTarget;
+        if (actionTarget instanceof Shape selectedShape) {
             for (ShapeInterface current : listInsertedShapes) {
                 if (current.getShape().equals(selectedShape)) {
-                    movedShape=current;
+                    movedShape = current;
                     currentShape.add(current);
                     break;
                 }
@@ -57,8 +56,9 @@ public class MoveAction implements Action {
 
             offsetX = initialX - mouseEvent.getX();
             offsetY = initialY - mouseEvent.getY();
+
+            hasNotBeenExecuted = false;
         }
-        hasNotBeenExecuted=false;
     }
 
     /**
@@ -99,13 +99,14 @@ public class MoveAction implements Action {
 
     /**
      * Undoes the action
+     *
      * @throws exceptions.NotExecutedActionException
      */
     @Override
     public void undo() throws NotExecutedActionException {
-        if(hasNotBeenExecuted)
+        if (hasNotBeenExecuted)
             throw new NotExecutedActionException();
-        movedShape.move(initialX,initialY);
-        hasNotBeenExecuted=true;
+        movedShape.move(initialX, initialY);
+        hasNotBeenExecuted = true;
     }
 }
