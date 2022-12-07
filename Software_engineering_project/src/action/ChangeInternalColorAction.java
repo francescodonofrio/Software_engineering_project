@@ -1,5 +1,6 @@
 package action;
 
+import exceptions.NotExecutedActionException;
 import javafx.beans.property.ObjectProperty;
 import javafx.event.Event;
 import javafx.scene.paint.Color;
@@ -9,6 +10,7 @@ public class ChangeInternalColorAction implements Action {
     private final ObjectProperty<Color> colorPickerInternal;
     private final ShapeInterface shape;
     private  Color initialColor;
+    private boolean hasNotBeenExecuted;
 
     /**
      * Returns a new instance of ChangeContourColorAction
@@ -19,6 +21,7 @@ public class ChangeInternalColorAction implements Action {
     public ChangeInternalColorAction(ShapeInterface selectedShape, ObjectProperty<Color> colorPickerInternal) {
         this.shape = selectedShape;
         this.colorPickerInternal = colorPickerInternal;
+        this.hasNotBeenExecuted = true;
     }
 
     /**
@@ -30,6 +33,7 @@ public class ChangeInternalColorAction implements Action {
     public void execute(Event event) throws Exception {
         initialColor=shape.getInternalColor();
         shape.setInternalColor(colorPickerInternal.getValue());
+        this.hasNotBeenExecuted=false;
     }
 
     /**
@@ -52,9 +56,13 @@ public class ChangeInternalColorAction implements Action {
 
     /**
      * Undoes the action
+     * @throws exceptions.NotExecutedActionException
      */
     @Override
-    public void undo() {
+    public void undo() throws NotExecutedActionException{
+        if(hasNotBeenExecuted)
+            throw new NotExecutedActionException();
         shape.setInternalColor(initialColor);
+        this.hasNotBeenExecuted=true;
     }
 }

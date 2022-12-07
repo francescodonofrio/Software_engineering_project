@@ -106,7 +106,7 @@
                         </VBox>
                         <ScrollPane fx:id="scrollPane" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="432.0" prefWidth="684.0">
                             <content>
-                                <AnchorPane fx:id="drawingPane" minHeight="0.0" minWidth="0.0" onMouseDragged="#drawingWindowOnMouseDragged" onMousePressed="#drawingWindowOnMousePressed" onMouseReleased="#drawingWindowOnMouseReleased" prefHeight="516.0" prefWidth="682.0" />
+                                <AnchorPane fx:id="drawingPane" minHeight="0.0" minWidth="0.0" onMouseDragged="#drawingWindowOnMouseDragged" onMousePressed="#drawingWindowOnMousePressed" onMouseReleased="#drawingWindowOnMouseReleased" prefHeight="864.0" prefWidth="1368.0" />
                             </content>
                      <contextMenu>
                         <ContextMenu fx:id="contextMenuDrawingPane">
@@ -130,6 +130,7 @@
                                         <MenuItem mnemonicParsing="false" onAction="#copyButtonOnClick" text="Copy" />
                                         <MenuItem mnemonicParsing="false" onAction="#toFrontOnClick" text="Move to front" />
                                         <MenuItem mnemonicParsing="false" onAction="#toBackOnClick" text="Move to back" />
+                                        <MenuItem mnemonicParsing="false" onAction="#RotateButtonOnClick" text="Rotate" />
                               <MenuItem mnemonicParsing="false" onAction="#cutButtonOnClick" text="Cut" />
                                     </items>
                                 </ContextMenu>

@@ -66,6 +66,7 @@ public class Invoker {
     /**
      * Undoes the last executed action
      * @throws exceptions.NoActionsException
+     * @throws exceptions.NotExecutedActionException
      */
     public void undo() throws NoActionsException, NotExecutedActionException {
         if(this.actions.isEmpty())

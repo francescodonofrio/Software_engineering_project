@@ -26,15 +26,16 @@ import shapes.RectangleShape;
 import shapes.ShapeInterface;
 import shapes.util.Clipboard;
 import shapes.util.ShapesIO;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayDeque;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.input.MouseButton;
+import javafx.scene.transform.Scale;
 
 public class WindowController implements Initializable {
 
@@ -62,6 +63,14 @@ public class WindowController implements Initializable {
     private MenuItem resizeItem;
     @FXML
     private Button undoBtn;
+    @FXML
+    private Button lessZoomBtn;
+    @FXML
+    private Button moreZoomBtn;
+    @FXML
+    private ContextMenu contextMenuDrawingPane;
+    @FXML
+    private MenuItem pasteMenuItem;
 
     private Invoker invoker;
     private ShapeInterface selectedShape;
@@ -73,17 +82,10 @@ public class WindowController implements Initializable {
     private Action action;
     private ObservableList<ShapeInterface> listInsertedShapes;
     private Clipboard clipboard;
-    @FXML
-    private ContextMenu contextMenuDrawingPane;
-    @FXML
-    private MenuItem pasteMenuItem;
     private MouseEvent rightClickPane;
     private final double zoomOffset = 0.2;
     private SimpleObjectProperty zoomLevel;
-    @FXML
-    private Button lessZoomBtn;
-    @FXML
-    private Button moreZoomBtn;
+    private ArrayDeque<Double> queue;
 
     // DA TOGLIERE APPENA VIENE AGGIORNATA L'INTERFACCIA @VINZ
     private GridPane gridPane=new GridPane();
@@ -98,6 +100,8 @@ public class WindowController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        queue = new ArrayDeque<>();
 
         invoker = new Invoker();
         undoBtn.disableProperty().bind(invoker.emptyQueueProperty());
@@ -105,7 +109,7 @@ public class WindowController implements Initializable {
         zoomLevel = new SimpleObjectProperty<>();
         zoomLevel.set(1);
         lessZoomBtn.disableProperty().bind(zoomLevel.isEqualTo(1));
-        moreZoomBtn.disableProperty().bind(zoomLevel.isEqualTo(8));
+        moreZoomBtn.disableProperty().bind(zoomLevel.isEqualTo(9));
 
         selectedInsertedShape = FXCollections.observableArrayList();
         selectedInsertedShape.addListener((ListChangeListener.Change<? extends ShapeInterface> change) -> {
@@ -152,8 +156,8 @@ public class WindowController implements Initializable {
         shapesColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         shapesTable.setItems(listInsertedShapes);
 
-        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+//        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+//        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
         colorPickerInternal.setValue(Color.TRANSPARENT);
         colorPickerContour.setValue(Color.BLACK);
@@ -421,8 +425,9 @@ public class WindowController implements Initializable {
      */
     @FXML
     private void lessZoomBtnOnAction(ActionEvent event) {
-        drawingPane.setScaleX(drawingPane.getScaleX() - zoomOffset);
-        drawingPane.setScaleY(drawingPane.getScaleY() - zoomOffset);
+        drawingPane.getTransforms().remove(drawingPane.getTransforms().size()-1);
+        drawingPane.setPrefHeight(queue.removeLast());
+        drawingPane.setPrefWidth(queue.removeLast());
         zoomLevel.set((int)zoomLevel.getValue() - 1);
     }
 
@@ -434,8 +439,16 @@ public class WindowController implements Initializable {
      */
     @FXML
     private void moreZoomBtnOnAction(ActionEvent event) {
-        drawingPane.setScaleX(drawingPane.getScaleX() + zoomOffset);
-        drawingPane.setScaleY(drawingPane.getScaleY() + zoomOffset);
+        Scale newScale = new Scale();
+        newScale.setX(drawingPane.getScaleX() + zoomOffset);
+        newScale.setY(drawingPane.getScaleY() + zoomOffset);
+        newScale.setPivotX(drawingPane.getScaleX());
+        newScale.setPivotY(drawingPane.getScaleY());
+        drawingPane.getTransforms().add(newScale);
+        queue.add(drawingPane.getPrefWidth());
+        queue.add(drawingPane.getPrefHeight());
+        drawingPane.setPrefWidth(drawingPane.getPrefWidth() + drawingPane.getPrefWidth()*zoomOffset);
+        drawingPane.setPrefHeight(drawingPane.getPrefHeight() + drawingPane.getPrefHeight()*zoomOffset);
         zoomLevel.set((int)zoomLevel.getValue() + 1);
     }
 
@@ -460,5 +473,9 @@ public class WindowController implements Initializable {
         action = new ToBackAction(selectedInsertedShape.get(0),drawingPane.getChildren());
         invoker.execute(action, event);
         action = new MoveAction(selectedInsertedShape, listInsertedShapes);
+    }
+
+    @FXML
+    private void RotateButtonOnClick(ActionEvent event) {
     }
 }

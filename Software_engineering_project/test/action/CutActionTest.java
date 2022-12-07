@@ -1,6 +1,7 @@
 package action;
 
 import exceptions.NotCloseContourException;
+import exceptions.NotExecutedActionException;
 import exceptions.NotShapeToCutException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -39,6 +40,7 @@ public class CutActionTest {
 
     /**
      * Test of execute method, of class CutAction.
+     * @throws java.lang.Exception
      */
     @Test
     public void testExecute() throws Exception {
@@ -75,7 +77,14 @@ public class CutActionTest {
         System.out.println("Passed");
     }
     
-    public void testUndo() throws Exception {
+    /**
+     * Test of undo method, of class CutAction.
+     * @throws exceptions.NotExecutedActionException
+     * @throws exceptions.NotShapeToCutException
+     * @throws java.lang.Exception
+     */
+    @Test(expected=NotExecutedActionException.class)
+    public void testUndo() throws NotExecutedActionException, NotShapeToCutException, Exception {
         System.out.println("undo: ");
         
         Event event = null;
@@ -87,47 +96,49 @@ public class CutActionTest {
         assertEquals(listInsertedShapes.isEmpty(), false);
         assertEquals(listInsertedShapes.contains(rectangleShape), true);
         
-        listInsertedShapes.add(rectangleShape);
         listInsertedShapes.add(ellipseShape);
         listInsertedShapes.add(lineShape);
         
-        instance = new CutAction(clipboard, listInsertedShapes, rectangleShape);
-        instance.execute(event);
-        assertEquals(listInsertedShapes.isEmpty(), false);
-        assertEquals(listInsertedShapes.contains(ellipseShape), true);
-        assertEquals(listInsertedShapes.contains(lineShape), true);
-        
-        instance = new CutAction(clipboard, listInsertedShapes, ellipseShape);
-        instance.execute(event);
+        Action instance1 = new CutAction(clipboard, listInsertedShapes, rectangleShape);
+        instance1.execute(event);
         assertEquals(listInsertedShapes.isEmpty(), false);
         assertEquals(listInsertedShapes.contains(rectangleShape), false);
         assertEquals(listInsertedShapes.contains(ellipseShape), true);
         assertEquals(listInsertedShapes.contains(lineShape), true);
         
-        instance = new CutAction(clipboard, listInsertedShapes, lineShape);
-        instance.execute(event);
+        Action instance2 = new CutAction(clipboard, listInsertedShapes, ellipseShape);
+        instance2.execute(event);
+        assertEquals(listInsertedShapes.isEmpty(), false);
+        assertEquals(listInsertedShapes.contains(rectangleShape), false);
+        assertEquals(listInsertedShapes.contains(ellipseShape), false);
+        assertEquals(listInsertedShapes.contains(lineShape), true);
+        
+        Action instance3 = new CutAction(clipboard, listInsertedShapes, lineShape);
+        instance3.execute(event);
         assertEquals(listInsertedShapes.isEmpty(), true);
         assertEquals(listInsertedShapes.contains(rectangleShape), false);
         assertEquals(listInsertedShapes.contains(ellipseShape), false);
         assertEquals(listInsertedShapes.contains(lineShape), false);
         
-        instance.undo();
+        instance1.undo();
         assertEquals(listInsertedShapes.isEmpty(), false);
-        assertEquals(listInsertedShapes.contains(rectangleShape), false);
+        assertEquals(listInsertedShapes.contains(rectangleShape), true);
         assertEquals(listInsertedShapes.contains(ellipseShape), false);
-        assertEquals(listInsertedShapes.contains(lineShape), true);
+        assertEquals(listInsertedShapes.contains(lineShape), false);
         
-        instance.undo();
+        instance2.undo();
         assertEquals(listInsertedShapes.isEmpty(), false);
-        assertEquals(listInsertedShapes.contains(rectangleShape), false);
+        assertEquals(listInsertedShapes.contains(rectangleShape), true);
         assertEquals(listInsertedShapes.contains(ellipseShape), true);
-        assertEquals(listInsertedShapes.contains(lineShape), true);
+        assertEquals(listInsertedShapes.contains(lineShape), false);
         
-        instance.undo();
+        instance3.undo();
         assertEquals(listInsertedShapes.isEmpty(), false);
         assertEquals(listInsertedShapes.contains(rectangleShape), true);
         assertEquals(listInsertedShapes.contains(ellipseShape), true);
         assertEquals(listInsertedShapes.contains(lineShape), true);
+        
+        instance1.undo();
         
         System.out.println("Passed");
     }

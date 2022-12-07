@@ -64,6 +64,7 @@ public class CopyAction implements Action {
 
     /**
      * Undoes the action
+     * @throws exceptions.NotExecutedActionException
      */
     @Override
     public void undo() throws NotExecutedActionException {
@@ -71,6 +72,7 @@ public class CopyAction implements Action {
             throw new NotExecutedActionException();
 
         clipboard.setContent(lastContent);
+        hasNotBeenExecuted=true;
     }
 
 }

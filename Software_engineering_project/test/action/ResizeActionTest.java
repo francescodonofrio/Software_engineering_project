@@ -123,7 +123,7 @@ public class ResizeActionTest {
      * @throws exceptions.ShapeNullException
      * @throws exceptions.NotExecutedActionException
      */
-    @Test
+    @Test(expected=NotExecutedActionException.class)
     public void testUndo() throws ShapeNullException, NotExecutedActionException {
         System.out.print("undo: ");
 
@@ -177,6 +177,27 @@ public class ResizeActionTest {
         assertEquals(line.getEndY(), endY, 0.8);
         assertEquals(line.getLayoutX(), layoutXLine, 0.1);
         assertEquals(line.getLayoutY(), layoutYLine, 0.1);
+        
+        action.undo();
+
+        System.out.println("Passed");
+    }
+    
+    /**
+     * Test of undo method, of class ResizeAction.
+     *
+     *
+     * @throws exceptions.ShapeNullException
+     * @throws exceptions.NotExecutedActionException
+     */
+    @Test(expected=ShapeNullException.class)
+    public void testUndoShapeNull() throws ShapeNullException, NotExecutedActionException {
+        System.out.print("undo: ");
+
+        event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 100, 150, 10, 25, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+        
+        action = new ResizeAction(null);
+        action.execute(event);
 
         System.out.println("Passed");
     }

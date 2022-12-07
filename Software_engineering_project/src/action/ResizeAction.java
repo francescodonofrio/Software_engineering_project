@@ -69,6 +69,7 @@ public class ResizeAction implements Action {
 
     /**
      * Undoes the action
+     * @throws exceptions.NotExecutedActionException
      */
     @Override
     public void undo() throws NotExecutedActionException {
@@ -77,6 +78,7 @@ public class ResizeAction implements Action {
         selectedShape.setX(initialX);
         selectedShape.setY(initialY);
         selectedShape.setDim(initialX, initialY, previousFinalX, previousFinalY);
+        hasNotBeenExecuted=true;
     }
 
 }

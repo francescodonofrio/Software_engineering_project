@@ -70,6 +70,7 @@ public class ChangeContourColorActionTest {
     /**
      * Test of undo method, of class ChangeContourColorAction.
      * 
+     * @throws java.lang.Exception
      */
     @Test(expected =NoActionsException.class)
     public void testUndo() throws Exception  {
@@ -83,12 +84,8 @@ public class ChangeContourColorActionTest {
         contourColorUndo.set(Color.BURLYWOOD);
         
         action = new ChangeContourColorAction(rectangleShape, contourColorUndo);
-        action.execute(event);
-        
         Invoker invoker=new Invoker();
-        
         invoker.execute(action, event);      
-        
         invoker.undo();
         
         assertEquals(startColor.getGreen(),rectangleShape.getCountourColor().getGreen(),0.1);

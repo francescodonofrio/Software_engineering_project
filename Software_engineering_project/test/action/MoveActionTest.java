@@ -1,13 +1,11 @@
-/*
- */
 package action;
 
 import exceptions.NoActionsException;
+import exceptions.NotExecutedActionException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import org.junit.Before;
@@ -15,12 +13,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import shapes.RectangleShape;
 import shapes.ShapeInterface;
-import shapes.util.Clipboard;
 
-/**
- *
- * @author Paolo
- */
 public class MoveActionTest {
     private ShapeInterface rectangleShape;
     private MouseEvent event;
@@ -88,6 +81,7 @@ public class MoveActionTest {
 
     /**
      * Test of onMouseReleased method, of class MoveAction.
+     * @throws java.lang.Exception
      */
     @Test
     public void testOnMouseReleased() throws Exception {
@@ -109,9 +103,10 @@ public class MoveActionTest {
 
     /**
      * Test of undo method, of class MoveAction.
+     * @throws exceptions.NoActionsException
      */
     @Test(expected =NoActionsException.class)
-    public void testUndo() throws NoActionsException {
+    public void testUndo() throws NoActionsException, NotExecutedActionException {
         System.out.print("execute: ");
         
         double startX=rectangle.getLayoutX(),
@@ -127,7 +122,7 @@ public class MoveActionTest {
         assertEquals(startX,rectangle.getLayoutX(),0.1);
         assertEquals(startY,rectangle.getLayoutY(),0.1);
         
-                invoker.undo();
+        invoker.undo();
 
         System.out.println("Passed");
     }

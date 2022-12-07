@@ -62,12 +62,14 @@ public class PasteAction implements Action {
 
     /**
      * Undoes the action
+     * @throws exceptions.NotExecutedActionException
      */
     @Override
     public void undo() throws NotExecutedActionException {
         if(hasNotBeenExecuted)
             throw new NotExecutedActionException();
         listInsertedShapes.remove(shapeToPaste);
+        hasNotBeenExecuted=true;
     }
 
 }

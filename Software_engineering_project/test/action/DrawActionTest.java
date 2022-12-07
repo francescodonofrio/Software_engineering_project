@@ -1,5 +1,6 @@
 package action;
 
+import exceptions.NotExecutedActionException;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -178,9 +179,15 @@ public class DrawActionTest {
         System.out.println("Passed");
     }
     
-    public void testUndo() {
+    /**
+     * Test of undo method, of class DrawAction.
+     * @throws exceptions.NotExecutedActionException
+     */
+    @Test(expected = NotExecutedActionException.class)
+    public void testUndo() throws NotExecutedActionException {
         System.out.print("undo: ");
-        
+        event = new MouseEvent(MouseEvent.MOUSE_DRAGGED, 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+
         instanceDrawActionRectangle = new DrawAction(rectangleShape, internalColorProperty, contourColorProperty, listInsertedShapes);
         instanceDrawActionRectangle.execute(event);
         
@@ -188,35 +195,46 @@ public class DrawActionTest {
         assertEquals(listInsertedShapes.isEmpty(),true);
         assertEquals(listInsertedShapes.contains(rectangleShape),false);
         
-        instanceDrawActionRectangle = new DrawAction(ellipseShape, internalColorProperty, contourColorProperty, listInsertedShapes);
-        instanceDrawActionRectangle.execute(event);
+        instanceDrawActionEllipse = new DrawAction(ellipseShape, internalColorProperty, contourColorProperty, listInsertedShapes);
+        instanceDrawActionEllipse.execute(event);
         
-        instanceDrawActionRectangle.undo();
+        instanceDrawActionEllipse.undo();
         assertEquals(listInsertedShapes.isEmpty(),true);
         assertEquals(listInsertedShapes.contains(ellipseShape),false);
         
-        instanceDrawActionRectangle = new DrawAction(lineShape, internalColorProperty, contourColorProperty, listInsertedShapes);
-        instanceDrawActionRectangle.execute(event);
+        instanceDrawActionLine = new DrawAction(lineShape, internalColorProperty, contourColorProperty, listInsertedShapes);
+        instanceDrawActionLine.execute(event);
         
-        instanceDrawActionRectangle.undo();
+        instanceDrawActionLine.undo();
         assertEquals(listInsertedShapes.isEmpty(),true);
         assertEquals(listInsertedShapes.contains(lineShape),false);
         
         instanceDrawActionRectangle = new DrawAction(rectangleShape, internalColorProperty, contourColorProperty, listInsertedShapes);
         instanceDrawActionRectangle.execute(event);
-        instanceDrawActionRectangle = new DrawAction(ellipseShape, internalColorProperty, contourColorProperty, listInsertedShapes);
-        instanceDrawActionRectangle.execute(event);
-        instanceDrawActionRectangle = new DrawAction(lineShape, internalColorProperty, contourColorProperty, listInsertedShapes);
-        instanceDrawActionRectangle.execute(event);
+        instanceDrawActionEllipse = new DrawAction(ellipseShape, internalColorProperty, contourColorProperty, listInsertedShapes);
+        instanceDrawActionEllipse.execute(event);
+        instanceDrawActionLine = new DrawAction(lineShape, internalColorProperty, contourColorProperty, listInsertedShapes);
+        instanceDrawActionLine.execute(event);
         
-        
+        instanceDrawActionRectangle.undo();
         assertEquals(listInsertedShapes.isEmpty(),false);
         assertEquals(listInsertedShapes.contains(rectangleShape),false);
+        assertEquals(listInsertedShapes.contains(ellipseShape),true);
+        assertEquals(listInsertedShapes.contains(lineShape),true);
+        
+        instanceDrawActionEllipse.undo();
         assertEquals(listInsertedShapes.isEmpty(),false);
+        assertEquals(listInsertedShapes.contains(rectangleShape),false);
         assertEquals(listInsertedShapes.contains(ellipseShape),false);
+        assertEquals(listInsertedShapes.contains(lineShape),true);
+        
+        instanceDrawActionLine.undo();
         assertEquals(listInsertedShapes.isEmpty(),true);
+        assertEquals(listInsertedShapes.contains(rectangleShape),false);
+        assertEquals(listInsertedShapes.contains(ellipseShape),false);
         assertEquals(listInsertedShapes.contains(lineShape),false);
         
+        instanceDrawActionLine.undo();
         
         System.out.println("Passed");
     }

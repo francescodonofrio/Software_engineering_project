@@ -57,6 +57,7 @@ public class CutAction implements Action {
         if(hasNotBeenExecuted)
             throw new NotExecutedActionException();
         listInsertedShapes.add(shapeToCut);
+        hasNotBeenExecuted=true;
     }
     
     

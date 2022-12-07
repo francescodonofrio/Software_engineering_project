@@ -1,5 +1,6 @@
 package action;
 
+import exceptions.NotExecutedActionException;
 import javafx.event.ActionEvent;
 import javafx.scene.layout.Pane;
 import static org.junit.Assert.assertEquals;
@@ -39,6 +40,7 @@ public class ToBackActionTest {
     
     /**
      * Test of execute method, of class ToBakAction.
+     * @throws java.lang.Exception
      */
     @Test
     public void testExecute() throws Exception {
@@ -54,9 +56,10 @@ public class ToBackActionTest {
     
     /**
      * Test of undo method, of class ToBackAction.
+     * @throws exceptions.NotExecutedActionException
      */
-    @Test
-    public void testUndo() throws Exception {
+    @Test(expected=NotExecutedActionException.class)
+    public void testUndo() throws NotExecutedActionException, Exception  {
         System.out.print("execute");
         
         action = new ToBackAction(rectangleShape,drawingPane.getChildren());
@@ -66,6 +69,8 @@ public class ToBackActionTest {
         
         assertEquals(drawingPane.getChildren().indexOf(rectangleShape.getShape()),startPositionRectangle);
         assertEquals(drawingPane.getChildren().indexOf(ellipseShape.getShape()),startPositionEllipse);
+        
+        action.undo();
         
         System.out.println("Passed");
     }
