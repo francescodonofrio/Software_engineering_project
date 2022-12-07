@@ -29,6 +29,7 @@ import shapes.util.ShapesIO;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayDeque;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -84,6 +85,7 @@ public class WindowController implements Initializable {
     private MouseEvent rightClickPane;
     private final double zoomOffset = 0.2;
     private SimpleObjectProperty zoomLevel;
+    private ArrayDeque<Double> queue;
 
     // DA TOGLIERE APPENA VIENE AGGIORNATA L'INTERFACCIA @VINZ
     private GridPane gridPane=new GridPane();
@@ -98,6 +100,8 @@ public class WindowController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        queue = new ArrayDeque<>();
 
         invoker = new Invoker();
         undoBtn.disableProperty().bind(invoker.emptyQueueProperty());
@@ -410,20 +414,10 @@ public class WindowController implements Initializable {
      */
     @FXML
     private void lessZoomBtnOnAction(ActionEvent event) {
-        Scale newScale = new Scale();
-        newScale.setX(drawingPane.getScaleX() - zoomOffset);
-        newScale.setY(drawingPane.getScaleY() - zoomOffset);
-        newScale.setPivotX(drawingPane.getScaleX());
-        newScale.setPivotY(drawingPane.getScaleY());
-        drawingPane.getTransforms().add(newScale);
-        
-//        drawingPane.setScaleX(drawingPane.getScaleX() - zoomOffset);
-//        drawingPane.setScaleY(drawingPane.getScaleY() - zoomOffset);
-//        drawingPane.setTranslateX(zoomOffset);
-//        drawingPane.setTranslateY(zoomOffset);
+        drawingPane.getTransforms().remove(drawingPane.getTransforms().size()-1);
+        drawingPane.setPrefHeight(queue.removeLast());
+        drawingPane.setPrefWidth(queue.removeLast());
         zoomLevel.set((int)zoomLevel.getValue() - 1);
-        scrollPane.setHmax(scrollPane.getHmax() - (scrollPane.getHmax())/0.2);
-        scrollPane.setVmax(scrollPane.getVmax() - (scrollPane.getVmax())/0.2);
     }
 
     /**
@@ -440,14 +434,11 @@ public class WindowController implements Initializable {
         newScale.setPivotX(drawingPane.getScaleX());
         newScale.setPivotY(drawingPane.getScaleY());
         drawingPane.getTransforms().add(newScale);
-
-//        drawingPane.setScaleX(drawingPane.getScaleX() + zoomOffset);
-//        drawingPane.setScaleY(drawingPane.getScaleY() + zoomOffset);
-//        drawingPane.setTranslateX(zoomOffset*2);
-//        drawingPane.setTranslateY(zoomOffset*2);
+        queue.add(drawingPane.getPrefWidth());
+        queue.add(drawingPane.getPrefHeight());
+        drawingPane.setPrefWidth(drawingPane.getPrefWidth() + drawingPane.getPrefWidth()*zoomOffset);
+        drawingPane.setPrefHeight(drawingPane.getPrefHeight() + drawingPane.getPrefHeight()*zoomOffset);
         zoomLevel.set((int)zoomLevel.getValue() + 1);
-        scrollPane.setHmax(scrollPane.getHmax() + (scrollPane.getHmax())*0.2);
-        scrollPane.setVmax(scrollPane.getVmax() + (scrollPane.getVmax())*0.2);
     }
 
     /**
