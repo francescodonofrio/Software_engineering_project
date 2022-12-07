@@ -240,7 +240,10 @@ public class WindowController implements Initializable {
      */
     @FXML
     private void drawingWindowOnMouseReleased(MouseEvent event) {
-        invoker.executeOnMouseReleased(action, event);
+        if(event.getButton()==MouseButton.SECONDARY)
+            rightClickPane = event;
+        else
+            invoker.executeOnMouseReleased(action, event);
 
         // Here we reset the default action to move action
         action = new MoveAction(selectedInsertedShape, listInsertedShapes);
@@ -253,7 +256,10 @@ public class WindowController implements Initializable {
      */
     @FXML
     private void drawingWindowOnMouseDragged(MouseEvent event) {
-        invoker.executeOnMouseDragged(action, event);
+        if(event.getButton()==MouseButton.SECONDARY)
+            rightClickPane = event;
+        else
+            invoker.executeOnMouseDragged(action, event);
     }
 
     /**
