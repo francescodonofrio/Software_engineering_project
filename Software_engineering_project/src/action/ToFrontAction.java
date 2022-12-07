@@ -1,5 +1,6 @@
 
 package action;
+import exceptions.NotExecutedActionException;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.scene.Node;
@@ -11,6 +12,7 @@ public class ToFrontAction implements Action {
      private final Shape shapeToFront;
      private ObservableList<Node> listInsertedShapes;
      private int initialPosition;
+     private boolean hasNotBeenExecuted;
      
      /**
      * Returns a new instance of ToFrontAction
@@ -20,6 +22,7 @@ public class ToFrontAction implements Action {
     public ToFrontAction(ShapeInterface selectedShape,ObservableList<Node> listInsertedShapes) {
         this.shapeToFront = selectedShape.getShape();
         this.listInsertedShapes=listInsertedShapes;
+        this.hasNotBeenExecuted = true;
     }
     
     /**
@@ -31,6 +34,7 @@ public class ToFrontAction implements Action {
     public void execute(Event event) throws Exception {
         initialPosition = listInsertedShapes.indexOf(shapeToFront);
         shapeToFront.toFront();
+        this.hasNotBeenExecuted = false;
     }
 
     @Override
@@ -43,11 +47,15 @@ public class ToFrontAction implements Action {
 
     /**
      * Undoes the action
+     * @throws exceptions.NotExecutedActionException
      */
     @Override
-    public void undo() {
+    public void undo() throws NotExecutedActionException{
+        if(hasNotBeenExecuted)
+            throw new NotExecutedActionException();
         listInsertedShapes.remove(shapeToFront);
         listInsertedShapes.add(initialPosition, shapeToFront);
+        this.hasNotBeenExecuted = true;
 
     }
     

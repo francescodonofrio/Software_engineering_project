@@ -99,11 +99,13 @@ public class MoveAction implements Action {
 
     /**
      * Undoes the action
+     * @throws exceptions.NotExecutedActionException
      */
     @Override
     public void undo() throws NotExecutedActionException {
         if(hasNotBeenExecuted)
             throw new NotExecutedActionException();
         movedShape.move(initialX,initialY);
+        hasNotBeenExecuted=true;
     }
 }

@@ -1,5 +1,6 @@
 package action;
 
+import exceptions.NotExecutedActionException;
 import javafx.event.ActionEvent;
 import javafx.scene.layout.Pane;
 import static org.junit.Assert.assertEquals;
@@ -39,6 +40,7 @@ public class ToFrontActionTest {
     
     /**
      * Test of execute method, of class ToFrontAction.
+     * @throws java.lang.Exception
      */
     @Test
     public void testExecute() throws Exception {
@@ -54,9 +56,11 @@ public class ToFrontActionTest {
     
     /**
      * Test of undo method, of class ToFrontAction.
+     * @throws java.lang.Exception
+     * @throws exceptions.NotExecutedActionException
      */
-    @Test
-    public void testUndo() throws Exception {
+    @Test(expected=NotExecutedActionException.class)
+    public void testUndo() throws Exception, NotExecutedActionException{
         System.out.print("execute");
         
         action = new ToFrontAction(rectangleShape,drawingPane.getChildren());
@@ -66,6 +70,8 @@ public class ToFrontActionTest {
         
         assertEquals(drawingPane.getChildren().indexOf(rectangleShape.getShape()),startPositionRectangle);
         assertEquals(drawingPane.getChildren().indexOf(ellipseShape.getShape()),startPositionEllipse);
+        
+        action.undo();
         
         System.out.println("Passed");
     }

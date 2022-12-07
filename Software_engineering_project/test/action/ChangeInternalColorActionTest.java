@@ -1,6 +1,6 @@
 package action;
 
-import exceptions.NotCloseContourException;
+import exceptions.NotExecutedActionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -88,9 +88,10 @@ public class ChangeInternalColorActionTest {
 
     /**
      * Test of undo method, of class ChangeInternalColorAction.
+     * @throws exceptions.NotExecutedActionException
      */
-    @Test
-    public void testUndo() {
+    @Test(expected=NotExecutedActionException.class)
+    public void testUndo() throws NotExecutedActionException {
         System.out.print("undo: ");
         
         Ellipse ellipse = (Ellipse) ellipseShape.getShape();
@@ -106,6 +107,8 @@ public class ChangeInternalColorActionTest {
         action.undo();
         
         assertEquals(Color.RED,ellipse.getFill());
+        
+        action.undo();
         
         System.out.println("Passed");
     }

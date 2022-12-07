@@ -1,31 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4TestClass.java to edit this template
- */
 package action;
 
 import exceptions.NotCloseContourException;
+import exceptions.NotExecutedActionException;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import shapes.RectangleShape;
 import shapes.ShapeInterface;
 import shapes.util.Clipboard;
 
-/**
- *
- * @author vince
- */
 public class PasteActionTest {
     
     private final Clipboard clipboard;
@@ -93,8 +83,13 @@ public class PasteActionTest {
         System.out.println("Passed");
     }
     
-    @Test
-    public void undo()throws Exception{
+    /**
+     * Test of undo method, of class PasteAction.
+     * @throws exceptions.NotExecutedActionException
+     * @throws java.lang.Exception
+     */
+    @Test(expected=NotExecutedActionException.class)
+    public void undo() throws NotExecutedActionException, Exception{
         System.out.print("undo: ");
         event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
         int initialSize=drawingPane.getChildren().size();
@@ -111,6 +106,8 @@ public class PasteActionTest {
         
         instance.undo();
         assertEquals(drawingPane.getChildren().size(),initialSize+1);
+        
+        instance.undo();
         
         System.out.println("Passed");
     }

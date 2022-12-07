@@ -1,10 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4TestClass.java to edit this template
- */
 package action;
 
 import exceptions.NotCloseContourException;
+import exceptions.NotExecutedActionException;
+import exceptions.NotShapeToCopyException;
 import javafx.event.Event;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -31,6 +29,7 @@ public class CopyActionTest {
 
     /**
      * Test of execute method, of class CopyAction.
+     * @throws java.lang.Exception
      */
     @Test
     public void testExecute() throws Exception {
@@ -65,9 +64,11 @@ public class CopyActionTest {
 
     /**
      * Test of undo method, of class CopyAction.
+     * @throws exceptions.NotShapeToCopyException
+     * @throws exceptions.NotExecutedActionException
      */
-    @Test
-    public void testUndo() throws Exception {
+    @Test(expected=NotExecutedActionException.class)
+    public void testUndo() throws NotShapeToCopyException, NotExecutedActionException, Exception  {
         System.out.print("undo: ");
         Event event = null;
         CopyAction instance;
@@ -88,6 +89,9 @@ public class CopyActionTest {
         instance.execute(event);
 
         assertNotEquals(!oldValue,clipboard.hasContent().get());
+        
+        instance.undo();
+        instance.undo();
 
         System.out.println("Passed");
     }

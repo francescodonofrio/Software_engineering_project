@@ -1,5 +1,6 @@
 
 package action;
+import exceptions.NotExecutedActionException;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.scene.Node;
@@ -11,6 +12,7 @@ public class ToBackAction implements Action {
      private final Shape shapeToBack;
      private ObservableList<Node> listInsertedShapes;
      private int initialPosition;
+     private boolean hasNotBeenExecuted;
      
      /**
      * Returns a new instance of ToBackAction
@@ -20,6 +22,7 @@ public class ToBackAction implements Action {
     public ToBackAction(ShapeInterface selectedShape,ObservableList<Node> listInsertedShapes) {
         this.shapeToBack = selectedShape.getShape();
         this.listInsertedShapes=listInsertedShapes;
+        this.hasNotBeenExecuted=true;
     }
     
     /**
@@ -31,6 +34,7 @@ public class ToBackAction implements Action {
     public void execute(Event event) throws Exception {
         initialPosition = listInsertedShapes.indexOf(shapeToBack);
         shapeToBack.toBack();
+        this.hasNotBeenExecuted=false;
     }
 
     @Override
@@ -43,11 +47,15 @@ public class ToBackAction implements Action {
 
     /**
      * Undoes the action
+     * @throws exceptions.NotExecutedActionException
      */
     @Override
-    public void undo() {
+    public void undo() throws NotExecutedActionException{
+        if(hasNotBeenExecuted)
+            throw new NotExecutedActionException();
         listInsertedShapes.remove(shapeToBack);
         listInsertedShapes.add(initialPosition, shapeToBack);
+        this.hasNotBeenExecuted=true;
     }
     
 }

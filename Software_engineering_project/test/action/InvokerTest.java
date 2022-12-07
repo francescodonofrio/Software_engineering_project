@@ -1,6 +1,7 @@
 package action;
 
 import exceptions.NoActionsException;
+import exceptions.NotExecutedActionException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -139,9 +140,11 @@ public class InvokerTest {
 
     /**
      * Test of undo method, of class Invoker.
+     * @throws exceptions.NoActionsException
+     * @throws exceptions.NotExecutedActionException
      */
     @Test
-    public void testUndo() throws NoActionsException{
+    public void testUndo() throws NoActionsException, NotExecutedActionException{
         System.out.print("Test undo: ");
         event = new MouseEvent(MouseEvent.MOUSE_DRAGGED, 180, 200, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
 
@@ -151,8 +154,7 @@ public class InvokerTest {
         
         assertEquals(test.size(), 5);
 
-        invoker.undo();
-        
+        invoker.undo();        
         
         assertEquals(test.size(), 0);
         
@@ -161,9 +163,10 @@ public class InvokerTest {
 
     /**
      * Test of emptyQueueProperty method, of class Invoker.
+     * @throws exceptions.NoActionsException
      */
     @Test(expected=NoActionsException.class)
-    public void testEmptyQueueProperty() throws NoActionsException {
+    public void testEmptyQueueProperty() throws NoActionsException, NotExecutedActionException {
         System.out.println("Test emptyQueueProperty: ");
         event = new MouseEvent(MouseEvent.MOUSE_DRAGGED, 180, 200, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
 

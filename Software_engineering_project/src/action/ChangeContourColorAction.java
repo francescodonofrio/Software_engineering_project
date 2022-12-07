@@ -57,6 +57,7 @@ public class ChangeContourColorAction implements Action {
 
     /**
      * Undoes the action
+     * @throws exceptions.NotExecutedActionException
      */
     @Override
     public void undo() throws NotExecutedActionException {
@@ -64,6 +65,7 @@ public class ChangeContourColorAction implements Action {
             throw new NotExecutedActionException();
 
         shape.setContourColor(oldColor);
+        this.hasNotBeenExecuted=true;
     }
 }
 
