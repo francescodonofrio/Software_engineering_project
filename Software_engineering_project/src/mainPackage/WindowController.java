@@ -202,6 +202,17 @@ public class WindowController implements Initializable {
     }
 
     /**
+     * Called when the polygon button is clicked
+     *
+     * @param event the event of the click
+     */
+    @FXML
+    private void polygonSelection(ActionEvent event) {
+        //selectedShape = new EllipseShape();
+        //action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes);
+    }
+
+    /**
      * Called when the save button is being clicked
      *
      * @param event the event of the click
