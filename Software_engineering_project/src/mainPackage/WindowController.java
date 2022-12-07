@@ -5,6 +5,7 @@ import exceptions.NoActionsException;
 import exceptions.NotExecutedActionException;
 import exceptions.NotShapeToCopyException;
 import exceptions.NotShapeToCutException;
+import exceptions.ShapeNullException;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -276,11 +277,18 @@ public class WindowController implements Initializable {
     }
 
     /**
-     * @param actionEvent
+     * Called when the MenuItem Resize id being clicked
+     * 
+     * @param actionEvent the event of the click
      */
     @FXML
     public void resizeButtonOnClick(ActionEvent actionEvent) {
-        action = new ResizeAction(selectedInsertedShape.get(0));
+        try {
+            action = new ResizeAction(selectedInsertedShape.get(0));
+        } catch (ShapeNullException ex) {
+            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
+            action = new MoveAction(selectedInsertedShape, listInsertedShapes);
+        }
     }
     
     /**
@@ -431,20 +439,15 @@ public class WindowController implements Initializable {
 
     @FXML
     private void toFrontOnClick(ActionEvent event) {
-        if (!selectedInsertedShape.isEmpty()) {
-            action = new ToFrontAction(selectedInsertedShape.get(0),drawingPane.getChildren());
-            invoker.execute(action, event);
-            action = new MoveAction(selectedInsertedShape, listInsertedShapes);
-        }
-
+        action = new ToFrontAction(selectedInsertedShape.get(0),drawingPane.getChildren());
+        invoker.execute(action, event);
+        action = new MoveAction(selectedInsertedShape, listInsertedShapes);
     }
 
     @FXML
     private void toBackOnClick(ActionEvent event) {
-        if (!selectedInsertedShape.isEmpty()) {
-            action = new ToBackAction(selectedInsertedShape.get(0),drawingPane.getChildren());
-            invoker.execute(action, event);
-            action = new MoveAction(selectedInsertedShape, listInsertedShapes);
-        }
+        action = new ToBackAction(selectedInsertedShape.get(0),drawingPane.getChildren());
+        invoker.execute(action, event);
+        action = new MoveAction(selectedInsertedShape, listInsertedShapes);
     }
 }
