@@ -1,6 +1,8 @@
 package action;
 
+import exceptions.NotExecutedActionException;
 import exceptions.NotResizedException;
+import exceptions.ShapeNullException;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Ellipse;
@@ -35,9 +37,10 @@ public class ResizeActionTest {
 
     /**
      * Test of execute method, of class ResizeAction.
+     * @throws exceptions.ShapeNullException
      */
-    @Test
-    public void testExecute() {
+    @Test(expected = ShapeNullException.class)
+    public void testExecute() throws ShapeNullException {
         System.out.print("execute: ");
 
         event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
@@ -59,15 +62,18 @@ public class ResizeActionTest {
         Line line = (Line) lineShape.getShape();
         assertEquals(line.getEndX(), event.getX(), 0.1);
         assertEquals(line.getEndY(), event.getY(), 0.1);
+        
+        action = new ResizeAction(null);
 
         System.out.println("Passed");
     }
 
     /**
      * Test of onMouseDragged method, of class ResizeAction.
+     * @throws exceptions.ShapeNullException
      */
     @Test
-    public void testOnMouseDragged() {
+    public void testOnMouseDragged() throws ShapeNullException {
         System.out.print("onMouseDragged: ");
 
         event = new MouseEvent(MouseEvent.MOUSE_DRAGGED, 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
@@ -114,9 +120,11 @@ public class ResizeActionTest {
      * Test of undo method, of class ResizeAction.
      *
      *
+     * @throws exceptions.ShapeNullException
+     * @throws exceptions.NotExecutedActionException
      */
     @Test
-    public void testUndo() {
+    public void testUndo() throws ShapeNullException, NotExecutedActionException {
         System.out.print("undo: ");
 
         event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 100, 150, 10, 25, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);

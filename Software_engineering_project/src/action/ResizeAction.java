@@ -2,6 +2,7 @@ package action;
 
 import exceptions.NotExecutedActionException;
 import exceptions.NotResizedException;
+import exceptions.ShapeNullException;
 import javafx.event.Event;
 import javafx.scene.input.MouseEvent;
 import shapes.ShapeInterface;
@@ -15,9 +16,13 @@ public class ResizeAction implements Action {
      * Returns a new instance of ResizeAction
      *
      * @param selectedShape the shape to be resized
+     * @throws exceptions.ShapeNullException
      */
-    public ResizeAction(ShapeInterface selectedShape) {
-        this.selectedShape = selectedShape;
+    public ResizeAction(ShapeInterface selectedShape) throws ShapeNullException {
+        if (selectedShape == null)
+            throw new ShapeNullException();
+        else
+            this.selectedShape = selectedShape;
         this.hasNotBeenExecuted=true;
     }
 
