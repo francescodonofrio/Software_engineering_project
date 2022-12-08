@@ -76,9 +76,8 @@ public class Invoker {
 
         try {
             Action a = this.actions.pop();
-            System.out.println(a);
             a.undo();
-        } catch (Exception ex) {
+        } catch (NotExecutedActionException ex) {
             System.out.println(ex);
         }
         if (this.actions.isEmpty())
