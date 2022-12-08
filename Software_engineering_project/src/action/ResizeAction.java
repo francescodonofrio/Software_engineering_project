@@ -34,8 +34,7 @@ public class ResizeAction implements Action {
     @Override
     public void execute(Event event) {
         initialX = selectedShape.getShape().getLayoutX();
-        initialY = selectedShape.getShape().getLayoutY();
-        
+        initialY = selectedShape.getShape().getLayoutY();  
         previousFinalX = selectedShape.getShape().getBoundsInParent().getMaxX();
         previousFinalY = selectedShape.getShape().getBoundsInParent().getMaxY();
         this.onMouseDragged(event);
