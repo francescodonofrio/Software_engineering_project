@@ -502,9 +502,9 @@ public class WindowController implements Initializable {
         invoker.execute(action, event);
         action = new MoveAction(selectedInsertedShape, listInsertedShapes);
     }
-
+    
     @FXML
-    private void RotateButtonOnClick(ActionEvent event) {
+    private void rotateButtonOnClick(ActionEvent event) {
         try {
             action = new RotateAction(selectedInsertedShape.get(0));
             disableClick.set(false);
@@ -512,10 +512,6 @@ public class WindowController implements Initializable {
             Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
             action = new MoveAction(selectedInsertedShape, listInsertedShapes);
         }
-    }
-
-    @FXML
-    private void StretchButtonOnClick(ActionEvent event) {
     }
     
     @FXML
@@ -528,6 +524,27 @@ public class WindowController implements Initializable {
     private void gridSliderOnSwipe(SwipeEvent event) {
         if(gridSlider.getValue()>0)
             grid.resize(gridSlider.getValue());
+    }
+
+
+    @FXML
+    private void stretchButtonOnClick(ActionEvent event) {
+    }
+
+    @FXML
+    private void mirrorXButtonOnClick(ActionEvent event) {
+        ShapeInterface shapeToMirror = shapesTable.getSelectionModel().getSelectedItem();
+        this.action = new MirrorAction(shapeToMirror, true, false);
+        invoker.execute(this.action, event);
+        action = new MoveAction(selectedInsertedShape, listInsertedShapes);
+    }
+
+    @FXML
+    private void mirrorYButtonOnClick(ActionEvent event) {
+        ShapeInterface shapeToMirror = shapesTable.getSelectionModel().getSelectedItem();
+        this.action = new MirrorAction(shapeToMirror, false, true);
+        invoker.execute(this.action, event);
+        action = new MoveAction(selectedInsertedShape, listInsertedShapes);
     }
     
 }

@@ -137,13 +137,19 @@
                             <contextMenu>
                                 <ContextMenu fx:id="contextMenuTableView">
                                     <items>
-                                        <MenuItem fx:id="resizeItem" mnemonicParsing="false" onAction="#resizeButtonOnClick" text="Resize" />
+                              <MenuItem mnemonicParsing="false" onAction="#cutButtonOnClick" text="Cut" />
                                         <MenuItem mnemonicParsing="false" onAction="#copyButtonOnClick" text="Copy" />
+                                        <MenuItem fx:id="resizeItem" mnemonicParsing="false" onAction="#resizeButtonOnClick" text="Resize" />
                                         <MenuItem mnemonicParsing="false" onAction="#toFrontOnClick" text="Move to front" />
                                         <MenuItem mnemonicParsing="false" onAction="#toBackOnClick" text="Move to back" />
-                                        <MenuItem mnemonicParsing="false" onAction="#RotateButtonOnClick" text="Rotate" />
-                                        <MenuItem mnemonicParsing="false" onAction="#StretchButtonOnClick" text="Stretch" />
-                              <MenuItem mnemonicParsing="false" onAction="#cutButtonOnClick" text="Cut" />
+                                        <MenuItem mnemonicParsing="false" onAction="#rotateButtonOnClick" text="Rotate" />
+                                        <MenuItem mnemonicParsing="false" onAction="#stretchButtonOnClick" text="Stretch" />
+                              <Menu mnemonicParsing="false" text="Mirror">
+                                <items>
+                                  <MenuItem mnemonicParsing="false" onAction="#mirrorXButtonOnClick" text="Horizontally" />
+                                    <MenuItem mnemonicParsing="false" onAction="#mirrorYButtonOnClick" text="Vertically" />
+                                </items>
+                              </Menu>
                                     </items>
                                 </ContextMenu>
                             </contextMenu>
