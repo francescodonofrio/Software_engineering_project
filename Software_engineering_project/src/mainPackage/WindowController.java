@@ -107,7 +107,7 @@ public class WindowController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         queue = new ArrayDeque<>();
-
+        
         invoker = new Invoker();
         undoBtn.disableProperty().bind(invoker.emptyQueueProperty());
 
@@ -316,6 +316,7 @@ public class WindowController implements Initializable {
     public void resizeButtonOnClick(ActionEvent actionEvent) {
         try {
             action = new ResizeAction(selectedInsertedShape.get(0));
+            disableClick.set(false);
         } catch (ShapeNullException ex) {
             Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
             action = new MoveAction(selectedInsertedShape, listInsertedShapes);
@@ -502,9 +503,14 @@ public class WindowController implements Initializable {
     private void RotateButtonOnClick(ActionEvent event) {
         try {
             action = new RotateAction(selectedInsertedShape.get(0));
+            disableClick.set(false);
         } catch (ShapeNullException ex) {
             Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
             action = new MoveAction(selectedInsertedShape, listInsertedShapes);
         }
+    }
+
+    @FXML
+    private void StretchButtonOnClick(ActionEvent event) {
     }
 }
