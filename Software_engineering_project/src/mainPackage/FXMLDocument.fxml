@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckMenuItem?>
 <?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Label?>
@@ -10,13 +11,13 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-
 
 <AnchorPane id="AnchorPane" minHeight="500.0" minWidth="800.0" prefHeight="542.0" prefWidth="863.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainPackage.WindowController">
     <children>
@@ -32,7 +33,11 @@
                         </Menu>
                   <Menu mnemonicParsing="false" text="View">
                      <items>
-                        <MenuItem mnemonicParsing="false" onAction="#toggleGrid" text="Toggle grid" />
+                        <CheckMenuItem fx:id="gridCheckItem" mnemonicParsing="false" onAction="#toggleGrid" text="Grid">
+                           <graphic>
+                              <Slider fx:id="gridSlider" blockIncrement="0.1" majorTickUnit="0.5" max="2.0" minorTickCount="1" onMouseClicked="#gridSliderOnMouse" onMouseDragged="#gridSliderOnMouse" onMousePressed="#gridSliderOnMouse" onMouseReleased="#gridSliderOnMouse" onSwipeLeft="#gridSliderOnSwipe" onSwipeRight="#gridSliderOnSwipe" showTickLabels="true" snapToTicks="true" value="1.0" />
+                           </graphic>
+                        </CheckMenuItem>
                      </items>
                   </Menu>
                     </menus>

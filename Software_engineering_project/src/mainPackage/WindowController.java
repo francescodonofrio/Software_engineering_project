@@ -16,7 +16,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Scale;
@@ -36,6 +35,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.Group;
+import javafx.scene.input.SwipeEvent;
 import javafx.scene.shape.Rectangle;
 import shapes.util.Grid;
 
@@ -93,6 +93,10 @@ public class WindowController implements Initializable {
     private final double zoomOffset = 0.2;
     private final SimpleBooleanProperty disableClick = new SimpleBooleanProperty(false);
     private Grid grid;
+    @FXML
+    private CheckMenuItem gridCheckItem;
+    @FXML
+    private Slider gridSlider;
     
     /**
      * Called to initialize a controller after its root element has been
@@ -482,7 +486,7 @@ public class WindowController implements Initializable {
      */
     @FXML
     private void toggleGrid(ActionEvent event) {
-        grid.setVisible(!grid.isVisible());
+        grid.setVisible(gridCheckItem.isSelected());
     }
 
     @FXML
@@ -513,4 +517,17 @@ public class WindowController implements Initializable {
     @FXML
     private void StretchButtonOnClick(ActionEvent event) {
     }
+    
+    @FXML
+    private void gridSliderOnMouse(MouseEvent event) {
+        if(gridSlider.getValue()>0)
+            grid.resize(gridSlider.getValue());
+    }
+
+    @FXML
+    private void gridSliderOnSwipe(SwipeEvent event) {
+        if(gridSlider.getValue()>0)
+            grid.resize(gridSlider.getValue());
+    }
+    
 }
