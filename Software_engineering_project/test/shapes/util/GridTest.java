@@ -7,13 +7,10 @@ package shapes.util;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author vince
- */
 public class GridTest {
     
     public GridTest() {
+        System.out.println("Test Grid");
     }
 
     /**
@@ -21,12 +18,17 @@ public class GridTest {
      */
     @Test
     public void testResize() {
-        System.out.println("resize");
-        int newSize = 0;
-        Grid instance = null;
-        instance.resize(newSize);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println("resize: ");
+        int newSize = 3;
+        Grid instanceOfGrid = new Grid(800, 600);
+        
+        assertEquals(800, instanceOfGrid.getPrefWidth(), 0.1);
+        assertEquals(600, instanceOfGrid.getPrefHeight(), 0.1);
+        
+        instanceOfGrid.resize(newSize);
+        assertEquals(newSize, instanceOfGrid.getSize(), 0.1);
+        
+        System.out.println("Passed");
     }
     
 }
