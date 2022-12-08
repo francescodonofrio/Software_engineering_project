@@ -1,6 +1,7 @@
 package mainPackage;
 
 import action.*;
+import com.sun.glass.ui.Screen;
 import exceptions.*;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -34,6 +35,9 @@ import java.util.ArrayDeque;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.Group;
+import javafx.scene.shape.Rectangle;
+import shapes.util.Grid;
 
 public class WindowController implements Initializable {
 
@@ -71,6 +75,8 @@ public class WindowController implements Initializable {
     private MenuItem pasteMenuItem;
     @FXML
     private Button polygonBtn1;
+    @FXML
+    private Group drawingPaneAndGrid;
     
     private Invoker invoker;
     private ShapeInterface selectedShape;
@@ -86,7 +92,7 @@ public class WindowController implements Initializable {
     private ArrayDeque<Double> queue;
     private final double zoomOffset = 0.2;
     private final SimpleBooleanProperty disableClick = new SimpleBooleanProperty(false);
-    private GridPane gridPane=new GridPane();
+    private Grid grid;
     
     /**
      * Called to initialize a controller after its root element has been
@@ -163,6 +169,12 @@ public class WindowController implements Initializable {
         clipboard = Clipboard.getClipboard();
 
         pasteMenuItem.disableProperty().bind(clipboard.hasContent().not());
+        
+        drawingPane.setPrefSize(Screen.getMainScreen().getWidth(), Screen.getMainScreen().getHeight());
+        drawingPane.setClip(new Rectangle (0,0, Screen.getMainScreen().getWidth(),Screen.getMainScreen().getHeight()));
+        grid = new Grid(drawingPane.getPrefWidth(), drawingPane.getPrefHeight());
+        drawingPaneAndGrid.getChildren().add(grid);
+        
     }
 
     /**
@@ -469,7 +481,7 @@ public class WindowController implements Initializable {
      */
     @FXML
     private void toggleGrid(ActionEvent event) {
-        gridPane.setGridLinesVisible(!gridPane.isGridLinesVisible());
+        grid.setVisible(!grid.isVisible());
     }
 
     @FXML
