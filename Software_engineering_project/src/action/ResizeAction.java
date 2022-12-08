@@ -69,6 +69,7 @@ public class ResizeAction implements Action {
 
     /**
      * Undoes the action
+     * 
      * @throws exceptions.NotExecutedActionException
      */
     @Override

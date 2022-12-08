@@ -37,8 +37,6 @@ import java.util.logging.Logger;
 
 public class WindowController implements Initializable {
 
-    private final double zoomOffset = 0.2;
-    private final SimpleBooleanProperty disableClick = new SimpleBooleanProperty(false);
     @FXML
     private Pane drawingPane;
     @FXML
@@ -71,6 +69,9 @@ public class WindowController implements Initializable {
     private ContextMenu contextMenuDrawingPane;
     @FXML
     private MenuItem pasteMenuItem;
+    @FXML
+    private Button polygonBtn1;
+    
     private Invoker invoker;
     private ShapeInterface selectedShape;
     private ObservableList<ShapeInterface> selectedInsertedShape;
@@ -83,10 +84,10 @@ public class WindowController implements Initializable {
     private MouseEvent rightClickPane;
     private SimpleObjectProperty<Integer> zoomLevel;
     private ArrayDeque<Double> queue;
-
-    // DA TOGLIERE APPENA VIENE AGGIORNATA L'INTERFACCIA @VINZ
-    private final GridPane gridPane = new GridPane();
-
+    private final double zoomOffset = 0.2;
+    private final SimpleBooleanProperty disableClick = new SimpleBooleanProperty(false);
+    private GridPane gridPane=new GridPane();
+    
     /**
      * Called to initialize a controller after its root element has been
      * completely processed.
@@ -487,5 +488,11 @@ public class WindowController implements Initializable {
 
     @FXML
     private void RotateButtonOnClick(ActionEvent event) {
+        try {
+            action = new RotateAction(selectedInsertedShape.get(0));
+        } catch (ShapeNullException ex) {
+            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
+            action = new MoveAction(selectedInsertedShape, listInsertedShapes);
+        }
     }
 }
