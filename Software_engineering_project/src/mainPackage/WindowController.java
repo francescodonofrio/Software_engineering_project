@@ -40,7 +40,6 @@ import javafx.scene.shape.Rectangle;
 import shapes.util.Grid;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.input.MouseButton;
-import javafx.scene.layout.GridPane;
 import shapes.TextShape;
 
 public class WindowController implements Initializable {
@@ -532,7 +531,6 @@ public class WindowController implements Initializable {
     }
 
 
-
     private void textSelection(ActionEvent event) throws InterruptedException {
         selectedShape = new TextShape();
         action = new DrawTextAction(selectedShape, colorPickerContour.valueProperty(), listInsertedShapes,drawingPane);
@@ -563,7 +561,10 @@ public class WindowController implements Initializable {
             action = new MoveAction(selectedInsertedShape, listInsertedShapes);
         }}
     
-   
+    
+
+=======
+    
     @FXML
     private void gridSliderOnMouse(MouseEvent event) {
         if(gridSlider.getValue()>0)
@@ -575,4 +576,6 @@ public class WindowController implements Initializable {
         if(gridSlider.getValue()>0)
             grid.resize(gridSlider.getValue());
     }
+    
+>>>>>>> db9e5db8073e9c99e13e38a6743cd1542bf9b590
 }
