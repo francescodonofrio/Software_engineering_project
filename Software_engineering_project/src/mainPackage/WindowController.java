@@ -500,7 +500,7 @@ public class WindowController implements Initializable {
     }
 
     @FXML
-    private void RotateButtonOnClick(ActionEvent event) {
+    private void rotateButtonOnClick(ActionEvent event) {
         try {
             action = new RotateAction(selectedInsertedShape.get(0));
             disableClick.set(false);
@@ -511,6 +511,6 @@ public class WindowController implements Initializable {
     }
 
     @FXML
-    private void StretchButtonOnClick(ActionEvent event) {
+    private void stretchButtonOnClick(ActionEvent event) {
     }
 }
