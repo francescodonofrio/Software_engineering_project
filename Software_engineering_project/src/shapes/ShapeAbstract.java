@@ -5,6 +5,7 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Effect;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
+import javafx.scene.transform.Translate;
 
 public abstract class ShapeAbstract implements ShapeInterface{
 
@@ -13,6 +14,7 @@ public abstract class ShapeAbstract implements ShapeInterface{
     protected static boolean isBeingLoaded = false;
     protected Shape shape;
     protected String name;
+    protected Translate translate;
 
     /**
      * Reset the static variable used for numering the created shapes
@@ -165,6 +167,26 @@ public abstract class ShapeAbstract implements ShapeInterface{
     @Override
     public Color getInternalColor() {
        return (Color)shape.getFill();
+    }
+
+    /**
+     * Set the shape inserted property of the shape
+     * 
+     * @param inserted the status of the insertion
+     */
+    @Override
+    public void setInserted(boolean inserted) {
+        hasBeenInserted = inserted;
+    }
+    
+    /**
+     * Return the shape inserted property of the shape
+     * 
+     * @return return the shape inserted property of the shape
+     */
+    @Override
+    public boolean getInserted(){
+        return hasBeenInserted;
     }
     
 }

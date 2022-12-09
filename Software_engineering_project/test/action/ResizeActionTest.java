@@ -21,7 +21,7 @@ import shapes.ShapeInterface;
 public class ResizeActionTest {
 
     private ShapeInterface rectangleShape, lineShape, ellipseShape;
-    private ResizeAction action;
+    private Action action;
     private MouseEvent event;
 
     public ResizeActionTest() {
@@ -40,23 +40,26 @@ public class ResizeActionTest {
      * @throws exceptions.ShapeNullException
      */
     @Test(expected = ShapeNullException.class)
-    public void testExecute() throws ShapeNullException {
+    public void testExecute() throws ShapeNullException, Exception {
         System.out.print("execute: ");
 
         event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
 
+        rectangleShape.setInserted(true);
         action = new ResizeAction(rectangleShape);
         action.execute(event);
         Rectangle rectangle = (Rectangle) rectangleShape.getShape();
         assertEquals(rectangle.getWidth(), event.getX(), 0.1);
         assertEquals(rectangle.getHeight(), event.getY(), 0.1);
 
+        ellipseShape.setInserted(true);
         action = new ResizeAction(ellipseShape);
         action.execute(event);
         Ellipse ellipse = (Ellipse) ellipseShape.getShape();
         assertEquals(ellipse.getRadiusX(), event.getX(), 0.1);
         assertEquals(ellipse.getRadiusY(), event.getY(), 0.1);
 
+        lineShape.setInserted(true);
         action = new ResizeAction(lineShape);
         action.execute(event);
         Line line = (Line) lineShape.getShape();
@@ -78,24 +81,47 @@ public class ResizeActionTest {
 
         event = new MouseEvent(MouseEvent.MOUSE_DRAGGED, 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
 
+        rectangleShape.setInserted(true);
         action = new ResizeAction(rectangleShape);
         action.onMouseDragged(event);
         Rectangle rectangle = (Rectangle) rectangleShape.getShape();
         assertEquals(rectangle.getWidth(), event.getX(), 0.1);
         assertEquals(rectangle.getHeight(), event.getY(), 0.1);
 
+        ellipseShape.setInserted(true);
         action = new ResizeAction(ellipseShape);
         action.onMouseDragged(event);
         Ellipse ellipse = (Ellipse) ellipseShape.getShape();
         assertEquals(ellipse.getRadiusX(), event.getX(), 0.1);
         assertEquals(ellipse.getRadiusY(), event.getY(), 0.1);
 
+        lineShape.setInserted(true);
         action = new ResizeAction(lineShape);
         action.onMouseDragged(event);
         Line line = (Line) lineShape.getShape();
         assertEquals(line.getEndX(), event.getX(), 0.1);
         assertEquals(line.getEndY(), event.getY(), 0.1);
 
+        event = new MouseEvent(MouseEvent.MOUSE_DRAGGED, -100, -150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+
+        action = new ResizeAction(rectangleShape);
+        action.onMouseDragged(event);
+        assertEquals(rectangle.getWidth(), 1, 0.1);
+        assertEquals(rectangle.getHeight(), 1, 0.1);
+        
+        event = new MouseEvent(MouseEvent.MOUSE_DRAGGED, 50, -150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+
+        action = new ResizeAction(rectangleShape);
+        action.onMouseDragged(event);
+        assertEquals(rectangle.getWidth(), event.getX(), 0.1);
+        assertEquals(rectangle.getHeight(), 1, 0.1);
+        
+        event = new MouseEvent(MouseEvent.MOUSE_DRAGGED, -50, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+
+        action = new ResizeAction(rectangleShape);
+        action.onMouseDragged(event);
+        assertEquals(rectangle.getWidth(), 1, 0.1);
+        assertEquals(rectangle.getHeight(), event.getY(), 0.1);
         System.out.println("Passed");
     }
 
@@ -110,6 +136,7 @@ public class ResizeActionTest {
 
         event = new MouseEvent(MouseEvent.MOUSE_RELEASED, 100, 100, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
 
+        rectangleShape.setInserted(true);
         action = new ResizeAction(rectangleShape);
         action.onMouseReleased(event);
 
@@ -124,7 +151,7 @@ public class ResizeActionTest {
      * @throws exceptions.NotExecutedActionException
      */
     @Test(expected=NotExecutedActionException.class)
-    public void testUndo() throws ShapeNullException, NotExecutedActionException {
+    public void testUndo() throws ShapeNullException, NotExecutedActionException, Exception {
         System.out.print("undo: ");
 
         event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 100, 150, 10, 25, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
@@ -149,6 +176,7 @@ public class ResizeActionTest {
         double layoutXLine = lineTest.getLayoutX();
         double layoutYLine = lineTest.getLayoutY();
         
+        rectangleShape.setInserted(true);
         action = new ResizeAction(rectangleShape);
         action.execute(event);
         action.undo();
@@ -157,7 +185,8 @@ public class ResizeActionTest {
         assertEquals(rectangle.getHeight(), height, 0.1);
         assertEquals(rectangle.getLayoutX(), layoutXRectangle, 0.1);
         assertEquals(rectangle.getLayoutY(), layoutYRectangle, 0.1);
-
+        
+        ellipseShape.setInserted(true);
         action = new ResizeAction(ellipseShape);
         action.execute(event);
         action.undo();
@@ -166,7 +195,8 @@ public class ResizeActionTest {
         assertEquals(ellipse.getRadiusY(), radiusY, 0.1);
         assertEquals(ellipse.getLayoutX(), layoutXEllipse, 0.1);
         assertEquals(ellipse.getLayoutY(), layoutYEllipse, 0.1);
-
+        
+        lineShape.setInserted(true);
         action = new ResizeAction(lineShape);
         action.execute(event);
         action.undo();
@@ -191,7 +221,7 @@ public class ResizeActionTest {
      * @throws exceptions.NotExecutedActionException
      */
     @Test(expected=ShapeNullException.class)
-    public void testUndoShapeNull() throws ShapeNullException, NotExecutedActionException {
+    public void testUndoShapeNull() throws ShapeNullException, NotExecutedActionException, Exception {
         System.out.print("undo: ");
 
         event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 100, 150, 10, 25, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);

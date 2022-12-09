@@ -1,8 +1,5 @@
 package shapes;
 
-import javafx.scene.effect.BlurType;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Effect;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
@@ -187,6 +184,20 @@ public class ShapeAbstractTest {
         shape.setName("Test");
         
         assertEquals(shape.getName(),"Test");
+
+        System.out.println("Passed");
+    }
+    
+    /**
+     * Test of setInserted method, of class ShapeAbstract.
+     */
+    @Test
+    public void testSetInserted() {
+        System.out.print("setInserted: ");
+        
+        shape.setInserted(true);
+        
+        assertEquals(shape.getInserted(),true);
 
         System.out.println("Passed");
     }
