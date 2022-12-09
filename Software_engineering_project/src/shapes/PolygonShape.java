@@ -12,9 +12,18 @@ public class PolygonShape extends CloseContourShape {
     public PolygonShape() {
         this.shape = new Polygon();
 
+        boolean updatedCont=false;
 
-        this.name = "Polygon " + RectangleShape.cont;
-        PolygonShape.cont++;
+        if(PolygonShape.hasBeenInserted) {
+            PolygonShape.cont++;
+            updatedCont=true;
+        }
+
+        this.name = "Polygon " + PolygonShape.cont;
+
+        if(!updatedCont)
+            PolygonShape.cont++;
+
         PolygonShape.hasBeenInserted = false;
     }
 
@@ -28,46 +37,85 @@ public class PolygonShape extends CloseContourShape {
      */
     @Override
     public void setDim(double initialX, double initialY, double finalX, double finalY) {
-        Bounds polygonBounds = shape.getBoundsInParent();
-        double minX = polygonBounds.getMinX(),
-                minY = polygonBounds.getMinY(),
-                maxX = polygonBounds.getMaxX(),
-                maxY = polygonBounds.getMaxY(),
-                centerX = (minX + maxX) / 2,
-                centerY = (minY + maxY) / 2,
-                offsetX, offsetY;
+        double width=finalX-initialX,
+                height=finalY-initialY;
 
-        if (finalX > centerX) {
-            offsetX = finalX - maxX;
-        } else {
-            offsetX = minX - finalX;
+        if(width<=20)
+            setWidth(20);
+        else
+            setWidth(width);
+
+        if(height<=20)
+            setHeight(20);
+        else
+            setHeight(height);
+
+        PolygonShape.hasBeenInserted = true;
+    }
+
+
+    /**
+     * Sets the width of the shape
+     * @param width the width to set
+     */
+    private void setWidth(double width) {
+        double minX = getMin(((Polygon)shape).getPoints(),0),
+                maxX = getMax(((Polygon)shape).getPoints(), 0);
+
+        for (int i=0; i < ((Polygon)shape).getPoints().size(); i+=2){
+            double currentX = ((Polygon)shape).getPoints().get(i);
+            //if(currentX != minX){
+                currentX = width*((currentX-minX)/(maxX-minX))+minX;
+                ((Polygon)shape).getPoints().set(i, currentX);
+            //}
         }
 
-        if (finalY > centerY) {
-            offsetY = finalY - maxY;
-        } else {
-            offsetY = minY - finalY;
+    }
+
+
+    /**
+     *Sets the height of the shape
+     *     @param height the height to set
+     */
+    private void setHeight(double height) {
+        double minY = getMin(((Polygon)shape).getPoints(),1),
+               maxY = getMax(((Polygon)shape).getPoints(), 1);
+
+        for (int i=1; i < ((Polygon)shape).getPoints().size(); i+=2){
+            double currentY = ((Polygon)shape).getPoints().get(i);
+            //if(currentY != minY){
+                currentY = height*((currentY-minY)/(maxY-minY))+minY;
+                ((Polygon)shape).getPoints().set(i, currentY);
+            //}
         }
 
-        // This array contains x and y values for each vertex of the shape
-        ObservableList<Double> listOfPoints = ((Polygon) shape).getPoints();
+    }
 
-        for (int i = 0; i < listOfPoints.size(); i += 2) {
-            double originalX = listOfPoints.get(i),
-                    originalY = listOfPoints.get(i + 1);
-
-            listOfPoints.remove(i, i + 2);
-            if (originalX > centerX) {
-                listOfPoints.add(i, originalX + offsetX);
-            } else {
-                listOfPoints.add(i, originalX - offsetX);
-            }
-
-            if (originalY > centerY) {
-                listOfPoints.add(i + 1, originalY + offsetY);
-            } else {
-                listOfPoints.add(i + 1, originalY - offsetY);
-            }
+    /**
+     * Searches the minimum value from a list of points, given the index from which to start the research
+     * @param points the list of points
+     * @param start the index
+     * @return the value found
+     */
+    private double getMin(ObservableList<Double> points, int start) {
+        double min = points.get(start);
+        for(int i=start+2; i<points.size(); i+=2){
+            if (points.get(i) < min) { min = points.get(i); }
         }
+        return min;
+    }
+
+    /**
+     * Searches the maximum value from a list of points, given the index from which to start the research
+     * @param points the list of points
+     * @param start the index
+     * @return the value found
+     */
+    private double getMax(ObservableList<Double> points, int start) {
+        double max = points.get(start);
+        for(int i=start+2; i<points.size(); i+=2){
+            if (points.get(i) > max) { max = points.get(i); }
+        }
+        return max;
     }
 }
