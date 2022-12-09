@@ -32,5 +32,4 @@ public class LineShape extends OpenContourShape {
         ((Line) shape).setEndY(finalY - initialY);
     }
 
-    }
 }

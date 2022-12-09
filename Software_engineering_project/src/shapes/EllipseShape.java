@@ -43,5 +43,5 @@ public class EllipseShape extends CloseContourShape {
         ((Ellipse) shape).setRadiusY(radiusY);
     }
 
-    }
 }
+
