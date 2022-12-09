@@ -44,4 +44,3 @@ public class EllipseShape extends CloseContourShape {
     }
 
     }
-}

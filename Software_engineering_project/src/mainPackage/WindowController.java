@@ -37,6 +37,7 @@ import java.util.logging.Logger;
 import javafx.scene.Group;
 import javafx.scene.input.SwipeEvent;
 import javafx.scene.shape.Rectangle;
+import shapes.TextShape;
 import shapes.util.Grid;
 
 public class WindowController implements Initializable {
@@ -93,10 +94,10 @@ public class WindowController implements Initializable {
     private final double zoomOffset = 0.2;
     private final SimpleBooleanProperty disableClick = new SimpleBooleanProperty(false);
     private Grid grid;
-    @FXML
     private CheckMenuItem gridCheckItem;
-    @FXML
     private Slider gridSlider;
+    @FXML
+    private Button textBtn;
     
     /**
      * Called to initialize a controller after its root element has been
@@ -514,13 +515,11 @@ public class WindowController implements Initializable {
         }
     }
     
-    @FXML
     private void gridSliderOnMouse(MouseEvent event) {
         if(gridSlider.getValue()>0)
             grid.resize(gridSlider.getValue());
     }
 
-    @FXML
     private void gridSliderOnSwipe(SwipeEvent event) {
         if(gridSlider.getValue()>0)
             grid.resize(gridSlider.getValue());
@@ -546,5 +545,36 @@ public class WindowController implements Initializable {
         invoker.execute(this.action, event);
         action = new MoveAction(selectedInsertedShape, listInsertedShapes);
     }
+    
+    @FXML
+    private void textSelection(ActionEvent event) throws InterruptedException {
+        selectedShape = new TextShape();
+        action = new DrawTextAction(selectedShape, colorPickerContour.valueProperty(), listInsertedShapes,drawingPane);
+    }
+
+    @FXML
+    private void textSize20OnAction(ActionEvent event) {
+        if (!selectedInsertedShape.isEmpty()) {
+            action = new ResizeTextAction(selectedInsertedShape.get(0),20.0);
+            invoker.execute(action, event);
+            action = new MoveAction(selectedInsertedShape, listInsertedShapes);
+        }
+    }
+
+    @FXML
+    private void textSize40OnAction(ActionEvent event) {
+     if (!selectedInsertedShape.isEmpty()) {
+            action = new ResizeTextAction(selectedInsertedShape.get(0),40.0);
+            invoker.execute(action, event);
+            action = new MoveAction(selectedInsertedShape, listInsertedShapes);
+        }}
+
+    @FXML
+    private void textSize60OnAction(ActionEvent event) {
+    if (!selectedInsertedShape.isEmpty()) {
+            action = new ResizeTextAction(selectedInsertedShape.get(0),60.0);
+            invoker.execute(action, event);
+            action = new MoveAction(selectedInsertedShape, listInsertedShapes);
+        }}
     
 }
