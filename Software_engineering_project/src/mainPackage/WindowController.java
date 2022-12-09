@@ -555,6 +555,13 @@ public class WindowController implements Initializable {
 
     @FXML
     private void stretchButtonOnClick(ActionEvent event) {
+        try {
+            action = new StretchAction(selectedInsertedShape.get(0));
+            disableClick.set(false);
+        } catch (ShapeNullException ex) {
+            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
+            action = new MoveAction(selectedInsertedShape, listInsertedShapes);
+        }
     }
 
     @FXML

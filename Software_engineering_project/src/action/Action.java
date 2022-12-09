@@ -17,7 +17,7 @@ public interface Action {
      *
      * @param event the event of the mouse click
      */
-    void onMouseDragged(Event event);
+    void onMouseDragged(Event event) throws Exception;
 
     /**
      * Executes the action specified by the calling class when the mouse is released

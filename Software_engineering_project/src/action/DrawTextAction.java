@@ -14,7 +14,6 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import shapes.ShapeInterface;
 import shapes.TextShape;
 
@@ -73,7 +72,6 @@ public class DrawTextAction implements Action{
     public void handle(KeyEvent ke) {
         if (ke.getCode().equals(KeyCode.ENTER)) {
             newText =t.getText();
-            System.out.println(newText);
             ((TextShape) shape).setText(newText);
             t.setVisible(false);
             drawingPane.getChildren().remove(t);
