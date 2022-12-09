@@ -12,9 +12,9 @@ public class EllipseShape extends CloseContourShape {
     public EllipseShape() {
         this.shape = new Ellipse();
 
-        if (isBeingLoaded || hasBeenInserted) {
+        if (isBeingLoaded || inserted) {
             EllipseShape.cont++;
-            hasBeenInserted = false;
+            inserted = false;
         }
 
         this.name = "Ellipse " + EllipseShape.cont;
@@ -44,3 +44,4 @@ public class EllipseShape extends CloseContourShape {
     }
 
     }
+}

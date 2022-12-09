@@ -13,9 +13,9 @@ public class RectangleShape extends CloseContourShape {
     public RectangleShape() {
         this.shape = new Rectangle();
 
-        if (isBeingLoaded || hasBeenInserted) {
+        if (isBeingLoaded || inserted) {
             RectangleShape.cont++;
-            hasBeenInserted = false;
+            inserted = false;
         }
         translate = new Translate();
         shape.getTransforms().add(translate);
@@ -33,7 +33,7 @@ public class RectangleShape extends CloseContourShape {
      */
     @Override
     public void setDim(double initialX, double initialY, double finalX, double finalY) {
-        if(!hasBeenInserted){
+        if(!inserted){
             width = finalX - initialX;
             height = finalY - initialY;
             double signWidth = 1, signHeight = 1;

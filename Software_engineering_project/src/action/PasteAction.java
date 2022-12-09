@@ -39,6 +39,7 @@ public class PasteAction implements Action {
         shapeToPaste.setX(mouseEvent.getX());
         shapeToPaste.setY(mouseEvent.getY());
         listInsertedShapes.add(shapeToPaste);
+        shapeToPaste.setInserted(true);
         hasNotBeenExecuted=false;
     }
 

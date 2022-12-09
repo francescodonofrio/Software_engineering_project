@@ -1,7 +1,6 @@
 package shapes;
 
 import javafx.collections.ObservableList;
-import javafx.geometry.Bounds;
 import javafx.scene.shape.Polygon;
 
 public class PolygonShape extends CloseContourShape {
@@ -14,7 +13,7 @@ public class PolygonShape extends CloseContourShape {
 
         boolean updatedCont=false;
 
-        if(PolygonShape.hasBeenInserted) {
+        if(PolygonShape.inserted) {
             PolygonShape.cont++;
             updatedCont=true;
         }
@@ -24,7 +23,10 @@ public class PolygonShape extends CloseContourShape {
         if(!updatedCont)
             PolygonShape.cont++;
 
-        PolygonShape.hasBeenInserted = false;
+
+        this.name = "Polygon " + RectangleShape.cont;
+        PolygonShape.cont++;
+        PolygonShape.inserted = false;
     }
 
     /**
@@ -50,7 +52,7 @@ public class PolygonShape extends CloseContourShape {
         else
             setHeight(height);
 
-        PolygonShape.hasBeenInserted = true;
+        PolygonShape.inserted = true;
     }
 
 

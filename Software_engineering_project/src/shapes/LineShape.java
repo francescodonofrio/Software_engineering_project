@@ -10,9 +10,9 @@ public class LineShape extends OpenContourShape {
     public LineShape() {
         this.shape = new Line();
 
-        if (isBeingLoaded || hasBeenInserted) {
+        if (isBeingLoaded || inserted) {
             LineShape.cont++;
-            hasBeenInserted = false;
+            inserted = false;
         }
 
         this.name = "Line " + LineShape.cont;
@@ -33,3 +33,4 @@ public class LineShape extends OpenContourShape {
     }
 
     }
+}

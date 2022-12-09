@@ -10,7 +10,7 @@ import javafx.scene.transform.Translate;
 public abstract class ShapeAbstract implements ShapeInterface{
 
     protected static int cont = 1;
-    protected static boolean hasBeenInserted = false;
+    protected static boolean inserted = false;
     protected static boolean isBeingLoaded = false;
     protected Shape shape;
     protected String name;
@@ -176,7 +176,7 @@ public abstract class ShapeAbstract implements ShapeInterface{
      */
     @Override
     public void setInserted(boolean inserted) {
-        hasBeenInserted = inserted;
+        this.inserted = inserted;
     }
     
     /**
@@ -186,7 +186,7 @@ public abstract class ShapeAbstract implements ShapeInterface{
      */
     @Override
     public boolean getInserted(){
-        return hasBeenInserted;
+        return inserted;
     }
     
 }

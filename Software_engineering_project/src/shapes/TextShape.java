@@ -13,9 +13,9 @@ public class TextShape extends OpenContourShape {
         
         this.shape = new Text();
 
-        if (isBeingLoaded || hasBeenInserted) {
+        if (isBeingLoaded || inserted) {
                 TextShape.cont++;
-            hasBeenInserted = false;
+            inserted = false;
         }
 
         this.name = "Text " + TextShape.cont;
@@ -28,7 +28,7 @@ public class TextShape extends OpenContourShape {
      */
     public void setText(String newText){
         ((Text) shape).setText(newText);
-        hasBeenInserted = true;
+        inserted = true;
     }
     
     /**
