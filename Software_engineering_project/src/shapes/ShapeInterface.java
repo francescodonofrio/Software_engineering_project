@@ -109,4 +109,17 @@ public interface ShapeInterface {
      * @param value the status of the focus
      */
     void setFocus(boolean value);
+    /**
+     * Set the shape inserted property of the shape
+     * 
+     * @param inserted the status of the insertion
+     */
+    void setInserted(boolean inserted);
+    
+    /**
+     * Return the shape inserted property of the shape
+     * 
+     * @return return the shape inserted property of the shape
+     */
+    boolean getInserted();
 }

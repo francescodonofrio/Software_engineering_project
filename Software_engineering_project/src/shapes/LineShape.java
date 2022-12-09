@@ -30,7 +30,7 @@ public class LineShape extends OpenContourShape {
     public void setDim(double initialX, double initialY, double finalX, double finalY) {
         ((Line) shape).setEndX(finalX - initialX);
         ((Line) shape).setEndY(finalY - initialY);
+    }
 
-        hasBeenInserted = true;
     }
 }

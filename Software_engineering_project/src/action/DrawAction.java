@@ -70,6 +70,7 @@ public class DrawAction implements Action {
      */
     @Override
     public void onMouseReleased(Event event) {
+        shape.setInserted(true);
     }
 
     /**
