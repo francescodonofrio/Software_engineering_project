@@ -94,12 +94,16 @@ public class WindowController implements Initializable {
     private final double zoomOffset = 0.2;
     private final SimpleBooleanProperty disableClick = new SimpleBooleanProperty(false);
     private Grid grid;
+    @FXML
     private CheckMenuItem gridCheckItem;
+    @FXML
     private Slider gridSlider;
     @FXML
     private Button textBtn;
     @FXML
     private Label mainLabel;
+    @FXML
+    private MenuButton buttonTextSize;
     
     /**
      * Called to initialize a controller after its root element has been
@@ -528,11 +532,13 @@ public class WindowController implements Initializable {
         }
     }
     
+    @FXML
     private void gridSliderOnMouse(MouseEvent event) {
         if(gridSlider.getValue()>0)
             grid.resize(gridSlider.getValue());
     }
 
+    @FXML
     private void gridSliderOnSwipe(SwipeEvent event) {
         if(gridSlider.getValue()>0)
             grid.resize(gridSlider.getValue());
@@ -591,7 +597,6 @@ public class WindowController implements Initializable {
             action = new MoveAction(selectedInsertedShape, listInsertedShapes);
         }}
     
-    @FXML
     private void resetMainLabel(){
         mainLabel.setText("Geometrical Drawing");
     }

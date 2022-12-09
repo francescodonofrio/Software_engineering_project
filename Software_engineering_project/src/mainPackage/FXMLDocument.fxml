@@ -7,6 +7,8 @@
 <?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.CheckMenuItem?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.MenuButton?>
@@ -32,8 +34,11 @@
                         </Menu>
                   <Menu mnemonicParsing="false" text="View">
                      <items>
-                        <MenuItem mnemonicParsing="false" onAction="#toggleGrid" text="Toggle grid" />
-                     </items>
+                        <CheckMenuItem fx:id="gridCheckItem" mnemonicParsing="false" onAction="#toggleGrid" text="Grid">
+                           <graphic>
+                              <Slider fx:id="gridSlider" blockIncrement="0.1" majorTickUnit="0.5" max="2.0" minorTickCount="1" onMouseClicked="#gridSliderOnMouse" onMouseDragged="#gridSliderOnMouse" onMousePressed="#gridSliderOnMouse" onMouseReleased="#gridSliderOnMouse" onSwipeLeft="#gridSliderOnSwipe" onSwipeRight="#gridSliderOnSwipe" showTickLabels="true" snapToTicks="true" value="1.0" />
+                           </graphic>
+                        </CheckMenuItem></items>
                   </Menu>
                     </menus>
                 </MenuBar>
