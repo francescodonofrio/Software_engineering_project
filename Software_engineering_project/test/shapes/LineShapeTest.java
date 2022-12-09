@@ -169,4 +169,46 @@ public class LineShapeTest {
 
         System.out.println("passed");
     }
+    
+    /**
+     * Test of getDimX method, of class LineShape.
+     */
+    @Test
+    public void getDimX() {
+        System.out.print("getDimX: ");
+
+        double initialDim1 = 70.0;
+        double initialDim2 = 130.0;
+        double finalDim1 = 150.0;
+        double finalDim2 = 300.0;
+        double endX = finalDim1 - initialDim1;
+
+        LineShape instance = new LineShape();
+        
+        instance.setDim(initialDim1, initialDim2, finalDim1, finalDim2);
+
+        assertEquals(instance.getDimX(), endX, 0.1);
+    }
+
+    /**
+     * Test of getDimY method, of class LineShape.
+     */
+    @Test
+    public void getDimY() {
+        System.out.print("getDimY: ");
+
+        double initialDim1 = 70.0;
+        double initialDim2 = 130.0;
+        double finalDim1 = 150.0;
+        double finalDim2 = 300.0;
+        double endY = finalDim2 - initialDim2;
+
+        LineShape instance = new LineShape();
+        
+        instance.setDim(initialDim1, initialDim2, finalDim1, finalDim2);
+
+        assertEquals(instance.getDimY(), endY, 0.1);
+        
+        System.out.println("Passed");
+    }
 }

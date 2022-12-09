@@ -2,6 +2,7 @@ package shapes;
 
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 
 public class RectangleShape extends CloseContourShape {
@@ -18,10 +19,15 @@ public class RectangleShape extends CloseContourShape {
             RectangleShape.cont++;
             inserted = false;
         }
-        translate = new Translate();
         rotate = new Rotate();
-        shape.getTransforms().add(translate);
+        translate = new Translate();
+        scale = new Scale();
         shape.getTransforms().add(rotate);
+        shape.getTransforms().add(scale);
+        shape.getTransforms().add(translate);
+        
+        this.width = 0;
+        this.height = 0;
 
         this.name = "Rectangle " + RectangleShape.cont;
     }
@@ -54,7 +60,28 @@ public class RectangleShape extends CloseContourShape {
             this.resize(initialX, initialY, finalX, finalY);
         }
     }
-
+    
+    /**
+     * Return the dimension along the x-axis
+     * 
+     * @return the dimension of the shape along the x-axis
+     */
+    @Override
+    public double getDimX() {
+        return width;
+    }
+    
+    /**
+     * Return the dimension along the y-axis
+     * 
+     * @return the dimension of the shape along the y-axis
+     */
+    @Override
+    public double getDimY() {
+        return height;
+    }
+    
+    
     /**
      * Resize the dimension of the shape
      * 

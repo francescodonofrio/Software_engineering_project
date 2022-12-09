@@ -2,6 +2,8 @@ package shapes;
 
 import javafx.scene.shape.Line;
 import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Scale;
+import javafx.scene.transform.Translate;
 
 public class LineShape extends OpenContourShape {
 
@@ -16,7 +18,11 @@ public class LineShape extends OpenContourShape {
             inserted = false;
         }
         rotate = new Rotate();
+        translate = new Translate();
+        scale = new Scale();
         shape.getTransforms().add(rotate);
+        shape.getTransforms().add(scale);
+        shape.getTransforms().add(translate);
 
         this.name = "Line " + LineShape.cont;
     }
@@ -33,6 +39,16 @@ public class LineShape extends OpenContourShape {
     public void setDim(double initialX, double initialY, double finalX, double finalY) {
         ((Line) shape).setEndX(finalX - initialX);
         ((Line) shape).setEndY(finalY - initialY);
+    }
+
+    @Override
+    public double getDimX() {
+        return ((Line) shape).getEndX();
+    }
+
+    @Override
+    public double getDimY() {
+        return ((Line) shape).getEndY();
     }
 
 }

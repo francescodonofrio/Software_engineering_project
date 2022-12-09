@@ -46,6 +46,16 @@ public class OpenContourShapeTest {
         @Override
         public void setDim(double initialX, double initialY, double finalX, double finalY) {
         }
+
+        @Override
+        public double getDimX() {
+            return 0;
+        }
+
+        @Override
+        public double getDimY() {
+            return 0;
+        }
     }
 
 }

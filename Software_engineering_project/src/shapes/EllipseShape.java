@@ -2,6 +2,8 @@ package shapes;
 
 import javafx.scene.shape.Ellipse;
 import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Scale;
+import javafx.scene.transform.Translate;
 
 public class EllipseShape extends CloseContourShape {
 
@@ -18,7 +20,11 @@ public class EllipseShape extends CloseContourShape {
             inserted = false;
         }
         rotate = new Rotate();
+        translate = new Translate();
+        scale = new Scale();
         shape.getTransforms().add(rotate);
+        shape.getTransforms().add(scale);
+        shape.getTransforms().add(translate);
 
         this.name = "Ellipse " + EllipseShape.cont;
     }
@@ -46,5 +52,15 @@ public class EllipseShape extends CloseContourShape {
         ((Ellipse) shape).setRadiusY(radiusY);
     }
 
+
+    @Override
+    public double getDimX() {
+        return ((Ellipse) shape).getRadiusX();
+    }
+
+    @Override
+    public double getDimY() {
+        return ((Ellipse) shape).getRadiusY();
+    }
 }
 

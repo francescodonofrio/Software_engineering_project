@@ -3,9 +3,13 @@ package shapes;
 import javafx.collections.ObservableList;
 import javafx.scene.shape.Polygon;
 import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Scale;
+import javafx.scene.transform.Translate;
 
 public class PolygonShape extends CloseContourShape {
 
+    private double width, height;
+    
     /**
      * Creates a new instance of PolygonShape
      */
@@ -18,10 +22,16 @@ public class PolygonShape extends CloseContourShape {
             PolygonShape.cont++;
             updatedCont=true;
         }
+        this.width = 0;
+        this.height = 0;
 
         this.name = "Polygon " + PolygonShape.cont;
         rotate = new Rotate();
+        translate = new Translate();
+        scale = new Scale();
         shape.getTransforms().add(rotate);
+        shape.getTransforms().add(scale);
+        shape.getTransforms().add(translate);
 
         if(!updatedCont)
             PolygonShape.cont++;
@@ -42,8 +52,8 @@ public class PolygonShape extends CloseContourShape {
      */
     @Override
     public void setDim(double initialX, double initialY, double finalX, double finalY) {
-        double width=finalX-initialX,
-                height=finalY-initialY;
+        width=finalX-initialX;
+        height=finalY-initialY;
 
         if(width<=20)
             setWidth(20);
@@ -122,5 +132,15 @@ public class PolygonShape extends CloseContourShape {
             if (points.get(i) > max) { max = points.get(i); }
         }
         return max;
+    }
+
+    @Override
+    public double getDimX() {
+        return this.width;
+    }
+
+    @Override
+    public double getDimY() {
+        return this.height;
     }
 }

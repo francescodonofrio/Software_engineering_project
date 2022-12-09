@@ -4,6 +4,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Scale;
+import javafx.scene.transform.Translate;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -201,6 +204,110 @@ public class ShapeAbstractTest {
 
         System.out.println("Passed");
     }
+
+    /**
+     * Test of getInserted method, of class ShapeAbstract.
+     */
+    @Test
+    public void testGetInserted(){
+        System.out.print("getInserted: ");
+        
+        shape.setInserted(true);
+        
+        assertEquals(shape.getInserted(),true);
+
+        System.out.println("Passed");
+    }
+    
+    /**
+     * Test of getRotate method, of class ShapeAbstract.
+     */
+    @Test
+    public void testGetRotate(){
+        System.out.print("getRotate: ");
+        
+        Rotate rotate = new Rotate();
+        shape.setRotate(rotate);
+        
+        assertEquals(shape.getRotate(),rotate);
+
+        System.out.println("Passed");
+    }
+    
+    /**
+     * Test of setRotate method, of class ShapeAbstract.
+     */
+    @Test
+    public void testSetRotate(){
+        System.out.print("setRotate: ");
+        
+        Rotate rotate = new Rotate();
+        shape.setRotate(rotate);
+        
+        assertEquals(shape.getRotate(),rotate);
+
+        System.out.println("Passed");
+    }
+    
+    /**
+     * Test of getScale method, of class ShapeAbstract.
+     */
+    @Test
+    public void testGetScale(){
+        System.out.print("getScale: ");
+        
+        Scale scale = new Scale();
+        shape.setScale(scale);
+        
+        assertEquals(shape.getScale(),scale);
+
+        System.out.println("Passed");
+    }
+    
+    /**
+     * Test of setScale method, of class ShapeAbstract.
+     */
+    @Test
+    public void testSetScale(){
+        System.out.print("setScale: ");
+        
+        Scale scale = new Scale();
+        shape.setScale(scale);
+        
+        assertEquals(shape.getScale(),scale);
+
+        System.out.println("Passed");
+    }
+
+    /**
+     * Test of getTranslate method, of class ShapeAbstract.
+     */
+    @Test
+    public void testGetTranslate(){
+        System.out.print("getTranslate: ");
+        
+        Translate translate = new Translate();
+        shape.setTranslate(translate);
+        
+        assertEquals(shape.getTranslate(),translate);
+
+        System.out.println("Passed");
+    }
+    
+    /**
+     * Test of setTranslate method, of class ShapeAbstract.
+     */
+    @Test
+    public void testSetTranslate(){
+        System.out.print("setTranslate: ");
+        
+        Translate translate = new Translate();
+        shape.setTranslate(translate);
+        
+        assertEquals(shape.getTranslate(),translate);
+
+        System.out.println("Passed");
+    }
     
     public class MockShape extends ShapeAbstract {
         public MockShape(Shape shape) {
@@ -216,5 +323,16 @@ public class ShapeAbstractTest {
         public void setInternalColor(Color newColor){
             shape.setFill(newColor);
         }
+
+        @Override
+        public double getDimX() {
+            return 0;
+        }
+
+        @Override
+        public double getDimY() {
+            return 0;
+        }
+        
     }
 }

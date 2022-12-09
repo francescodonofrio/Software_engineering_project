@@ -179,4 +179,46 @@ public class RectangleShapeTest {
 
         System.out.println("Passed");
     }
+    
+    /**
+     * Test of getDimX method, of class LineShape.
+     */
+    @Test
+    public void getDimX() {
+        System.out.print("getDimX: ");
+
+        double initialDim1 = 70.0;
+        double initialDim2 = 130.0;
+        double finalDim1 = 150.0;
+        double finalDim2 = 300.0;
+        double width = finalDim1 - initialDim1;
+
+        RectangleShape instance = new RectangleShape();
+        
+        instance.setDim(initialDim1, initialDim2, finalDim1, finalDim2);
+
+        assertEquals(instance.getDimX(), width, 0.1);
+    }
+
+    /**
+     * Test of getDimY method, of class LineShape.
+     */
+    @Test
+    public void getDimY() {
+        System.out.print("getDimY: ");
+
+        double initialDim1 = 70.0;
+        double initialDim2 = 130.0;
+        double finalDim1 = 150.0;
+        double finalDim2 = 300.0;
+        double height = finalDim2 - initialDim2;
+
+        RectangleShape instance = new RectangleShape();
+        
+        instance.setDim(initialDim1, initialDim2, finalDim1, finalDim2);
+
+        assertEquals(instance.getDimY(), height, 0.1);
+        
+        System.out.println("Passed");
+    }
 }

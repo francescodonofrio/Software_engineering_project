@@ -6,6 +6,7 @@ import javafx.scene.effect.Effect;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 
 public abstract class ShapeAbstract implements ShapeInterface{
@@ -17,6 +18,7 @@ public abstract class ShapeAbstract implements ShapeInterface{
     protected String name;
     protected Translate translate = null;
     protected Rotate rotate = null;
+    protected Scale scale = null;
 
     /**
      * Reset the static variable used for numering the created shapes
@@ -39,6 +41,7 @@ public abstract class ShapeAbstract implements ShapeInterface{
     public static void finalizeLoad() {
         isBeingLoaded = true;
     }
+    private Rotate scalle;
 
     /**
      * Returns the shape contained in the current object
@@ -208,6 +211,44 @@ public abstract class ShapeAbstract implements ShapeInterface{
     @Override
     public void setRotate(Rotate rotate){
         this.rotate = rotate;
+    }
+    
+    /**
+     * 
+     * @return the scale transform applicated to the shape
+     */
+    @Override
+    public Scale getScale(){
+        return this.scale;
+    }
+    
+    /**
+     * Set the scale property
+     * 
+     * @param scale
+     */
+    @Override
+    public void setScale(Scale scale){
+        this.scale = scale;
+    }
+    
+    /**
+     * 
+     * @return the translate transform applicated to the shape
+     */
+    @Override
+    public Translate getTranslate(){
+        return this.translate;
+    }
+    
+    /**
+     * Set the translate property
+     * 
+     * @param translate
+     */
+    @Override
+    public void setTranslate(Translate translate){
+        this.translate = translate;
     }
     
 }

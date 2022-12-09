@@ -3,6 +3,8 @@ package shapes;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Scale;
+import javafx.scene.transform.Translate;
 
 public interface ShapeInterface {
 
@@ -110,6 +112,21 @@ public interface ShapeInterface {
      * @param value the status of the focus
      */
     void setFocus(boolean value);
+    
+    /**
+     * Return the dimension along the x-axis
+     * 
+     * @return the dimension of the shape along the x-axis
+     */
+    double getDimX();
+    
+    /**
+      * Return the dimension along the y-axis
+     * 
+     * @return the dimension of the shape along the y-axis
+     */
+    double getDimY();
+    
     /**
      * Set the shape inserted property of the shape
      * 
@@ -126,14 +143,40 @@ public interface ShapeInterface {
     
     /**
      * 
-     * @return the Rotate transform applicated to the shape
+     * @return the rotate transform applicated to the shape
      */
     Rotate getRotate();
     
     /**
-     * Set the rotation property to rotate
+     * Set the rotate property
      * 
      * @param rotate
      */
     void setRotate(Rotate rotate);
+    
+    /**
+     * 
+     * @return the scale transform applicated to the shape
+     */
+    Scale getScale();
+    
+    /**
+     * Set the scale property
+     * 
+     * @param scale
+     */
+    void setScale(Scale scale);
+    
+    /**
+     * 
+     * @return the translate transform applicated to the shape
+     */
+    Translate getTranslate();
+    
+    /**
+     * Set the translate property
+     * 
+     * @param translate
+     */
+    void setTranslate(Translate translate);
 }
