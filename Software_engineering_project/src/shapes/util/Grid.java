@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package shapes.util;
 
 import javafx.scene.layout.Pane;
@@ -12,23 +8,27 @@ import javafx.scene.shape.Line;
 
 public class Grid extends Pane{
     
-    private final double cmToPixel =  37.7952755906;
     private final double width, height;
+    private double size;
+    private final double cmToPixel =  37.7952755906;
+    private final double gridOpacity =  0.5;
     
     /**
      * Returns a new instance of Grid
      *
-     * @param width 
-     * @param height
+     * @param width of grid
+     * @param height of grid
      */
     public Grid(double width, double height) {    
         this.width = width;
         this.height = height;
+        this.size = 1;
         super.setPrefSize(width, height);
         super.setVisible(false);
         this.setMouseTransparent(true);
         this.setManaged(false);
-        this.makeGrid(1);
+        this.setOpacity(gridOpacity);
+        this.makeGrid(size);
     }
     
     
@@ -44,7 +44,7 @@ public class Grid extends Pane{
        return column;
     }
     
-    private void makeGrid(int size){   
+    private void makeGrid(double size){   
         double cellSize = size * cmToPixel;
         
         for (int x=1 ; x*cellSize < width; x++)
@@ -58,10 +58,14 @@ public class Grid extends Pane{
      * Resize the grid, with a new size for the cells of grids.
      * @param newSize the size in cm of the grid's square
      */
-    public void resize(int newSize){
+    public void resize(double newSize){
         super.getChildren().clear();
+        this.size = newSize;
         this.makeGrid(newSize);
     }
-    
+
+    public double getSize() {
+        return size;
+    }
     
 }
