@@ -16,15 +16,16 @@ public class Grid extends Pane{
     /**
      * Returns a new instance of Grid
      *
-     * @param width of grid
-     * @param height of grid
+     * @param drawingPane of the main program
+     * @param actualSize of grid cell
+     * @param isVisible 
      */
-    public Grid(double width, double height) {    
-        this.width = width;
-        this.height = height;
-        this.size = 1;
+    public Grid(Pane drawingPane, double actualSize, boolean isVisible) {    
+        this.width = drawingPane.getPrefWidth();
+        this.height = drawingPane.getPrefHeight();
+        this.size = actualSize;
         super.setPrefSize(width, height);
-        super.setVisible(false);
+        super.setVisible(isVisible);
         this.setMouseTransparent(true);
         this.setManaged(false);
         this.setOpacity(gridOpacity);

@@ -181,7 +181,7 @@ public class WindowController implements Initializable {
         
         drawingPane.setPrefSize(Screen.getMainScreen().getWidth(), Screen.getMainScreen().getHeight());
         drawingPane.setClip(new Rectangle (0,0, Screen.getMainScreen().getWidth(),Screen.getMainScreen().getHeight()));
-        grid = new Grid(drawingPane.getPrefWidth(), drawingPane.getPrefHeight());
+        grid = new Grid(drawingPane, 1, false);
         drawingPaneAndGrid.getChildren().add(grid);
         
     }
@@ -473,6 +473,10 @@ public class WindowController implements Initializable {
         drawingPane.setPrefHeight(queue.removeLast());
         drawingPane.setPrefWidth(queue.removeLast());
         zoomLevel.set(zoomLevel.getValue() - 1);
+        
+        drawingPaneAndGrid.getChildren().remove(grid);
+        grid = new Grid(drawingPane, gridSlider.getValue(), true);
+        drawingPaneAndGrid.getChildren().add(grid);
     }
 
     /**
@@ -494,6 +498,10 @@ public class WindowController implements Initializable {
         drawingPane.setPrefWidth(drawingPane.getPrefWidth() + drawingPane.getPrefWidth() * zoomOffset);
         drawingPane.setPrefHeight(drawingPane.getPrefHeight() + drawingPane.getPrefHeight() * zoomOffset);
         zoomLevel.set(zoomLevel.getValue() + 1);
+        
+        drawingPaneAndGrid.getChildren().remove(grid);
+        grid = new Grid(drawingPane, gridSlider.getValue(), true);
+        drawingPaneAndGrid.getChildren().add(grid);
     }
 
     /**
