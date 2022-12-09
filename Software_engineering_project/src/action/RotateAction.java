@@ -7,6 +7,7 @@ import exceptions.ShapeNullException;
 import javafx.event.Event;
 import java.awt.geom.Point2D;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.transform.Rotate;
 import shapes.ShapeInterface;
 
 public class RotateAction implements Action{
@@ -15,7 +16,9 @@ public class RotateAction implements Action{
     private boolean hasNotBeenExecuted;
     private Line2D.Double xLine, yLine;
     private Point2D.Double centerPoint;
-    private double initialAngle;
+    private double initialAngle, angle;
+    private final Rotate rotate;
+    
     /**
      * Returns a new instance of RotateAction
      *
@@ -27,6 +30,7 @@ public class RotateAction implements Action{
             throw new ShapeNullException();
         else
             this.selectedShape = selectedShape;
+        rotate = (Rotate)selectedShape.getShape().getTransforms().get(selectedShape.getShape().getTransforms().indexOf(selectedShape.getRotate()));
         this.hasNotBeenExecuted=true;
     }
 
@@ -37,7 +41,7 @@ public class RotateAction implements Action{
      */
     @Override
     public void execute(Event event) {
-        initialAngle = selectedShape.getShape().getRotate();
+        initialAngle = rotate.getAngle();
         
         double topLeftPointX = selectedShape.getShape().getBoundsInParent().getMinX();
         double topLeftPointY = selectedShape.getShape().getBoundsInParent().getMinY();
@@ -64,7 +68,7 @@ public class RotateAction implements Action{
         MouseEvent mouseEvent = (MouseEvent) event;
         Point2D.Double clickedPoint = new Point2D.Double(mouseEvent.getX(),mouseEvent.getY());
         
-        double angle, signAtan, signAngle, distanceX, distanceY;
+        double signAtan, signAngle, distanceX, distanceY;
         signAtan = 1;
         signAngle = 1;
         distanceX = distancePointToLine(xLine,clickedPoint);
@@ -74,14 +78,15 @@ public class RotateAction implements Action{
             signAtan = -1;
         if(clickedPoint.getY() < centerPoint.getY())
             signAngle = -1;
+        if(distanceX > distanceY)
+            angle = signAngle * (90-Math.toDegrees(signAtan * Math.atan(distanceX/distanceY)));
+        else
+            if(signAtan == 1)                                        
+                angle = signAngle * Math.toDegrees(signAtan * Math.atan(distanceY/distanceX));
+            else
+                angle = signAngle * (90-Math.toDegrees(signAtan * Math.atan(distanceX/distanceY)));
         
-        if(distanceX > distanceY){
-            angle = Math.toDegrees(signAtan * Math.atan(distanceX/distanceY));
-            selectedShape.getShape().setRotate(signAngle * (90-angle));
-        }else{
-            angle = Math.toDegrees(signAtan * Math.atan(distanceY/distanceX));
-            selectedShape.getShape().setRotate(signAngle * angle);
-        }
+        rotate.setAngle(angle);
     }
 
     /**
@@ -92,7 +97,7 @@ public class RotateAction implements Action{
      */
     @Override
     public void onMouseReleased(Event event) throws NotRotatedException  {
-        if (selectedShape.getShape().getRotate()-0.1 <= initialAngle && initialAngle <= selectedShape.getShape().getRotate()+0.1)
+        if (angle <= initialAngle && initialAngle <= angle+0.1)
             throw new NotRotatedException();
     }
 
@@ -106,7 +111,7 @@ public class RotateAction implements Action{
         if(hasNotBeenExecuted)
             throw new NotExecutedActionException();
         
-        selectedShape.getShape().setRotate(initialAngle);
+        rotate.setAngle(initialAngle);
         this.hasNotBeenExecuted=true;
     }
     

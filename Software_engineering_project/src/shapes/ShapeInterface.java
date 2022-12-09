@@ -2,6 +2,7 @@ package shapes;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
+import javafx.scene.transform.Rotate;
 
 public interface ShapeInterface {
 
@@ -122,4 +123,10 @@ public interface ShapeInterface {
      * @return return the shape inserted property of the shape
      */
     boolean getInserted();
+    
+    /**
+     * 
+     * @return the Rotate transform applicated to the shape
+     */
+    Rotate getRotate();
 }

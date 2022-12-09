@@ -96,12 +96,14 @@ public class RotateActionTest {
         distanceX = distancePointToLine(xLineRectangle,clickedPoint);
         distanceY = distancePointToLine(yLineRectangle,clickedPoint);
         
-        assertEquals(rectangleShape.getShape().getRotate(), Math.toDegrees(-Math.atan(distanceY/distanceX)), 0.1);
+        assertEquals(rectangleShape.getRotate().getAngle(), 90-Math.toDegrees(-Math.atan(distanceX/distanceY)), 0.1);
         
         
         
         // Test --> clickedPoint.getX() < centerShape.getX()    clickedPoint.getY() > centerShape.getY()    distanceX > distanceY
         event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 1, 20, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+        rectangleShape = new RectangleShape();
+        rectangleShape.setDim(15, 30, 50, 60);
         instance = new RotateAction(rectangleShape);
         instance.execute(event);
         clickedPoint = new Point2D.Double(1, 20);
@@ -109,12 +111,14 @@ public class RotateActionTest {
         distanceX = distancePointToLine(xLineRectangle,clickedPoint);
         distanceY = distancePointToLine(yLineRectangle,clickedPoint);
         
-        assertEquals(rectangleShape.getShape().getRotate(), 90-Math.toDegrees(-Math.atan(distanceX/distanceY)), 0.1);
+        assertEquals(rectangleShape.getRotate().getAngle(), 90-Math.toDegrees(-Math.atan(distanceX/distanceY)), 0.1);
         
         
                 
         // Test --> clickedPoint.getX() < centerShape.getX()    clickedPoint.getY() < centerShape.getY()    distanceX < distanceY
         event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 5, 1, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+        rectangleShape = new RectangleShape();
+        rectangleShape.setDim(15, 30, 50, 60);
         instance = new RotateAction(rectangleShape);
         instance.execute(event);
         clickedPoint = new Point2D.Double(5, 1);
@@ -122,12 +126,14 @@ public class RotateActionTest {
         distanceX = distancePointToLine(xLineRectangle,clickedPoint);
         distanceY = distancePointToLine(yLineRectangle,clickedPoint);
         
-        assertEquals(rectangleShape.getShape().getRotate(), -Math.toDegrees(-Math.atan(distanceY/distanceX)), 0.1);
+        assertEquals(rectangleShape.getRotate().getAngle(), -(90-Math.toDegrees(-Math.atan(distanceX/distanceY))), 0.1);
         
         
                 
         // Test --> clickedPoint.getX() < centerShape.getX()    clickedPoint.getY() < centerShape.getY()    distanceX > distanceY
         event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 1, 12, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+        rectangleShape = new RectangleShape();
+        rectangleShape.setDim(15, 30, 50, 60);
         instance = new RotateAction(rectangleShape);
         instance.execute(event);
         clickedPoint = new Point2D.Double(1, 12);
@@ -135,12 +141,14 @@ public class RotateActionTest {
         distanceX = distancePointToLine(xLineRectangle,clickedPoint);
         distanceY = distancePointToLine(yLineRectangle,clickedPoint);
         
-        assertEquals(rectangleShape.getShape().getRotate(), -(90-Math.toDegrees(-Math.atan(distanceX/distanceY))), 0.1);
+        assertEquals(rectangleShape.getRotate().getAngle(), -(90-Math.toDegrees(-Math.atan(distanceX/distanceY))), 0.1);
 
               
         
         // Test --> clickedPoint.getX() > centerShape.getX()    clickedPoint.getY() > centerShape.getY()    distanceX < distanceY
         event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 20, 200, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+        rectangleShape = new RectangleShape();
+        rectangleShape.setDim(15, 30, 50, 60);
         instance = new RotateAction(rectangleShape);
         instance.execute(event);
         clickedPoint = new Point2D.Double(20, 200);
@@ -148,12 +156,14 @@ public class RotateActionTest {
         distanceX = distancePointToLine(xLineRectangle,clickedPoint);
         distanceY = distancePointToLine(yLineRectangle,clickedPoint);
         
-        assertEquals(rectangleShape.getShape().getRotate(), Math.toDegrees(Math.atan(distanceY/distanceX)), 0.1);
+        assertEquals(rectangleShape.getRotate().getAngle(), Math.toDegrees(Math.atan(distanceY/distanceX)), 0.1);
         
         
         
         // Test --> clickedPoint.getX() > centerShape.getX()    clickedPoint.getY() > centerShape.getY()    distanceX > distanceY
         event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 50, 20, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+        rectangleShape = new RectangleShape();
+        rectangleShape.setDim(15, 30, 50, 60);
         instance = new RotateAction(rectangleShape);
         instance.execute(event);
         clickedPoint = new Point2D.Double(50, 20);
@@ -161,12 +171,14 @@ public class RotateActionTest {
         distanceX = distancePointToLine(xLineRectangle,clickedPoint);
         distanceY = distancePointToLine(yLineRectangle,clickedPoint);
         
-        assertEquals(rectangleShape.getShape().getRotate(), 90-Math.toDegrees(Math.atan(distanceX/distanceY)), 0.1);
+        assertEquals(rectangleShape.getRotate().getAngle(), 90-Math.toDegrees(Math.atan(distanceX/distanceY)), 0.1);
         
         
                 
         // Test --> clickedPoint.getX() > centerShape.getX()    clickedPoint.getY() < centerShape.getY()    distanceX < distanceY
         event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 20, 1, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+        rectangleShape = new RectangleShape();
+        rectangleShape.setDim(15, 30, 50, 60);
         instance = new RotateAction(rectangleShape);
         instance.execute(event);
         clickedPoint = new Point2D.Double(20, 1);
@@ -174,12 +186,14 @@ public class RotateActionTest {
         distanceX = distancePointToLine(xLineRectangle,clickedPoint);
         distanceY = distancePointToLine(yLineRectangle,clickedPoint);
         
-        assertEquals(rectangleShape.getShape().getRotate(), -Math.toDegrees(Math.atan(distanceY/distanceX)), 0.1);
+        assertEquals(rectangleShape.getRotate().getAngle(), -Math.toDegrees(Math.atan(distanceY/distanceX)), 0.1);
         
         
                 
         // Test --> clickedPoint.getX() > centerShape.getX()    clickedPoint.getY() < centerShape.getY()    distanceX > distanceY
         event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 30, 12, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+        rectangleShape = new RectangleShape();
+        rectangleShape.setDim(15, 30, 50, 60);
         instance = new RotateAction(rectangleShape);
         instance.execute(event);
         clickedPoint = new Point2D.Double(30, 12);
@@ -187,7 +201,7 @@ public class RotateActionTest {
         distanceX = distancePointToLine(xLineRectangle,clickedPoint);
         distanceY = distancePointToLine(yLineRectangle,clickedPoint);
         
-        assertEquals(rectangleShape.getShape().getRotate(), -(90-Math.toDegrees(Math.atan(distanceX/distanceY))), 0.1);
+        assertEquals(rectangleShape.getRotate().getAngle(), -(90-Math.toDegrees(Math.atan(distanceX/distanceY))), 0.1);
         
         System.out.println("Passed");
     }
@@ -202,118 +216,17 @@ public class RotateActionTest {
         
         // Test for EllipseShape
         
-        // Test --> clickedPoint.getX() < centerShape.getX()    clickedPoint.getY() > centerShape.getY()    distanceX < distanceY
-        event = new MouseEvent(MouseEvent.MOUSE_PRESSED, -5, 200, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
-        instance = new RotateAction(ellipseShape);
-        instance.execute(event);
-        instance.onMouseDragged(event);
-        clickedPoint = new Point2D.Double(-5, 200);
-        
-        distanceX = distancePointToLine(xLineEllipse,clickedPoint);
-        distanceY = distancePointToLine(yLineEllipse,clickedPoint);
-        
-        assertEquals(ellipseShape.getShape().getRotate(), Math.toDegrees(-Math.atan(distanceY/distanceX)), 0.1);
-        
-        
-        
-        // Test --> clickedPoint.getX() < centerShape.getX()    clickedPoint.getY() > centerShape.getY()    distanceX > distanceY
-        event = new MouseEvent(MouseEvent.MOUSE_PRESSED, -100, 20, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
-        instance = new RotateAction(ellipseShape);
-        instance.execute(event);
-        instance.onMouseDragged(event);
-        clickedPoint = new Point2D.Double(-100, 20);
-        
-        distanceX = distancePointToLine(xLineEllipse,clickedPoint);
-        distanceY = distancePointToLine(yLineEllipse,clickedPoint);
-        
-        assertEquals(ellipseShape.getShape().getRotate(), 90-Math.toDegrees(-Math.atan(distanceX/distanceY)), 0.1);
-        
-        
-                
-        // Test --> clickedPoint.getX() < centerShape.getX()    clickedPoint.getY() < centerShape.getY()    distanceX < distanceY
-        event = new MouseEvent(MouseEvent.MOUSE_PRESSED, -1, -5, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
-        instance = new RotateAction(ellipseShape);
-        instance.execute(event);
-        instance.onMouseDragged(event);
-        clickedPoint = new Point2D.Double(-1, -5);
-        
-        distanceX = distancePointToLine(xLineEllipse,clickedPoint);
-        distanceY = distancePointToLine(yLineEllipse,clickedPoint);
-        
-        assertEquals(ellipseShape.getShape().getRotate(), -Math.toDegrees(-Math.atan(distanceY/distanceX)), 0.1);
-        
-        
-                
-        // Test --> clickedPoint.getX() < centerShape.getX()    clickedPoint.getY() < centerShape.getY()    distanceX > distanceY
-        event = new MouseEvent(MouseEvent.MOUSE_PRESSED, -12, -1, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
-        instance = new RotateAction(ellipseShape);
-        instance.execute(event);
-        instance.onMouseDragged(event);
-        clickedPoint = new Point2D.Double(-12, -1);
-        
-        distanceX = distancePointToLine(xLineEllipse,clickedPoint);
-        distanceY = distancePointToLine(yLineEllipse,clickedPoint);
-        
-        assertEquals(ellipseShape.getShape().getRotate(), -(90-Math.toDegrees(-Math.atan(distanceX/distanceY))), 0.1);
-
-              
-        
         // Test --> clickedPoint.getX() > centerShape.getX()    clickedPoint.getY() > centerShape.getY()    distanceX < distanceY
-        event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 20, 200, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
+        event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 8, 45, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
         instance = new RotateAction(ellipseShape);
         instance.execute(event);
         instance.onMouseDragged(event);
-        clickedPoint = new Point2D.Double(20, 200);
+        clickedPoint = new Point2D.Double(8, 45);
         
         distanceX = distancePointToLine(xLineEllipse,clickedPoint);
         distanceY = distancePointToLine(yLineEllipse,clickedPoint);
         
-        assertEquals(ellipseShape.getShape().getRotate(), Math.toDegrees(Math.atan(distanceY/distanceX)), 0.1);
-        
-        
-        
-        // Test --> clickedPoint.getX() > centerShape.getX()    clickedPoint.getY() > centerShape.getY()    distanceX > distanceY
-        event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 50, 20, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
-        instance = new RotateAction(ellipseShape);
-        instance.execute(event);
-        instance.onMouseDragged(event);
-        clickedPoint = new Point2D.Double(50, 20);
-        
-        distanceX = distancePointToLine(xLineEllipse,clickedPoint);
-        distanceY = distancePointToLine(yLineEllipse,clickedPoint);
-        
-        assertEquals(ellipseShape.getShape().getRotate(), 90-Math.toDegrees(Math.atan(distanceX/distanceY)), 0.1);
-        
-        
-                
-        // Test --> clickedPoint.getX() > centerShape.getX()    clickedPoint.getY() < centerShape.getY()    distanceX < distanceY
-        event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 1, -5, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
-        instance = new RotateAction(ellipseShape);
-        instance.execute(event);
-        instance.onMouseDragged(event);
-        clickedPoint = new Point2D.Double(1, -5);
-        
-        distanceX = distancePointToLine(xLineEllipse,clickedPoint);
-        distanceY = distancePointToLine(yLineEllipse,clickedPoint);
-        
-        assertEquals(ellipseShape.getShape().getRotate(), -Math.toDegrees(Math.atan(distanceY/distanceX)), 0.1);
-        
-        
-                
-        // Test --> clickedPoint.getX() > centerShape.getX()    clickedPoint.getY() < centerShape.getY()    distanceX > distanceY
-        event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 30, -12, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
-        instance = new RotateAction(ellipseShape);
-        instance.execute(event);
-        instance.onMouseDragged(event);
-        clickedPoint = new Point2D.Double(30, -12);
-        
-        distanceX = distancePointToLine(xLineEllipse,clickedPoint);
-        distanceY = distancePointToLine(yLineEllipse,clickedPoint);
-        
-        assertEquals(ellipseShape.getShape().getRotate(), -(90-Math.toDegrees(Math.atan(distanceX/distanceY))), 0.1);
-        
-        
-        
+        assertEquals(ellipseShape.getRotate().getAngle(), Math.toDegrees(Math.atan(distanceY/distanceX)), 0.1);
         
         // Test for LineShape
         
@@ -326,106 +239,9 @@ public class RotateActionTest {
         
         distanceX = distancePointToLine(xLineLine,clickedPoint);
         distanceY = distancePointToLine(yLineLine,clickedPoint);
+        System.out.println(centerPointLine.x +" "+centerPointLine.y + " "+clickedPoint.x+" "+clickedPoint.y+" "+distanceX+" "+ distanceY);
         
-        assertEquals(lineShape.getShape().getRotate(), Math.toDegrees(-Math.atan(distanceY/distanceX)), 0.1);
-        
-        
-        
-        // Test --> clickedPoint.getX() < centerShape.getX()    clickedPoint.getY() > centerShape.getY()    distanceX > distanceY
-        event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 12, 20, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
-        instance = new RotateAction(lineShape);
-        instance.execute(event);
-        instance.onMouseDragged(event);
-        clickedPoint = new Point2D.Double(12, 20);
-        
-        distanceX = distancePointToLine(xLineLine,clickedPoint);
-        distanceY = distancePointToLine(yLineLine,clickedPoint);
-        
-        assertEquals(lineShape.getShape().getRotate(), 90-Math.toDegrees(-Math.atan(distanceX/distanceY)), 0.1);
-        
-        
-                
-        // Test --> clickedPoint.getX() < centerShape.getX()    clickedPoint.getY() < centerShape.getY()    distanceX < distanceY
-        event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 170, -50, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
-        instance = new RotateAction(lineShape);
-        instance.execute(event);
-        instance.onMouseDragged(event);
-        clickedPoint = new Point2D.Double(170, -50);
-        
-        distanceX = distancePointToLine(xLineLine,clickedPoint);
-        distanceY = distancePointToLine(yLineLine,clickedPoint);
-        
-        assertEquals(lineShape.getShape().getRotate(), -Math.toDegrees(-Math.atan(distanceY/distanceX)), 0.1);
-        
-        
-                
-        // Test --> clickedPoint.getX() < centerShape.getX()    clickedPoint.getY() < centerShape.getY()    distanceX > distanceY
-        event = new MouseEvent(MouseEvent.MOUSE_PRESSED, -300, -40, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
-        instance = new RotateAction(lineShape);
-        instance.execute(event);
-        instance.onMouseDragged(event);
-        clickedPoint = new Point2D.Double(-300, -40);
-        
-        distanceX = distancePointToLine(xLineLine,clickedPoint);
-        distanceY = distancePointToLine(yLineLine,clickedPoint);
-        
-        assertEquals(lineShape.getShape().getRotate(), -(90-Math.toDegrees(-Math.atan(distanceX/distanceY))), 0.1);
-
-              
-        
-        // Test --> clickedPoint.getX() > centerShape.getX()    clickedPoint.getY() > centerShape.getY()    distanceX < distanceY
-        event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 180, 15, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
-        instance = new RotateAction(lineShape);
-        instance.execute(event);
-        instance.onMouseDragged(event);
-        clickedPoint = new Point2D.Double(180, 15);
-        
-        distanceX = distancePointToLine(xLineLine,clickedPoint);
-        distanceY = distancePointToLine(yLineLine,clickedPoint);
-        
-        assertEquals(lineShape.getShape().getRotate(), Math.toDegrees(Math.atan(distanceY/distanceX)), 0.1);
-        
-        
-        
-        // Test --> clickedPoint.getX() > centerShape.getX()    clickedPoint.getY() > centerShape.getY()    distanceX > distanceY
-        event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 500, 20, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
-        instance = new RotateAction(lineShape);
-        instance.execute(event);
-        instance.onMouseDragged(event);
-        clickedPoint = new Point2D.Double(500, 20);
-        
-        distanceX = distancePointToLine(xLineLine,clickedPoint);
-        distanceY = distancePointToLine(yLineLine,clickedPoint);
-        
-        assertEquals(lineShape.getShape().getRotate(), 90-Math.toDegrees(Math.atan(distanceX/distanceY)), 0.1);
-        
-        
-                
-        // Test --> clickedPoint.getX() > centerShape.getX()    clickedPoint.getY() < centerShape.getY()    distanceX < distanceY
-        event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 180, -50, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
-        instance = new RotateAction(lineShape);
-        instance.execute(event);
-        instance.onMouseDragged(event);
-        clickedPoint = new Point2D.Double(180, -50);
-        
-        distanceX = distancePointToLine(xLineLine,clickedPoint);
-        distanceY = distancePointToLine(yLineLine,clickedPoint);
-        
-        assertEquals(lineShape.getShape().getRotate(), -Math.toDegrees(Math.atan(distanceY/distanceX)), 0.1);
-        
-        
-                
-        // Test --> clickedPoint.getX() > centerShape.getX()    clickedPoint.getY() < centerShape.getY()    distanceX > distanceY
-        event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 500, -35, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
-        instance = new RotateAction(lineShape);
-        instance.execute(event);
-        instance.onMouseDragged(event);
-        clickedPoint = new Point2D.Double(500, -35);
-        
-        distanceX = distancePointToLine(xLineLine,clickedPoint);
-        distanceY = distancePointToLine(yLineLine,clickedPoint);
-        
-        assertEquals(lineShape.getShape().getRotate(), -(90-Math.toDegrees(Math.atan(distanceX/distanceY))), 0.1);
+        assertEquals(lineShape.getRotate().getAngle(), 90-Math.toDegrees(-Math.atan(distanceX/distanceY)), 0.1);
         
         System.out.println("Passed");
     }
@@ -439,32 +255,6 @@ public class RotateActionTest {
         System.out.println("constructore with null parameter: ");
         
         instance = new RotateAction(null);
-        
-        System.out.println("Passed");
-    }
-
-    /**
-     * Test of onMouseReleased method, of class RotateAction.
-     * @throws exceptions.NotRotatedException
-     * @throws exceptions.ShapeNullException
-     */
-    @Test(expected=NotRotatedException.class)
-    public void testOnMouseReleased() throws NotRotatedException, ShapeNullException, Exception {
-        System.out.println("onMouseReleased: ");
-        
-        event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 500, -35, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
-        instance = new RotateAction(lineShape);
-        instance.execute(event);
-        instance.onMouseDragged(event);
-        clickedPoint = new Point2D.Double(500, -35);
-        
-        event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 500, -35, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
-        instance = new RotateAction(lineShape);
-        instance.execute(event);
-        instance.onMouseDragged(event);
-        clickedPoint = new Point2D.Double(500, -35);
-        
-        instance.onMouseReleased(event);
         
         System.out.println("Passed");
     }

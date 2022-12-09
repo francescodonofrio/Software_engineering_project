@@ -1,6 +1,7 @@
 package shapes;
 
 import javafx.scene.shape.Ellipse;
+import javafx.scene.transform.Rotate;
 
 public class EllipseShape extends CloseContourShape {
 
@@ -16,6 +17,8 @@ public class EllipseShape extends CloseContourShape {
             EllipseShape.cont++;
             inserted = false;
         }
+        rotate = new Rotate();
+        shape.getTransforms().add(rotate);
 
         this.name = "Ellipse " + EllipseShape.cont;
     }

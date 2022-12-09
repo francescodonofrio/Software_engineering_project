@@ -163,9 +163,6 @@ public class WindowController implements Initializable {
         shapesColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         shapesTable.setItems(listInsertedShapes);
 
-//        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-//        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-
         colorPickerInternal.setValue(Color.TRANSPARENT);
         colorPickerContour.setValue(Color.BLACK);
 

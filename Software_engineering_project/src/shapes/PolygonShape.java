@@ -2,6 +2,7 @@ package shapes;
 
 import javafx.collections.ObservableList;
 import javafx.scene.shape.Polygon;
+import javafx.scene.transform.Rotate;
 
 public class PolygonShape extends CloseContourShape {
 
@@ -19,6 +20,8 @@ public class PolygonShape extends CloseContourShape {
         }
 
         this.name = "Polygon " + PolygonShape.cont;
+        rotate = new Rotate();
+        shape.getTransforms().add(rotate);
 
         if(!updatedCont)
             PolygonShape.cont++;

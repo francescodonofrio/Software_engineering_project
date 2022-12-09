@@ -5,6 +5,7 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Effect;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
+import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 
 public abstract class ShapeAbstract implements ShapeInterface{
@@ -14,7 +15,8 @@ public abstract class ShapeAbstract implements ShapeInterface{
     protected static boolean isBeingLoaded = false;
     protected Shape shape;
     protected String name;
-    protected Translate translate;
+    protected Translate translate = null;
+    protected Rotate rotate = null;
 
     /**
      * Reset the static variable used for numering the created shapes
@@ -187,6 +189,15 @@ public abstract class ShapeAbstract implements ShapeInterface{
     @Override
     public boolean getInserted(){
         return inserted;
+    }
+    
+    /**
+     * 
+     * @return the Rotate transform applicated to the shape
+     */
+    @Override
+    public Rotate getRotate(){
+        return rotate;
     }
     
 }

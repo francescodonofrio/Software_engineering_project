@@ -3,6 +3,7 @@ package shapes;
 
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.transform.Rotate;
 
 public class TextShape extends OpenContourShape {
 
@@ -17,6 +18,8 @@ public class TextShape extends OpenContourShape {
                 TextShape.cont++;
             inserted = false;
         }
+        rotate = new Rotate();
+        shape.getTransforms().add(rotate);
 
         this.name = "Text " + TextShape.cont;
     }

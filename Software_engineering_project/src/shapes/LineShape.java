@@ -1,6 +1,7 @@
 package shapes;
 
 import javafx.scene.shape.Line;
+import javafx.scene.transform.Rotate;
 
 public class LineShape extends OpenContourShape {
 
@@ -14,6 +15,8 @@ public class LineShape extends OpenContourShape {
             LineShape.cont++;
             inserted = false;
         }
+        rotate = new Rotate();
+        shape.getTransforms().add(rotate);
 
         this.name = "Line " + LineShape.cont;
     }
