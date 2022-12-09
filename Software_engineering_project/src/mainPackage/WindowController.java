@@ -98,6 +98,8 @@ public class WindowController implements Initializable {
     private Slider gridSlider;
     @FXML
     private Button textBtn;
+    @FXML
+    private Label mainLabel;
     
     /**
      * Called to initialize a controller after its root element has been
@@ -129,6 +131,7 @@ public class WindowController implements Initializable {
                         remItem.setFocus(false);
                         int index = listInsertedShapes.indexOf(remItem);
                         shapesTable.getSelectionModel().clearSelection(index);
+                        resetMainLabel();
                     }
                 });
                 change.getAddedSubList().forEach(addItem -> {
@@ -189,6 +192,7 @@ public class WindowController implements Initializable {
      */
     @FXML
     private void lineSegmentSelection(ActionEvent event) {
+        mainLabel.setText("Draw a line on paper with left click");
         selectedShape = new LineShape();
         action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes);
         disableClick.set(false);
@@ -201,6 +205,7 @@ public class WindowController implements Initializable {
      */
     @FXML
     private void rectangleSelection(ActionEvent event) {
+        mainLabel.setText("Draw a rectangle on paper with left click");
         selectedShape = new RectangleShape();
         action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes);
         disableClick.set(false);
@@ -213,6 +218,7 @@ public class WindowController implements Initializable {
      */
     @FXML
     private void ellipseSelection(ActionEvent event) {
+        mainLabel.setText("Draw an ellipse on paper with left click");
         selectedShape = new EllipseShape();
         action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes);
         disableClick.set(false);
@@ -226,9 +232,11 @@ public class WindowController implements Initializable {
     @FXML
     private void polygonSelection(ActionEvent event) {
         if (disableClick.get()) {
+            resetMainLabel();
             disableClick.set(false);
             action = new MoveAction(selectedInsertedShape, listInsertedShapes);
         } else {
+            mainLabel.setText("Draw a polygon on paper with multiples left click, click again Polygon button for ending the draw");
             disableClick.set(true);
             action = new DrawPolygonAction(colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes, disableClick);
         }
@@ -282,6 +290,7 @@ public class WindowController implements Initializable {
             if (!disableClick.get()) {
                 // Here we reset the default action to move action if a polygon has been inserted
                 action = new MoveAction(selectedInsertedShape, listInsertedShapes);
+                resetMainLabel();
             }
         }
     }
@@ -295,8 +304,10 @@ public class WindowController implements Initializable {
     private void drawingWindowOnMouseDragged(MouseEvent event) {
         if (event.getButton() == MouseButton.SECONDARY)
             rightClickPane = event;
-        else
+        else{
             invoker.executeOnMouseDragged(action, event);
+            resetMainLabel();
+        }
     }
 
     /**
@@ -308,8 +319,10 @@ public class WindowController implements Initializable {
     private void drawingWindowOnMousePressed(MouseEvent event) {
         if (event.getButton() == MouseButton.SECONDARY)
             rightClickPane = event;
-        else
+        else{
             invoker.execute(action, event);
+            resetMainLabel();
+        }
     }
 
     /**
@@ -320,6 +333,7 @@ public class WindowController implements Initializable {
     @FXML
     public void resizeButtonOnClick(ActionEvent actionEvent) {
         try {
+            mainLabel.setText("Resize selected shape with left click or drag and drop");
             action = new ResizeAction(selectedInsertedShape.get(0));
             disableClick.set(false);
         } catch (ShapeNullException ex) {
@@ -336,7 +350,7 @@ public class WindowController implements Initializable {
     @FXML
     private void copyButtonOnClick(ActionEvent event) {
         ShapeInterface copiedShape = shapesTable.getSelectionModel().getSelectedItem();
-
+        
         try {
             this.action = new CopyAction(clipboard, copiedShape);
         } catch (NotShapeToCopyException ex) {
@@ -344,6 +358,7 @@ public class WindowController implements Initializable {
             return;
         }
         invoker.execute(this.action, event);
+        resetMainLabel();
     }
 
     /**
@@ -506,7 +521,8 @@ public class WindowController implements Initializable {
     
     @FXML
     private void rotateButtonOnClick(ActionEvent event) {
-        try {
+        try{
+            mainLabel.setText("Rotate the selected shape with left click or drag and drop on ");
             action = new RotateAction(selectedInsertedShape.get(0));
             disableClick.set(false);
         } catch (ShapeNullException ex) {
@@ -548,6 +564,7 @@ public class WindowController implements Initializable {
     
     @FXML
     private void textSelection(ActionEvent event) throws InterruptedException {
+        mainLabel.setText("Insert a text on paper with left click");
         selectedShape = new TextShape();
         action = new DrawTextAction(selectedShape, colorPickerContour.valueProperty(), listInsertedShapes,drawingPane);
     }
@@ -577,4 +594,8 @@ public class WindowController implements Initializable {
             action = new MoveAction(selectedInsertedShape, listInsertedShapes);
         }}
     
+    @FXML
+    private void resetMainLabel(){
+        mainLabel.setText("Geometrical Drawing");
+    }
 }
