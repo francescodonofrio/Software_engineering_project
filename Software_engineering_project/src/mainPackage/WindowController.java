@@ -306,7 +306,11 @@ public class WindowController implements Initializable {
         if (event.getButton() == MouseButton.SECONDARY)
             rightClickPane = event;
         else{
-            invoker.executeOnMouseDragged(action, event);
+            try {
+                invoker.executeOnMouseDragged(action, event);
+            } catch (Exception ex) {
+                Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
+            }
             resetMainLabel();
         }
     }

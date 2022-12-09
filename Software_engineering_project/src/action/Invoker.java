@@ -43,8 +43,9 @@ public class Invoker {
      *
      * @param action the action on whom call the onMouseDragged method
      * @param event  the event passed to the onMouseDragged method of the action
+     * @throws java.lang.Exception
      */
-    public void executeOnMouseDragged(Action action, Event event) {
+    public void executeOnMouseDragged(Action action, Event event) throws Exception {
         action.onMouseDragged(event);
     }
 

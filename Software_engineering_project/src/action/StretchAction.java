@@ -12,7 +12,7 @@ import shapes.ShapeInterface;
 public class StretchAction implements Action{
 
     private final ShapeInterface selectedShape;
-    private double halfWidth, width, previousStretch, stretchOffset;
+    private double previousStretch;
     private boolean hasNotBeenExecuted;
     private MouseEvent mouseEvent;
     private final Scale scale;
@@ -54,15 +54,7 @@ public class StretchAction implements Action{
     @Override
     public void onMouseDragged(Event event) throws ShapeWithNullWidthException{
         mouseEvent = (MouseEvent) event;
-        width = selectedShape.getDimX();
-        if(width == 0)
-            throw new ShapeWithNullWidthException();
-        halfWidth = width/2;
-        stretchOffset = Math.abs((2*(mouseEvent.getX()-width))/halfWidth);
-        if(stretchOffset < 1)
-            stretchOffset = 1;
-        if(mouseEvent.getX() > -Math.abs(width))
-            scale.setX(stretchOffset);
+        selectedShape.setStretchX(mouseEvent.getX());
     }
 
     /**

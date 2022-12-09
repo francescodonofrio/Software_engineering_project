@@ -76,7 +76,7 @@ public class ResizeActionTest {
      * @throws exceptions.ShapeNullException
      */
     @Test
-    public void testOnMouseDragged() throws ShapeNullException {
+    public void testOnMouseDragged() throws ShapeNullException, Exception {
         System.out.print("onMouseDragged: ");
 
         event = new MouseEvent(MouseEvent.MOUSE_DRAGGED, 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);

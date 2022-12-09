@@ -64,7 +64,7 @@ public class InvokerTest {
      * Test of executeOnMouseDragged method, of class Invoker.
      */
     @Test
-    public void testExecuteOnMouseDragged() {
+    public void testExecuteOnMouseDragged() throws Exception {
         System.out.print("executeOnMouseDragged: ");
         event = new MouseEvent(MouseEvent.MOUSE_DRAGGED, 180, 200, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
 

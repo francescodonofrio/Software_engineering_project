@@ -1,5 +1,6 @@
 package shapes;
 
+import exceptions.ShapeWithNullWidthException;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Effect;
@@ -251,4 +252,22 @@ public abstract class ShapeAbstract implements ShapeInterface{
         this.translate = translate;
     }
     
+    /**
+     * Stretch the shape along the x-axis
+     * 
+     * @param X the point along the x-axis for whom stretch the shape
+     * @throws exceptions.ShapeWithNullWidthException
+     */
+    @Override
+    public void setStretchX(double X) throws ShapeWithNullWidthException{
+        double width = this.getDimX();
+        if(width == 0)
+            throw new ShapeWithNullWidthException();
+        double halfWidth = width/2;
+        double stretchOffset = Math.abs((2*(X-width))/halfWidth);
+        if(stretchOffset < 1)
+            stretchOffset = 1;
+        if(X > -Math.abs(width))
+            scale.setX(stretchOffset);
+    }
 }

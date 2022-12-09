@@ -1,5 +1,6 @@
 package shapes;
 
+import exceptions.ShapeWithNullWidthException;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
@@ -309,14 +310,42 @@ public class ShapeAbstractTest {
         System.out.println("Passed");
     }
     
+    /**
+     * Test of setStretchX method, of class ShapeAbstract.
+     * 
+     * @throws exceptions.ShapeWithNullWidthException
+     */
+    @Test(expected=ShapeWithNullWidthException.class)
+    public void setStretchX() throws ShapeWithNullWidthException{
+        System.out.print("setStretchX: ");
+        
+        double width = shape.getDimX();
+        double halfWidth = width/2;
+        double stretchOffset = Math.abs((2*(200-width))/halfWidth);
+        if(stretchOffset < 1)
+            stretchOffset = 1;
+        shape.setStretchX(200);
+        
+        assertEquals(shape.getScale().getX(), stretchOffset, 0.1);
+        
+        shape.setDim(0, 0, 0, 0);
+        shape.setStretchX(15);
+
+        System.out.println("Passed");
+    }
+    
     public class MockShape extends ShapeAbstract {
+        private double width;
         public MockShape(Shape shape) {
             this.shape = shape;
             this.name = "Rectangle1";
+            this.scale = new Scale();
+            width = 15;
         }
 
         @Override
         public void setDim(double initialX, double initialY, double finalX, double finalY) {
+            width = 0;
         }
 
         @Override
@@ -326,7 +355,7 @@ public class ShapeAbstractTest {
 
         @Override
         public double getDimX() {
-            return 0;
+            return width;
         }
 
         @Override

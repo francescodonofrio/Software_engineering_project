@@ -60,9 +60,10 @@ public class MoveActionTest {
 
     /**
      * Test of onMouseDragged method, of class MoveAction.
+     * @throws java.lang.Exception
      */
     @Test
-    public void testOnMouseDragged() {
+    public void testOnMouseDragged() throws Exception {
         System.out.print("onMouseDragged: ");
         
         double startX=rectangle.getLayoutX(),
@@ -104,9 +105,10 @@ public class MoveActionTest {
     /**
      * Test of undo method, of class MoveAction.
      * @throws exceptions.NoActionsException
+     * @throws exceptions.NotExecutedActionException
      */
     @Test(expected =NoActionsException.class)
-    public void testUndo() throws NoActionsException, NotExecutedActionException {
+    public void testUndo() throws NoActionsException, NotExecutedActionException, Exception {
         System.out.print("execute: ");
         
         double startX=rectangle.getLayoutX(),

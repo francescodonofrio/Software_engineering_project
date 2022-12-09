@@ -1,5 +1,6 @@
 package shapes;
 
+import exceptions.ShapeWithNullWidthException;
 import javafx.collections.ObservableList;
 import javafx.scene.shape.Polygon;
 import javafx.scene.transform.Rotate;
@@ -142,5 +143,15 @@ public class PolygonShape extends CloseContourShape {
     @Override
     public double getDimY() {
         return this.height;
+    }
+    
+    /**
+     * Stretch the shape along the x-axis
+     * 
+     * @param X the point along the x-axis for whom stretch the shape
+     * @throws exceptions.ShapeWithNullWidthException
+     */
+    @Override
+    public void setStretchX(double X) throws ShapeWithNullWidthException{
     }
 }

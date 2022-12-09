@@ -1,5 +1,6 @@
 package shapes;
 
+import exceptions.ShapeWithNullWidthException;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import javafx.scene.transform.Rotate;
@@ -179,4 +180,12 @@ public interface ShapeInterface {
      * @param translate
      */
     void setTranslate(Translate translate);
+    
+    /**
+     * Stretch the shape along the x-axis
+     * 
+     * @param X the point along the x-axis for whom stretch the shape
+     * @throws exceptions.ShapeWithNullWidthException
+     */
+    void setStretchX(double X) throws ShapeWithNullWidthException;
 }
