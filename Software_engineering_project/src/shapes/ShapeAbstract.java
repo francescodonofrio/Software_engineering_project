@@ -200,4 +200,14 @@ public abstract class ShapeAbstract implements ShapeInterface{
         return rotate;
     }
     
+    /**
+     * Set the rotation property to rotate
+     * 
+     * @param rotate
+     */
+    @Override
+    public void setRotate(Rotate rotate){
+        this.rotate = rotate;
+    }
+    
 }

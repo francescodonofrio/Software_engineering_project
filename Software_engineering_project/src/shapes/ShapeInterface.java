@@ -129,4 +129,11 @@ public interface ShapeInterface {
      * @return the Rotate transform applicated to the shape
      */
     Rotate getRotate();
+    
+    /**
+     * Set the rotation property to rotate
+     * 
+     * @param rotate
+     */
+    void setRotate(Rotate rotate);
 }
