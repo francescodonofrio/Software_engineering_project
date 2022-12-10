@@ -173,4 +173,13 @@ public class PolygonShape extends CloseContourShape {
     public void setHeight(double initialY, double finalY) {
         height=finalY-initialY;
     }
+    
+    /**
+     * Rotate the shape of passed parameter
+     * 
+     * @param angle the angle of rotation
+     */
+    @Override
+    public void setRotation(double angle){
+    }
 }
