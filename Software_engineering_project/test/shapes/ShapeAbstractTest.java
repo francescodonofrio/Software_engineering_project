@@ -334,6 +334,41 @@ public class ShapeAbstractTest {
         System.out.println("Passed");
     }
     
+    /**
+     * Test of setRotation method, of class ShapeAbstract.
+     * 
+     */    
+    @Test
+    public void setRotation(){
+        System.out.print("setRotation: ");
+        
+        Rotate rotate = new Rotate();
+        shape.setRotate(rotate);
+        shape.setRotation(20);
+        
+        assertEquals(shape.getRotation(), 20, 0.1);
+
+        System.out.println("Passed");
+        
+    }
+    
+    /**
+     * Test of getRotation method, of class ShapeAbstract.
+     * 
+     */        
+    @Test
+    public void getRotation(){
+        System.out.print("getRotation: ");
+        
+        Rotate rotate = new Rotate();
+        shape.setRotate(rotate);
+        shape.setRotation(20);
+        
+        assertEquals(shape.getRotation(), 20, 0.1);
+
+        System.out.println("Passed");        
+    }
+    
     public class MockShape extends ShapeAbstract {
         private double width;
         public MockShape(Shape shape) {

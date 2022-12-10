@@ -188,4 +188,17 @@ public interface ShapeInterface {
      * @throws exceptions.ShapeWithNullWidthException
      */
     void setStretchX(double X) throws ShapeWithNullWidthException;
+    
+    /**
+     * Rotate the shape of passed parameter
+     * 
+     * @param angle the angle of rotation
+     */
+    void setRotation(double angle);
+    
+    /**
+     * 
+     * @return the angle of rotation of the shape
+     */
+    double getRotation();
 }
