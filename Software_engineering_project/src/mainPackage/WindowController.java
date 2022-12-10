@@ -37,6 +37,8 @@ import java.util.logging.Logger;
 import javafx.scene.Group;
 import javafx.scene.input.SwipeEvent;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import shapes.TextShape;
 import shapes.util.Grid;
 
@@ -78,6 +80,16 @@ public class WindowController implements Initializable {
     private Button polygonBtn1;
     @FXML
     private Group drawingPaneAndGrid;
+    @FXML
+    private CheckMenuItem gridCheckItem;
+    @FXML
+    private Slider gridSlider;
+    @FXML
+    private Button textBtn;
+    @FXML
+    private Label mainLabel;
+    @FXML
+    private MenuButton buttonTextSize;
     
     private Invoker invoker;
     private ShapeInterface selectedShape;
@@ -94,16 +106,7 @@ public class WindowController implements Initializable {
     private final double zoomOffset = 0.2;
     private final SimpleBooleanProperty disableClick = new SimpleBooleanProperty(false);
     private Grid grid;
-    @FXML
-    private CheckMenuItem gridCheckItem;
-    @FXML
-    private Slider gridSlider;
-    @FXML
-    private Button textBtn;
-    @FXML
-    private Label mainLabel;
-    @FXML
-    private MenuButton buttonTextSize;
+    private Font defaultFont, boldFont;
     
     /**
      * Called to initialize a controller after its root element has been
@@ -195,7 +198,8 @@ public class WindowController implements Initializable {
                 }
         });
         
-        
+        defaultFont = mainLabel.getFont();
+        boldFont = Font.font(mainLabel.getFont().getFamily(), FontWeight.BOLD, mainLabel.getFont().getSize());
         
     }
 
@@ -207,6 +211,7 @@ public class WindowController implements Initializable {
     @FXML
     private void lineSegmentSelection(ActionEvent event) {
         mainLabel.setText("Draw a line on paper with left click");
+        mainLabel.setFont(boldFont);
         selectedShape = new LineShape();
         action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes);
         disableClick.set(false);
@@ -220,6 +225,7 @@ public class WindowController implements Initializable {
     @FXML
     private void rectangleSelection(ActionEvent event) {
         mainLabel.setText("Draw a rectangle on paper with left click");
+        mainLabel.setFont(boldFont);
         selectedShape = new RectangleShape();
         action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes);
         disableClick.set(false);
@@ -233,6 +239,7 @@ public class WindowController implements Initializable {
     @FXML
     private void ellipseSelection(ActionEvent event) {
         mainLabel.setText("Draw an ellipse on paper with left click");
+        mainLabel.setFont(boldFont);
         selectedShape = new EllipseShape();
         action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes);
         disableClick.set(false);
@@ -251,6 +258,7 @@ public class WindowController implements Initializable {
             action = new MoveAction(selectedInsertedShape, listInsertedShapes);
         } else {
             mainLabel.setText("Draw a polygon on paper with multiples left click, click again Polygon button for ending the draw");
+            mainLabel.setFont(boldFont);
             disableClick.set(true);
             action = new DrawPolygonAction(colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes, disableClick);
         }
@@ -352,6 +360,7 @@ public class WindowController implements Initializable {
     public void resizeButtonOnClick(ActionEvent actionEvent) {
         try {
             mainLabel.setText("Resize selected shape with left click or drag and drop");
+            mainLabel.setFont(boldFont);
             action = new ResizeAction(selectedInsertedShape.get(0));
             disableClick.set(false);
         } catch (ShapeNullException ex) {
@@ -492,7 +501,7 @@ public class WindowController implements Initializable {
         zoomLevel.set(zoomLevel.getValue() - 1);
         
         drawingPaneAndGrid.getChildren().remove(grid);
-        grid = new Grid(drawingPane, gridSlider.getValue(), true);
+        grid = new Grid(drawingPane, gridSlider.getValue(), gridCheckItem.isSelected());
         drawingPaneAndGrid.getChildren().add(grid);
     }
 
@@ -517,7 +526,7 @@ public class WindowController implements Initializable {
         zoomLevel.set(zoomLevel.getValue() + 1);
         
         drawingPaneAndGrid.getChildren().remove(grid);
-        grid = new Grid(drawingPane, gridSlider.getValue(), true);
+        grid = new Grid(drawingPane, gridSlider.getValue(), gridCheckItem.isSelected());
         drawingPaneAndGrid.getChildren().add(grid);
     }
 
@@ -549,6 +558,7 @@ public class WindowController implements Initializable {
     private void rotateButtonOnClick(ActionEvent event) {
         try{
             mainLabel.setText("Rotate the selected shape with left click or drag and drop on ");
+            mainLabel.setFont(boldFont);
             action = new RotateAction(selectedInsertedShape.get(0));
             disableClick.set(false);
         } catch (ShapeNullException ex) {
@@ -599,9 +609,11 @@ public class WindowController implements Initializable {
     
     @FXML
     private void textSelection(ActionEvent event) throws InterruptedException {
-        mainLabel.setText("Insert a text on paper with left click");
+        mainLabel.setText("Insert a text on paper with left click, insert your text and to finish press enter (to resize select the text already inserted)");
+        mainLabel.setFont(boldFont);
         selectedShape = new TextShape();
         action = new DrawTextAction(selectedShape, colorPickerContour.valueProperty(), listInsertedShapes,drawingPane);
+        disableClick.set(false);
     }
 
     @FXML
@@ -631,5 +643,6 @@ public class WindowController implements Initializable {
     
     private void resetMainLabel(){
         mainLabel.setText("Geometrical Drawing");
+        mainLabel.setFont(defaultFont);
     }
 }
