@@ -4,22 +4,19 @@ import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 import shapes.ShapeAbstract;
 import shapes.ShapeInterface;
+
 import java.beans.DefaultPersistenceDelegate;
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.util.LinkedList;
+
 
 public class ShapesIO {
 
     /**
-     * Perform a save operation on a file, given a legal instance of file
+     * Performs a save operation on a file, given a legal instance of file
      * where the shapes drawn in the actual list will be saved.
      *
      * @param file file to save to
@@ -28,18 +25,11 @@ public class ShapesIO {
      */
     public void saveFile(File file, ObservableList<ShapeInterface> listInsertedShapes) throws IOException {
         if (file == null) return;
-        try (XMLEncoder encoder = new XMLEncoder(new BufferedOutputStream(Files.newOutputStream(file.toPath())))) {
-            encoder.setExceptionListener(e -> {
-                throw new RuntimeException(e);
-            });
-            encoder.setPersistenceDelegate(Color.class, new DefaultPersistenceDelegate(new String[]{"red", "green", "blue", "opacity"}));
-            encoder.writeObject(listInsertedShapes.toArray(new ShapeInterface[0]));
-        }
-
+        this.encode(new BufferedOutputStream(Files.newOutputStream(file.toPath())),listInsertedShapes.toArray(new ShapeInterface[0]));
     }
 
     /**
-     * Perform a load operation on a file, given a legal instance of file,
+     * Performs a load operation on a file, given a legal instance of file,
      * where the shapes previously saved will be loaded in the actual list.
      *
      * @param file file to load from
@@ -52,43 +42,55 @@ public class ShapesIO {
         ShapeAbstract.resetCont();
         ShapeAbstract.initializeLoad();
 
-        try (XMLDecoder decoder = new XMLDecoder(new BufferedInputStream(Files.newInputStream(file.toPath())))) {
-            decoder.setExceptionListener(e -> {
-                throw new RuntimeException(e);
-            });
-            listInsertedShapes.setAll((ShapeInterface[]) decoder.readObject());
-        }
+        listInsertedShapes.addAll((ShapeInterface[]) this.decode(new BufferedInputStream(Files.newInputStream(file.toPath()))));
 
         ShapeAbstract.finalizeLoad();
     }
 
     /**
-     * Perform a save operation on a stream byte
-     * 
+     * Performs a save operation on a stream byte
+     *
      * @param stream the ByteArrayOutputStream in which the shape will be saved
      * @param shape the shape to be saved
-     * @throws Exception 
+     * @throws Exception
      */
     public void saveStreamByte(ByteArrayOutputStream stream, ShapeInterface shape) throws Exception{
-        
-        try (XMLEncoder encoder = new XMLEncoder(stream)) {
-            encoder.setPersistenceDelegate(Color.class, new DefaultPersistenceDelegate(new String[]{"red", "green", "blue", "opacity"}));
-            encoder.writeObject(shape);
-        }
+        shape.getShape().setEffect(null);
+        this.encode(stream,shape);
     }
-    
+
     /**
-     * Perform a load operation on a stream byte
-     * 
+     * Performs a load operation on a stream byte
+     *
      * @param content an array storing a byte stream
-     * @param shape an ArrayLinkedList<> in which the shapes stored in content will be saved 
-     * @throws java.lang.Exception 
+     * @param shape an ArrayLinkedList<> in which the shapes stored in content will be saved
+     * @throws java.lang.Exception
      */
     public void loadStreamByte(byte[] content, LinkedList<ShapeInterface> shape) throws Exception{
-        
-        try (XMLDecoder decoder = new XMLDecoder(new ByteArrayInputStream(content))) {
-            shape.add((ShapeInterface) decoder.readObject());
-        }  
+        shape.add((ShapeInterface) this.decode(new ByteArrayInputStream(content)));
     }
-    
+
+    /**
+     * Writes the XML equivalent of an object to a stream
+     * @param stream the output stream
+     * @param o the object to save
+     */
+    private void encode(OutputStream stream, Object o){
+        try (XMLEncoder encoder = new XMLEncoder(stream)) {
+            encoder.setPersistenceDelegate(Color.class, new DefaultPersistenceDelegate(new String[]{"red", "green", "blue", "opacity"}));
+            encoder.writeObject(o);
+        }
+    }
+
+    /**
+     * Loads an object decoding its XML representation from a stream
+     * @param stream the input stream
+     * @return the read object
+     */
+    private Object decode(InputStream stream){
+        try (XMLDecoder decoder = new XMLDecoder(stream)) {
+            return decoder.readObject();
+        }
+    }
+
 }
