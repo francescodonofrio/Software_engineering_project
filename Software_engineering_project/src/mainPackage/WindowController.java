@@ -184,6 +184,19 @@ public class WindowController implements Initializable {
         grid = new Grid(drawingPane, 1, false);
         drawingPaneAndGrid.getChildren().add(grid);
         
+        selectedInsertedShape.addListener((ListChangeListener.Change<? extends ShapeInterface> change) -> {
+            while (change.next()) {
+                change.getAddedSubList().forEach(addItem -> {
+                    if (addItem instanceof TextShape)
+                        buttonTextSize.setDisable(false);
+                    else
+                        buttonTextSize.setDisable(true);
+                    });
+                }
+        });
+        
+        
+        
     }
 
     /**
