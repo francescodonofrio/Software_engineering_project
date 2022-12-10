@@ -16,7 +16,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-import shapes.PolygonShape;
 import shapes.ShapeInterface;
 
 public class DrawPolygonActionTest {

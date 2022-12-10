@@ -42,7 +42,7 @@
                   </Menu>
                     </menus>
                 </MenuBar>
-            <Label fx:id="mainLabel" alignment="CENTER" contentDisplay="CENTER" text="Geometrical Drawing" />
+            <Label fx:id="mainLabel" alignment="CENTER" contentDisplay="CENTER" text="Welcome, select a shape on the left to draw it" />
                 <SplitPane dividerPositions="0.17, 0.8" focusTraversable="false" prefHeight="160.0" prefWidth="200.0">
                     <items>
                         <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="180.0" minWidth="94.0" prefHeight="509.0" prefWidth="180.0" style="-fx-background-color: white;" SplitPane.resizableWithParent="false">
@@ -62,11 +62,6 @@
                                         <Insets top="10.0" />
                                     </VBox.margin>
                                 </Button>
-                        <Button fx:id="polygonBtn1" layoutX="16.0" layoutY="94.0" mnemonicParsing="false" onAction="#polygonSelection" onMouseReleased="#shapesButtonsOnMouseReleased" prefHeight="27.0" prefWidth="132.0" text="Polygon">
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin>
-                        </Button>
                         <Button fx:id="textBtn" mnemonicParsing="false" onAction="#textSelection" onMouseReleased="#shapesButtonsOnMouseReleased" prefHeight="27.0" prefWidth="132.0" text="Text">
                            <VBox.margin>
                               <Insets top="10.0" />

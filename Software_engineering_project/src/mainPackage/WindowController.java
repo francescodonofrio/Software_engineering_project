@@ -104,7 +104,6 @@ public class WindowController implements Initializable {
     private SimpleObjectProperty<Integer> zoomLevel;
     private ArrayDeque<Double> queue;
     private final double zoomOffset = 0.2;
-    private final SimpleBooleanProperty disableClick = new SimpleBooleanProperty(false);
     private Grid grid;
     private Font defaultFont, boldFont;
     
@@ -214,7 +213,6 @@ public class WindowController implements Initializable {
         mainLabel.setFont(boldFont);
         selectedShape = new LineShape();
         action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes);
-        disableClick.set(false);
     }
 
     /**
@@ -228,7 +226,6 @@ public class WindowController implements Initializable {
         mainLabel.setFont(boldFont);
         selectedShape = new RectangleShape();
         action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes);
-        disableClick.set(false);
     }
 
     /**
@@ -242,27 +239,6 @@ public class WindowController implements Initializable {
         mainLabel.setFont(boldFont);
         selectedShape = new EllipseShape();
         action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes);
-        disableClick.set(false);
-    }
-
-    /**
-     * Called when the polygon button is clicked
-     *
-     * @param event the event of the click
-     */
-    @FXML
-    private void polygonSelection(ActionEvent event) {
-        if (disableClick.get()) {
-            resetMainLabel();
-            disableClick.set(false);
-            action = new MoveAction(selectedInsertedShape, listInsertedShapes);
-        } else {
-            mainLabel.setText("Draw a polygon on paper with multiples left click, click again Polygon button for ending the draw");
-            mainLabel.setFont(boldFont);
-            disableClick.set(true);
-            action = new DrawPolygonAction(colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes, disableClick);
-        }
-
     }
 
     /**
@@ -309,11 +285,10 @@ public class WindowController implements Initializable {
             rightClickPane = event;
         else {
             invoker.executeOnMouseReleased(action, event);
-            if (!disableClick.get()) {
-                // Here we reset the default action to move action if a polygon has been inserted
-                action = new MoveAction(selectedInsertedShape, listInsertedShapes);
-                resetMainLabel();
-            }
+
+            // Here we reset the default action to move action if a polygon has been inserted
+            action = new MoveAction(selectedInsertedShape, listInsertedShapes);
+            resetMainLabel();
         }
     }
 
@@ -332,7 +307,6 @@ public class WindowController implements Initializable {
             } catch (Exception ex) {
                 Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            resetMainLabel();
         }
     }
 
@@ -347,7 +321,6 @@ public class WindowController implements Initializable {
             rightClickPane = event;
         else{
             invoker.execute(action, event);
-            resetMainLabel();
         }
     }
 
@@ -362,7 +335,6 @@ public class WindowController implements Initializable {
             mainLabel.setText("Resize selected shape with left click or drag and drop");
             mainLabel.setFont(boldFont);
             action = new ResizeAction(selectedInsertedShape.get(0));
-            disableClick.set(false);
         } catch (ShapeNullException ex) {
             Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
             action = new MoveAction(selectedInsertedShape, listInsertedShapes);
@@ -400,7 +372,6 @@ public class WindowController implements Initializable {
 
         if (lastSelectedShape != null)
             selectedInsertedShape.add(lastSelectedShape);
-
     }
 
     /**
@@ -468,10 +439,9 @@ public class WindowController implements Initializable {
     @FXML
     private void undoBtnOnAction(ActionEvent event) throws NoActionsException, NotExecutedActionException {
         invoker.undo();
-        if (disableClick.get()) {
-            action = new MoveAction(selectedInsertedShape, listInsertedShapes);
-            disableClick.set(false);
-        }
+
+        // Here we reset the default action to move action
+        action = new MoveAction(selectedInsertedShape, listInsertedShapes);
     }
 
     /**
@@ -483,6 +453,7 @@ public class WindowController implements Initializable {
     private void pasteButtonOnClick(ActionEvent event) {
         this.action = new PasteAction(clipboard, listInsertedShapes);
         invoker.execute(action, rightClickPane);
+
         // Here we reset the default action to move action
         action = new MoveAction(selectedInsertedShape, listInsertedShapes);
     }
@@ -560,7 +531,6 @@ public class WindowController implements Initializable {
             mainLabel.setText("Rotate the selected shape with left click or drag and drop on ");
             mainLabel.setFont(boldFont);
             action = new RotateAction(selectedInsertedShape.get(0));
-            disableClick.set(false);
         } catch (ShapeNullException ex) {
             Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
             action = new MoveAction(selectedInsertedShape, listInsertedShapes);
@@ -584,7 +554,6 @@ public class WindowController implements Initializable {
     private void stretchButtonOnClick(ActionEvent event) {
         try {
             action = new StretchAction(selectedInsertedShape.get(0));
-            disableClick.set(false);
         } catch (ShapeNullException ex) {
             Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
             action = new MoveAction(selectedInsertedShape, listInsertedShapes);
@@ -613,11 +582,10 @@ public class WindowController implements Initializable {
         mainLabel.setFont(boldFont);
         selectedShape = new TextShape();
         action = new DrawTextAction(selectedShape, colorPickerContour.valueProperty(), listInsertedShapes,drawingPane);
-        disableClick.set(false);
     }
     
     private void resetMainLabel(){
-        mainLabel.setText("Geometrical Drawing");
+        mainLabel.setText("Select a shape on the left to draw it");
         mainLabel.setFont(defaultFont);
     }
 
