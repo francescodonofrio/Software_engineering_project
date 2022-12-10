@@ -74,9 +74,9 @@
                         </Button>
                         <MenuButton fx:id="buttonTextSize" disable="true" mnemonicParsing="false" text="Text size">
                           <items>
-                            <MenuItem mnemonicParsing="false" onAction="#textSize20OnAction" text="20" />
-                            <MenuItem mnemonicParsing="false" onAction="#textSize40OnAction" text="40" />
-                              <MenuItem mnemonicParsing="false" onAction="#textSize60OnAction" text="60" />
+                            <MenuItem mnemonicParsing="false" onAction="#textResizeOnAction" text="20" />
+                            <MenuItem mnemonicParsing="false" onAction="#textResizeOnAction" text="40" />
+                              <MenuItem mnemonicParsing="false" onAction="#textResizeOnAction" text="60" />
                           </items>
                            <VBox.margin>
                               <Insets top="10.0" />

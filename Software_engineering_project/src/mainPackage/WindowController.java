@@ -615,34 +615,19 @@ public class WindowController implements Initializable {
         action = new DrawTextAction(selectedShape, colorPickerContour.valueProperty(), listInsertedShapes,drawingPane);
         disableClick.set(false);
     }
-
-    @FXML
-    private void textSize20OnAction(ActionEvent event) {
-        if (!selectedInsertedShape.isEmpty()) {
-            action = new ResizeTextAction(selectedInsertedShape.get(0),20.0);
-            invoker.execute(action, event);
-            action = new MoveAction(selectedInsertedShape, listInsertedShapes);
-        }
-    }
-
-    @FXML
-    private void textSize40OnAction(ActionEvent event) {
-     if (!selectedInsertedShape.isEmpty()) {
-            action = new ResizeTextAction(selectedInsertedShape.get(0),40.0);
-            invoker.execute(action, event);
-            action = new MoveAction(selectedInsertedShape, listInsertedShapes);
-        }}
-
-    @FXML
-    private void textSize60OnAction(ActionEvent event) {
-    if (!selectedInsertedShape.isEmpty()) {
-            action = new ResizeTextAction(selectedInsertedShape.get(0),60.0);
-            invoker.execute(action, event);
-            action = new MoveAction(selectedInsertedShape, listInsertedShapes);
-        }}
     
     private void resetMainLabel(){
         mainLabel.setText("Geometrical Drawing");
         mainLabel.setFont(defaultFont);
+    }
+
+    @FXML
+    private void textResizeOnAction(ActionEvent event) {
+        if (!selectedInsertedShape.isEmpty()) {
+            MenuItem temp = (MenuItem) event.getSource();
+            action = new ResizeTextAction(selectedInsertedShape.get(0), Integer.parseInt(temp.getText()));
+            invoker.execute(action, event);
+            action = new MoveAction(selectedInsertedShape, listInsertedShapes);
+        }
     }
 }
