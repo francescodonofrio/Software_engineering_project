@@ -1,6 +1,5 @@
 package shapes;
 
-import javafx.scene.shape.Ellipse;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
@@ -166,6 +165,50 @@ public class EllipseShapeTest {
         assertEquals(shape.getRadiusX(), radiusX, 0.1);
         assertEquals(shape.getRadiusY(), radiusY, 0.1);
 
+        System.out.println("Passed");
+    }
+    
+    /**
+     * Test of getDimX method, of class EllipseShape.
+     */
+    @Test
+    public void getDimX() {
+        System.out.print("getDimX: ");
+
+        double initialDim1 = 70.0;
+        double initialDim2 = 130.0;
+        double finalDim1 = 150.0;
+        double finalDim2 = 300.0;
+        double radiusX = finalDim1 - initialDim1;
+
+        EllipseShape instance = new EllipseShape();
+        
+        instance.setDim(initialDim1, initialDim2, finalDim1, finalDim2);
+
+        assertEquals(instance.getDimX(), radiusX, 0.1);
+        
+        System.out.println("Passed");
+    }
+
+    /**
+     * Test of getDimY method, of class EllipseShape.
+     */
+    @Test
+    public void getDimY() {
+        System.out.print("getDimY: ");
+
+        double initialDim1 = 70.0;
+        double initialDim2 = 130.0;
+        double finalDim1 = 150.0;
+        double finalDim2 = 300.0;
+        double radiusY = finalDim2 - initialDim2;
+
+        EllipseShape instance = new EllipseShape();
+        
+        instance.setDim(initialDim1, initialDim2, finalDim1, finalDim2);
+
+        assertEquals(instance.getDimY(), radiusY, 0.1);
+        
         System.out.println("Passed");
     }
 }

@@ -1,8 +1,11 @@
 package shapes;
 
-import exceptions.NotCloseContourException;
+import exceptions.ShapeWithNullWidthException;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
+import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Scale;
+import javafx.scene.transform.Translate;
 
 public interface ShapeInterface {
 
@@ -26,27 +29,27 @@ public interface ShapeInterface {
      * @return the shape contained
      */
     Shape getShape();
-    
+
+    /**
+     * Sets the internal shape to shape
+     *
+     * @param shape the new shape
+     */
+    void setShape(Shape shape);
+
     /**
      * Returns the name of the current object
-     * 
-     * @return the name 
+     *
+     * @return the name
      */
     String getName();
 
     /**
      * Sets a new name for a shape
+     *
      * @param name the new name
      */
     void setName(String name);
-
-    /**
-     * Sets a new internal color for a shape
-     *
-     * @param newColor the new color to set
-     * @throws exceptions.NotCloseContourException
-     */
-    void setInternalColor(Color newColor) throws NotCloseContourException;
 
     /**
      * Sets a new contour color for a shape
@@ -54,6 +57,27 @@ public interface ShapeInterface {
      * @param newColor the new color to set
      */
     void setContourColor(Color newColor);
+
+    /**
+     * Retur the contour color of that shape
+     *
+     * @return Color
+     */
+    Color getCountourColor();
+
+    /**
+     * Retur the internal color of that shape
+     *
+     * @return Color
+     */
+    Color getInternalColor();
+
+    /**
+     * Sets a new internal color for a shape
+     *
+     * @param newColor the new color to set
+     */
+    void setInternalColor(Color newColor);
 
     /**
      * Updates the current shape as defined by the parameters
@@ -84,19 +108,97 @@ public interface ShapeInterface {
     void move(double X, double Y);
 
     /**
-     * Sets the internal shape to shape
+     * Set the focus of a shape
      *
-     * @param shape the new shape
+     * @param value the status of the focus
      */
-    void setShape(Shape shape);
-
+    void setFocus(boolean value);
+    
     /**
-     * Enables the focus on a shape
+     * Return the dimension along the x-axis
+     * 
+     * @return the dimension of the shape along the x-axis
      */
-    void setFocus();
-
+    double getDimX();
+    
     /**
-     * Disables the focus on a shape
+      * Return the dimension along the y-axis
+     * 
+     * @return the dimension of the shape along the y-axis
      */
-    void setDefocus();
+    double getDimY();
+    
+    /**
+     * Set the shape inserted property of the shape
+     * 
+     * @param inserted the status of the insertion
+     */
+    void setInserted(boolean inserted);
+    
+    /**
+     * Return the shape inserted property of the shape
+     * 
+     * @return return the shape inserted property of the shape
+     */
+    boolean getInserted();
+    
+    /**
+     * 
+     * @return the rotate transform applicated to the shape
+     */
+    Rotate getRotate();
+    
+    /**
+     * Set the rotate property
+     * 
+     * @param rotate
+     */
+    void setRotate(Rotate rotate);
+    
+    /**
+     * 
+     * @return the scale transform applicated to the shape
+     */
+    Scale getScale();
+    
+    /**
+     * Set the scale property
+     * 
+     * @param scale
+     */
+    void setScale(Scale scale);
+    
+    /**
+     * 
+     * @return the translate transform applicated to the shape
+     */
+    Translate getTranslate();
+    
+    /**
+     * Set the translate property
+     * 
+     * @param translate
+     */
+    void setTranslate(Translate translate);
+    
+    /**
+     * Stretch the shape along the x-axis
+     * 
+     * @param X the point along the x-axis for whom stretch the shape
+     * @throws exceptions.ShapeWithNullWidthException
+     */
+    void setStretchX(double X) throws ShapeWithNullWidthException;
+    
+    /**
+     * Rotate the shape of passed parameter
+     * 
+     * @param angle the angle of rotation
+     */
+    void setRotation(double angle);
+    
+    /**
+     * 
+     * @return the angle of rotation of the shape
+     */
+    double getRotation();
 }

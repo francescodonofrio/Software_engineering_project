@@ -1,7 +1,7 @@
 package exceptions;
 
 public class NotResizedException extends Exception {
-    public NotResizedException(){
+    public NotResizedException() {
         super();
     }
 }
