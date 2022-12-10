@@ -61,4 +61,56 @@ public class PolygonShapeTest {
         System.out.println("Passed");
     }
 
+    /**
+     * Test of setWidth method, of class PolygonShape.
+     */
+    @Test
+    public void testSetWidth() {
+        System.out.print("setWidth: ");
+
+        test.setWidth(15, 30);
+        assertEquals(test.getDimX(), 15, 0.1);
+        
+        System.out.println("Passed");
+    }
+
+    /**
+     * Test of setHeight method, of class PolygonShape.
+     */
+    @Test
+    public void testSetHeight() {
+        System.out.print("setHeight: ");
+
+        test.setHeight(20, 100);
+        assertEquals(test.getDimY(), 80, 0.1);
+
+        System.out.println("Passed");
+    }
+
+    /**
+     * Test of getDimX method, of class PolygonShape.
+     */
+    @Test
+    public void testGetDimX() {
+        System.out.print("getDimX: ");
+
+        test.setWidth(15, 30);
+        assertEquals(test.getDimX(), 15, 0.1);
+
+        System.out.println("Passed");
+    }
+
+    /**
+     * Test of getDimY method, of class PolygonShape.
+     */
+    @Test
+    public void testGetDimY() {
+        System.out.print("getDimY: ");
+
+        test.setHeight(20, 100);
+        assertEquals(test.getDimY(), 80, 0.1);
+
+        System.out.println("Passed");
+    }
+
 }

@@ -22,6 +22,7 @@ public class DrawPolygonAction implements Action {
     private final List<Double> insertedPoints;
     private ShapeInterface polygon;
     private boolean hasNotBeenExecuted;
+    private double minX = Double.MAX_VALUE, maxX = Double.MIN_VALUE, minY = Double.MAX_VALUE, maxY = Double.MIN_VALUE;
 
     /**
      * Returns a new instance of DrwPolygon
@@ -44,10 +45,15 @@ public class DrawPolygonAction implements Action {
      */
     @Override
     public void execute(Event event) throws Exception {
-
+        
         if (keepActionsDisabled.get()) {
             hasNotBeenExecuted = false;
             MouseEvent clickEvent = (MouseEvent) event;
+            minX = Math.min(minX, clickEvent.getX());
+            minY = Math.min(minY, clickEvent.getY());
+            maxX = Math.max(maxX, clickEvent.getX());
+            maxY = Math.max(maxY, clickEvent.getY());
+            
             if (insertedPoints.size() < 4) {
                 insertedPoints.add(clickEvent.getX());
                 insertedPoints.add(clickEvent.getY());
@@ -59,10 +65,13 @@ public class DrawPolygonAction implements Action {
                 }
                 polygon.setContourColor(contourColor.get());
                 polygon.setInternalColor(internalColor.get());
+                ((PolygonShape) polygon).setWidth(minX, maxX);
+                ((PolygonShape) polygon).setHeight(minY, maxY);
 
                 ((Polygon) polygon.getShape()).getPoints().addAll(clickEvent.getX(), clickEvent.getY());
             }
         }
+            
     }
 
 

@@ -1,6 +1,5 @@
 package shapes;
 
-import exceptions.ShapeWithNullWidthException;
 import javafx.collections.ObservableList;
 import javafx.scene.shape.Polygon;
 import javafx.scene.transform.Rotate;
@@ -55,7 +54,7 @@ public class PolygonShape extends CloseContourShape {
     public void setDim(double initialX, double initialY, double finalX, double finalY) {
         width=finalX-initialX;
         height=finalY-initialY;
-
+        
         if(width<=20)
             setWidth(20);
         else
@@ -134,24 +133,44 @@ public class PolygonShape extends CloseContourShape {
         }
         return max;
     }
-
+    
+    /**
+     * Return the dimension along the x-axis
+     * 
+     * @return the dimension of the shape along the x-axis
+     */
     @Override
     public double getDimX() {
         return this.width;
     }
-
+    
+    /**
+      * Return the dimension along the y-axis
+     * 
+     * @return the dimension of the shape along the y-axis
+     */
     @Override
     public double getDimY() {
         return this.height;
     }
     
     /**
-     * Stretch the shape along the x-axis
+     * Set the width of the polygon
      * 
-     * @param X the point along the x-axis for whom stretch the shape
-     * @throws exceptions.ShapeWithNullWidthException
+     * @param initialX initial coord along the x-axis
+     * @param finalX final coord along the x-axis
      */
-    @Override
-    public void setStretchX(double X) throws ShapeWithNullWidthException{
+    public void setWidth(double initialX, double finalX) {
+        width=finalX-initialX;
+    }
+    
+    /**
+     * Set the height of the polygon
+     * 
+     * @param initialY initial coord along the y-axis
+     * @param finalY final coord along the y-axis
+     */
+    public void setHeight(double initialY, double finalY) {
+        height=finalY-initialY;
     }
 }
