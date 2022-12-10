@@ -59,6 +59,8 @@ public class DrawPolygonActionTest {
 
         assertEquals(internalColor.get(), polygon.getInternalColor());
         assertEquals(contourColor.get(), polygon.getCountourColor());
+        assertEquals(43.9, polygon.getDimX(), 0.1);
+        assertEquals(15, polygon.getDimY(), 0.1);
         assertEquals(((Polygon) polygon.getShape()).getPoints().size(), points.length, 0.1);
 
         for (int i = 0; i < points.length; i++) {
