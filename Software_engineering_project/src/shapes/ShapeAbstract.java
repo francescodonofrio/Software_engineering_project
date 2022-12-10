@@ -270,4 +270,23 @@ public abstract class ShapeAbstract implements ShapeInterface{
         if(X > -Math.abs(width))
             scale.setX(stretchOffset);
     }
+    
+    /**
+     * Rotate the shape of passed parameter
+     * 
+     * @param angle the angle of rotation
+     */
+    @Override
+    public void setRotation(double angle){
+        this.rotate.setAngle(angle);
+    }
+    
+    /**
+     * 
+     * @return the angle of rotation of the shape
+     */
+    @Override
+    public double getRotation(){
+        return rotate.getAngle();
+    }
 }

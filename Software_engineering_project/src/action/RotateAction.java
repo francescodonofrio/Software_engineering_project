@@ -7,7 +7,6 @@ import exceptions.ShapeNullException;
 import javafx.event.Event;
 import java.awt.geom.Point2D;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.transform.Rotate;
 import shapes.ShapeInterface;
 
 public class RotateAction implements Action{
@@ -17,7 +16,6 @@ public class RotateAction implements Action{
     private Line2D.Double xLine, yLine;
     private Point2D.Double centerPoint;
     private double initialAngle, angle;
-    private final Rotate rotate;
     
     /**
      * Returns a new instance of RotateAction
@@ -30,7 +28,6 @@ public class RotateAction implements Action{
             throw new ShapeNullException();
         else
             this.selectedShape = selectedShape;
-        rotate = (Rotate)selectedShape.getShape().getTransforms().get(selectedShape.getShape().getTransforms().indexOf(selectedShape.getRotate()));
         this.hasNotBeenExecuted=true;
     }
 
@@ -41,7 +38,7 @@ public class RotateAction implements Action{
      */
     @Override
     public void execute(Event event) {
-        initialAngle = rotate.getAngle();
+        initialAngle = selectedShape.getRotation();
         
         double topLeftPointX = selectedShape.getShape().getBoundsInParent().getMinX();
         double topLeftPointY = selectedShape.getShape().getBoundsInParent().getMinY();
@@ -86,7 +83,7 @@ public class RotateAction implements Action{
             else
                 angle = signAngle * (90-Math.toDegrees(signAtan * Math.atan(distanceX/distanceY)));
         
-        rotate.setAngle(angle);
+        selectedShape.setRotation(angle);
     }
 
     /**
@@ -111,7 +108,7 @@ public class RotateAction implements Action{
         if(hasNotBeenExecuted)
             throw new NotExecutedActionException();
         
-        rotate.setAngle(initialAngle);
+        selectedShape.setRotation(initialAngle);
         this.hasNotBeenExecuted=true;
     }
     
