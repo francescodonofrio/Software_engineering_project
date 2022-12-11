@@ -4,7 +4,6 @@ import action.*;
 import com.sun.glass.ui.Screen;
 import exceptions.*;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -26,7 +25,6 @@ import shapes.RectangleShape;
 import shapes.ShapeInterface;
 import shapes.util.Clipboard;
 import shapes.util.ShapesIO;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -34,6 +32,7 @@ import java.util.ArrayDeque;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.binding.BooleanBinding;
 import javafx.scene.Group;
 import javafx.scene.input.SwipeEvent;
 import javafx.scene.shape.Rectangle;
@@ -102,10 +101,11 @@ public class WindowController implements Initializable {
     private Clipboard clipboard;
     private MouseEvent rightClickPane;
     private SimpleObjectProperty<Integer> zoomLevel;
-    private ArrayDeque<Double> queue;
+    private ArrayDeque<Double> zoomQueue;
     private final double zoomOffset = 0.2;
     private Grid grid;
     private Font defaultFont, boldFont;
+    private ObservableList<BooleanBinding> textShapeBinding;
     
     /**
      * Called to initialize a controller after its root element has been
@@ -119,7 +119,9 @@ public class WindowController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        queue = new ArrayDeque<>();
+        textShapeBinding = FXCollections.observableArrayList();
+
+        zoomQueue = new ArrayDeque<>();
         
         invoker = new Invoker();
         undoBtn.disableProperty().bind(invoker.emptyQueueProperty());
@@ -147,6 +149,9 @@ public class WindowController implements Initializable {
                         shapesTable.getSelectionModel().select(index);
                         colorPickerContour.setValue((Color) addItem.getShape().getStroke());
                         colorPickerInternal.setValue((Color) addItem.getShape().getFill());
+                        BooleanBinding allValid = Bindings.createBooleanBinding(() -> textShapeBinding.stream().allMatch(BooleanBinding::get), textShapeBinding);
+                        buttonTextSize.disableProperty().bind(allValid);
+                        resizeItem.visibleProperty().bind(allValid);
                     }
                 });
             }
@@ -164,8 +169,7 @@ public class WindowController implements Initializable {
 
         selectedShape = new LineShape();
         action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes);
-
-
+        
         shapesColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         shapesTable.setItems(listInsertedShapes);
 
@@ -185,17 +189,6 @@ public class WindowController implements Initializable {
         drawingPane.setClip(new Rectangle (0,0, Screen.getMainScreen().getWidth(),Screen.getMainScreen().getHeight()));
         grid = new Grid(drawingPane, 1, false);
         drawingPaneAndGrid.getChildren().add(grid);
-        
-        selectedInsertedShape.addListener((ListChangeListener.Change<? extends ShapeInterface> change) -> {
-            while (change.next()) {
-                change.getAddedSubList().forEach(addItem -> {
-                    if (addItem instanceof TextShape)
-                        buttonTextSize.setDisable(false);
-                    else
-                        buttonTextSize.setDisable(true);
-                    });
-                }
-        });
         
         defaultFont = mainLabel.getFont();
         boldFont = Font.font(mainLabel.getFont().getFamily(), FontWeight.BOLD, mainLabel.getFont().getSize());
@@ -239,6 +232,15 @@ public class WindowController implements Initializable {
         mainLabel.setFont(boldFont);
         selectedShape = new EllipseShape();
         action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes);
+    }
+    
+    @FXML
+    private void textSelection(ActionEvent event) throws InterruptedException {
+        mainLabel.setText("Insert a text on paper with left click, insert your text and to finish press enter (to resize select the text already inserted)");
+        mainLabel.setFont(boldFont);
+        selectedShape = new TextShape();
+        action = new DrawTextAction(selectedShape, colorPickerContour.valueProperty(), listInsertedShapes,drawingPane);
+        textShapeBinding.add(selectedShape.getShape().effectProperty().isNull());
     }
 
     /**
@@ -286,8 +288,7 @@ public class WindowController implements Initializable {
         else {
             invoker.executeOnMouseReleased(action, event);
 
-            // Here we reset the default action to move action if a polygon has been inserted
-            action = new MoveAction(selectedInsertedShape, listInsertedShapes);
+            resetDefaultAction();
             resetMainLabel();
         }
     }
@@ -325,42 +326,6 @@ public class WindowController implements Initializable {
     }
 
     /**
-     * Called when the MenuItem Resize id being clicked
-     *
-     * @param actionEvent the event of the click
-     */
-    @FXML
-    public void resizeButtonOnClick(ActionEvent actionEvent) {
-        try {
-            mainLabel.setText("Resize selected shape with left click or drag and drop");
-            mainLabel.setFont(boldFont);
-            action = new ResizeAction(selectedInsertedShape.get(0));
-        } catch (ShapeNullException ex) {
-            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
-            action = new MoveAction(selectedInsertedShape, listInsertedShapes);
-        }
-    }
-
-    /**
-     * Called when the MenuItem Copy is being clicked
-     *
-     * @param event the event of the click
-     */
-    @FXML
-    private void copyButtonOnClick(ActionEvent event) {
-        ShapeInterface copiedShape = shapesTable.getSelectionModel().getSelectedItem();
-        
-        try {
-            this.action = new CopyAction(clipboard, copiedShape);
-        } catch (NotShapeToCopyException ex) {
-            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
-            return;
-        }
-        invoker.execute(this.action, event);
-        resetMainLabel();
-    }
-
-    /**
      * Called when the table of inserted shapes is being clicked
      *
      * @param event the event of the click
@@ -375,6 +340,145 @@ public class WindowController implements Initializable {
     }
 
     /**
+     * Called when the MenuItem Resize id being clicked
+     *
+     * @param actionEvent the event of the click
+     */
+    @FXML
+    public void resizeButtonOnClick(ActionEvent actionEvent) {
+        try {
+            mainLabel.setText("Resize selected shape with left click or drag and drop");
+            mainLabel.setFont(boldFont);
+            action = new ResizeAction(selectedInsertedShape.get(0));
+        } catch (ShapeNullException ex) {
+            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
+            resetDefaultAction();
+        }
+    }
+
+    /**
+     * Called when the MenuItem Copy is being clicked
+     *
+     * @param event the event of the click
+     */
+    @FXML
+    private void copyButtonOnClick(ActionEvent event) {
+        ShapeInterface copiedShape = shapesTable.getSelectionModel().getSelectedItem();
+        
+        try {
+            action = new CopyAction(clipboard, copiedShape);
+            invoker.execute(this.action, event);
+        } catch (NotShapeToCopyException ex) {
+            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        resetMainLabel();
+        resetDefaultAction();
+    }
+
+    /**
+     * Called when the MenuItem Cut is being clicked
+     *
+     * @param event the event of the click
+     */
+    @FXML
+    private void cutButtonOnClick(ActionEvent event) {
+        ShapeInterface cuttedShape = shapesTable.getSelectionModel().getSelectedItem();
+
+        try {
+            action = new CutAction(clipboard, listInsertedShapes, cuttedShape);
+            invoker.execute(this.action, event);
+        } catch (NotShapeToCutException ex) {
+            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        resetMainLabel();
+        resetDefaultAction();
+    }
+
+    /**
+     * Called when the MenuItem to front is being clicked
+     * 
+     * @param event the event of the click
+     */
+    @FXML
+    private void toFrontOnClick(ActionEvent event) {
+        action = new ToFrontAction(selectedInsertedShape.get(0), drawingPane.getChildren());
+        invoker.execute(action, event);
+        resetDefaultAction();
+    }
+
+    /**
+     * Called when the MenuItem to back is being clicked
+     * 
+     * @param event the event of the click
+     */
+    @FXML
+    private void toBackOnClick(ActionEvent event) {
+        action = new ToBackAction(selectedInsertedShape.get(0), drawingPane.getChildren());
+        invoker.execute(action, event);
+        resetDefaultAction();
+    }
+
+    /**
+     * Called when the MenuItem rotate is being clicked
+     * 
+     * @param event the event of the click
+     */    
+    @FXML
+    private void rotateButtonOnClick(ActionEvent event) {
+        try{
+            mainLabel.setText("Rotate the selected shape with left click or drag and drop on ");
+            mainLabel.setFont(boldFont);
+            action = new RotateAction(selectedInsertedShape.get(0));
+        } catch (ShapeNullException ex) {
+            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
+            resetDefaultAction();
+        }
+    }
+
+    /**
+     * Called when the MenuItem stretch is being clicked
+     * 
+     * @param event the event of the click
+     */  
+    @FXML
+    private void stretchButtonOnClick(ActionEvent event) {
+        try {
+            mainLabel.setText("Stretch the selected shape by dragging the mouse ");
+            mainLabel.setFont(boldFont);
+            action = new StretchAction(selectedInsertedShape.get(0));
+        } catch (ShapeNullException ex) {
+            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
+            resetDefaultAction();
+        }
+    }
+    
+    /**
+     * Called when the MenuItem mirror horizzontally is being clicked
+     * 
+     * @param event the event of the click
+     */
+    @FXML
+    private void mirrorXButtonOnClick(ActionEvent event) {
+        ShapeInterface shapeToMirror = shapesTable.getSelectionModel().getSelectedItem();
+        this.action = new MirrorAction(shapeToMirror, true, false);
+        invoker.execute(this.action, event);
+        resetDefaultAction();
+    }
+    
+    /**
+     * Called when the MenuItem mirror vertically is being clicked
+     * 
+     * @param event the event of the click
+     */
+    @FXML
+    private void mirrorYButtonOnClick(ActionEvent event) {
+        ShapeInterface shapeToMirror = shapesTable.getSelectionModel().getSelectedItem();
+        this.action = new MirrorAction(shapeToMirror, false, true);
+        invoker.execute(this.action, event);
+        resetDefaultAction();
+    }
+
+    /**
      * Called when the internal color picker is being used
      *
      * @param event the event of the use
@@ -384,7 +488,7 @@ public class WindowController implements Initializable {
         if (!selectedInsertedShape.isEmpty()) {
             action = new ChangeInternalColorAction(selectedInsertedShape.get(0), colorPickerInternal.valueProperty());
             invoker.execute(action, event);
-            action = new MoveAction(selectedInsertedShape, listInsertedShapes);
+            resetDefaultAction();
         }
     }
 
@@ -398,26 +502,8 @@ public class WindowController implements Initializable {
         if (!selectedInsertedShape.isEmpty()) {
             action = new ChangeContourColorAction(selectedInsertedShape.get(0), colorPickerContour.valueProperty());
             invoker.execute(action, event);
-            action = new MoveAction(selectedInsertedShape, listInsertedShapes);
+            resetDefaultAction();
         }
-    }
-
-    /**
-     * Called when the MenuItem Cut is being clicked
-     *
-     * @param event the event of the click
-     */
-    @FXML
-    private void cutButtonOnClick(ActionEvent event) {
-        ShapeInterface cuttedShape = shapesTable.getSelectionModel().getSelectedItem();
-
-        try {
-            this.action = new CutAction(clipboard, listInsertedShapes, cuttedShape);
-        } catch (NotShapeToCutException ex) {
-            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
-            return;
-        }
-        invoker.execute(this.action, event);
     }
 
     /**
@@ -440,8 +526,7 @@ public class WindowController implements Initializable {
     private void undoBtnOnAction(ActionEvent event) throws NoActionsException, NotExecutedActionException {
         invoker.undo();
 
-        // Here we reset the default action to move action
-        action = new MoveAction(selectedInsertedShape, listInsertedShapes);
+        resetDefaultAction();
     }
 
     /**
@@ -451,11 +536,10 @@ public class WindowController implements Initializable {
      */
     @FXML
     private void pasteButtonOnClick(ActionEvent event) {
-        this.action = new PasteAction(clipboard, listInsertedShapes);
+        action = new PasteAction(clipboard, listInsertedShapes);
         invoker.execute(action, rightClickPane);
 
-        // Here we reset the default action to move action
-        action = new MoveAction(selectedInsertedShape, listInsertedShapes);
+        resetDefaultAction();
     }
 
     /**
@@ -467,8 +551,8 @@ public class WindowController implements Initializable {
     @FXML
     private void lessZoomBtnOnAction(ActionEvent event) {
         drawingPane.getTransforms().remove(drawingPane.getTransforms().size() - 1);
-        drawingPane.setPrefHeight(queue.removeLast());
-        drawingPane.setPrefWidth(queue.removeLast());
+        drawingPane.setPrefHeight(zoomQueue.removeLast());
+        drawingPane.setPrefWidth(zoomQueue.removeLast());
         zoomLevel.set(zoomLevel.getValue() - 1);
         
         drawingPaneAndGrid.getChildren().remove(grid);
@@ -490,8 +574,8 @@ public class WindowController implements Initializable {
         newScale.setPivotX(drawingPane.getScaleX());
         newScale.setPivotY(drawingPane.getScaleY());
         drawingPane.getTransforms().add(newScale);
-        queue.add(drawingPane.getPrefWidth());
-        queue.add(drawingPane.getPrefHeight());
+        zoomQueue.add(drawingPane.getPrefWidth());
+        zoomQueue.add(drawingPane.getPrefHeight());
         drawingPane.setPrefWidth(drawingPane.getPrefWidth() + drawingPane.getPrefWidth() * zoomOffset);
         drawingPane.setPrefHeight(drawingPane.getPrefHeight() + drawingPane.getPrefHeight() * zoomOffset);
         zoomLevel.set(zoomLevel.getValue() + 1);
@@ -510,92 +594,56 @@ public class WindowController implements Initializable {
     private void toggleGrid(ActionEvent event) {
         grid.setVisible(gridCheckItem.isSelected());
     }
-
-    @FXML
-    private void toFrontOnClick(ActionEvent event) {
-        action = new ToFrontAction(selectedInsertedShape.get(0), drawingPane.getChildren());
-        invoker.execute(action, event);
-        action = new MoveAction(selectedInsertedShape, listInsertedShapes);
-    }
-
-    @FXML
-    private void toBackOnClick(ActionEvent event) {
-        action = new ToBackAction(selectedInsertedShape.get(0), drawingPane.getChildren());
-        invoker.execute(action, event);
-        action = new MoveAction(selectedInsertedShape, listInsertedShapes);
-    }
     
-    @FXML
-    private void rotateButtonOnClick(ActionEvent event) {
-        try{
-            mainLabel.setText("Rotate the selected shape with left click or drag and drop on ");
-            mainLabel.setFont(boldFont);
-            action = new RotateAction(selectedInsertedShape.get(0));
-        } catch (ShapeNullException ex) {
-            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
-            action = new MoveAction(selectedInsertedShape, listInsertedShapes);
-        }
-    }
-    
+    /**
+     * Called when on the grid slider is performed an on mouse dragged or on mouse pressed action
+     * 
+     * @param event the event of the click
+     */
     @FXML
     private void gridSliderOnMouse(MouseEvent event) {
         if(gridSlider.getValue()>0)
             grid.resize(gridSlider.getValue());
     }
-
+    
+    /**
+     * Called when on the grid slider is performed a swipe action
+     * 
+     * @param event the event of the click
+     */
     @FXML
     private void gridSliderOnSwipe(SwipeEvent event) {
         if(gridSlider.getValue()>0)
             grid.resize(gridSlider.getValue());
     }
-
-
-    @FXML
-    private void stretchButtonOnClick(ActionEvent event) {
-        try {
-            action = new StretchAction(selectedInsertedShape.get(0));
-        } catch (ShapeNullException ex) {
-            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
-            action = new MoveAction(selectedInsertedShape, listInsertedShapes);
-        }
-    }
-
-    @FXML
-    private void mirrorXButtonOnClick(ActionEvent event) {
-        ShapeInterface shapeToMirror = shapesTable.getSelectionModel().getSelectedItem();
-        this.action = new MirrorAction(shapeToMirror, true, false);
-        invoker.execute(this.action, event);
-        action = new MoveAction(selectedInsertedShape, listInsertedShapes);
-    }
-
-    @FXML
-    private void mirrorYButtonOnClick(ActionEvent event) {
-        ShapeInterface shapeToMirror = shapesTable.getSelectionModel().getSelectedItem();
-        this.action = new MirrorAction(shapeToMirror, false, true);
-        invoker.execute(this.action, event);
-        action = new MoveAction(selectedInsertedShape, listInsertedShapes);
-    }
     
-    @FXML
-    private void textSelection(ActionEvent event) throws InterruptedException {
-        mainLabel.setText("Insert a text on paper with left click, insert your text and to finish press enter (to resize select the text already inserted)");
-        mainLabel.setFont(boldFont);
-        selectedShape = new TextShape();
-        action = new DrawTextAction(selectedShape, colorPickerContour.valueProperty(), listInsertedShapes,drawingPane);
-    }
-    
-    private void resetMainLabel(){
-        mainLabel.setText("Select a shape on the left to draw it");
-        mainLabel.setFont(defaultFont);
-    }
-
+    /**
+     * Called when the menu item of the buttonTextSize are being clicked
+     * 
+     * @param event the event of the click
+     */
     @FXML
     private void textResizeOnAction(ActionEvent event) {
         if (!selectedInsertedShape.isEmpty()) {
             MenuItem temp = (MenuItem) event.getSource();
             action = new ResizeTextAction(selectedInsertedShape.get(0), Integer.parseInt(temp.getText()));
             invoker.execute(action, event);
-            action = new MoveAction(selectedInsertedShape, listInsertedShapes);
+            resetDefaultAction();
         }
+    }
+    
+    /**
+     * Reset the main lebel to a default value
+     */
+    private void resetMainLabel(){
+        mainLabel.setText("Select a shape on the left to draw it");
+        mainLabel.setFont(defaultFont);
+    }
+    
+    /**
+     * Reset the action to the default one
+     */
+    private void resetDefaultAction(){
+        action = new MoveAction(selectedInsertedShape, listInsertedShapes);
     }
 }
