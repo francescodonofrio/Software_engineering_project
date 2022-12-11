@@ -1,6 +1,7 @@
 package action;
 
 import exceptions.NotExecutedActionException;
+import exceptions.ShapeNullException;
 import javafx.event.Event;
 import shapes.ShapeInterface;
 
@@ -19,8 +20,11 @@ public class MirrorAction implements Action {
      * @param mirrorX indicates if the shape has to be mirrored due the x-axis
      * @param mirrorY indicates if the shape has to be mirrored due the y-axis
      */
-    public MirrorAction(ShapeInterface shapeToMirror, boolean mirrorX, boolean mirrorY) {
-        this.shape = shapeToMirror;
+    public MirrorAction(ShapeInterface shapeToMirror, boolean mirrorX, boolean mirrorY) throws ShapeNullException {
+        if (shapeToMirror == null)
+            throw new ShapeNullException();
+        else
+            this.shape = shapeToMirror;
         this.mirrorX = mirrorX;
         this.mirrorY = mirrorY;
         this.hasNotBeenExecuted=true;

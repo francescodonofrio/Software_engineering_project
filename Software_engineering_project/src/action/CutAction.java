@@ -1,7 +1,7 @@
 package action;
 
 import exceptions.NotExecutedActionException;
-import exceptions.NotShapeToCutException;
+import exceptions.ShapeNullException;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import shapes.ShapeInterface;
@@ -19,13 +19,13 @@ public class CutAction implements Action {
      * @param clipboard   the clipboard containing the saved shape
      * @param listInsertedShapes the list that so the shape will removed
      * @param shapeToCut the shape that has to be cutted
-     * @throws NotShapeToCutException
+     * @throws ShapeNullException
      */
-    public CutAction(Clipboard clipboard, ObservableList<ShapeInterface> listInsertedShapes, ShapeInterface shapeToCut) throws NotShapeToCutException {
+    public CutAction(Clipboard clipboard, ObservableList<ShapeInterface> listInsertedShapes, ShapeInterface shapeToCut) throws ShapeNullException {
         this.clipboard = clipboard;
         this.listInsertedShapes = listInsertedShapes;
         if (shapeToCut == null)
-            throw new NotShapeToCutException();
+            throw new ShapeNullException();
         else
             this.shapeToCut = shapeToCut;
         this.hasNotBeenExecuted=true;

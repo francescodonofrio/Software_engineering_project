@@ -1,6 +1,7 @@
 package action;
 
 import exceptions.NotExecutedActionException;
+import exceptions.ShapeNullException;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -26,9 +27,13 @@ public class DrawAction implements Action {
      * @param colorPickerInternal an ObjectProperty<Color> from whom the shape's internal color is taken
      * @param colorPickerContour  an ObjectProperty<Color> from whom the shape's contour color is taken
      * @param listInsertedShapes  the list in which are stored the shapes
+     * @throws exceptions.ShapeNullException
      */
-    public DrawAction(ShapeInterface shape, ObjectProperty<Color> colorPickerInternal, ObjectProperty<Color> colorPickerContour, ObservableList<ShapeInterface> listInsertedShapes) {
-        this.shape = shape;
+    public DrawAction(ShapeInterface shape, ObjectProperty<Color> colorPickerInternal, ObjectProperty<Color> colorPickerContour, ObservableList<ShapeInterface> listInsertedShapes) throws ShapeNullException {
+       if (shape == null)
+            throw new ShapeNullException();
+        else
+            this.shape = shape;
         this.listInsertedShapes = listInsertedShapes;
         this.colorPickerInternal = colorPickerInternal;
         this.colorPickerContour = colorPickerContour;

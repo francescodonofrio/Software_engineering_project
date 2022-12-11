@@ -1,6 +1,7 @@
 package action;
 
 import exceptions.NotExecutedActionException;
+import exceptions.ShapeNullException;
 import javafx.beans.property.ObjectProperty;
 import javafx.event.Event;
 import javafx.scene.paint.Color;
@@ -18,9 +19,13 @@ public class ChangeContourColorAction implements Action {
      *
      * @param selectedShape      the shape to change the contour color to
      * @param colorPickerContour the new contour color
+     * @throws exceptions.ShapeNullException
      */
-    public ChangeContourColorAction(ShapeInterface selectedShape, ObjectProperty<Color> colorPickerContour) {
-        this.shape = selectedShape;
+    public ChangeContourColorAction(ShapeInterface selectedShape, ObjectProperty<Color> colorPickerContour) throws ShapeNullException {
+        if (selectedShape == null)
+            throw new ShapeNullException();
+        else 
+            this.shape = selectedShape;
         this.colorPickerContour = colorPickerContour;
         this.hasNotBeenExecuted=true;
     }
