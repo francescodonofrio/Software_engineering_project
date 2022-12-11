@@ -187,7 +187,6 @@ public class WindowController implements Initializable {
         fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("XML File (*.xml)", "*.xml");
         fileChooser.getExtensionFilters().add(extensionFilter);
-//        shapesInputOutput = new ShapesIO();
 
         clipboard = Clipboard.getClipboard();
 

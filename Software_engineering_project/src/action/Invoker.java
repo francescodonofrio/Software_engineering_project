@@ -11,6 +11,7 @@ import java.util.Deque;
 public class Invoker {
     private final Deque<Action> actions;
     private final SimpleBooleanProperty emptyQueue;
+    private boolean exceptionVerified;
 
     /**
      * Returns a new instance of Invoker, capable of memorizing the sequence
@@ -33,6 +34,7 @@ public class Invoker {
             if (!this.actions.contains(action))
                 this.actions.push(action);
             this.emptyQueue.set(false);
+            exceptionVerified = false;
         } catch (Exception ex) {
         }
     }
@@ -47,9 +49,7 @@ public class Invoker {
         try {
             action.onMouseDragged(event);
         } catch (Exception ex) {
-            this.actions.pop();
-            if (this.actions.isEmpty())
-                this.emptyQueue.set(true);
+            exceptionVerified = true;
         }
     }
 
@@ -63,9 +63,16 @@ public class Invoker {
         try {
             action.onMouseReleased(event);
         } catch (Exception ex) {
+            exceptionVerified = true;
+        }
+        if(exceptionVerified){
             this.actions.pop();
             if (this.actions.isEmpty())
                 this.emptyQueue.set(true);
+            try {
+                action.undo();
+            } catch (NotExecutedActionException ex) {
+            }
         }
     }
 
