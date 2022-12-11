@@ -2,7 +2,6 @@ package action;
 
 import exceptions.NotExecutedActionException;
 import exceptions.NotMovedException;
-import exceptions.ShapeNullException;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.scene.input.MouseEvent;
@@ -23,6 +22,7 @@ public class MoveAction implements Action {
      * @param listInsertedShapes the list of already inserted shapes
      */
     public MoveAction(ObservableList<ShapeInterface> currentShape, ObservableList<ShapeInterface> listInsertedShapes) {
+        this.currentShape = currentShape;
         this.listInsertedShapes = listInsertedShapes;
         this.hasNotBeenExecuted = true;
     }
