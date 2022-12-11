@@ -10,7 +10,6 @@ public class Clipboard {
     private static Clipboard instance = null;
     private byte[] content;
     private final BooleanProperty hasContent;
-    private final ShapesIO shapesIO = new ShapesIO();
     
     /**
      * Creates a new instance of Clipboard
@@ -40,7 +39,7 @@ public class Clipboard {
     public ShapeInterface getContent() {
         LinkedList<ShapeInterface> shape = new LinkedList<>();
         try {
-            shapesIO.loadStreamByte(content, shape);
+            ShapesIO.loadStreamByte(content, shape);
             shape.get(0).setName(shape.get(0).getName() + " - Copy");
             shape.get(0).getShape().setEffect(null);  
             return shape.removeFirst();
@@ -59,7 +58,7 @@ public class Clipboard {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         
         try {
-            shapesIO.saveStreamByte(stream, shape);
+            ShapesIO.saveStreamByte(stream, shape);
             this.content = stream.toByteArray();
         } catch (Exception ex) {
             content = null;

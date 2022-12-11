@@ -94,7 +94,6 @@ public class WindowController implements Initializable {
     private ObservableList<ShapeInterface> selectedInsertedShape;
     private FileChooser fileChooser;
     private File file;
-    private ShapesIO shapesInputOutput;
     private Action action;
     private ObservableList<ShapeInterface> listInsertedShapes;
     private Clipboard clipboard;
@@ -188,7 +187,7 @@ public class WindowController implements Initializable {
         fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("XML File (*.xml)", "*.xml");
         fileChooser.getExtensionFilters().add(extensionFilter);
-        shapesInputOutput = new ShapesIO();
+//        shapesInputOutput = new ShapesIO();
 
         clipboard = Clipboard.getClipboard();
 
@@ -263,7 +262,7 @@ public class WindowController implements Initializable {
         selectedInsertedShape.clear();
         file = fileChooser.showSaveDialog(drawingPane.getScene().getWindow());
         try {
-            shapesInputOutput.saveFile(file, listInsertedShapes);
+            ShapesIO.saveFile(file, listInsertedShapes);
         } catch (IOException ex) {
             Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -279,7 +278,7 @@ public class WindowController implements Initializable {
         fileChooser.setTitle("Open File");
         file = fileChooser.showOpenDialog(drawingPane.getScene().getWindow());
         try {
-            shapesInputOutput.loadFile(file, listInsertedShapes);
+            ShapesIO.loadFile(file, listInsertedShapes);
         } catch (IOException ex) {
             Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
         }
