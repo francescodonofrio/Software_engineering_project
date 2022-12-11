@@ -31,27 +31,41 @@ public class Grid extends Pane {
         this.makeGrid(size);
     }
 
-
-    private Line makeRow(double x) {
+    /**
+     * Make a column in a specified position along x-axis
+     *
+     * @param x the shape to be save on the clipboard
+     */
+    private Line makeColumn(double x) {
         Line row = new Line(x, 0, x, height);
         row.setStroke(new Color(0, 0, 0, 0.5));
         return row;
     }
-
-    private Line makeColumn(double y) {
+    
+    /**
+     * Make a row in a specified position along y-axis
+     *
+     * @param y the shape to be save on the clipboard
+     */
+    private Line makeRow(double y) {
         Line column = new Line(0, y, width, y);
         column.setStroke(new Color(0, 0, 0, 0.5));
         return column;
     }
-
+    
+    /**
+     * Make a grid with of specified size
+     *
+     * @param x the shape to be save on the clipboard
+     */
     private void makeGrid(double size) {
         double cellSize = size * cmToPixel;
 
         for (int x = 1; x * cellSize < width; x++)
-            super.getChildren().add(makeRow(x * cellSize));
+            super.getChildren().add(makeColumn(x * cellSize));
 
         for (int y = 1; y * cellSize < height; y++)
-            super.getChildren().add(makeColumn(y * cellSize));
+            super.getChildren().add(makeRow(y * cellSize));
     }
 
     /**
@@ -64,7 +78,12 @@ public class Grid extends Pane {
         this.size = newSize;
         this.makeGrid(newSize);
     }
-
+    
+    /**
+     * Getter for size of the grid
+     *
+     * @return a double represnt the size of the grid
+     */
     public double getSize() {
         return size;
     }
