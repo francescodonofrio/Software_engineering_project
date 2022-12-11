@@ -16,9 +16,9 @@ public class MirrorAction implements Action {
      * Returns a new instance of MirrorAction, given the shape to mirror,
      * and booleans in order to mirror on not on X-axis and Y-axis
      * 
-     * @param shapeToMirror
-     * @param mirrorX
-     * @param mirrorY
+     * @param shapeToMirror the shape that has to be mirrored
+     * @param mirrorX indicates if the shape has to be mirrored due the x-axis
+     * @param mirrorY indicates if the shape has to be mirrored due the y-axis
      */
     public MirrorAction(ShapeInterface shapeToMirror, boolean mirrorX, boolean mirrorY) throws ShapeNullException {
         if (shapeToMirror == null)
