@@ -67,7 +67,7 @@ public class CopyActionTest {
      * @throws exceptions.NotExecutedActionException
      */
     @Test(expected=NotExecutedActionException.class)
-    public void testUndo() throws NotShapeToCopyException, NotExecutedActionException, Exception  {
+    public void testUndo() throws  NotExecutedActionException, Exception  {
         System.out.print("undo: ");
         Event event = null;
         CopyAction instance;
