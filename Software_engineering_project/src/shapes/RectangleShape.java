@@ -25,9 +25,6 @@ public class RectangleShape extends CloseContourShape {
         shape.getTransforms().add(rotate);
         shape.getTransforms().add(scale);
         shape.getTransforms().add(translate);
-        
-        this.width = 0;
-        this.height = 0;
 
         this.name = "Rectangle " + RectangleShape.cont;
     }
@@ -68,7 +65,7 @@ public class RectangleShape extends CloseContourShape {
      */
     @Override
     public double getDimX() {
-        return width;
+        return ((Rectangle) shape).getWidth();
     }
     
     /**
@@ -78,7 +75,7 @@ public class RectangleShape extends CloseContourShape {
      */
     @Override
     public double getDimY() {
-        return height;
+        return ((Rectangle) shape).getHeight();
     }
     
     
