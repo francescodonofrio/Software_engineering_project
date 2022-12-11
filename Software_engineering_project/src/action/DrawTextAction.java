@@ -47,6 +47,7 @@ public class DrawTextAction implements Action{
     
     @Override
     public void execute(Event event) throws Exception {
+    System.out.println(event.getEventType().toString());
     listInsertedShapes.add(shape);
     ((TextShape) shape).setText("");//this line fix bug
     MouseEvent mouseEvent = (MouseEvent) event;

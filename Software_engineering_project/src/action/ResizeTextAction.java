@@ -2,12 +2,7 @@
 package action;
 
 import exceptions.NotExecutedActionException;
-import javafx.beans.property.ObjectProperty;
-import javafx.collections.ObservableList;
 import javafx.event.Event;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import shapes.ShapeInterface;
 import shapes.TextShape;
 
