@@ -14,6 +14,8 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import shapes.ShapeInterface;
 import shapes.TextShape;
 
@@ -22,10 +24,9 @@ public class DrawTextAction implements Action{
     private final ShapeInterface shape;
     private final ObservableList<ShapeInterface> listInsertedShapes;
     private final ObjectProperty<Color> colorPickerContour;
-    private double initialX, initialY;
+    private final ObjectProperty<Color> colorPickerInternal;
     private boolean hasNotBeenExecuted;
     private final Pane drawingPane;
-    private String newText;
 
 
     /**
@@ -37,10 +38,11 @@ public class DrawTextAction implements Action{
      * @param listInsertedShapes  the list in which are stored the shapes
      * @param drawingPane the drawing pane in which draw the shape
      */
-    public DrawTextAction(ShapeInterface shape, ObjectProperty<Color> colorPickerContour, ObservableList<ShapeInterface> listInsertedShapes, Pane drawingPane) {
+    public DrawTextAction(ShapeInterface shape, ObjectProperty<Color> colorPickerContour, ObjectProperty<Color> colorPickerInternal, ObservableList<ShapeInterface> listInsertedShapes, Pane drawingPane) {
         this.shape = shape;
         this.listInsertedShapes = listInsertedShapes;
         this.colorPickerContour = colorPickerContour;
+        this.colorPickerInternal = colorPickerInternal;
         this.hasNotBeenExecuted=true;
         this.drawingPane=drawingPane;
     }
@@ -53,36 +55,37 @@ public class DrawTextAction implements Action{
     @Override
     public void execute(Event event) throws Exception {
     listInsertedShapes.add(shape);
-    ((TextShape) shape).setText("");//this line fix bug
+    ((TextShape)shape).setSizeFont(40);
+
+    Text text= (Text) shape.getShape();
+    text.setText("");
     MouseEvent mouseEvent = (MouseEvent) event;
-    initialX = mouseEvent.getX();
-    initialY = mouseEvent.getY();
-    shape.setProperties(initialX, initialY,null, colorPickerContour.getValue());
+        double initialX = mouseEvent.getX();
+        double initialY = mouseEvent.getY();
+    shape.setProperties(initialX, initialY,colorPickerInternal.getValue(), colorPickerContour.getValue());
     hasNotBeenExecuted=false;
-   
-    TextField t = new TextField();
-    t.setLayoutX(initialX);
-    t.setLayoutY(initialY);
-    String style ="-fx-text-fill: #"+colorPickerContour.get().toString().substring(2,colorPickerContour.get().toString().length()-2 )+";";
-    t.setStyle(style);
-    t.setText("edit your text here...");
-    t.setBackground(Background.EMPTY);
-    t.setBorder(Border.EMPTY);
-    shape.getShape().setVisible(false);
-    drawingPane.getChildren().add(t);
-    t.setVisible(true);
-    
-    t.setOnKeyPressed(new EventHandler<KeyEvent>() {
-    @Override
-    public void handle(KeyEvent ke) {
+
+    TextField temporaryText = new TextField();
+    temporaryText.setLayoutX(initialX-20);
+    temporaryText.setLayoutY(initialY-50);
+    temporaryText.setText("write your text here...");
+    temporaryText.setBackground(Background.EMPTY);
+    temporaryText.setBorder(Border.EMPTY);
+    temporaryText.setFont(Font.font(40));
+
+    drawingPane.getChildren().add(temporaryText);
+    temporaryText.setVisible(true);
+
+    text.setVisible(false);
+
+    temporaryText.setOnKeyPressed(ke -> {
         if (ke.getCode().equals(KeyCode.ENTER)) {
-            newText =t.getText();
-            ((TextShape) shape).setText(newText);
-            t.setVisible(false);
-            drawingPane.getChildren().remove(t);
-            shape.getShape().setVisible(true);
+            String content =temporaryText.getText();
+            text.setText(content);
+
+            drawingPane.getChildren().remove(temporaryText);
+            text.setVisible(true);
         }
-    }
     });
     
 

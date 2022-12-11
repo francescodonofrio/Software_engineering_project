@@ -42,7 +42,6 @@ public abstract class ShapeAbstract implements ShapeInterface{
     public static void finalizeLoad() {
         isBeingLoaded = true;
     }
-    private Rotate scalle;
 
     /**
      * Returns the shape contained in the current object
@@ -163,6 +162,7 @@ public abstract class ShapeAbstract implements ShapeInterface{
         this.setY(Y);
         this.setInternalColor(internalColor);
         this.setContourColor(contourColor);
+        inserted=true;
     }
     
     /**

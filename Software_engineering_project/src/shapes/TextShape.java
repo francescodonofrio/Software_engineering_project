@@ -7,7 +7,7 @@ import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 
-public class TextShape extends OpenContourShape  {
+public class TextShape extends CloseContourShape  {
     
     /**
      * Creates a new instance of TextShape
@@ -15,9 +15,10 @@ public class TextShape extends OpenContourShape  {
     public TextShape() {
         
         this.shape = new Text();
+        this.shape.setStrokeWidth(1.5);
 
         if (isBeingLoaded || inserted) {
-                TextShape.cont++;
+            TextShape.cont++;
             inserted = false;
         }
         rotate = new Rotate();
@@ -56,9 +57,30 @@ public class TextShape extends OpenContourShape  {
     public double getSizeFont(){
         return ((Text) shape).getFont().getSize();
     }
-    
+
+    //16px = 12pt
     @Override
     public void setDim(double initialX, double initialY, double finalX, double finalY) {
+        Text text= (Text) shape;
+
+        double originalWidth=getDimX(),
+                originalHeight=getDimY(),
+                newWidth=finalX-initialX,
+                newHeight=finalY-initialY;
+        if(newHeight<=20)
+            newHeight=20;
+        if(newWidth<=20)
+            newWidth=20;
+
+        Double newScaleX= text.getScaleX() *newWidth/originalWidth,
+                newScaleY=text.getScaleY() *newHeight/originalHeight;
+        if(newScaleX<0)
+            newScaleX*=-1;
+        if(newScaleY<0)
+            newScaleY*=-1;
+
+        text.setScaleX(newScaleX);
+        text.setScaleY(newScaleY);
     }
     
     @Override

@@ -239,7 +239,7 @@ public class WindowController implements Initializable {
         mainLabel.setText("Insert a text on paper with left click, insert your text and to finish press enter (to resize select the text already inserted)");
         mainLabel.setFont(boldFont);
         selectedShape = new TextShape();
-        action = new DrawTextAction(selectedShape, colorPickerContour.valueProperty(), listInsertedShapes,drawingPane);
+        action = new DrawTextAction(selectedShape, colorPickerContour.valueProperty(), colorPickerInternal.valueProperty(),listInsertedShapes,drawingPane);
         textShapeBinding.add(selectedShape.getShape().effectProperty().isNull());
     }
 
