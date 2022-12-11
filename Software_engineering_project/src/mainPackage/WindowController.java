@@ -33,6 +33,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.binding.BooleanBinding;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Group;
 import javafx.scene.input.SwipeEvent;
 import javafx.scene.shape.Rectangle;
@@ -58,6 +59,8 @@ public class WindowController implements Initializable {
     @FXML
     private Button ellipseBtn;
     @FXML
+    private Button textBtn;
+    @FXML
     private TableView<ShapeInterface> shapesTable;
     @FXML
     private TableColumn<ShapeInterface, String> shapesColumn;
@@ -76,19 +79,15 @@ public class WindowController implements Initializable {
     @FXML
     private MenuItem pasteMenuItem;
     @FXML
-    private Button polygonBtn1;
-    @FXML
     private Group drawingPaneAndGrid;
     @FXML
     private CheckMenuItem gridCheckItem;
     @FXML
     private Slider gridSlider;
     @FXML
-    private Button textBtn;
-    @FXML
     private Label mainLabel;
     @FXML
-    private MenuButton buttonTextSize;
+    private TextField textFieldTextSize;
     
     private Invoker invoker;
     private ShapeInterface selectedShape;
@@ -119,6 +118,13 @@ public class WindowController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        textFieldTextSize.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                textFieldTextSize.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+        textFieldTextSize.setDisable(true);
+        
         textShapeBinding = FXCollections.observableArrayList();
 
         zoomQueue = new ArrayDeque<>();
@@ -139,6 +145,9 @@ public class WindowController implements Initializable {
                         remItem.setFocus(false);
                         int index = listInsertedShapes.indexOf(remItem);
                         shapesTable.getSelectionModel().clearSelection(index);
+                        BooleanBinding allValid = Bindings.createBooleanBinding(() -> textShapeBinding.stream().allMatch(BooleanBinding::get), textShapeBinding);
+                        textFieldTextSize.disableProperty().bind(allValid);
+                        resizeItem.visibleProperty().bind(allValid);
                         resetMainLabel();
                     }
                 });
@@ -150,7 +159,7 @@ public class WindowController implements Initializable {
                         colorPickerContour.setValue((Color) addItem.getShape().getStroke());
                         colorPickerInternal.setValue((Color) addItem.getShape().getFill());
                         BooleanBinding allValid = Bindings.createBooleanBinding(() -> textShapeBinding.stream().allMatch(BooleanBinding::get), textShapeBinding);
-                        buttonTextSize.disableProperty().bind(allValid);
+                        textFieldTextSize.disableProperty().bind(allValid);
                         resizeItem.visibleProperty().bind(allValid);
                     }
                 });
@@ -303,11 +312,7 @@ public class WindowController implements Initializable {
         if (event.getButton() == MouseButton.SECONDARY)
             rightClickPane = event;
         else{
-            try {
-                invoker.executeOnMouseDragged(action, event);
-            } catch (Exception ex) {
-                Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            invoker.executeOnMouseDragged(action, event);
         }
     }
 
@@ -625,8 +630,7 @@ public class WindowController implements Initializable {
     @FXML
     private void textResizeOnAction(ActionEvent event) {
         if (!selectedInsertedShape.isEmpty()) {
-            MenuItem temp = (MenuItem) event.getSource();
-            action = new ResizeTextAction(selectedInsertedShape.get(0), Integer.parseInt(temp.getText()));
+            action = new ResizeTextAction(selectedInsertedShape.get(0), Double.parseDouble(textFieldTextSize.getText()));
             invoker.execute(action, event);
             resetDefaultAction();
         }
