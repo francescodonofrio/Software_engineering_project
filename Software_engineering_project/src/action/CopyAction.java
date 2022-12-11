@@ -1,7 +1,7 @@
 package action;
 
 import exceptions.NotExecutedActionException;
-import exceptions.NotShapeToCopyException;
+import exceptions.ShapeNullException;
 import javafx.event.Event;
 import shapes.ShapeInterface;
 import shapes.util.Clipboard;
@@ -17,12 +17,12 @@ public class CopyAction implements Action {
      *
      * @param clipboard   the clipboard containing the saved shape
      * @param shapeToCopy the shape that has to be copied
-     * @throws NotShapeToCopyException
+     * @throws ShapeNullException
      */
-    public CopyAction(Clipboard clipboard, ShapeInterface shapeToCopy) throws NotShapeToCopyException {
+    public CopyAction(Clipboard clipboard, ShapeInterface shapeToCopy) throws ShapeNullException {
         this.clipboard = clipboard;
         if (shapeToCopy == null)
-            throw new NotShapeToCopyException();
+            throw new ShapeNullException();
         else
             this.shapeToCopy = shapeToCopy;
         this.hasNotBeenExecuted=true;

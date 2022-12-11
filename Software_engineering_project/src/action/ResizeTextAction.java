@@ -1,6 +1,7 @@
 package action;
 
 import exceptions.NotExecutedActionException;
+import exceptions.ShapeNullException;
 import javafx.event.Event;
 import shapes.ShapeInterface;
 import shapes.TextShape;
@@ -17,8 +18,11 @@ public class ResizeTextAction implements Action {
      * @param shape               the text to change size
      * @param size                 the new size for the text
      */
-    public ResizeTextAction(ShapeInterface shape, double size) {
-        this.shape = shape;
+    public ResizeTextAction(ShapeInterface shape, double size) throws ShapeNullException {
+        if (shape == null)
+            throw new ShapeNullException();
+        else
+            this.shape = shape;
         this.newSize=size;
         this.hasNotBeenExecuted=true;
     }
