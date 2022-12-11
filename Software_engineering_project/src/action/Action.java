@@ -29,6 +29,7 @@ public interface Action {
 
     /**
      * Undoes the action
+     *
      * @throws exceptions.NotExecutedActionException
      */
     void undo() throws NotExecutedActionException;

@@ -8,17 +8,18 @@ import shapes.ShapeInterface;
 import shapes.util.Clipboard;
 
 public class CutAction implements Action {
-    
+
     private final Clipboard clipboard;
     private final ObservableList<ShapeInterface> listInsertedShapes;
     private final ShapeInterface shapeToCut;
     private boolean hasNotBeenExecuted;
+
     /**
      * Returns a new instance of CutAction
      *
-     * @param clipboard   the clipboard containing the saved shape
+     * @param clipboard          the clipboard containing the saved shape
      * @param listInsertedShapes the list that so the shape will removed
-     * @param shapeToCut the shape that has to be cutted
+     * @param shapeToCut         the shape that has to be cutted
      * @throws ShapeNullException
      */
     public CutAction(Clipboard clipboard, ObservableList<ShapeInterface> listInsertedShapes, ShapeInterface shapeToCut) throws ShapeNullException {
@@ -28,7 +29,7 @@ public class CutAction implements Action {
             throw new ShapeNullException();
         else
             this.shapeToCut = shapeToCut;
-        this.hasNotBeenExecuted=true;
+        this.hasNotBeenExecuted = true;
     }
 
     /**
@@ -41,7 +42,7 @@ public class CutAction implements Action {
     public void execute(Event event) throws Exception {
         clipboard.setContent(shapeToCut);
         listInsertedShapes.remove(shapeToCut);
-        hasNotBeenExecuted=false;
+        hasNotBeenExecuted = false;
     }
 
     /**
@@ -50,7 +51,7 @@ public class CutAction implements Action {
      * @param event the event of the mouse click
      */
     @Override
-    public void onMouseDragged(Event event) { 
+    public void onMouseDragged(Event event) {
     }
 
     /**
@@ -64,13 +65,14 @@ public class CutAction implements Action {
 
     /**
      * Undoes the action
+     *
      * @throws exceptions.NotExecutedActionException
      */
     @Override
     public void undo() throws NotExecutedActionException {
-        if(hasNotBeenExecuted)
+        if (hasNotBeenExecuted)
             throw new NotExecutedActionException();
         listInsertedShapes.add(shapeToCut);
-        hasNotBeenExecuted=true;
-    }   
+        hasNotBeenExecuted = true;
+    }
 }

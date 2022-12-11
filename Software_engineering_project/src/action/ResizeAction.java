@@ -12,18 +12,19 @@ public class ResizeAction implements Action {
     private final ShapeInterface selectedShape;
     private double initialX, initialY, finalX, finalY, previousFinalX, previousFinalY;
     private boolean hasNotBeenExecuted;
+
     /**
      * Returns a new instance of ResizeAction
      *
      * @param selectedShape the shape to be resized
-     * @throws exceptions.ShapeNullException
+     * @throws ShapeNullException if the selected shape is null
      */
     public ResizeAction(ShapeInterface selectedShape) throws ShapeNullException {
         if (selectedShape == null)
             throw new ShapeNullException();
         else
             this.selectedShape = selectedShape;
-        this.hasNotBeenExecuted=true;
+        this.hasNotBeenExecuted = true;
     }
 
     /**
@@ -35,11 +36,11 @@ public class ResizeAction implements Action {
     public void execute(Event event) {
         initialX = selectedShape.getShape().getLayoutX();
         initialY = selectedShape.getShape().getLayoutY();
-        
+
         previousFinalX = selectedShape.getShape().getBoundsInParent().getMaxX();
         previousFinalY = selectedShape.getShape().getBoundsInParent().getMaxY();
         this.onMouseDragged(event);
-        this.hasNotBeenExecuted=false;
+        this.hasNotBeenExecuted = false;
     }
 
     /**
@@ -69,17 +70,17 @@ public class ResizeAction implements Action {
 
     /**
      * Undoes the action
-     * 
+     *
      * @throws exceptions.NotExecutedActionException
      */
     @Override
     public void undo() throws NotExecutedActionException {
-        if(hasNotBeenExecuted)
+        if (hasNotBeenExecuted)
             throw new NotExecutedActionException();
         selectedShape.setX(initialX);
         selectedShape.setY(initialY);
         selectedShape.setDim(initialX, initialY, previousFinalX, previousFinalY);
-        hasNotBeenExecuted=true;
+        hasNotBeenExecuted = true;
     }
 
 }

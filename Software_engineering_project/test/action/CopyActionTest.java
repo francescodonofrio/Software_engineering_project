@@ -2,7 +2,6 @@ package action;
 
 import exceptions.NotCloseContourException;
 import exceptions.NotExecutedActionException;
-import exceptions.NotShapeToCopyException;
 import javafx.event.Event;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;

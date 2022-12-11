@@ -1,164 +1,192 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.Group?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckMenuItem?>
-<?import javafx.scene.control.ColorPicker?>
-<?import javafx.scene.control.ContextMenu?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Slider?>
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-
-<AnchorPane id="AnchorPane" minHeight="500.0" minWidth="800.0" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainPackage.WindowController">
+<?import javafx.scene.layout.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" id="AnchorPane" minHeight="500.0" minWidth="800.0" prefHeight="800.0"
+            prefWidth="1200.0" xmlns="http://javafx.com/javafx/17"
+            fx:controller="mainPackage.WindowController">
     <children>
-        <SplitPane dividerPositions="0.5, 0.5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" orientation="VERTICAL" prefHeight="542.0" prefWidth="863.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <SplitPane dividerPositions="0.5, 0.5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                   orientation="VERTICAL" prefHeight="542.0" prefWidth="863.0" AnchorPane.bottomAnchor="0.0"
+                   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <items>
                 <MenuBar>
                     <menus>
                         <Menu mnemonicParsing="false" text="File">
                             <items>
-                                <MenuItem mnemonicParsing="false" onAction="#saveWindow" text="Save" />
-                                <MenuItem mnemonicParsing="false" onAction="#loadWindow" text="Load" />
+                                <MenuItem mnemonicParsing="false" onAction="#saveWindow" text="Save"/>
+                                <MenuItem mnemonicParsing="false" onAction="#loadWindow" text="Load"/>
                             </items>
                         </Menu>
-                  <Menu mnemonicParsing="false" text="View">
-                     <items>
-                        <CheckMenuItem fx:id="gridCheckItem" mnemonicParsing="false" onAction="#toggleGrid" text="Grid">
-                           <graphic>
-                              <Slider fx:id="gridSlider" blockIncrement="0.1" majorTickUnit="0.5" max="2.0" minorTickCount="1" onMouseClicked="#gridSliderOnMouse" onMouseDragged="#gridSliderOnMouse" onMousePressed="#gridSliderOnMouse" onMouseReleased="#gridSliderOnMouse" onSwipeLeft="#gridSliderOnSwipe" onSwipeRight="#gridSliderOnSwipe" showTickLabels="true" snapToTicks="true" value="1.0" />
-                           </graphic>
-                        </CheckMenuItem></items>
-                  </Menu>
+                        <Menu mnemonicParsing="false" text="View">
+                            <items>
+                                <CheckMenuItem fx:id="gridCheckItem" mnemonicParsing="false" onAction="#toggleGrid"
+                                               text="Grid">
+                                    <graphic>
+                                        <Slider fx:id="gridSlider" blockIncrement="0.1" majorTickUnit="0.5" max="2.0"
+                                                minorTickCount="1" onMouseClicked="#gridSliderOnMouse"
+                                                onMouseDragged="#gridSliderOnMouse" onMousePressed="#gridSliderOnMouse"
+                                                onMouseReleased="#gridSliderOnMouse" onSwipeLeft="#gridSliderOnSwipe"
+                                                onSwipeRight="#gridSliderOnSwipe" showTickLabels="true"
+                                                snapToTicks="true" value="1.0"/>
+                                    </graphic>
+                                </CheckMenuItem>
+                            </items>
+                        </Menu>
                     </menus>
                 </MenuBar>
-            <Label fx:id="mainLabel" alignment="CENTER" contentDisplay="CENTER" text="Welcome, select a shape on the left to draw it" />
+                <Label fx:id="mainLabel" alignment="CENTER" contentDisplay="CENTER"
+                       text="Welcome, select a shape on the left to draw it"/>
                 <SplitPane dividerPositions="0.17, 0.8" focusTraversable="false" prefHeight="160.0" prefWidth="200.0">
                     <items>
-                        <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="180.0" minWidth="94.0" prefHeight="509.0" prefWidth="180.0" style="-fx-background-color: white;" SplitPane.resizableWithParent="false">
+                        <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="180.0" minWidth="94.0"
+                              prefHeight="509.0" prefWidth="180.0" style="-fx-background-color: white;"
+                              SplitPane.resizableWithParent="false">
                             <children>
-                                <Button fx:id="lineSegmentBtn" mnemonicParsing="false" onAction="#lineSegmentSelection" onMouseReleased="#shapesButtonsOnMouseReleased" prefHeight="27.0" prefWidth="132.0" text="Line segment">
+                                <Button fx:id="lineSegmentBtn" mnemonicParsing="false" onAction="#lineSegmentSelection"
+                                        onMouseReleased="#shapesButtonsOnMouseReleased" prefHeight="27.0"
+                                        prefWidth="132.0" text="Line segment">
                                     <VBox.margin>
-                                        <Insets top="10.0" />
+                                        <Insets top="10.0"/>
                                     </VBox.margin>
                                 </Button>
-                                <Button fx:id="rectangleBtn" mnemonicParsing="false" onAction="#rectangleSelection" onMouseReleased="#shapesButtonsOnMouseReleased" prefHeight="27.0" prefWidth="132.0" text="Rectangle">
+                                <Button fx:id="rectangleBtn" mnemonicParsing="false" onAction="#rectangleSelection"
+                                        onMouseReleased="#shapesButtonsOnMouseReleased" prefHeight="27.0"
+                                        prefWidth="132.0" text="Rectangle">
                                     <VBox.margin>
-                                        <Insets top="10.0" />
+                                        <Insets top="10.0"/>
                                     </VBox.margin>
                                 </Button>
-                                <Button fx:id="ellipseBtn" mnemonicParsing="false" onAction="#ellipseSelection" onMouseReleased="#shapesButtonsOnMouseReleased" prefHeight="27.0" prefWidth="132.0" text="Ellipse">
+                                <Button fx:id="ellipseBtn" mnemonicParsing="false" onAction="#ellipseSelection"
+                                        onMouseReleased="#shapesButtonsOnMouseReleased" prefHeight="27.0"
+                                        prefWidth="132.0" text="Ellipse">
                                     <VBox.margin>
-                                        <Insets top="10.0" />
+                                        <Insets top="10.0"/>
                                     </VBox.margin>
                                 </Button>
-                        <Button fx:id="textBtn" mnemonicParsing="false" onAction="#textSelection" onMouseReleased="#shapesButtonsOnMouseReleased" prefHeight="27.0" prefWidth="132.0" text="Text">
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin>
-                        </Button>
-                        <TextField fx:id="textFieldTextSize" onAction="#textResizeOnAction" prefHeight="27.0" prefWidth="132.0" promptText="Text size">
-                           <VBox.margin>
-                              <Insets left="10.0" right="10.0" top="10.0" />
-                           </VBox.margin>
-                        </TextField>
-                        
-                                
-                       
+                                <Button fx:id="textBtn" mnemonicParsing="false" onAction="#textSelection"
+                                        onMouseReleased="#shapesButtonsOnMouseReleased" prefHeight="27.0"
+                                        prefWidth="132.0" text="Text">
+                                    <VBox.margin>
+                                        <Insets top="10.0"/>
+                                    </VBox.margin>
+                                </Button>
+                                <TextField fx:id="textFieldTextSize" onAction="#textResizeOnAction" prefHeight="27.0"
+                                           prefWidth="132.0" promptText="Text size">
+                                    <VBox.margin>
+                                        <Insets left="10.0" right="10.0" top="10.0"/>
+                                    </VBox.margin>
+                                </TextField>
+
+
                                 <Label text="Choose internal color ">
                                     <VBox.margin>
-                                        <Insets left="10.0" right="10.0" top="40.0" />
+                                        <Insets left="10.0" right="10.0" top="40.0"/>
                                     </VBox.margin>
                                 </Label>
                                 <ColorPicker fx:id="colorPickerInternal" onAction="#changeInternalColorOnAction">
                                     <VBox.margin>
-                                        <Insets left="10.0" right="10.0" top="10.0" />
+                                        <Insets left="10.0" right="10.0" top="10.0"/>
                                     </VBox.margin>
                                 </ColorPicker>
                                 <Label text="Choose contour color">
                                     <VBox.margin>
-                                        <Insets left="10.0" right="10.0" top="20.0" />
+                                        <Insets left="10.0" right="10.0" top="20.0"/>
                                     </VBox.margin>
                                 </Label>
                                 <ColorPicker fx:id="colorPickerContour" onAction="#changeContourColorOnAction">
                                     <VBox.margin>
-                                        <Insets left="10.0" right="10.0" top="10.0" />
+                                        <Insets left="10.0" right="10.0" top="10.0"/>
                                     </VBox.margin>
                                 </ColorPicker>
-                        <Button fx:id="undoBtn" mnemonicParsing="false" onAction="#undoBtnOnAction" prefHeight="27.0" prefWidth="132.0" text="Undo">
-                           <VBox.margin>
-                              <Insets top="50.0" />
-                           </VBox.margin>
-                        </Button>
+                                <Button fx:id="undoBtn" mnemonicParsing="false" onAction="#undoBtnOnAction"
+                                        prefHeight="27.0" prefWidth="132.0" text="Undo">
+                                    <VBox.margin>
+                                        <Insets top="50.0"/>
+                                    </VBox.margin>
+                                </Button>
                                 <Label text="Zoom">
                                     <VBox.margin>
-                                        <Insets top="50.0" />
+                                        <Insets top="50.0"/>
                                     </VBox.margin>
                                 </Label>
-                                <HBox alignment="CENTER" fillHeight="false" prefHeight="34.0" prefWidth="108.0" spacing="20.0">
+                                <HBox alignment="CENTER" fillHeight="false" prefHeight="34.0" prefWidth="108.0"
+                                      spacing="20.0">
                                     <children>
-                                        <Button fx:id="lessZoomBtn" mnemonicParsing="false" onAction="#lessZoomBtnOnAction" prefHeight="26.0" prefWidth="33.0" text="-" />
-                                        <Button fx:id="moreZoomBtn" mnemonicParsing="false" onAction="#moreZoomBtnOnAction" prefHeight="26.0" prefWidth="33.0" text="+">
+                                        <Button fx:id="lessZoomBtn" mnemonicParsing="false"
+                                                onAction="#lessZoomBtnOnAction" prefHeight="26.0" prefWidth="33.0"
+                                                text="-"/>
+                                        <Button fx:id="moreZoomBtn" mnemonicParsing="false"
+                                                onAction="#moreZoomBtnOnAction" prefHeight="26.0" prefWidth="33.0"
+                                                text="+">
                                             <HBox.margin>
-                                                <Insets />
+                                                <Insets/>
                                             </HBox.margin>
                                         </Button>
                                     </children>
-                           <padding>
-                              <Insets top="5.0" />
-                           </padding>
+                                    <padding>
+                                        <Insets top="5.0"/>
+                                    </padding>
                                 </HBox>
                             </children>
                         </VBox>
-                        <ScrollPane fx:id="scrollPane" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="432.0" prefWidth="684.0">
-                     <contextMenu>
-                        <ContextMenu fx:id="contextMenuDrawingPane">
-                          <items>
-                            <MenuItem fx:id="pasteMenuItem" mnemonicParsing="false" onAction="#pasteButtonOnClick" text="Paste" />
-                          </items>
-                        </ContextMenu>
-                     </contextMenu>
-                     <content>
-                        <Group fx:id="drawingPaneAndGrid">
-                           <children>
-                                      <AnchorPane fx:id="drawingPane" minHeight="0.0" minWidth="0.0" onMouseDragged="#drawingWindowOnMouseDragged" onMousePressed="#drawingWindowOnMousePressed" onMouseReleased="#drawingWindowOnMouseReleased" prefHeight="864.0" prefWidth="1368.0" />
-                           </children>
-                        </Group>
-                     </content>
+                        <ScrollPane fx:id="scrollPane" focusTraversable="false" maxHeight="1.7976931348623157E308"
+                                    maxWidth="1.7976931348623157E308" prefHeight="432.0" prefWidth="684.0">
+                            <contextMenu>
+                                <ContextMenu fx:id="contextMenuDrawingPane">
+                                    <items>
+                                        <MenuItem fx:id="pasteMenuItem" mnemonicParsing="false"
+                                                  onAction="#pasteButtonOnClick" text="Paste"/>
+                                    </items>
+                                </ContextMenu>
+                            </contextMenu>
+                            <content>
+                                <Group fx:id="drawingPaneAndGrid">
+                                    <children>
+                                        <AnchorPane fx:id="drawingPane" minHeight="0.0" minWidth="0.0"
+                                                    onMouseDragged="#drawingWindowOnMouseDragged"
+                                                    onMousePressed="#drawingWindowOnMousePressed"
+                                                    onMouseReleased="#drawingWindowOnMouseReleased" prefHeight="864.0"
+                                                    prefWidth="1368.0"/>
+                                    </children>
+                                </Group>
+                            </content>
                         </ScrollPane>
-                        <TableView fx:id="shapesTable" maxWidth="150.0" minWidth="50.0" onMouseClicked="#shapesTableOnMouseClicked" prefHeight="200.0" prefWidth="100.0" SplitPane.resizableWithParent="false">
+                        <TableView fx:id="shapesTable" maxWidth="150.0" minWidth="50.0"
+                                   onMouseClicked="#shapesTableOnMouseClicked" prefHeight="200.0" prefWidth="100.0"
+                                   SplitPane.resizableWithParent="false">
                             <columns>
-                                <TableColumn fx:id="shapesColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="100.0" text="Inserted shapes" />
+                                <TableColumn fx:id="shapesColumn" editable="false" maxWidth="1.7976931348623157E308"
+                                             minWidth="50.0" prefWidth="100.0" text="Inserted shapes"/>
                             </columns>
                             <columnResizePolicy>
-                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
                             </columnResizePolicy>
                             <contextMenu>
                                 <ContextMenu fx:id="contextMenuTableView">
                                     <items>
-                              <MenuItem mnemonicParsing="false" onAction="#cutButtonOnClick" text="Cut" />
-                                        <MenuItem mnemonicParsing="false" onAction="#copyButtonOnClick" text="Copy" />
-                                        <MenuItem fx:id="resizeItem" mnemonicParsing="false" onAction="#resizeButtonOnClick" text="Resize" />
-                                        <MenuItem mnemonicParsing="false" onAction="#toFrontOnClick" text="Move to front" />
-                                        <MenuItem mnemonicParsing="false" onAction="#toBackOnClick" text="Move to back" />
-                                        <MenuItem mnemonicParsing="false" onAction="#rotateButtonOnClick" text="Rotate" />
-                                        <MenuItem mnemonicParsing="false" onAction="#stretchButtonOnClick" text="Stretch" />
-                              <Menu mnemonicParsing="false" text="Mirror">
-                                <items>
-                                  <MenuItem mnemonicParsing="false" onAction="#mirrorXButtonOnClick" text="Horizontally" />
-                                    <MenuItem mnemonicParsing="false" onAction="#mirrorYButtonOnClick" text="Vertically" />
-                                </items>
-                              </Menu>
+                                        <MenuItem mnemonicParsing="false" onAction="#cutButtonOnClick" text="Cut"/>
+                                        <MenuItem mnemonicParsing="false" onAction="#copyButtonOnClick" text="Copy"/>
+                                        <MenuItem fx:id="resizeItem" mnemonicParsing="false"
+                                                  onAction="#resizeButtonOnClick" text="Resize"/>
+                                        <MenuItem mnemonicParsing="false" onAction="#toFrontOnClick"
+                                                  text="Move to front"/>
+                                        <MenuItem mnemonicParsing="false" onAction="#toBackOnClick"
+                                                  text="Move to back"/>
+                                        <MenuItem mnemonicParsing="false" onAction="#rotateButtonOnClick"
+                                                  text="Rotate"/>
+                                        <MenuItem mnemonicParsing="false" onAction="#stretchButtonOnClick"
+                                                  text="Stretch"/>
+                                        <Menu mnemonicParsing="false" text="Mirror">
+                                            <items>
+                                                <MenuItem mnemonicParsing="false" onAction="#mirrorXButtonOnClick"
+                                                          text="Horizontally"/>
+                                                <MenuItem mnemonicParsing="false" onAction="#mirrorYButtonOnClick"
+                                                          text="Vertically"/>
+                                            </items>
+                                        </Menu>
                                     </items>
                                 </ContextMenu>
                             </contextMenu>

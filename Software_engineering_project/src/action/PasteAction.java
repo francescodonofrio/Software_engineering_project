@@ -23,7 +23,7 @@ public class PasteAction implements Action {
     public PasteAction(Clipboard clipboard, ObservableList<ShapeInterface> listInsertedShapes) {
         this.clipboard = clipboard;
         this.listInsertedShapes = listInsertedShapes;
-        this.hasNotBeenExecuted=true;
+        this.hasNotBeenExecuted = true;
     }
 
     /**
@@ -40,7 +40,7 @@ public class PasteAction implements Action {
         shapeToPaste.setY(mouseEvent.getY());
         listInsertedShapes.add(shapeToPaste);
         shapeToPaste.setInserted(true);
-        hasNotBeenExecuted=false;
+        hasNotBeenExecuted = false;
     }
 
     /**
@@ -63,14 +63,15 @@ public class PasteAction implements Action {
 
     /**
      * Undoes the action
+     *
      * @throws exceptions.NotExecutedActionException
      */
     @Override
     public void undo() throws NotExecutedActionException {
-        if(hasNotBeenExecuted)
+        if (hasNotBeenExecuted)
             throw new NotExecutedActionException();
         listInsertedShapes.remove(shapeToPaste);
-        hasNotBeenExecuted=true;
+        hasNotBeenExecuted = true;
     }
 
 }

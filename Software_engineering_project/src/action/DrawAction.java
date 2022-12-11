@@ -30,14 +30,14 @@ public class DrawAction implements Action {
      * @throws exceptions.ShapeNullException
      */
     public DrawAction(ShapeInterface shape, ObjectProperty<Color> colorPickerInternal, ObjectProperty<Color> colorPickerContour, ObservableList<ShapeInterface> listInsertedShapes) throws ShapeNullException {
-       if (shape == null)
+        if (shape == null)
             throw new ShapeNullException();
         else
             this.shape = shape;
         this.listInsertedShapes = listInsertedShapes;
         this.colorPickerInternal = colorPickerInternal;
         this.colorPickerContour = colorPickerContour;
-        this.hasNotBeenExecuted=true;
+        this.hasNotBeenExecuted = true;
     }
 
     /**
@@ -52,7 +52,7 @@ public class DrawAction implements Action {
         initialX = mouseEvent.getX();
         initialY = mouseEvent.getY();
         shape.setProperties(initialX, initialY, colorPickerInternal.getValue(), colorPickerContour.getValue());
-        hasNotBeenExecuted=false;
+        hasNotBeenExecuted = false;
     }
 
     /**
@@ -80,14 +80,15 @@ public class DrawAction implements Action {
 
     /**
      * Undoes the action
+     *
      * @throws exceptions.NotExecutedActionException
      */
     @Override
     public void undo() throws NotExecutedActionException {
-        if(hasNotBeenExecuted)
+        if (hasNotBeenExecuted)
             throw new NotExecutedActionException();
 
         listInsertedShapes.remove(shape);
-        hasNotBeenExecuted=true;
+        hasNotBeenExecuted = true;
     }
 }

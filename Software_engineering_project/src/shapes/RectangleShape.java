@@ -39,7 +39,7 @@ public class RectangleShape extends CloseContourShape {
      */
     @Override
     public void setDim(double initialX, double initialY, double finalX, double finalY) {
-        if(!inserted){
+        if (!inserted) {
             width = finalX - initialX;
             height = finalY - initialY;
             double signWidth = 1, signHeight = 1;
@@ -51,37 +51,37 @@ public class RectangleShape extends CloseContourShape {
                 signHeight = -1;
                 translate.setY(height);
             }
-            ((Rectangle) shape).setWidth(signWidth*width);
-            ((Rectangle) shape).setHeight(signHeight*height);
-        }else{
+            ((Rectangle) shape).setWidth(signWidth * width);
+            ((Rectangle) shape).setHeight(signHeight * height);
+        } else {
             this.resize(initialX, initialY, finalX, finalY);
         }
     }
-    
+
     /**
      * Return the dimension along the x-axis
-     * 
+     *
      * @return the dimension of the shape along the x-axis
      */
     @Override
     public double getDimX() {
         return ((Rectangle) shape).getWidth();
     }
-    
+
     /**
      * Return the dimension along the y-axis
-     * 
+     *
      * @return the dimension of the shape along the y-axis
      */
     @Override
     public double getDimY() {
         return ((Rectangle) shape).getHeight();
     }
-    
-    
+
+
     /**
      * Resize the dimension of the shape
-     * 
+     *
      * @param initialX the initial X coordinate
      * @param initialY the initial Y coordinate
      * @param finalX   the final X coordinate

@@ -5,6 +5,7 @@ import exceptions.NotExecutedActionException;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.Event;
+
 import java.util.ArrayDeque;
 import java.util.Deque;
 
@@ -65,7 +66,7 @@ public class Invoker {
         } catch (Exception ex) {
             exceptionVerified = true;
         }
-        if(exceptionVerified){
+        if (exceptionVerified) {
             this.actions.pop();
             if (this.actions.isEmpty())
                 this.emptyQueue.set(true);

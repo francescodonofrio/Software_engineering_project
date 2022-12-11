@@ -1,16 +1,17 @@
 package shapes.util;
 
-import shapes.ShapeInterface;
-import java.io.ByteArrayOutputStream;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import shapes.ShapeInterface;
+
+import java.io.ByteArrayOutputStream;
 import java.util.LinkedList;
 
 public class Clipboard {
     private static Clipboard instance = null;
-    private byte[] content;
     private final BooleanProperty hasContent;
-    
+    private byte[] content;
+
     /**
      * Creates a new instance of Clipboard
      */
@@ -41,12 +42,12 @@ public class Clipboard {
         try {
             ShapesIO.loadStreamByte(content, shape);
             shape.get(0).setName(shape.get(0).getName() + " - Copy");
-            shape.get(0).getShape().setEffect(null);  
+            shape.get(0).getShape().setEffect(null);
             return shape.removeFirst();
         } catch (Exception ex) {
             return null;
         }
-        
+
     }
 
     /**
@@ -54,9 +55,9 @@ public class Clipboard {
      *
      * @param shape the shape to be save on the clipboard
      */
-    public void setContent(ShapeInterface shape){
+    public void setContent(ShapeInterface shape) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        
+
         try {
             ShapesIO.saveStreamByte(stream, shape);
             this.content = stream.toByteArray();
@@ -66,14 +67,14 @@ public class Clipboard {
         hasContent.set(true);
 
     }
-    
+
     /**
      * Return a property to know if the clipboard has a content
      *
-     * @return hasContent 
+     * @return hasContent
      */
     public BooleanProperty hasContent() {
         return hasContent;
     }
-    
+
 }

@@ -2,29 +2,37 @@ package mainPackage;
 
 import action.*;
 import com.sun.glass.ui.Screen;
-import exceptions.*;
+import exceptions.NoActionsException;
+import exceptions.NotExecutedActionException;
+import exceptions.ShapeNullException;
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.SwipeEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.transform.Scale;
 import javafx.stage.FileChooser;
-import shapes.EllipseShape;
-import shapes.LineShape;
-import shapes.RectangleShape;
-import shapes.ShapeInterface;
+import shapes.*;
 import shapes.util.Clipboard;
+import shapes.util.Grid;
 import shapes.util.ShapesIO;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -32,18 +40,10 @@ import java.util.ArrayDeque;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.binding.BooleanBinding;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.Group;
-import javafx.scene.input.SwipeEvent;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import shapes.TextShape;
-import shapes.util.Grid;
 
 public class WindowController implements Initializable {
 
+    private final double zoomOffset = 0.2;
     @FXML
     private Pane drawingPane;
     @FXML
@@ -88,7 +88,6 @@ public class WindowController implements Initializable {
     private Label mainLabel;
     @FXML
     private TextField textFieldTextSize;
-    
     private Invoker invoker;
     private ShapeInterface selectedShape;
     private ObservableList<ShapeInterface> selectedInsertedShape;
@@ -100,11 +99,10 @@ public class WindowController implements Initializable {
     private MouseEvent rightClickPane;
     private SimpleObjectProperty<Integer> zoomLevel;
     private ArrayDeque<Double> zoomQueue;
-    private final double zoomOffset = 0.2;
     private Grid grid;
     private Font defaultFont, boldFont;
     private ObservableList<BooleanBinding> textShapeBinding;
-    
+
     /**
      * Called to initialize a controller after its root element has been
      * completely processed.
@@ -123,11 +121,11 @@ public class WindowController implements Initializable {
             }
         });
         textFieldTextSize.setDisable(true);
-        
+
         textShapeBinding = FXCollections.observableArrayList();
 
         zoomQueue = new ArrayDeque<>();
-        
+
         invoker = new Invoker();
         undoBtn.disableProperty().bind(invoker.emptyQueueProperty());
 
@@ -176,8 +174,12 @@ public class WindowController implements Initializable {
         contextMenuTableView.getItems().forEach(menuItem -> menuItem.disableProperty().bind(Bindings.isEmpty(selectedInsertedShape)));
 
         selectedShape = new LineShape();
-        action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes);
-        
+        try {
+            action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes);
+        } catch (ShapeNullException ex) {
+            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         shapesColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         shapesTable.setItems(listInsertedShapes);
 
@@ -191,15 +193,15 @@ public class WindowController implements Initializable {
         clipboard = Clipboard.getClipboard();
 
         pasteMenuItem.disableProperty().bind(clipboard.hasContent().not());
-        
+
         drawingPane.setPrefSize(Screen.getMainScreen().getWidth(), Screen.getMainScreen().getHeight());
-        drawingPane.setClip(new Rectangle (0,0, Screen.getMainScreen().getWidth(),Screen.getMainScreen().getHeight()));
+        drawingPane.setClip(new Rectangle(0, 0, Screen.getMainScreen().getWidth(), Screen.getMainScreen().getHeight()));
         grid = new Grid(drawingPane, 1, false);
         drawingPaneAndGrid.getChildren().add(grid);
-        
+
         defaultFont = mainLabel.getFont();
         boldFont = Font.font(mainLabel.getFont().getFamily(), FontWeight.BOLD, mainLabel.getFont().getSize());
-        
+
     }
 
     /**
@@ -212,7 +214,11 @@ public class WindowController implements Initializable {
         mainLabel.setText("Draw a line on paper with left click");
         mainLabel.setFont(boldFont);
         selectedShape = new LineShape();
-        action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes);
+        try {
+            action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes);
+        } catch (ShapeNullException ex) {
+            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -225,7 +231,11 @@ public class WindowController implements Initializable {
         mainLabel.setText("Draw a rectangle on paper with left click");
         mainLabel.setFont(boldFont);
         selectedShape = new RectangleShape();
-        action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes);
+        try {
+            action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes);
+        } catch (ShapeNullException ex) {
+            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -238,15 +248,23 @@ public class WindowController implements Initializable {
         mainLabel.setText("Draw an ellipse on paper with left click");
         mainLabel.setFont(boldFont);
         selectedShape = new EllipseShape();
-        action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes);
+        try {
+            action = new DrawAction(selectedShape, colorPickerInternal.valueProperty(), colorPickerContour.valueProperty(), listInsertedShapes);
+        } catch (ShapeNullException ex) {
+            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    
+
     @FXML
     private void textSelection(ActionEvent event) throws InterruptedException {
         mainLabel.setText("Insert a text on paper with left click, insert your text and to finish press enter (to resize select the text already inserted)");
         mainLabel.setFont(boldFont);
         selectedShape = new TextShape();
-        action = new DrawTextAction(selectedShape, colorPickerContour.valueProperty(), colorPickerInternal.valueProperty(),listInsertedShapes,drawingPane);
+        try {
+            action = new DrawTextAction(selectedShape, colorPickerContour.valueProperty(), colorPickerInternal.valueProperty(), listInsertedShapes, drawingPane);
+        } catch (ShapeNullException ex) {
+            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         textShapeBinding.add(selectedShape.getShape().effectProperty().isNull());
     }
 
@@ -309,7 +327,7 @@ public class WindowController implements Initializable {
     private void drawingWindowOnMouseDragged(MouseEvent event) {
         if (event.getButton() == MouseButton.SECONDARY)
             rightClickPane = event;
-        else{
+        else {
             invoker.executeOnMouseDragged(action, event);
         }
     }
@@ -323,7 +341,7 @@ public class WindowController implements Initializable {
     private void drawingWindowOnMousePressed(MouseEvent event) {
         if (event.getButton() == MouseButton.SECONDARY)
             rightClickPane = event;
-        else{
+        else {
             invoker.execute(action, event);
         }
     }
@@ -367,11 +385,11 @@ public class WindowController implements Initializable {
     @FXML
     private void copyButtonOnClick(ActionEvent event) {
         ShapeInterface copiedShape = shapesTable.getSelectionModel().getSelectedItem();
-        
+
         try {
             action = new CopyAction(clipboard, copiedShape);
             invoker.execute(this.action, event);
-        } catch (NotShapeToCopyException ex) {
+        } catch (ShapeNullException ex) {
             Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
         }
         resetMainLabel();
@@ -390,7 +408,7 @@ public class WindowController implements Initializable {
         try {
             action = new CutAction(clipboard, listInsertedShapes, cuttedShape);
             invoker.execute(this.action, event);
-        } catch (NotShapeToCutException ex) {
+        } catch (ShapeNullException ex) {
             Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
         }
         resetMainLabel();
@@ -399,36 +417,46 @@ public class WindowController implements Initializable {
 
     /**
      * Called when the MenuItem to front is being clicked
-     * 
+     *
      * @param event the event of the click
      */
     @FXML
     private void toFrontOnClick(ActionEvent event) {
-        action = new ToFrontAction(selectedInsertedShape.get(0), drawingPane.getChildren());
-        invoker.execute(action, event);
+        try {
+            action = new ToFrontAction(selectedInsertedShape.get(0), drawingPane.getChildren());
+
+            invoker.execute(action, event);
+        } catch (ShapeNullException ex) {
+            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         resetDefaultAction();
     }
 
     /**
      * Called when the MenuItem to back is being clicked
-     * 
+     *
      * @param event the event of the click
      */
     @FXML
     private void toBackOnClick(ActionEvent event) {
-        action = new ToBackAction(selectedInsertedShape.get(0), drawingPane.getChildren());
-        invoker.execute(action, event);
+        try {
+            action = new ToBackAction(selectedInsertedShape.get(0), drawingPane.getChildren());
+
+            invoker.execute(action, event);
+        } catch (ShapeNullException ex) {
+            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         resetDefaultAction();
     }
 
     /**
      * Called when the MenuItem rotate is being clicked
-     * 
+     *
      * @param event the event of the click
-     */    
+     */
     @FXML
     private void rotateButtonOnClick(ActionEvent event) {
-        try{
+        try {
             mainLabel.setText("Rotate the selected shape with left click or drag and drop on ");
             mainLabel.setFont(boldFont);
             action = new RotateAction(selectedInsertedShape.get(0));
@@ -440,9 +468,9 @@ public class WindowController implements Initializable {
 
     /**
      * Called when the MenuItem stretch is being clicked
-     * 
+     *
      * @param event the event of the click
-     */  
+     */
     @FXML
     private void stretchButtonOnClick(ActionEvent event) {
         try {
@@ -454,30 +482,41 @@ public class WindowController implements Initializable {
             resetDefaultAction();
         }
     }
-    
+
     /**
      * Called when the MenuItem mirror horizzontally is being clicked
-     * 
+     *
      * @param event the event of the click
      */
     @FXML
     private void mirrorXButtonOnClick(ActionEvent event) {
         ShapeInterface shapeToMirror = shapesTable.getSelectionModel().getSelectedItem();
-        this.action = new MirrorAction(shapeToMirror, true, false);
-        invoker.execute(this.action, event);
+
+        try {
+
+            this.action = new MirrorAction(shapeToMirror, true, false);
+            invoker.execute(this.action, event);
+        } catch (ShapeNullException ex) {
+            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         resetDefaultAction();
     }
-    
+
     /**
      * Called when the MenuItem mirror vertically is being clicked
-     * 
+     *
      * @param event the event of the click
      */
     @FXML
     private void mirrorYButtonOnClick(ActionEvent event) {
         ShapeInterface shapeToMirror = shapesTable.getSelectionModel().getSelectedItem();
-        this.action = new MirrorAction(shapeToMirror, false, true);
-        invoker.execute(this.action, event);
+        try {
+
+            this.action = new MirrorAction(shapeToMirror, true, false);
+            invoker.execute(this.action, event);
+        } catch (ShapeNullException ex) {
+            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         resetDefaultAction();
     }
 
@@ -488,11 +527,13 @@ public class WindowController implements Initializable {
      */
     @FXML
     private void changeInternalColorOnAction(ActionEvent event) {
-        if (!selectedInsertedShape.isEmpty()) {
+        try {
             action = new ChangeInternalColorAction(selectedInsertedShape.get(0), colorPickerInternal.valueProperty());
             invoker.execute(action, event);
-            resetDefaultAction();
+        } catch (ShapeNullException ex) {
+            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        resetDefaultAction();
     }
 
     /**
@@ -502,11 +543,13 @@ public class WindowController implements Initializable {
      */
     @FXML
     private void changeContourColorOnAction(ActionEvent event) {
-        if (!selectedInsertedShape.isEmpty()) {
+        try {
             action = new ChangeContourColorAction(selectedInsertedShape.get(0), colorPickerContour.valueProperty());
             invoker.execute(action, event);
-            resetDefaultAction();
+        } catch (ShapeNullException ex) {
+            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        resetDefaultAction();
     }
 
     /**
@@ -557,7 +600,7 @@ public class WindowController implements Initializable {
         drawingPane.setPrefHeight(zoomQueue.removeLast());
         drawingPane.setPrefWidth(zoomQueue.removeLast());
         zoomLevel.set(zoomLevel.getValue() - 1);
-        
+
         drawingPaneAndGrid.getChildren().remove(grid);
         grid = new Grid(drawingPane, gridSlider.getValue(), gridCheckItem.isSelected());
         drawingPaneAndGrid.getChildren().add(grid);
@@ -582,7 +625,7 @@ public class WindowController implements Initializable {
         drawingPane.setPrefWidth(drawingPane.getPrefWidth() + drawingPane.getPrefWidth() * zoomOffset);
         drawingPane.setPrefHeight(drawingPane.getPrefHeight() + drawingPane.getPrefHeight() * zoomOffset);
         zoomLevel.set(zoomLevel.getValue() + 1);
-        
+
         drawingPaneAndGrid.getChildren().remove(grid);
         grid = new Grid(drawingPane, gridSlider.getValue(), gridCheckItem.isSelected());
         drawingPaneAndGrid.getChildren().add(grid);
@@ -597,55 +640,57 @@ public class WindowController implements Initializable {
     private void toggleGrid(ActionEvent event) {
         grid.setVisible(gridCheckItem.isSelected());
     }
-    
+
     /**
      * Called when on the grid slider is performed an on mouse dragged or on mouse pressed action
-     * 
+     *
      * @param event the event of the click
      */
     @FXML
     private void gridSliderOnMouse(MouseEvent event) {
-        if(gridSlider.getValue()>0)
+        if (gridSlider.getValue() > 0)
             grid.resize(gridSlider.getValue());
     }
-    
+
     /**
      * Called when on the grid slider is performed a swipe action
-     * 
+     *
      * @param event the event of the click
      */
     @FXML
     private void gridSliderOnSwipe(SwipeEvent event) {
-        if(gridSlider.getValue()>0)
+        if (gridSlider.getValue() > 0)
             grid.resize(gridSlider.getValue());
     }
-    
+
     /**
      * Called when the menu item of the buttonTextSize are being clicked
-     * 
+     *
      * @param event the event of the click
      */
     @FXML
     private void textResizeOnAction(ActionEvent event) {
-        if (!selectedInsertedShape.isEmpty()) {
+        try {
             action = new ResizeTextAction(selectedInsertedShape.get(0), Double.parseDouble(textFieldTextSize.getText()));
             invoker.execute(action, event);
-            resetDefaultAction();
+        } catch (ShapeNullException ex) {
+            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        resetDefaultAction();
     }
-    
+
     /**
      * Reset the main lebel to a default value
      */
-    private void resetMainLabel(){
+    private void resetMainLabel() {
         mainLabel.setText("Select a shape on the left to draw it");
         mainLabel.setFont(defaultFont);
     }
-    
+
     /**
      * Reset the action to the default one
      */
-    private void resetDefaultAction(){
+    private void resetDefaultAction() {
         action = new MoveAction(selectedInsertedShape, listInsertedShapes);
     }
 }

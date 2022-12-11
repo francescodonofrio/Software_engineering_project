@@ -8,25 +8,27 @@ import shapes.TextShape;
 
 public class ResizeTextAction implements Action {
     private final ShapeInterface shape;
-    private final double newSize; 
+    private final double newSize;
     private double oldSize;
     private boolean hasNotBeenExecuted;
+
     /**
      * Returns a new instance of ResizeTextAction, given the shape and
      * its new size
      *
-     * @param shape               the text to change size
-     * @param size                 the new size for the text
+     * @param shape the text to change size
+     * @param size  the new size for the text
+     * @throws ShapeNullException if the selected shape is null
      */
     public ResizeTextAction(ShapeInterface shape, double size) throws ShapeNullException {
         if (shape == null)
             throw new ShapeNullException();
         else
             this.shape = shape;
-        this.newSize=size;
-        this.hasNotBeenExecuted=true;
+        this.newSize = size;
+        this.hasNotBeenExecuted = true;
     }
-    
+
     /**
      * Executes the action specified by the calling class when the mouse is clicked
      *
@@ -34,9 +36,9 @@ public class ResizeTextAction implements Action {
      */
     @Override
     public void execute(Event event) throws Exception {
-        oldSize = ((TextShape)shape).getSizeFont();
-        ((TextShape)shape).setSizeFont(newSize);
-        this.hasNotBeenExecuted=false;
+        oldSize = ((TextShape) shape).getSizeFont();
+        ((TextShape) shape).setSizeFont(newSize);
+        this.hasNotBeenExecuted = false;
     }
 
     /**
@@ -59,14 +61,15 @@ public class ResizeTextAction implements Action {
 
     /**
      * Undoes the action
+     *
      * @throws exceptions.NotExecutedActionException
      */
     @Override
     public void undo() throws NotExecutedActionException {
-        if(hasNotBeenExecuted)
+        if (hasNotBeenExecuted)
             throw new NotExecutedActionException();
 
-        hasNotBeenExecuted=true;
-        ((TextShape)shape).setSizeFont(oldSize);
+        hasNotBeenExecuted = true;
+        ((TextShape) shape).setSizeFont(oldSize);
     }
 }

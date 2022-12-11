@@ -2,7 +2,6 @@ package action;
 
 import exceptions.NotCloseContourException;
 import exceptions.NotExecutedActionException;
-import exceptions.NotShapeToCutException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -84,7 +83,7 @@ public class CutActionTest {
      * @throws java.lang.Exception
      */
     @Test(expected=NotExecutedActionException.class)
-    public void testUndo() throws NotExecutedActionException, NotShapeToCutException, Exception {
+    public void testUndo() throws NotExecutedActionException, Exception {
         System.out.println("undo: ");
         
         Event event = null;

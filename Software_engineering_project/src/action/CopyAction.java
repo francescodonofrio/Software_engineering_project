@@ -12,6 +12,7 @@ public class CopyAction implements Action {
     private final ShapeInterface shapeToCopy;
     private boolean hasNotBeenExecuted;
     private ShapeInterface lastContent;
+
     /**
      * Returns a new instance of CopyAction
      *
@@ -25,7 +26,7 @@ public class CopyAction implements Action {
             throw new ShapeNullException();
         else
             this.shapeToCopy = shapeToCopy;
-        this.hasNotBeenExecuted=true;
+        this.hasNotBeenExecuted = true;
     }
 
     /**
@@ -36,12 +37,12 @@ public class CopyAction implements Action {
      */
     @Override
     public void execute(Event event) throws Exception {
-        lastContent=null;
-        if(clipboard.hasContent().get())
-            lastContent=clipboard.getContent();
+        lastContent = null;
+        if (clipboard.hasContent().get())
+            lastContent = clipboard.getContent();
 
         clipboard.setContent(shapeToCopy);
-        hasNotBeenExecuted=false;
+        hasNotBeenExecuted = false;
     }
 
     /**
@@ -64,6 +65,7 @@ public class CopyAction implements Action {
 
     /**
      * Undoes the action
+     *
      * @throws exceptions.NotExecutedActionException
      */
     @Override
@@ -72,7 +74,7 @@ public class CopyAction implements Action {
             throw new NotExecutedActionException();
 
         clipboard.setContent(lastContent);
-        hasNotBeenExecuted=true;
+        hasNotBeenExecuted = true;
     }
 
 }

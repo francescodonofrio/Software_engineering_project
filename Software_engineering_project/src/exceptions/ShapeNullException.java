@@ -1,7 +1,7 @@
 package exceptions;
 
 public class ShapeNullException extends Exception {
-    
+
     /**
      * Creates a new instance of <code>ShapeNullException</code> without
      * detail message.

@@ -9,26 +9,26 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.transform.Scale;
 import shapes.ShapeInterface;
 
-public class StretchAction implements Action{
+public class StretchAction implements Action {
 
     private final ShapeInterface selectedShape;
+    private final Scale scale;
     private double previousStretch;
     private boolean hasNotBeenExecuted;
     private MouseEvent mouseEvent;
-    private final Scale scale;
-    
+
     /**
      * Returns a new instance of StretchAction
      *
      * @param selectedShape the shape to be resized
-     * @throws exceptions.ShapeNullException
+     * @throws ShapeNullException if the selected shape is null
      */
     public StretchAction(ShapeInterface selectedShape) throws ShapeNullException {
         if (selectedShape == null)
             throw new ShapeNullException();
         this.selectedShape = selectedShape;
         this.scale = selectedShape.getScale();
-        this.hasNotBeenExecuted=true;
+        this.hasNotBeenExecuted = true;
         this.previousStretch = scale.getX();
     }
 
@@ -42,7 +42,7 @@ public class StretchAction implements Action{
     public void execute(Event event) throws ShapeWithNullWidthException {
         this.previousStretch = scale.getX();
         this.onMouseDragged(event);
-        this.hasNotBeenExecuted=false;
+        this.hasNotBeenExecuted = false;
     }
 
     /**
@@ -52,7 +52,7 @@ public class StretchAction implements Action{
      * @throws exceptions.ShapeWithNullWidthException
      */
     @Override
-    public void onMouseDragged(Event event) throws ShapeWithNullWidthException{
+    public void onMouseDragged(Event event) throws ShapeWithNullWidthException {
         mouseEvent = (MouseEvent) event;
         selectedShape.setStretchX(mouseEvent.getX());
     }
@@ -65,23 +65,23 @@ public class StretchAction implements Action{
      */
     @Override
     public void onMouseReleased(Event event) throws NotStretchedException {
-        if (previousStretch == scale.getX()){
-            this.hasNotBeenExecuted=true;
+        if (previousStretch == scale.getX()) {
+            this.hasNotBeenExecuted = true;
             throw new NotStretchedException();
         }
     }
 
     /**
      * Undoes the action
-     * 
+     *
      * @throws exceptions.NotExecutedActionException
      */
     @Override
     public void undo() throws NotExecutedActionException {
-        if(hasNotBeenExecuted)
+        if (hasNotBeenExecuted)
             throw new NotExecutedActionException();
         scale.setX(previousStretch);
-        this.hasNotBeenExecuted=true;
+        this.hasNotBeenExecuted = true;
     }
-    
+
 }

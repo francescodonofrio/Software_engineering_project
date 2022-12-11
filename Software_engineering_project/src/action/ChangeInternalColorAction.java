@@ -10,7 +10,7 @@ import shapes.ShapeInterface;
 public class ChangeInternalColorAction implements Action {
     private final ObjectProperty<Color> colorPickerInternal;
     private final ShapeInterface shape;
-    private  Color initialColor;
+    private Color initialColor;
     private boolean hasNotBeenExecuted;
 
     /**
@@ -20,10 +20,10 @@ public class ChangeInternalColorAction implements Action {
      * @param colorPickerInternal the new contour color
      * @throws exceptions.ShapeNullException
      */
-    public ChangeInternalColorAction(ShapeInterface selectedShape, ObjectProperty<Color> colorPickerInternal) throws ShapeNullException{
+    public ChangeInternalColorAction(ShapeInterface selectedShape, ObjectProperty<Color> colorPickerInternal) throws ShapeNullException {
         if (selectedShape == null)
             throw new ShapeNullException();
-        else 
+        else
             this.shape = selectedShape;
         this.colorPickerInternal = colorPickerInternal;
         this.hasNotBeenExecuted = true;
@@ -36,9 +36,9 @@ public class ChangeInternalColorAction implements Action {
      */
     @Override
     public void execute(Event event) throws Exception {
-        initialColor=shape.getInternalColor();
+        initialColor = shape.getInternalColor();
         shape.setInternalColor(colorPickerInternal.getValue());
-        this.hasNotBeenExecuted=false;
+        this.hasNotBeenExecuted = false;
     }
 
     /**
@@ -61,13 +61,14 @@ public class ChangeInternalColorAction implements Action {
 
     /**
      * Undoes the action
+     *
      * @throws exceptions.NotExecutedActionException
      */
     @Override
-    public void undo() throws NotExecutedActionException{
-        if(hasNotBeenExecuted)
+    public void undo() throws NotExecutedActionException {
+        if (hasNotBeenExecuted)
             throw new NotExecutedActionException();
         shape.setInternalColor(initialColor);
-        this.hasNotBeenExecuted=true;
+        this.hasNotBeenExecuted = true;
     }
 }

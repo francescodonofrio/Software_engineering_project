@@ -2,11 +2,11 @@ package exceptions;
 
 public class NoActionsException extends Exception {
 
-    public NoActionsException(){
+    public NoActionsException() {
         super();
     }
 
-    public NoActionsException(String message){
+    public NoActionsException(String message) {
         super(message);
     }
 }

@@ -1,6 +1,7 @@
 package action;
 
 import exceptions.NotExecutedActionException;
+import exceptions.ShapeNullException;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -16,14 +17,14 @@ import javafx.scene.text.Text;
 import shapes.ShapeInterface;
 import shapes.TextShape;
 
-public class DrawTextAction implements Action{
+public class DrawTextAction implements Action {
 
     private final ShapeInterface shape;
     private final ObservableList<ShapeInterface> listInsertedShapes;
     private final ObjectProperty<Color> colorPickerContour;
     private final ObjectProperty<Color> colorPickerInternal;
-    private boolean hasNotBeenExecuted;
     private final Pane drawingPane;
+    private boolean hasNotBeenExecuted;
 
     /**
      * Returns a new instance of DrawTextAction, given the shape to draw,
@@ -33,17 +34,21 @@ public class DrawTextAction implements Action{
      * @param colorPickerContour  an ObjectProperty<Color> from whom the shape's contour color is taken
      * @param colorPickerInternal an ObjectProperty<Color> from whom the shape's internal color is taken
      * @param listInsertedShapes  the list in which are stored the shapes
-     * @param drawingPane the drawing pane in which draw the shape
+     * @param drawingPane         the drawing pane in which draw the shape
+     * @throws ShapeNullException if the selected shape is null
      */
-    public DrawTextAction(ShapeInterface shape, ObjectProperty<Color> colorPickerContour, ObjectProperty<Color> colorPickerInternal, ObservableList<ShapeInterface> listInsertedShapes, Pane drawingPane) {
-        this.shape = shape;
+    public DrawTextAction(ShapeInterface shape, ObjectProperty<Color> colorPickerContour, ObjectProperty<Color> colorPickerInternal, ObservableList<ShapeInterface> listInsertedShapes, Pane drawingPane) throws ShapeNullException {
+        if (shape == null)
+            throw new ShapeNullException();
+        else
+            this.shape = shape;
         this.listInsertedShapes = listInsertedShapes;
         this.colorPickerContour = colorPickerContour;
         this.colorPickerInternal = colorPickerInternal;
-        this.hasNotBeenExecuted=true;
-        this.drawingPane=drawingPane;
+        this.hasNotBeenExecuted = true;
+        this.drawingPane = drawingPane;
     }
-    
+
     /**
      * Executes the action specified by the calling class when the mouse is clicked
      *
@@ -52,19 +57,19 @@ public class DrawTextAction implements Action{
     @Override
     public void execute(Event event) throws Exception {
         listInsertedShapes.add(shape);
-        ((TextShape)shape).setSizeFont(40);
+        ((TextShape) shape).setSizeFont(40);
 
-        Text text= (Text) shape.getShape();
+        Text text = (Text) shape.getShape();
         text.setText("");
         MouseEvent mouseEvent = (MouseEvent) event;
-            double initialX = mouseEvent.getX();
-            double initialY = mouseEvent.getY();
-        shape.setProperties(initialX, initialY,colorPickerInternal.getValue(), colorPickerContour.getValue());
-        hasNotBeenExecuted=false;
+        double initialX = mouseEvent.getX();
+        double initialY = mouseEvent.getY();
+        shape.setProperties(initialX, initialY, colorPickerInternal.getValue(), colorPickerContour.getValue());
+        hasNotBeenExecuted = false;
 
         TextField temporaryText = new TextField();
-        temporaryText.setLayoutX(initialX-20);
-        temporaryText.setLayoutY(initialY-50);
+        temporaryText.setLayoutX(initialX - 20);
+        temporaryText.setLayoutY(initialY - 50);
         temporaryText.setText("write your text here...");
         temporaryText.setBackground(Background.EMPTY);
         temporaryText.setBorder(Border.EMPTY);
@@ -77,7 +82,7 @@ public class DrawTextAction implements Action{
 
         temporaryText.setOnKeyPressed(ke -> {
             if (ke.getCode().equals(KeyCode.ENTER)) {
-                String content =temporaryText.getText();
+                String content = temporaryText.getText();
                 text.setText(content);
 
                 drawingPane.getChildren().remove(temporaryText);
@@ -106,14 +111,15 @@ public class DrawTextAction implements Action{
 
     /**
      * Undoes the action
+     *
      * @throws exceptions.NotExecutedActionException
      */
     @Override
     public void undo() throws NotExecutedActionException {
-        if(hasNotBeenExecuted)
+        if (hasNotBeenExecuted)
             throw new NotExecutedActionException();
 
-        hasNotBeenExecuted=true;
+        hasNotBeenExecuted = true;
         listInsertedShapes.remove(shape);
     }
 

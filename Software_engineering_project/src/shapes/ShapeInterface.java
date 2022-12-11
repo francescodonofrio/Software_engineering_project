@@ -113,92 +113,88 @@ public interface ShapeInterface {
      * @param value the status of the focus
      */
     void setFocus(boolean value);
-    
+
     /**
      * Return the dimension along the x-axis
-     * 
+     *
      * @return the dimension of the shape along the x-axis
      */
     double getDimX();
-    
+
     /**
-      * Return the dimension along the y-axis
-     * 
+     * Return the dimension along the y-axis
+     *
      * @return the dimension of the shape along the y-axis
      */
     double getDimY();
-    
-    /**
-     * Set the shape inserted property of the shape
-     * 
-     * @param inserted the status of the insertion
-     */
-    void setInserted(boolean inserted);
-    
+
     /**
      * Return the shape inserted property of the shape
-     * 
+     *
      * @return return the shape inserted property of the shape
      */
     boolean getInserted();
-    
+
     /**
-     * 
+     * Set the shape inserted property of the shape
+     *
+     * @param inserted the status of the insertion
+     */
+    void setInserted(boolean inserted);
+
+    /**
      * @return the rotate transform applicated to the shape
      */
     Rotate getRotate();
-    
+
     /**
      * Set the rotate property
-     * 
+     *
      * @param rotate
      */
     void setRotate(Rotate rotate);
-    
+
     /**
-     * 
      * @return the scale transform applicated to the shape
      */
     Scale getScale();
-    
+
     /**
      * Set the scale property
-     * 
+     *
      * @param scale
      */
     void setScale(Scale scale);
-    
+
     /**
-     * 
      * @return the translate transform applicated to the shape
      */
     Translate getTranslate();
-    
+
     /**
      * Set the translate property
-     * 
+     *
      * @param translate
      */
     void setTranslate(Translate translate);
-    
+
     /**
      * Stretch the shape along the x-axis
-     * 
+     *
      * @param X the point along the x-axis for whom stretch the shape
      * @throws exceptions.ShapeWithNullWidthException
      */
     void setStretchX(double X) throws ShapeWithNullWidthException;
-    
+
     /**
-     * Rotate the shape of passed parameter
-     * 
-     * @param angle the angle of rotation
-     */
-    void setRotation(double angle);
-    
-    /**
-     * 
      * @return the angle of rotation of the shape
      */
     double getRotation();
+
+    /**
+     * Rotate the shape of passed parameter
+     *
+     * @param angle the angle of rotation
+     */
+    void setRotation(double angle);
 }

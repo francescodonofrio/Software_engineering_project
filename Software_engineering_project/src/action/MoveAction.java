@@ -2,6 +2,7 @@ package action;
 
 import exceptions.NotExecutedActionException;
 import exceptions.NotMovedException;
+import exceptions.ShapeNullException;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.scene.input.MouseEvent;
@@ -20,6 +21,7 @@ public class MoveAction implements Action {
      *
      * @param currentShape       the current selected shape
      * @param listInsertedShapes the list of already inserted shapes
+     * @throws ShapeNullException if the selected shape is null
      */
     public MoveAction(ObservableList<ShapeInterface> currentShape, ObservableList<ShapeInterface> listInsertedShapes) {
         this.currentShape = currentShape;
@@ -43,7 +45,7 @@ public class MoveAction implements Action {
 
         Object actionTarget = event.getTarget();
         if (actionTarget instanceof Shape) {
-            Shape selectedShape = (Shape)actionTarget;
+            Shape selectedShape= (Shape) actionTarget;
             for (ShapeInterface current : listInsertedShapes) {
                 if (current.getShape().equals(selectedShape)) {
                     movedShape = current;

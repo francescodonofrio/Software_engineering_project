@@ -1,6 +1,7 @@
 package action;
 
 import exceptions.NotExecutedActionException;
+import exceptions.ShapeNullException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -91,7 +92,7 @@ public class ChangeInternalColorActionTest {
      * @throws exceptions.NotExecutedActionException
      */
     @Test(expected=NotExecutedActionException.class)
-    public void testUndo() throws NotExecutedActionException {
+    public void testUndo() throws NotExecutedActionException, ShapeNullException {
         System.out.print("undo: ");
         
         Ellipse ellipse = (Ellipse) ellipseShape.getShape();

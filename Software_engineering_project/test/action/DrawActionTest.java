@@ -1,6 +1,7 @@
 package action;
 
 import exceptions.NotExecutedActionException;
+import exceptions.ShapeNullException;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -83,7 +84,7 @@ public class DrawActionTest {
      * Test of execute method, of class DrawAction.
      */
     @Test
-    public void testExecute() {
+    public void testExecute() throws ShapeNullException {
         System.out.print("execute: ");
 
         event = new MouseEvent(MouseEvent.MOUSE_PRESSED, 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
@@ -154,7 +155,7 @@ public class DrawActionTest {
      * Test of onMouseDragged method, of class DrawAction.
      */
     @Test
-    public void testOnMouseDragged() {
+    public void testOnMouseDragged() throws ShapeNullException {
         System.out.print("onMouseDragged: ");
         event = new MouseEvent(MouseEvent.MOUSE_DRAGGED, 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
 
@@ -184,7 +185,7 @@ public class DrawActionTest {
      * @throws exceptions.NotExecutedActionException
      */
     @Test(expected = NotExecutedActionException.class)
-    public void testUndo() throws NotExecutedActionException {
+    public void testUndo() throws NotExecutedActionException, ShapeNullException {
         System.out.print("undo: ");
         event = new MouseEvent(MouseEvent.MOUSE_DRAGGED, 100, 150, 0, 0, MouseButton.PRIMARY, 0, false, false, false, false, false, false, false, false, false, false, null);
 
