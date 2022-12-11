@@ -191,7 +191,7 @@ public class ShapesIOTest {
      * Test of save method, of class ShapesIO.
      * @throws java.lang.Exception
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public void testASaveStreamByte() throws IllegalArgumentException, Exception {
         System.out.println("saveStreamByte Test:");
         

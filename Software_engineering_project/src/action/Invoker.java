@@ -5,7 +5,6 @@ import exceptions.NotExecutedActionException;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.Event;
-
 import java.util.ArrayDeque;
 import java.util.Deque;
 
@@ -43,10 +42,15 @@ public class Invoker {
      *
      * @param action the action on whom call the onMouseDragged method
      * @param event  the event passed to the onMouseDragged method of the action
-     * @throws java.lang.Exception
      */
-    public void executeOnMouseDragged(Action action, Event event) throws Exception {
-        action.onMouseDragged(event);
+    public void executeOnMouseDragged(Action action, Event event) {
+        try {
+            action.onMouseDragged(event);
+        } catch (Exception ex) {
+            this.actions.pop();
+            if (this.actions.isEmpty())
+                this.emptyQueue.set(true);
+        }
     }
 
     /**
@@ -76,8 +80,8 @@ public class Invoker {
             throw new NoActionsException();
 
         try {
-            Action a = this.actions.pop();
-            a.undo();
+            Action action = this.actions.pop();
+            action.undo();
         } catch (NotExecutedActionException ex) {
             System.out.println(ex);
         }

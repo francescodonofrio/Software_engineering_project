@@ -38,7 +38,6 @@ public class TextShape extends CloseContourShape  {
      */
     public void setText(String newText){
         ((Text) shape).setText(newText);
-        inserted = true;
     }
     
     /**
@@ -53,12 +52,21 @@ public class TextShape extends CloseContourShape  {
     /**
      * Get a size font of a TextShape
      *
+     * @return the size font of the text shape
      */
     public double getSizeFont(){
         return ((Text) shape).getFont().getSize();
     }
 
-    //16px = 12pt
+    //16px = 12pt    
+    /**
+     * Updates the dimentions of the shape
+     *
+     * @param initialX the initial X coordinate
+     * @param initialY the initial Y coordinate
+     * @param finalX   the final X coordinate
+     * @param finalY   the final Y coordinate
+     */
     @Override
     public void setDim(double initialX, double initialY, double finalX, double finalY) {
         Text text= (Text) shape;
@@ -83,11 +91,21 @@ public class TextShape extends CloseContourShape  {
         text.setScaleY(newScaleY);
     }
     
+    /**
+     * Return the dimension along the x-axis
+     * 
+     * @return the dimension of the shape along the x-axis
+     */    
     @Override
     public double getDimX() {
         return -this.shape.getBoundsInParent().getWidth();
     }
-
+    
+    /**
+     * Return the dimension along the y-axis
+     * 
+     * @return the dimension of the shape along the y-axis
+     */
     @Override
     public double getDimY() {
         return this.shape.getBoundsInParent().getHeight();

@@ -1,5 +1,5 @@
-
 package action;
+
 import exceptions.NotExecutedActionException;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -10,7 +10,7 @@ import shapes.ShapeInterface;
 public class ToBackAction implements Action {
     
      private final Shape shapeToBack;
-     private ObservableList<Node> listInsertedShapes;
+     private final ObservableList<Node> listInsertedShapes;
      private int initialPosition;
      private boolean hasNotBeenExecuted;
      
@@ -18,6 +18,7 @@ public class ToBackAction implements Action {
      * Returns a new instance of ToBackAction
      *
      * @param selectedShape the shape to be move to back
+     * @param listInsertedShapes the list containing the sape that has been inserted in the drawing window
      */
     public ToBackAction(ShapeInterface selectedShape,ObservableList<Node> listInsertedShapes) {
         this.shapeToBack = selectedShape.getShape();
@@ -37,10 +38,20 @@ public class ToBackAction implements Action {
         this.hasNotBeenExecuted=false;
     }
 
+    /**
+     * Executes the action specified by the calling class when the mouse is dragged
+     *
+     * @param event the event of the mouse click
+     */
     @Override
     public void onMouseDragged(Event event) {
     }
 
+    /**
+     * Executes the action specified by the calling class when the mouse is released
+     *
+     * @param event the event of the mouse click
+     */
     @Override
     public void onMouseReleased(Event event) throws Exception {
     }

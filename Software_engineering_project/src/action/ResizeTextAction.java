@@ -1,4 +1,3 @@
-
 package action;
 
 import exceptions.NotExecutedActionException;
@@ -33,13 +32,23 @@ public class ResizeTextAction implements Action {
     public void execute(Event event) throws Exception {
         oldSize = ((TextShape)shape).getSizeFont();
         ((TextShape)shape).setSizeFont(newSize);
-         this.hasNotBeenExecuted=false;
+        this.hasNotBeenExecuted=false;
     }
 
+    /**
+     * Executes the action specified by the calling class when the mouse is dragged
+     *
+     * @param event the event of the mouse click
+     */
     @Override
     public void onMouseDragged(Event event) {
     }
 
+    /**
+     * Executes the action specified by the calling class when the mouse is released
+     *
+     * @param event the event of the mouse click
+     */
     @Override
     public void onMouseReleased(Event event) throws Exception {
     }
@@ -50,9 +59,10 @@ public class ResizeTextAction implements Action {
      */
     @Override
     public void undo() throws NotExecutedActionException {
-        if (hasNotBeenExecuted)
+        if(hasNotBeenExecuted)
             throw new NotExecutedActionException();
 
+        hasNotBeenExecuted=true;
         ((TextShape)shape).setSizeFont(oldSize);
     }
 }

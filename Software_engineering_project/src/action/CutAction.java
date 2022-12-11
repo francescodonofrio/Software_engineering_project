@@ -44,22 +44,33 @@ public class CutAction implements Action {
         hasNotBeenExecuted=false;
     }
 
+    /**
+     * Executes the action specified by the calling class when the mouse is dragged
+     *
+     * @param event the event of the mouse click
+     */
     @Override
     public void onMouseDragged(Event event) { 
     }
 
+    /**
+     * Executes the action specified by the calling class when the mouse is released
+     *
+     * @param event the event of the mouse click
+     */
     @Override
     public void onMouseReleased(Event event) throws Exception {
     }
 
+    /**
+     * Undoes the action
+     * @throws exceptions.NotExecutedActionException
+     */
     @Override
     public void undo() throws NotExecutedActionException {
         if(hasNotBeenExecuted)
             throw new NotExecutedActionException();
         listInsertedShapes.add(shapeToCut);
         hasNotBeenExecuted=true;
-    }
-    
-    
-    
+    }   
 }

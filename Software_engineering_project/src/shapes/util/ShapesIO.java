@@ -4,7 +4,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 import shapes.ShapeAbstract;
 import shapes.ShapeInterface;
-
 import java.beans.DefaultPersistenceDelegate;
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
