@@ -527,13 +527,15 @@ public class WindowController implements Initializable {
      */
     @FXML
     private void changeInternalColorOnAction(ActionEvent event) {
-        try {
-            action = new ChangeInternalColorAction(selectedInsertedShape.get(0), colorPickerInternal.valueProperty());
-            invoker.execute(action, event);
-        } catch (ShapeNullException ex) {
-            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
+        if(!selectedInsertedShape.isEmpty()){
+            try {
+                action = new ChangeInternalColorAction(selectedInsertedShape.get(0), colorPickerInternal.valueProperty());
+                invoker.execute(action, event);
+            } catch (ShapeNullException ex) {
+                Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            resetDefaultAction();
         }
-        resetDefaultAction();
     }
 
     /**
@@ -543,13 +545,15 @@ public class WindowController implements Initializable {
      */
     @FXML
     private void changeContourColorOnAction(ActionEvent event) {
-        try {
-            action = new ChangeContourColorAction(selectedInsertedShape.get(0), colorPickerContour.valueProperty());
-            invoker.execute(action, event);
-        } catch (ShapeNullException ex) {
-            Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
+        if(!selectedInsertedShape.isEmpty()){
+            try {
+                action = new ChangeContourColorAction(selectedInsertedShape.get(0), colorPickerContour.valueProperty());
+                invoker.execute(action, event);
+            } catch (ShapeNullException ex) {
+                Logger.getLogger(WindowController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            resetDefaultAction();
         }
-        resetDefaultAction();
     }
 
     /**
