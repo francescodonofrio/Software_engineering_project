@@ -45,9 +45,13 @@ public class DrawTextAction implements Action{
         this.drawingPane=drawingPane;
     }
     
+    /**
+     * Executes the action specified by the calling class when the mouse is clicked
+     *
+     * @param event the event of the mouse click
+     */
     @Override
     public void execute(Event event) throws Exception {
-    System.out.println(event.getEventType().toString());
     listInsertedShapes.add(shape);
     ((TextShape) shape).setText("");//this line fix bug
     MouseEvent mouseEvent = (MouseEvent) event;
@@ -92,6 +96,10 @@ public class DrawTextAction implements Action{
     public void onMouseReleased(Event event) throws Exception {
     }
 
+    /**
+     * Undoes the action
+     * @throws exceptions.NotExecutedActionException
+     */
     @Override
     public void undo() throws NotExecutedActionException {
         if(hasNotBeenExecuted)

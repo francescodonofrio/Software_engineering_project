@@ -31,12 +31,15 @@ public class ResizeTextActionTest {
      */
     @Test
     public void testExecute() throws Exception {
+        System.out.print("execute: ");
         
         action= new ResizeTextAction(textShape,newSize);
         
         action.execute(event);
         
         assertEquals(textShape.getSizeFont(),newSize,0.1);
+        
+        System.out.println("Passed");
     }
     
     /**

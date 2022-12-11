@@ -8,7 +8,8 @@ import shapes.TextShape;
 
 public class ResizeTextAction implements Action {
     private final ShapeInterface shape;
-    private double newSize,oldSize; 
+    private final double newSize; 
+    private double oldSize;
     private boolean hasNotBeenExecuted;
     /**
      * Returns a new instance of ResizeTextAction, given the shape and
@@ -23,6 +24,11 @@ public class ResizeTextAction implements Action {
         this.hasNotBeenExecuted=true;
     }
     
+    /**
+     * Executes the action specified by the calling class when the mouse is clicked
+     *
+     * @param event the event of the mouse click
+     */
     @Override
     public void execute(Event event) throws Exception {
         oldSize = ((TextShape)shape).getSizeFont();
@@ -38,6 +44,10 @@ public class ResizeTextAction implements Action {
     public void onMouseReleased(Event event) throws Exception {
     }
 
+    /**
+     * Undoes the action
+     * @throws exceptions.NotExecutedActionException
+     */
     @Override
     public void undo() throws NotExecutedActionException {
         if (hasNotBeenExecuted)

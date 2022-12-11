@@ -60,7 +60,7 @@ public class TextShape extends OpenContourShape  {
     @Override
     public void setDim(double initialX, double initialY, double finalX, double finalY) {
     }
-
+    
     @Override
     public double getDimX() {
         return -this.shape.getBoundsInParent().getWidth();
